@@ -426,11 +426,11 @@ module Plivo
       end 
       @nestables = []
       @valid_attributes = []
-      @name = "Element"
 
       attr_accessor :name, :node
 
       def initialize(body=nil, attributes={})
+          @name = "Element"
           @body = body
           @node = REXML::Element.new @name
           attributes.each do |k, v|
@@ -536,10 +536,10 @@ module Plivo
       @nestables = ['Speak', 'Play', 'GetDigits', 'Record', 'Dial', 'Message',
                    'Redirect', 'Wait', 'Hangup', 'PreAnswer', 'Conference']
       @valid_attributes = []
-      @name = "Response"
 
       def initialize()
           super(nil, {})
+          @name = "Response"
       end
 
       def to_xml()
@@ -555,13 +555,13 @@ module Plivo
   class Speak < Element
       @nestables = []
       @valid_attributes = ['voice', 'language', 'loop']
-      @name = "Speak"
 
       def initialize(body, attributes={})
           if not body
-              raise PlivoError, 'No text set for ' + @name
+              raise PlivoError, 'No text set for Speak'
           end
           super(body, attributes)
+          @name = "Speak"
       end
   end
 
@@ -569,13 +569,13 @@ module Plivo
   class Play < Element
       @nestables = []
       @valid_attributes = ['loop']
-      @name = "Play"
 
       def initialize(body, attributes={})
           if not body
-              raise PlivoError 'No url set for ' + @name
+              raise PlivoError 'No url set for Play'
           end
           super(body, attributes)
+          @name = "Speak"
       end
   end
 
@@ -583,10 +583,10 @@ module Plivo
   class Wait < Element
       @nestables = []
       @valid_attributes = ['length']
-      @name = "Wait"
 
       def initialize(attributes={})
           super(nil, attributes)
+          @name = "Wait"
       end
   end
 
@@ -594,13 +594,13 @@ module Plivo
   class Redirect < Element
       @nestables = []
       @valid_attributes = ['method']
-      @name = "Redirect"
 
       def initialize(body, attributes={})
           if not body
-              raise PlivoError 'No url set for ' + @name
+              raise PlivoError 'No url set for Redirect'
           end
           super(body, attributes)
+          @name = "Redirect"
       end
   end
 
@@ -608,10 +608,10 @@ module Plivo
   class Hangup < Element
       @nestables = []
       @valid_attributes = ['schedule', 'reason']
-      @name = "Hangup"
 
       def initialize(attributes={})
           super(nil, attributes)
+          @name = "Hangup"
       end
   end
 
@@ -621,10 +621,10 @@ module Plivo
       @valid_attributes = ['action', 'method', 'timeout', 'finishOnKey',
                           'numDigits', 'retries', 'invalidDigitsSound',
                           'validDigits', 'playBeep']
-      @name = "GetDigits"
 
       def initialize(attributes={})
           super(nil, attributes)
+          @name = "GetDigits"
       end
   end
 
@@ -632,13 +632,13 @@ module Plivo
   class Number < Element
       @nestables = []
       @valid_attributes = ['sendDigits', 'sendOnPreanswer']
-      @name = "Number"
 
       def initialize(body, attributes={})
           if not body
-              raise PlivoError, 'No number set for ' + @name
+              raise PlivoError, 'No number set for Number'
           end
           super(body, attributes)
+          @name = "Number"
       end
   end
 
@@ -646,13 +646,13 @@ module Plivo
   class User < Element
       @nestables = []
       @valid_attributes = ['sendDigits', 'sendOnPreanswer']
-      @name = "User"
 
       def initialize(body, attributes={})
           if not body
-              raise PlivoError, 'No user set for ' + @name
+              raise PlivoError, 'No user set for User'
           end
           super(body, attributes)
+          @name = "User"
       end
   end
 
@@ -663,10 +663,10 @@ module Plivo
                            'timeLimit','callerId', 'callerName', 'confirmSound',
                            'dialMusic', 'confirmKey', 'redirect',
                            'callbackUrl', 'callbackMethod', 'digitsMatch']
-      @name = "Dial"
 
       def initialize(attributes={})
           super(nil, attributes)
+          @name = "Dial"
       end
   end
 
@@ -679,13 +679,13 @@ module Plivo
                            'record', 'recordFileFormat', 'action', 'method', 'redirect',
                            'digitsMatch', 'callbackUrl', 'callbackMethod',
                            'stayAlone', 'floorEvent']
-      @name = "Conference"
 
       def initialize(body, attributes={})
           if not body
-              raise PlivoError, 'No conference name set for ' + @name
+              raise PlivoError, 'No conference name set for Conference'
           end
           super(body, attributes)
+          @name = "Conference"
       end
   end
 
@@ -695,10 +695,10 @@ module Plivo
       @valid_attributes = ['action', 'method', 'timeout','finishOnKey',
                            'maxLength', 'playBeep', 'recordSession',
                            'startOnDialAnswer', 'redirect', 'fileFormat']
-      @name = "Record"
 
       def initialize(attributes={})
           super(nil, attributes)
+          @name = "Record"
       end
   end
 
@@ -706,10 +706,10 @@ module Plivo
   class PreAnswer < Element
       @nestables = ['Play', 'Speak', 'GetDigits', 'Wait', 'Redirect', 'Message']
       @valid_attributes = []
-      @name = "PreAnswer"
 
       def initialize(attributes={})
           super(nil, attributes)
+          @name = "PreAnswer"
       end
   end
 
@@ -717,13 +717,13 @@ module Plivo
   class Message < Element
       @nestables = []
       @valid_attributes = ['src', 'dst', 'type', 'callbackUrl', 'callbackMethod']
-      @name = "Message"
 
       def initialize(body, attributes={})
           if not body
-              raise PlivoError, 'No text set for ' + @name
+              raise PlivoError, 'No text set for Message'
           end
           super(body, attributes)
+          @name = "Message"
       end
   end  
 end
