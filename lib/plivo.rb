@@ -26,18 +26,13 @@ module Plivo
 
       def request(method, path, params=nil)
           if method == "POST"
-              if params
-                  begin
-                      r = @rest[path].post params.to_json, :content_type => 'application/json'
-                  rescue => e
-                      response = e
-                  end
-              else
-                  begin
-                      r = @rest[path].post
-                  rescue => e
-                      response = e
-                  end
+              if not params
+                  params = {}
+              end
+              begin
+                  r = @rest[path].post params.to_json, :content_type => 'application/json'
+              rescue => e
+                  response = e
               end
               if not response
                   code = r.code
@@ -431,11 +426,11 @@ module Plivo
       end 
       @nestables = []
       @valid_attributes = []
+      @name = "Element"
 
       attr_accessor :name, :node
 
       def initialize(body=nil, attributes={})
-          @name = self.class.name
           @body = body
           @node = REXML::Element.new @name
           attributes.each do |k, v|
@@ -541,6 +536,7 @@ module Plivo
       @nestables = ['Speak', 'Play', 'GetDigits', 'Record', 'Dial', 'Message',
                    'Redirect', 'Wait', 'Hangup', 'PreAnswer', 'Conference']
       @valid_attributes = []
+      @name = "Response"
 
       def initialize()
           super(nil, {})
@@ -559,6 +555,7 @@ module Plivo
   class Speak < Element
       @nestables = []
       @valid_attributes = ['voice', 'language', 'loop']
+      @name = "Speak"
 
       def initialize(body, attributes={})
           if not body
@@ -572,6 +569,7 @@ module Plivo
   class Play < Element
       @nestables = []
       @valid_attributes = ['loop']
+      @name = "Play"
 
       def initialize(body, attributes={})
           if not body
@@ -585,6 +583,7 @@ module Plivo
   class Wait < Element
       @nestables = []
       @valid_attributes = ['length']
+      @name = "Wait"
 
       def initialize(attributes={})
           super(nil, attributes)
@@ -595,6 +594,7 @@ module Plivo
   class Redirect < Element
       @nestables = []
       @valid_attributes = ['method']
+      @name = "Redirect"
 
       def initialize(body, attributes={})
           if not body
@@ -608,6 +608,7 @@ module Plivo
   class Hangup < Element
       @nestables = []
       @valid_attributes = ['schedule', 'reason']
+      @name = "Hangup"
 
       def initialize(attributes={})
           super(nil, attributes)
@@ -620,6 +621,7 @@ module Plivo
       @valid_attributes = ['action', 'method', 'timeout', 'finishOnKey',
                           'numDigits', 'retries', 'invalidDigitsSound',
                           'validDigits', 'playBeep']
+      @name = "GetDigits"
 
       def initialize(attributes={})
           super(nil, attributes)
@@ -630,6 +632,7 @@ module Plivo
   class Number < Element
       @nestables = []
       @valid_attributes = ['sendDigits', 'sendOnPreanswer']
+      @name = "Number"
 
       def initialize(body, attributes={})
           if not body
@@ -643,6 +646,7 @@ module Plivo
   class User < Element
       @nestables = []
       @valid_attributes = ['sendDigits', 'sendOnPreanswer']
+      @name = "User"
 
       def initialize(body, attributes={})
           if not body
@@ -659,6 +663,7 @@ module Plivo
                            'timeLimit','callerId', 'callerName', 'confirmSound',
                            'dialMusic', 'confirmKey', 'redirect',
                            'callbackUrl', 'callbackMethod', 'digitsMatch']
+      @name = "Dial"
 
       def initialize(attributes={})
           super(nil, attributes)
@@ -674,6 +679,7 @@ module Plivo
                            'record', 'recordFileFormat', 'action', 'method', 'redirect',
                            'digitsMatch', 'callbackUrl', 'callbackMethod',
                            'stayAlone', 'floorEvent']
+      @name = "Conference"
 
       def initialize(body, attributes={})
           if not body
@@ -689,6 +695,7 @@ module Plivo
       @valid_attributes = ['action', 'method', 'timeout','finishOnKey',
                            'maxLength', 'playBeep', 'recordSession',
                            'startOnDialAnswer', 'redirect', 'fileFormat']
+      @name = "Record"
 
       def initialize(attributes={})
           super(nil, attributes)
@@ -699,6 +706,7 @@ module Plivo
   class PreAnswer < Element
       @nestables = ['Play', 'Speak', 'GetDigits', 'Wait', 'Redirect', 'Message']
       @valid_attributes = []
+      @name = "PreAnswer"
 
       def initialize(attributes={})
           super(nil, attributes)
@@ -709,6 +717,7 @@ module Plivo
   class Message < Element
       @nestables = []
       @valid_attributes = ['src', 'dst', 'type', 'callbackUrl', 'callbackMethod']
+      @name = "Message"
 
       def initialize(body, attributes={})
           if not body
