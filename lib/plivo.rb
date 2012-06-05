@@ -427,10 +427,10 @@ module Plivo
       @nestables = []
       @valid_attributes = []
 
-      attr_accessor :name, :node
+      attr_accessor :node, :name
 
       def initialize(body=nil, attributes={})
-          @name = "Element"
+          @name = self.class.name.split('::')[1]
           @body = body
           @node = REXML::Element.new @name
           attributes.each do |k, v|
@@ -462,6 +462,9 @@ module Plivo
       end
 
       def add(element)
+          if not element
+              raise PlivoError, "invalid element"
+          end
           if self.class.nestables.include?(element.name)
               @node.elements << element.node
               return element
@@ -539,7 +542,6 @@ module Plivo
 
       def initialize()
           super(nil, {})
-          @name = "Response"
       end
 
       def to_xml()
@@ -561,7 +563,6 @@ module Plivo
               raise PlivoError, 'No text set for Speak'
           end
           super(body, attributes)
-          @name = "Speak"
       end
   end
 
@@ -575,7 +576,6 @@ module Plivo
               raise PlivoError 'No url set for Play'
           end
           super(body, attributes)
-          @name = "Speak"
       end
   end
 
@@ -586,7 +586,6 @@ module Plivo
 
       def initialize(attributes={})
           super(nil, attributes)
-          @name = "Wait"
       end
   end
 
@@ -600,7 +599,6 @@ module Plivo
               raise PlivoError 'No url set for Redirect'
           end
           super(body, attributes)
-          @name = "Redirect"
       end
   end
 
@@ -611,7 +609,6 @@ module Plivo
 
       def initialize(attributes={})
           super(nil, attributes)
-          @name = "Hangup"
       end
   end
 
@@ -624,7 +621,6 @@ module Plivo
 
       def initialize(attributes={})
           super(nil, attributes)
-          @name = "GetDigits"
       end
   end
 
@@ -638,7 +634,6 @@ module Plivo
               raise PlivoError, 'No number set for Number'
           end
           super(body, attributes)
-          @name = "Number"
       end
   end
 
@@ -652,7 +647,6 @@ module Plivo
               raise PlivoError, 'No user set for User'
           end
           super(body, attributes)
-          @name = "User"
       end
   end
 
@@ -666,7 +660,6 @@ module Plivo
 
       def initialize(attributes={})
           super(nil, attributes)
-          @name = "Dial"
       end
   end
 
@@ -685,7 +678,6 @@ module Plivo
               raise PlivoError, 'No conference name set for Conference'
           end
           super(body, attributes)
-          @name = "Conference"
       end
   end
 
@@ -698,7 +690,6 @@ module Plivo
 
       def initialize(attributes={})
           super(nil, attributes)
-          @name = "Record"
       end
   end
 
@@ -709,7 +700,6 @@ module Plivo
 
       def initialize(attributes={})
           super(nil, attributes)
-          @name = "PreAnswer"
       end
   end
 
@@ -723,7 +713,6 @@ module Plivo
               raise PlivoError, 'No text set for Message'
           end
           super(body, attributes)
-          @name = "Message"
       end
   end  
 end
