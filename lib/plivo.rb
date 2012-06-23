@@ -532,12 +532,16 @@ module Plivo
       def addMessage(body, attributes={})
           return add(Message.new(body, attributes))
       end
+
+      def addDTMF(body, attributes={})
+          return add(DTMF.new(body, attributes))
+      end
   end
 
 
   class Response < Element
       @nestables = ['Speak', 'Play', 'GetDigits', 'Record', 'Dial', 'Message',
-                   'Redirect', 'Wait', 'Hangup', 'PreAnswer', 'Conference']
+                    'Redirect', 'Wait', 'Hangup', 'PreAnswer', 'Conference', 'DTMF']
       @valid_attributes = []
 
       def initialize()
@@ -617,7 +621,7 @@ module Plivo
       @nestables = ['Speak', 'Play', 'Wait']
       @valid_attributes = ['action', 'method', 'timeout', 'finishOnKey',
                           'numDigits', 'retries', 'invalidDigitsSound',
-                          'validDigits', 'playBeep']
+                          'validDigits', 'playBeep', 'redirect']
 
       def initialize(attributes={})
           super(nil, attributes)
@@ -695,7 +699,7 @@ module Plivo
 
 
   class PreAnswer < Element
-      @nestables = ['Play', 'Speak', 'GetDigits', 'Wait', 'Redirect', 'Message']
+      @nestables = ['Play', 'Speak', 'GetDigits', 'Wait', 'Redirect', 'Message', 'DTMF']
       @valid_attributes = []
 
       def initialize(attributes={})
@@ -715,4 +719,17 @@ module Plivo
           super(body, attributes)
       end
   end  
+
+  class DTMF < Element
+      @nestables = []
+      @valid_attributes = []
+
+      def initialize(body, attributes={})
+          if not body
+              raise PlivoError, 'No digits set for DTMF'
+          end
+          super(body, attributes)
+      end
+  end
+
 end
