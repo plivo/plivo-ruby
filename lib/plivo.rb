@@ -644,7 +644,7 @@ module Plivo
 
   class User < Element
       @nestables = []
-      @valid_attributes = ['sendDigits', 'sendOnPreanswer']
+      @valid_attributes = ['sendDigits', 'sendOnPreanswer', 'sipHeaders']
 
       def initialize(body, attributes={})
           if not body
@@ -660,7 +660,8 @@ module Plivo
       @valid_attributes = ['action','method','timeout','hangupOnStar',
                            'timeLimit','callerId', 'callerName', 'confirmSound',
                            'dialMusic', 'confirmKey', 'redirect',
-                           'callbackUrl', 'callbackMethod', 'digitsMatch']
+                           'callbackUrl', 'callbackMethod', 'digitsMatch',
+                           'sipHeaders']
 
       def initialize(attributes={})
           super(nil, attributes)
