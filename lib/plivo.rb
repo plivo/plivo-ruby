@@ -586,7 +586,7 @@ module Plivo
 
   class Wait < Element
       @nestables = []
-      @valid_attributes = ['length']
+      @valid_attributes = ['length', 'silence']
 
       def initialize(attributes={})
           super(nil, attributes)
@@ -621,7 +621,8 @@ module Plivo
       @nestables = ['Speak', 'Play', 'Wait']
       @valid_attributes = ['action', 'method', 'timeout', 'finishOnKey',
                           'numDigits', 'retries', 'invalidDigitsSound',
-                          'validDigits', 'playBeep', 'redirect']
+                          'validDigits', 'playBeep', 'redirect',
+                          'digitTimeout']
 
       def initialize(attributes={})
           super(nil, attributes)
@@ -691,7 +692,8 @@ module Plivo
       @nestables = []
       @valid_attributes = ['action', 'method', 'timeout','finishOnKey',
                            'maxLength', 'playBeep', 'recordSession',
-                           'startOnDialAnswer', 'redirect', 'fileFormat']
+                           'startOnDialAnswer', 'redirect', 'fileFormat',
+                           'callbackUrl', 'callbackMethod']
 
       def initialize(attributes={})
           super(nil, attributes)
