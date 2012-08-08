@@ -163,15 +163,19 @@ module Plivo
           params = {"app_id" => ""}
           return request('POST', "/Number/#{number}/", params)
       end
-      
-      ## Schedule ##
-      def get_scheduled_tasks(params={})
-          return request('GET', "/Schedule/", params)
+
+      def get_number_group(self, params={}):
+          return request('GET', "/AvailableNumberGroup/", data=params)
       end
-      
-      def cancel_scheduled_task(params={})
-          task_id = params.delete("task_id")
-          return request('DELETE', "/Schedule/#{task_id}/")
+
+      def get_number_group_details(params={}):
+          group_id = params.delete('group_id')
+          return request('GET', "/AvailableNumberGroup/#{group_id}/", data=params)
+      end
+
+      def rent_from_number_group(params={}):
+          group_id = params.delete('group_id')
+          return request('POST', "/AvailableNumberGroup/#{group_id}/", data=params)
       end
       
       ## Calls ##
