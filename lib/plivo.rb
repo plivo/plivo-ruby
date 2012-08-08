@@ -102,7 +102,7 @@ module Plivo
       
       def delete_subaccount(params={})
           subauth_id = params.delete("subauth_id")
-          return request('DELETE', "/Subaccount/#{subauth_id}/")
+          return request('DELETE', "/Subaccount/#{subauth_id}/", params)
       end
       
       ## Applications ##
@@ -126,7 +126,7 @@ module Plivo
       
       def delete_application(params={})
           app_id = params.delete("app_id")
-          return request('DELETE', "/Application/#{app_id}/")
+          return request('DELETE', "/Application/#{app_id}/", params)
       end
       
       ## Numbers ##
@@ -150,7 +150,7 @@ module Plivo
       
       def unrent_number(params={})
           number = params.delete("number")
-          return request('DELETE', "/Number/#{number}/")
+          return request('DELETE', "/Number/#{number}/", params)
       end
       
       def link_application_number(params={})
@@ -204,7 +204,7 @@ module Plivo
       end
       
       def hangup_all_calls(params={})
-          return request('DELETE', "/Call/")
+          return request('DELETE', "/Call/", params)
       end
       
       def transfer_call(params={})
@@ -214,7 +214,7 @@ module Plivo
       
       def hangup_call(params={})
           call_uuid = params.delete('call_uuid')
-          return request('DELETE', "/Call/#{call_uuid}/")
+          return request('DELETE', "/Call/#{call_uuid}/", params)
       end
       
       def record(params={})
@@ -224,7 +224,7 @@ module Plivo
           
       def stop_record(params={})
           call_uuid = params.delete('call_uuid')
-          return request('DELETE', "/Call/#{call_uuid}/Record/")
+          return request('DELETE', "/Call/#{call_uuid}/Record/", params)
       end
       
       def play(params={})
@@ -234,7 +234,7 @@ module Plivo
           
       def stop_play(params={})
           call_uuid = params.delete('call_uuid')
-          return request('DELETE', "/Call/#{call_uuid}/Play/")
+          return request('DELETE', "/Call/#{call_uuid}/Play/", params)
       end
       
       def speak(params={})
@@ -250,7 +250,7 @@ module Plivo
       ## Calls requests ##
       def hangup_request(params={})
           request_uuid = params.delete('request_uuid')
-          return request('DELETE', "/Request/#{request_uuid}/")
+          return request('DELETE', "/Request/#{request_uuid}/", params)
       end
       
       ## Conferences ##
@@ -259,7 +259,7 @@ module Plivo
       end
       
       def hangup_all_conferences(params={})
-          return request('DELETE', "/Conference/")
+          return request('DELETE', "/Conference/", params)
       end
       
       def get_live_conference(params={})
@@ -269,13 +269,13 @@ module Plivo
       
       def hangup_conference(params={})
           conference_name = params.delete('conference_name')
-          return request('DELETE', "/Conference/#{conference_name}/")
+          return request('DELETE', "/Conference/#{conference_name}/", params)
       end
       
       def hangup_member(params={})
           conference_name = params.delete('conference_name')
           member_id = params.delete('member_id')
-          return request('DELETE', "/Conference/#{conference_name}/Member/#{member_id}/")
+          return request('DELETE', "/Conference/#{conference_name}/Member/#{member_id}/", params)
       end
       
       def play_member(params={})
@@ -287,7 +287,7 @@ module Plivo
       def stop_play_member(params={})
           conference_name = params.delete('conference_name')
           member_id = params.delete('member_id')
-          return request('DELETE', "/Conference/#{conference_name}/Member/#{member_id}/Play/")
+          return request('DELETE', "/Conference/#{conference_name}/Member/#{member_id}/Play/", params)
       end
       
       def speak_member(params={})
@@ -305,7 +305,7 @@ module Plivo
       def undeaf_member(params={})
           conference_name = params.delete('conference_name')
           member_id = params.delete('member_id')
-          return request('DELETE', "/Conference/#{conference_name}/Member/#{member_id}/Deaf/")
+          return request('DELETE', "/Conference/#{conference_name}/Member/#{member_id}/Deaf/", params)
       end
       
       def mute_member(params={})
@@ -317,7 +317,7 @@ module Plivo
       def unmute_member(params={})
           conference_name = params.delete('conference_name')
           member_id = params.delete('member_id')
-          return request('DELETE', "/Conference/#{conference_name}/Member/#{member_id}/Mute/")
+          return request('DELETE', "/Conference/#{conference_name}/Member/#{member_id}/Mute/", params)
       end
       
       def kick_member(params={})
@@ -333,7 +333,7 @@ module Plivo
       
       def stop_record_conference(params={}) 
           conference_name = params.delete('conference_name')
-          return request('DELETE', "/Conference/#{conference_name}/Record/")
+          return request('DELETE', "/Conference/#{conference_name}/Record/", params)
       end
       
       ## Recordings ##
@@ -367,7 +367,7 @@ module Plivo
       
       def delete_endpoint(params={})
           endpoint_id = params.delete('endpoint_id')
-          return request('DELETE', "/Endpoint/#{endpoint_id}/")
+          return request('DELETE', "/Endpoint/#{endpoint_id}/", params)
       end
       
       ## Carriers ##
@@ -391,7 +391,7 @@ module Plivo
       
       def delete_carrier(params={})
           carrier_id = params.delete('carrier_id')
-          return request('DELETE', "/Carrier/#{carrier_id}/")
+          return request('DELETE', "/Carrier/#{carrier_id}/", params)
       end
       
       ## Carrier Routings ##
@@ -415,7 +415,7 @@ module Plivo
       
       def delete_carrier_routing(params={})
           routing_id = params.delete('routing_id')
-          return request('DELETE', "/CarrierRouting/#{routing_id}/")
+          return request('DELETE', "/CarrierRouting/#{routing_id}/", params)
       end
       
       ## Message ##
