@@ -75,7 +75,7 @@ module Plivo
 
       ## Accounts ##
       def get_account(params={})
-          return request('GET', "/")
+          return request('GET', "/", params)
       end
       
       def modify_account(params={})
@@ -83,7 +83,7 @@ module Plivo
       end
       
       def get_subaccounts(params={})
-          return request('GET', "/Subaccount/")
+          return request('GET', "/Subaccount/", params)
       end
       
       def create_subaccount(params={})
@@ -92,7 +92,7 @@ module Plivo
       
       def get_subaccount(params={})
           subauth_id = params.delete("subauth_id")
-          return request('GET', "/Subaccount/#{subauth_id}/")
+          return request('GET', "/Subaccount/#{subauth_id}/", params)
       end
       
       def modify_subaccount(params={})
@@ -116,7 +116,7 @@ module Plivo
       
       def get_application(params={})
           app_id = params.delete("app_id")
-          return request('GET', "/Application/#{app_id}/")
+          return request('GET', "/Application/#{app_id}/", params)
       end
       
       def modify_application(params={})
@@ -140,7 +140,7 @@ module Plivo
       
       def get_number(params={})
           number = params.delete("number")
-          return request('GET', "/Number/#{number}/")
+          return request('GET', "/Number/#{number}/", params)
       end
       
       def rent_number(params={})
@@ -166,7 +166,7 @@ module Plivo
       
       ## Schedule ##
       def get_scheduled_tasks(params={})
-          return request('GET', "/Schedule/")
+          return request('GET', "/Schedule/", params)
       end
       
       def cancel_scheduled_task(params={})
@@ -181,16 +181,18 @@ module Plivo
       
       def get_cdr(params={})
           record_id = params.delete('record_id')
-          return request('GET', "/Call/#{record_id}/")
+          return request('GET', "/Call/#{record_id}/", params)
       end
       
       def get_live_calls(params={})
-          return request('GET', "/Call/", params={'status'=>'live'})
+          params["status"] = "live"
+          return request('GET', "/Call/", params)
       end
       
       def get_live_call(params={})
           call_uuid = params.delete('call_uuid')
-          return request('GET', "/Call/#{call_uuid}/", params={'status'=>'live'})
+          params["status"] = "live"
+          return request('GET', "/Call/#{call_uuid}/", params)
       end
       
       def make_call(params={})
@@ -337,7 +339,7 @@ module Plivo
       
       def get_recording(params={})
           recording_id = params.delete('recording_id')
-          return request('GET', "/Recording/#{recording_id}/")
+          return request('GET', "/Recording/#{recording_id}/", params)
       end
       
       ## Endpoints ##
@@ -351,7 +353,7 @@ module Plivo
       
       def get_endpoint(params={})
           endpoint_id = params.delete('endpoint_id')
-          return request('GET', "/Endpoint/#{endpoint_id}/")
+          return request('GET', "/Endpoint/#{endpoint_id}/", params)
       end
       
       def modify_endpoint(params={})
@@ -375,7 +377,7 @@ module Plivo
       
       def get_carrier(params={})
           carrier_id = params.delete('carrier_id')
-          return request('GET', "/Carrier/#{carrier_id}/")
+          return request('GET', "/Carrier/#{carrier_id}/", params)
       end
       
       def modify_carrier(params={})
@@ -399,7 +401,7 @@ module Plivo
       
       def get_carrier_routing(params={})
           routing_id = params.delete('routing_id')
-          return request('GET', "/CarrierRouting/#{routing_id}/")
+          return request('GET', "/CarrierRouting/#{routing_id}/", params)
       end
       
       def modify_carrier_routing(params={})
