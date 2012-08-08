@@ -164,7 +164,7 @@ module Plivo
           return request('POST', "/Number/#{number}/", params)
       end
 
-      def get_number_group(self, params={})
+      def get_number_group(params={})
           return request('GET', "/AvailableNumberGroup/", params)
       end
 
