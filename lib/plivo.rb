@@ -164,18 +164,18 @@ module Plivo
           return request('POST', "/Number/#{number}/", params)
       end
 
-      def get_number_group(self, params={}):
-          return request('GET', "/AvailableNumberGroup/", data=params)
+      def get_number_group(self, params={})
+          return request('GET', "/AvailableNumberGroup/", params)
       end
 
-      def get_number_group_details(params={}):
+      def get_number_group_details(params={})
           group_id = params.delete('group_id')
-          return request('GET', "/AvailableNumberGroup/#{group_id}/", data=params)
+          return request('GET', "/AvailableNumberGroup/#{group_id}/", params)
       end
 
-      def rent_from_number_group(params={}):
+      def rent_from_number_group(params={})
           group_id = params.delete('group_id')
-          return request('POST', "/AvailableNumberGroup/#{group_id}/", data=params)
+          return request('POST', "/AvailableNumberGroup/#{group_id}/", params)
       end
       
       ## Calls ##
