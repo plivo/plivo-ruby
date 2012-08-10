@@ -145,7 +145,7 @@ module Plivo
       
       def rent_number(params={})
           number = params.delete("number")
-          return request('POST', "/AvailableNumber/#{number}/")
+          return request('POST', "/AvailableNumber/#{number}/", params)
       end
       
       def unrent_number(params={})
@@ -299,7 +299,7 @@ module Plivo
       def deaf_member(params={})
           conference_name = params.delete('conference_name')
           member_id = params.delete('member_id')
-          return request('POST', "/Conference/#{conference_name}/Member/#{member_id}/Deaf/")
+          return request('POST', "/Conference/#{conference_name}/Member/#{member_id}/Deaf/", params)
       end
       
       def undeaf_member(params={})
@@ -311,7 +311,7 @@ module Plivo
       def mute_member(params={})
           conference_name = params.delete('conference_name')
           member_id = params.delete('member_id')
-          return request('POST', "/Conference/#{conference_name}/Member/#{member_id}/Mute/")
+          return request('POST', "/Conference/#{conference_name}/Member/#{member_id}/Mute/", params)
       end
       
       def unmute_member(params={})
@@ -323,7 +323,7 @@ module Plivo
       def kick_member(params={})
           conference_name = params.delete('conference_name')
           member_id = params.delete('member_id')
-          return request('POST', "/Conference/#{conference_name}/Member/#{member_id}/Kick/")
+          return request('POST', "/Conference/#{conference_name}/Member/#{member_id}/Kick/", params)
       end
       
       def record_conference(params={}) 
