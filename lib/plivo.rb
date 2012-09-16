@@ -21,7 +21,7 @@ module Plivo
       end
 
       def hash_to_params(myhash)
-          return myhash.map{|k,v| "#{CGI.escape(k)}=#{CGI.escape(v)}"}.join("&")
+        return myhash.map { |k, v| "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}" }.join("&")
       end
 
       def request(method, path, params=nil)
@@ -449,10 +449,10 @@ module Plivo
           @body = body
           @node = REXML::Element.new @name
           attributes.each do |k, v|
-              if self.class.valid_attributes.include?(k)
-                  @node.attributes[k] = convert_value(v)
+              if self.class.valid_attributes.include?(k.to_s)
+                  @node.attributes[k.to_s] = convert_value(v)
               else
-                  raise PlivoError, 'invalid attribute ' + k + ' for ' + @name
+                  raise PlivoError, "invalid attribute #{k.to_s} for #{@name}"
               end
           end
           if @body
@@ -484,7 +484,7 @@ module Plivo
               @node.elements << element.node
               return element
           else
-              raise PlivoError, element.name + ' not nestable in ' + @name
+              raise PlivoError, "#{element.name} not nestable in #{@name}"
           end
       end
 
