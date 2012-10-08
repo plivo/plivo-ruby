@@ -21,7 +21,7 @@ module Plivo
       end
 
       def hash_to_params(myhash)
-          return myhash.map{|k,v| "#{CGI.escape(k)}=#{CGI.escape(v)}"}.join("&")
+        return myhash.map { |k, v| "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}" }.join("&")
       end
 
       def request(method, path, params=nil)
@@ -444,21 +444,38 @@ module Plivo
 
       attr_accessor :node, :name
 
-      def initialize(body=nil, attributes={})
+      def initialize(body=nil, attributes={}, &block)
           @name = self.class.name.split('::')[1]
           @body = body
           @node = REXML::Element.new @name
           attributes.each do |k, v|
-              if self.class.valid_attributes.include?(k)
-                  @node.attributes[k] = convert_value(v)
+              if self.class.valid_attributes.include?(k.to_s)
+                  @node.attributes[k.to_s] = convert_value(v)
               else
-                  raise PlivoError, 'invalid attribute ' + k + ' for ' + @name
+                  raise PlivoError, "invalid attribute #{k.to_s} for #{@name}"
               end
           end
           if @body
               @node.text = @body
           end
+
+          # Allow for nested "nestable" elements using a code block
+          # ie
+          # Plivo::Response.new do |r|
+          #   r.Dial do |n|
+          #     n.Number '+15557779999'
+          #   end
+          # end
+          yield(self) if block_given?
       end
+
+      def method_missing(method, *args, &block)
+          # Handle the addElement methods
+          method = $1.to_sym if method.to_s =~ /^add(.*)/
+          # Add the element
+          add(Plivo.const_get(method).new(*args, &block))
+      end
+
 
       def convert_value(v)
           if v == true
@@ -484,7 +501,7 @@ module Plivo
               @node.elements << element.node
               return element
           else
-              raise PlivoError, element.name + ' not nestable in ' + @name
+              raise PlivoError, "#{element.name} not nestable in #{@name}"
           end
       end
 
@@ -494,62 +511,6 @@ module Plivo
 
       def to_s
           return @node.to_s
-      end
-
-      def addSpeak(body, attributes={})
-          return add(Speak.new(body, attributes))
-      end
-
-      def addPlay(body, attributes={})
-          return add(Play.new(body, attributes))
-      end
-
-      def addGetDigits(attributes={})
-          return add(GetDigits.new(attributes))
-      end
-
-      def addRecord(attributes={})
-          return add(Record.new(attributes))
-      end
-
-      def addDial(attributes={})
-          return add(Dial.new(attributes))
-      end
-
-      def addNumber(body, attributes={})
-          return add(Number.new(body, attributes))
-      end
-
-      def addUser(body, attributes={})
-          return add(User.new(body, attributes))
-      end
-
-      def addRedirect(body, attributes={})
-          return add(Redirect.new(body, attributes))
-      end
-
-      def addWait(attributes={})
-          return add(Wait.new(attributes))
-      end
-
-      def addHangup(attributes={})
-          return add(Hangup.new(attributes))
-      end
-
-      def addPreAnswer(attributes={})
-          return add(PreAnswer.new(attributes))
-      end
-
-      def addConference(body, attributes={})
-          return add(Conference.new(body, attributes))
-      end
-
-      def addMessage(body, attributes={})
-          return add(Message.new(body, attributes))
-      end
-
-      def addDTMF(body, attributes={})
-          return add(DTMF.new(body, attributes))
       end
   end
 
@@ -639,8 +600,8 @@ module Plivo
                           'validDigits', 'playBeep', 'redirect',
                           'digitTimeout']
 
-      def initialize(attributes={})
-          super(nil, attributes)
+      def initialize(attributes={}, &block)
+          super(nil, attributes, &block)
       end
   end
 
@@ -679,8 +640,8 @@ module Plivo
                            'callbackUrl', 'callbackMethod', 'digitsMatch',
                            'sipHeaders']
 
-      def initialize(attributes={})
-          super(nil, attributes)
+      def initialize(attributes={}, &block)
+          super(nil, attributes, &block)
       end
   end
 
@@ -720,8 +681,8 @@ module Plivo
       @nestables = ['Play', 'Speak', 'GetDigits', 'Wait', 'Redirect', 'Message', 'DTMF']
       @valid_attributes = []
 
-      def initialize(attributes={})
-          super(nil, attributes)
+      def initialize(attributes={}, &block)
+          super(nil, attributes, &block)
       end
   end
 
