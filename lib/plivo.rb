@@ -595,9 +595,9 @@ module Plivo
 
   class GetDigits < Element
       @nestables = ['Speak', 'Play', 'Wait']
-      @valid_attributes = ['action', 'method', 'timeout', 'finishOnKey',
+      @valid_attributes = ['action', 'method', 'timeout', 'digitTimeout',
                           'numDigits', 'retries', 'invalidDigitsSound',
-                          'validDigits', 'playBeep', 'redirect',
+                          'validDigits', 'playBeep', 'redirect', "finishOnKey",
                           'digitTimeout']
 
       def initialize(attributes={}, &block)
