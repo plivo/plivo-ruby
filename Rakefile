@@ -3,13 +3,13 @@ require 'rubygems/package_task'
 
 spec = Gem::Specification.new do |s|
   s.name = "plivo"
-  s.version = "0.2.10"
+  s.version = "0.2.11"
   s.author = "Plivo Inc"
   s.email = "support@plivo.com"
   s.homepage = "http://www.plivo.com"
-  s.description = "A Ruby gem for interacting with the Plivo Platform"
+  s.description = "A Ruby gem for interacting with the Plivo Cloud Platform"
   s.platform = Gem::Platform::RUBY
-  s.summary = "A Ruby gem for communicating with the Plivo Platform"
+  s.summary = "A Ruby gem for communicating with the Plivo Cloud Platform"
   s.files = FileList["{lib}/*"].to_a
   s.require_path = "lib"
   s.test_files = FileList["{test}/response_spec.rb"].to_a
