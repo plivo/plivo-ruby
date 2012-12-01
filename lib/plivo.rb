@@ -692,7 +692,9 @@ module Plivo
                            'timeLimit', 'hangupOnStar', 'maxMembers',
                            'record', 'recordFileFormat', 'action', 'method', 'redirect',
                            'digitsMatch', 'callbackUrl', 'callbackMethod',
-                           'stayAlone', 'floorEvent']
+                           'stayAlone', 'floorEvent',
+                           'transcriptionType', 'transcriptionUrl',
+                           'transcriptionMethod']
 
       def initialize(body, attributes={})
           if not body
@@ -708,7 +710,9 @@ module Plivo
       @valid_attributes = ['action', 'method', 'timeout','finishOnKey',
                            'maxLength', 'playBeep', 'recordSession',
                            'startOnDialAnswer', 'redirect', 'fileFormat',
-                           'callbackUrl', 'callbackMethod']
+                           'callbackUrl', 'callbackMethod',
+                           'transcriptionType', 'transcriptionUrl',
+                           'transcriptionMethod']
 
       def initialize(attributes={})
           super(nil, attributes)
