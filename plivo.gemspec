@@ -4,9 +4,9 @@ Gem::Specification.new do |s|
   s.author = "Plivo Inc"
   s.email = "support@plivo.com"
   s.homepage = "http://www.plivo.com"
-  s.description = "A Ruby gem for interacting with the Plivo Platform"
+  s.description = "A Ruby gem for interacting with the Plivo Cloud Platform"
   s.platform = Gem::Platform::RUBY
-  s.summary = "A Ruby gem for communicating with the Plivo Platform"
+  s.summary = "A Ruby gem for communicating with the Plivo Cloud Platform"
   s.files = Dir["lib/*"]
   s.has_rdoc = true
   s.extra_rdoc_files = ["README.md"]
