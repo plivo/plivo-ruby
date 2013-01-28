@@ -370,28 +370,28 @@ module Plivo
           return request('DELETE', "/Endpoint/#{endpoint_id}/", params)
       end
       
-      ## Carriers ##
-      def get_carriers(params={})
-          return request('GET', "/Carrier/", params)
+      ## Incoming Carriers ##
+      def get_incoming_carriers(params={})
+          return request('GET', "/IncomingCarrier/", params)
       end
       
-      def create_carrier(params={})
-          return request('POST', "/Carrier/", params)
+      def create_incoming_carrier(params={})
+          return request('POST', "/IncomingCarrier/", params)
       end
       
-      def get_carrier(params={})
+      def get_incoming_carrier(params={})
           carrier_id = params.delete('carrier_id')
-          return request('GET', "/Carrier/#{carrier_id}/", params)
+          return request('GET', "/IncomingCarrier/#{carrier_id}/", params)
       end
       
-      def modify_carrier(params={})
+      def modify_incoming_carrier(params={})
           carrier_id = params.delete('carrier_id')
-          return request('POST', "/Carrier/#{carrier_id}/", params)
+          return request('POST', "/IncomingCarrier/#{carrier_id}/", params)
       end
       
-      def delete_carrier(params={})
+      def delete_incoming_carrier(params={})
           carrier_id = params.delete('carrier_id')
-          return request('DELETE', "/Carrier/#{carrier_id}/", params)
+          return request('DELETE', "/IncomingCarrier/#{carrier_id}/", params)
       end
       
       ## Carrier Routings ##
@@ -417,6 +417,10 @@ module Plivo
           routing_id = params.delete('routing_id')
           return request('DELETE', "/CarrierRouting/#{routing_id}/", params)
       end
+      
+      ## Outgoing Carrier ##
+      
+      ## To be added here ##
       
       ## Message ##
       def send_message(params={})
