@@ -417,6 +417,10 @@ module Plivo
           routing_id = params.delete('routing_id')
           return request('DELETE', "/CarrierRouting/#{routing_id}/", params)
       end
+
+      ## Pricing ##
+      def pricing(params={})
+          return request('GET', "/Pricing/", params)
       
       ## Outgoing Carrier ##
       
