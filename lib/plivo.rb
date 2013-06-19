@@ -241,11 +241,6 @@ module Plivo
           call_uuid = params.delete('call_uuid')
           return request('POST', "/Call/#{call_uuid}/Speak/", params)
       end
-      
-      def stop_speak(params={})
-          call_uuid = params.delete('call_uuid')
-          return request('DELETE', "/Call/#{call_uuid}/Speak/", params)
-      end
           
       def send_digits(params={})
           call_uuid = params.delete('call_uuid')
@@ -426,6 +421,7 @@ module Plivo
       ## Pricing ##
       def pricing(params={})
           return request('GET', "/Pricing/", params)
+      end
       
       ## Outgoing Carrier ##
       
