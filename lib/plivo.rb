@@ -393,29 +393,53 @@ module Plivo
           carrier_id = params.delete('carrier_id')
           return request('DELETE', "/IncomingCarrier/#{carrier_id}/", params)
       end
-      
-      ## Carrier Routings ##
-      def get_carrier_routings(params={})
-          return request('GET', "/CarrierRouting/", params)
+
+      ## Outgoing Carriers ##
+      def get_outgoing_carriers(params={})
+          return request('GET', "/OutgoingCarrier/", params)
       end
       
-      def create_carrier_routing(params={})
-          return request('POST', "/CarrierRouting/", params)
+      def create_outgoing_carrier(params={})
+          return request('POST', "/OutgoingCarrier/", params)
       end
       
-      def get_carrier_routing(params={})
+      def get_outgoing_carrier(params={})
+          carrier_id = params.delete('carrier_id')
+          return request('GET', "/OutgoingCarrier/#{carrier_id}/", params)
+      end
+      
+      def modify_outgoing_carrier(params={})
+          carrier_id = params.delete('carrier_id')
+          return request('POST', "/OutgoingCarrier/#{carrier_id}/", params)
+      end
+      
+      def delete_outgoing_carrier(params={})
+          carrier_id = params.delete('carrier_id')
+          return request('DELETE', "/OutgoingCarrier/#{carrier_id}/", params)
+      end
+      
+      ## Outgoing Carrier Routings ##
+      def get_outgoing_carrier_routings(params={})
+          return request('GET', "/OutgoingCarrierRouting/", params)
+      end
+      
+      def create_outgoing_carrier_routing(params={})
+          return request('POST', "/OutgoingCarrierRouting/", params)
+      end
+      
+      def get_outgoing_carrier_routing(params={})
           routing_id = params.delete('routing_id')
-          return request('GET', "/CarrierRouting/#{routing_id}/", params)
+          return request('GET', "/OutgoingCarrierRouting/#{routing_id}/", params)
       end
       
-      def modify_carrier_routing(params={})
+      def modify_outgoing_carrier_routing(params={})
           routing_id = params.delete('routing_id')
-          return request('POST', "/CarrierRouting/#{routing_id}/", params)
+          return request('POST', "/OutgoingCarrierRouting/#{routing_id}/", params)
       end
       
-      def delete_carrier_routing(params={})
+      def delete_outgoing_carrier_routing(params={})
           routing_id = params.delete('routing_id')
-          return request('DELETE', "/CarrierRouting/#{routing_id}/", params)
+          return request('DELETE', "/OutgoingCarrierRouting/#{routing_id}/", params)
       end
 
       ## Pricing ##
