@@ -19,6 +19,7 @@ module Plivo
           @api = @url + '/' + @version + '/Account/' + @auth_id
           @headers = {"User-Agent" => "RubyPlivo"}
           @rest = Faraday.new(:url => @api) do |conn|
+            conn.response :logger  
             conn.use FaradayMiddleware::FollowRedirects
             conn.headers = {:"content-type" => "application/json"}
             conn.adapter Faraday.default_adapter
@@ -498,7 +499,7 @@ module Plivo
               @node.text = @body
           end
 
-          # Allow for nested "nestable" elements using a status block
+          # Allow for nested "nestable" elements using a code block
           # ie
           # Plivo::Response.new do |r|
           #   r.Dial do |n|
