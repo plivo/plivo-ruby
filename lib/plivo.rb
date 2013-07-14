@@ -2,6 +2,7 @@ require 'rubygems'
 require 'restclient'
 require 'json'
 require 'rexml/document'
+require 'htmlentities'
 
 module Plivo
   class PlivoError < Exception
@@ -481,6 +482,7 @@ module Plivo
           @name = self.class.name.split('::')[1]
           @body = body
           @node = REXML::Element.new @name
+          @encoder = HTMLEntities.new :expanded
           attributes.each do |k, v|
               if self.class.valid_attributes.include?(k.to_s)
                   @node.attributes[k.to_s] = convert_value(v)
@@ -488,8 +490,9 @@ module Plivo
                   raise PlivoError, "invalid attribute #{k.to_s} for #{@name}"
               end
           end
+          
           if @body
-              @node.text = @body
+              @node.text = @encoder.encode(@body, :decimal)
           end
 
           # Allow for nested "nestable" elements using a code block
@@ -539,7 +542,7 @@ module Plivo
       end
 
       def to_xml
-          return @node.to_s
+          return @node.to_s.gsub!("&amp;", "&")
       end
 
       def to_s
