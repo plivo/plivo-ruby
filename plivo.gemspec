@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "plivo"
-  s.version = "0.3.1"
+  s.version = "0.3.2"
   s.author = "Plivo Inc"
   s.email = "support@plivo.com"
   s.homepage = "http://www.plivo.com"
@@ -13,4 +13,5 @@ Gem::Specification.new do |s|
   s.add_dependency("builder", ">= 2.1.2")
   s.add_dependency("rest-client", ">= 1.6.7")
   s.add_dependency("json", ">= 1.6.6")
+  s.add_dependency("htmlentities", ">= 4.3.1")
 end
