@@ -9,7 +9,7 @@ module Plivo
   end 
 
   class RestAPI
-      attr_accessor :auth_id, :auth_token, :url, :version, :api, :headers, :rest
+      attr_accessor :auth_id, :auth_token, :url, :version, :api, :headers, :rest, :encoder
 
       def initialize(auth_id, auth_token, url="https://api.plivo.com", version="v1")
           @auth_id = auth_id
@@ -19,6 +19,7 @@ module Plivo
           @api = @url + '/' + @version + '/Account/' + @auth_id
           @headers = {"User-Agent" => "RubyPlivo"}
           @rest = RestClient::Resource.new(@api, @auth_id, @auth_token)
+          @encoder = HTMLEntities.new :expanded
       end
 
       def hash_to_params(myhash)
@@ -26,6 +27,7 @@ module Plivo
       end
 
       def request(method, path, params=nil)
+          params.each{ |key,value| value.replace(encoder.encode(value, :decimal)) }
           if method == "POST"
               if not params
                   params = {}
