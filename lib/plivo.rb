@@ -2,13 +2,14 @@ require 'rubygems'
 require 'restclient'
 require 'json'
 require 'rexml/document'
+require 'htmlentities'
 
 module Plivo
   class PlivoError < Exception
   end 
 
   class RestAPI
-      attr_accessor :auth_id, :auth_token, :url, :version, :api, :headers, :rest
+      attr_accessor :auth_id, :auth_token, :url, :version, :api, :headers, :rest, :encoder
 
       def initialize(auth_id, auth_token, url="https://api.plivo.com", version="v1")
           @auth_id = auth_id
@@ -18,6 +19,7 @@ module Plivo
           @api = @url + '/' + @version + '/Account/' + @auth_id
           @headers = {"User-Agent" => "RubyPlivo"}
           @rest = RestClient::Resource.new(@api, @auth_id, @auth_token)
+          @encoder = HTMLEntities.new :expanded
       end
 
       def hash_to_params(myhash)
@@ -25,6 +27,7 @@ module Plivo
       end
 
       def request(method, path, params=nil)
+          params.each{ |key,value| value.replace(encoder.encode(value, :decimal)) }
           if method == "POST"
               if not params
                   params = {}
@@ -481,6 +484,7 @@ module Plivo
           @name = self.class.name.split('::')[1]
           @body = body
           @node = REXML::Element.new @name
+          @encoder = HTMLEntities.new :expanded
           attributes.each do |k, v|
               if self.class.valid_attributes.include?(k.to_s)
                   @node.attributes[k.to_s] = convert_value(v)
@@ -488,8 +492,9 @@ module Plivo
                   raise PlivoError, "invalid attribute #{k.to_s} for #{@name}"
               end
           end
+          
           if @body
-              @node.text = @body
+              @node.text = @encoder.encode(@body, :decimal)
           end
 
           # Allow for nested "nestable" elements using a code block
@@ -539,7 +544,7 @@ module Plivo
       end
 
       def to_xml
-          return @node.to_s
+          return @node.to_s.gsub!("&amp;", "&")
       end
 
       def to_s
