@@ -1,8 +1,9 @@
 Gem::Specification.new do |s|
   s.name = "plivo"
-  s.version = "0.3.1"
+  s.version = "0.3.4"
   s.author = "Plivo Inc"
   s.email = "support@plivo.com"
+  s.license = "MIT"
   s.homepage = "http://www.plivo.com"
   s.description = "A Ruby gem for interacting with the Plivo Cloud Platform"
   s.platform = Gem::Platform::RUBY
