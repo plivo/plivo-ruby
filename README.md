@@ -1,6 +1,8 @@
 Plivo Ruby Library
 ---------------------------
 
+[![Gem Version](https://badge.fury.io/rb/plivo.png)](http://badge.fury.io/rb/plivo)
+
 Description
 ~~~~~~~~~~~
 
@@ -29,7 +31,7 @@ Requirements
 ~~~~~~~~~~~~
 gem "rest-client", "~> 1.6.7"
 gem "json", "~> 1.6.6"
-
+gem "htmlentities", "~> 4.3.1"
 
 Usage
 ~~~~~
