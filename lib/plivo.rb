@@ -693,7 +693,7 @@ module Plivo
                            'digitsMatch', 'callbackUrl', 'callbackMethod',
                            'stayAlone', 'floorEvent',
                            'transcriptionType', 'transcriptionUrl',
-                           'transcriptionMethod']
+                           'transcriptionMethod', 'recordWhenAlone']
 
       def initialize(body, attributes={})
           if not body
