@@ -2,6 +2,7 @@ require 'rubygems'
 require 'restclient'
 require 'json'
 require 'rexml/document'
+require 'htmlentities'
 
 module Plivo
   class PlivoError < Exception
@@ -25,6 +26,8 @@ module Plivo
       end
 
       def request(method, path, params=nil)
+          coder = HTMLEntities.new(:html4)
+          params.each{ |key,value| value.replace(coder.encode(value, :decimal)) }
           if method == "POST"
               if not params
                   params = {}
@@ -489,7 +492,8 @@ module Plivo
               end
           end
           if @body
-              @node.text = @body
+              coder = HTMLEntities.new(:html4)
+              @node.text = coder.encode(@body, :decimal)
           end
 
           # Allow for nested "nestable" elements using a code block
