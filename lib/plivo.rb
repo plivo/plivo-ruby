@@ -3,10 +3,29 @@ require 'restclient'
 require 'json'
 require 'rexml/document'
 require 'htmlentities'
+require 'openssl'
+require 'base64'
 
 module Plivo
   class PlivoError < Exception
   end 
+
+  class XPlivoSignature
+    attr_accessor :signature, :uri, :post_params, :auth_token
+
+    def initialize(signature, uri, post_params, auth_token)
+      @signature = signature
+      @uri = uri
+      @post_params = post_params
+      @auth_token = auth_token
+    end
+
+    def is_valid?
+      uri = @post_params.sort.reduce(@uri) {|_, (key, val)| _ += key + val}
+      return Base64.encode64(OpenSSL::HMAC.digest('sha1', @auth_token, uri)).chomp.eql? @signature
+    end
+
+  end
 
   class RestAPI
     attr_accessor :auth_id, :auth_token, :url, :version, :api, :headers, :rest
