@@ -1,7 +1,8 @@
 Plivo Ruby Library
 ---------------------------
 
-[![Gem Version](https://badge.fury.io/rb/plivo.png)](http://badge.fury.io/rb/plivo)
+[![Gem Version](https://badge.fury.io/rb/plivo.png)](http://badge.fury.io/rb/plivo) 
+[![Dependency Status](https://gemnasium.com/plivo/plivo-ruby.png)](https://gemnasium.com/plivo/plivo-ruby)
 
 Description
 ~~~~~~~~~~~
