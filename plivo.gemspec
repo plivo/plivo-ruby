@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "plivo"
-  s.version = "0.3.4"
+  s.version = "0.3.5"
   s.author = "Plivo Inc"
   s.email = "support@plivo.com"
   s.homepage = "http://www.plivo.com"
@@ -15,4 +15,5 @@ Gem::Specification.new do |s|
   s.add_dependency("rest-client", ">= 1.6.7")
   s.add_dependency("json", ">= 1.6.6")
   s.add_dependency("htmlentities", ">= 4.3.1")
+  s.extensions = "ext/mkrf_conf.rb"
 end
