@@ -1,1 +1,6 @@
-2013-02-23 pricing API added
+2013-07-26 Added XPlivoSignature header validation.
+2013-07-21 Added outgoing carrier and carrier routing apis.
+2013-07-20 Added recordWhenAlone to <Conference>.
+2013-07-14 Unicode character support in XML and API.
+2013-03-15 Added min_silence to <Wait>.
+2013-02-23 Pricing API added.
