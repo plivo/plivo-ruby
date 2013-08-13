@@ -45,8 +45,6 @@ module Plivo
     end
 
     def request(method, path, params=nil)
-      coder = HTMLEntities.new(:html4)
-      params.each{ |key,value| value.replace(coder.encode(value, :decimal)) }
       if method == "POST"
         if not params
           params = {}
@@ -261,6 +259,7 @@ module Plivo
     
     def speak(params={})
       call_uuid = params.delete('call_uuid')
+      params.update({"text" => HTMLEntities.new(:html4).encode(params['text'], :decimal)})
       return request('POST', "/Call/#{call_uuid}/Speak/", params)
     end
     
@@ -315,6 +314,7 @@ module Plivo
     def speak_member(params={})
       conference_name = params.delete('conference_name')
       member_id = params.delete('member_id')
+      params.update({"text" => HTMLEntities.new(:html4).encode(params['text'], :decimal)})
       return request('POST', "/Conference/#{conference_name}/Member/#{member_id}/Speak/", params)
     end
     
