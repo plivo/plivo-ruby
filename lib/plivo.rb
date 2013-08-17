@@ -510,9 +510,9 @@ module Plivo
           raise PlivoError, "invalid attribute #{k.to_s} for #{@name}"
         end
       end
+
       if @body
-        coder = HTMLEntities.new(:html4)
-        @node.text = coder.encode(@body, :decimal)
+        @node.text = @body
       end
 
       # Allow for nested "nestable" elements using a code block
@@ -597,6 +597,8 @@ module Plivo
     def initialize(body, attributes={})
       if not body
         raise PlivoError, 'No text set for Speak'
+      else
+        body = HTMLEntities.new(:html4).encode(body, :decimal)
       end
       super(body, attributes)
     end
