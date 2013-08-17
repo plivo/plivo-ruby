@@ -1,3 +1,5 @@
+2013-08-17 Fix unicode characters only for speak element.
+2013-08-12 Fix unicode characters only for speak APIs.
 2013-07-26 Added XPlivoSignature header validation.
 2013-07-21 Added outgoing carrier and carrier routing apis.
 2013-07-20 Added recordWhenAlone to <Conference>.
