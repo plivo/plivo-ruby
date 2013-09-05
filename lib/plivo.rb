@@ -479,12 +479,12 @@ module Plivo
     end
 
     def get_messages(params={})
-      return request('POST', "/Message/", params)
+      return request('GET', "/Message/", params)
     end
 
     def get_message(params={})
       record_id = params.delete('record_id')
-      return request('POST', "/Message/#{record_id}/", params)
+      return request('GET', "/Message/#{record_id}/", params)
     end
   end
 
