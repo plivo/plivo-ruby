@@ -713,7 +713,7 @@ module Plivo
                          'digitsMatch', 'callbackUrl', 'callbackMethod',
                          'stayAlone', 'floorEvent',
                          'transcriptionType', 'transcriptionUrl',
-                         'transcriptionMethod', 'recordWhenAlone']
+                         'transcriptionMethod', 'recordWhenAlone', 'relayDTMF']
 
     def initialize(body, attributes={})
       if not body
@@ -763,7 +763,7 @@ module Plivo
 
   class DTMF < Element
     @nestables = []
-    @valid_attributes = []
+    @valid_attributes = ['async']
 
     def initialize(body, attributes={})
       if not body

@@ -1,3 +1,4 @@
+2013-09-25 Added relayDTMF to <Conference> and async to <DTMF>
 2013-08-17 Fix unicode characters only for speak element.
 2013-08-12 Fix unicode characters only for speak APIs.
 2013-07-26 Added XPlivoSignature header validation.
