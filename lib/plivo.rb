@@ -6,6 +6,13 @@ require 'hashie'
 require 'rexml/document'
 
 module Plivo
+  autoload :AvailableNumberGroup, 'plivo/available_number_group'
+  autoload :RentedNumber,         'plivo/rented_number'
+  autoload :Resource,             'plivo/resource'
+  autoload :ResourceCollection,   'plivo/resource_collection'
+end
+
+module Plivo
   class PlivoError < Exception
   end 
 
