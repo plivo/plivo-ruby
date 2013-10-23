@@ -2,6 +2,7 @@ require 'rubygems'
 require 'faraday'
 require 'faraday_middleware'
 require 'json'
+require 'hashie'
 require 'rexml/document'
 
 module Plivo
@@ -18,13 +19,24 @@ module Plivo
           @version = version
           @api = @url + '/' + @version + '/Account/' + @auth_id
           @headers = {"User-Agent" => "RubyPlivo"}
-          @rest = Faraday.new(:url => @api) do |conn|
-            conn.response :logger  
-            conn.use FaradayMiddleware::FollowRedirects
-            conn.headers = {:"content-type" => "application/json"}
-            conn.adapter Faraday.default_adapter
-          end
-          @rest.basic_auth(@auth_id, @auth_token)
+          configure_client
+      end
+
+      def configure_client
+        @rest = Faraday.new(:url => @api) do |conn|
+          conn.response :logger
+          conn.use FaradayMiddleware::FollowRedirects
+          conn.headers = {:"content-type" => "application/json"}
+          conn.adapter Faraday.default_adapter
+
+          # Order is important here. Response middlewares are processed in
+          # reverse order. We need the json middleware to convert the response
+          # body to a ruby hash first.
+          conn.response :raise_error # raise non-success codes as an exception
+          conn.response :mashify # return response bodies as Hashie::Rash objects
+          conn.response :json, :content_type => /\bjson$/ # auto-parse json responses
+        end
+        @rest.basic_auth(@auth_id, @auth_token)
       end
 
       def hash_to_params(myhash)
