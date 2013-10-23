@@ -19,6 +19,20 @@ module Plivo
   class RestAPI
       attr_accessor :auth_id, :auth_token, :url, :version, :api, :headers, :rest
 
+      # @return [Plivo::RestAPI, nil] an instance of the Plivo::RestAPI client
+      def self.client
+        @client
+      end
+
+      # @param [Plivo::RestAPI] client an instance of Plivo::RestAPI
+      def self.client=(client)
+        @client = client
+      end
+
+      def self.configure(*args)
+        self.client = new(*args)
+      end
+
       def initialize(auth_id, auth_token, url="https://api.plivo.com", version="v1")
           @auth_id = auth_id
           @auth_token = auth_token

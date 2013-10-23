@@ -30,6 +30,15 @@ Requirements
 gem "rest-client", "~> 1.6.7"
 gem "json", "~> 1.6.6"
 
+## Configuration
+
+Configure the Plivo REST API client in an initializer:
+
+```ruby
+# config/initializers/plivo.rb
+
+Plivo::RestAPI.configure(ENV['PLIVO_AUTH_ID'], ENV['PLIVO_AUTH_TOKEN'])
+```
 
 Usage
 ~~~~~
