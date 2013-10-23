@@ -65,52 +65,22 @@ module Plivo
       end
 
       def request(method, path, params=nil)
-          if method == "POST"
-              if not params
-                  params = {}
-              end
-              begin
-                  r = @rest.post path, params.to_json
-              rescue => e
-                  response = e
-              end
-              if not response
-                  status = r.status
-                  raw = r.body
-                  response = JSON.parse(raw)
-              end
-              return [status, response]
-          elsif method == "GET"
-              if params
-                  path = path + '?' + hash_to_params(params)
-              end
-
-              begin
-                  r = @rest.get path
-              rescue => e
-                  response = e
-              end
-              if not response
-                  status = r.status
-                  raw = r.body
-                  response = JSON.parse(raw)
-              end
-              return [status, response]
-          elsif method == "DELETE"
-              if params
-                  path = path + '?' + hash_to_params(params)
-              end
-              begin
-                  r = @rest.delete path
-              rescue => e
-                  response = e
-              end
-              if not response
-                  status = r.status
-              end
-              return [status, ""]
+        if method == "POST"
+          params ||= {}
+          return @rest.post(path, params.to_json)
+        elsif method == "GET"
+          if params
+            path = path + '?' + hash_to_params(params)
           end
-          return [405, 'Method Not Supported']
+
+          return @rest.get(path)
+        elsif method == "DELETE"
+          if params
+            path = path + '?' + hash_to_params(params)
+          end
+          return @rest.delete path
+        end
+        return [405, 'Method Not Supported']
       end
 
       ## Accounts ##
