@@ -24,6 +24,11 @@ Gem::PackageTask.new(spec) do |pkg|
   pkg.need_tar = true
 end
 
-task :default => "pkg/#{spec.name}-#{spec.version}.gem" do
+task :build => "pkg/#{spec.name}-#{spec.version}.gem" do
     puts "generated latest version"
 end
+
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec)
+
+task :default => :spec
