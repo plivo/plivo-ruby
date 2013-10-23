@@ -22,7 +22,7 @@ module Plivo
       end
 
       def all(opts = {})
-        ResourceCollection.new(client.request("GET", resource_name))
+        ResourceCollection.new(client.request("GET", "#{resource_name}/"), self)
       end
     end
 

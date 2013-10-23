@@ -5,6 +5,7 @@ describe Plivo::Resource, '.all', :vcr do
     it 'loads the index resource' do
       result = Plivo::RentedNumber.all
       result.should be_a Plivo::ResourceCollection
+      result.first.should be_a Plivo::RentedNumber
       result.size.should be_a Fixnum
     end
   end
