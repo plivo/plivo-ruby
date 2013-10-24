@@ -5,6 +5,8 @@ require 'json'
 require 'hashie'
 require 'rexml/document'
 
+require 'plivo/version'
+
 module Plivo
   autoload :AvailableNumberGroup, 'plivo/available_number_group'
   autoload :RentedNumber,         'plivo/rented_number'
@@ -39,7 +41,7 @@ module Plivo
       @url = url.chomp('/')
       @version = version
       @api = @url + '/' + @version + '/Account/' + @auth_id
-      @headers = {"User-Agent" => "RubyPlivo"}
+      @headers = {"User-Agent" => "RubyPlivo #{Plivo::VERSION}"}
       configure_client
     end
 
