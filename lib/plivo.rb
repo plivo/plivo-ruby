@@ -51,7 +51,7 @@ module Plivo
       @rest = Faraday.new(:url => @api) do |conn|
         conn.response :logger
         conn.use FaradayMiddleware::FollowRedirects
-        conn.headers = {:"content-type" => "application/json"}
+        conn.headers = {:"content-type" => "application/json"}.merge(@headers)
         conn.adapter Faraday.default_adapter
 
         # Order is important here. Response middlewares are processed in
