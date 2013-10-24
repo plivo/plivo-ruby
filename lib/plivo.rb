@@ -6,9 +6,11 @@ require 'hashie'
 require 'rexml/document'
 
 require 'plivo/version'
+require 'faraday/plivo_exception_middleware'
 
 module Plivo
   autoload :AvailableNumberGroup, 'plivo/available_number_group'
+  autoload :ClientError,          'plivo/client_error'
   autoload :RentedNumber,         'plivo/rented_number'
   autoload :Resource,             'plivo/resource'
   autoload :ResourceCollection,   'plivo/resource_collection'
@@ -55,7 +57,7 @@ module Plivo
         # Order is important here. Response middlewares are processed in
         # reverse order. We need the json middleware to convert the response
         # body to a ruby hash first.
-        conn.response :raise_error # raise non-success codes as an exception
+        conn.response :plivo_exception # raise non-success codes as an exception
         conn.response :mashify # return response bodies as Hashie::Rash objects
         conn.response :json, :content_type => /\bjson$/ # auto-parse json responses
       end
