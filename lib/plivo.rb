@@ -15,6 +15,7 @@ module Plivo
   autoload :RentedNumber,         'plivo/rented_number'
   autoload :Resource,             'plivo/resource'
   autoload :ResourceCollection,   'plivo/resource_collection'
+  autoload :SMS,                  'plivo/sms'
 end
 
 module Plivo
