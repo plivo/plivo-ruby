@@ -23,6 +23,10 @@ module Plivo
       def all(opts = {})
         ResourceCollection.new(client.request("GET", "#{resource_name}/"), self)
       end
+
+      def create(params = {})
+        client.request("POST", "#{resource_name}/", params)
+      end
     end
 
     # Convenience method.
