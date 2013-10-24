@@ -1,6 +1,10 @@
+# -*- encoding: utf-8 -*-
+$:.push File.expand_path("../lib", __FILE__)
+require 'plivo/version'
+
 Gem::Specification.new do |s|
   s.name = "plivo"
-  s.version = "0.3.1"
+  s.version = Plivo::VERSION
   s.author = "Plivo Inc"
   s.email = "support@plivo.com"
   s.homepage = "http://www.plivo.com"
