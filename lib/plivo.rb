@@ -10,6 +10,7 @@ require 'faraday/plivo_exception_middleware'
 
 module Plivo
   autoload :AvailableNumberGroup, 'plivo/available_number_group'
+  autoload :Call,                 'plivo/call'
   autoload :ClientError,          'plivo/client_error'
   autoload :RentedNumber,         'plivo/rented_number'
   autoload :Resource,             'plivo/resource'

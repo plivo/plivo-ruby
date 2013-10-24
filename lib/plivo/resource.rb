@@ -1,4 +1,3 @@
-
 # Base class for all API resource classes.
 module Plivo
   class Resource < Hashie::Mash
