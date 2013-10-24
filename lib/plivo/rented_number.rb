@@ -14,10 +14,14 @@ module Plivo
     #
     # @see http://plivo.com/docs/api/numbers/number/#number_detail
     #
-    # @param [String] number a phone number
+    # @param [String] number_or_uri a phone number or a resource URI
     # @return [Plivo::RentedNumber]
-    def self.find(number)
-      super("Number/#{number}/")
+    def self.find(number_or_uri)
+      if number_or_uri =~ /^\//
+        super
+      else
+        super("Number/#{number_or_uri}/")
+      end
     end
   end
 end
