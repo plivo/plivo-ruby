@@ -154,6 +154,10 @@ module Plivo
       return request('GET', "/Number/", params)
     end
     
+    def add_a_number_from_your_own_carrier(params={})
+      return request('POST', "/Number/", params)
+    end
+
     def search_numbers(params={})
       return request('GET', "/AvailableNumber/", params)
     end
