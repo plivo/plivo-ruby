@@ -12,6 +12,7 @@ module Plivo
   autoload :AvailableNumberGroup, 'plivo/available_number_group'
   autoload :Call,                 'plivo/call'
   autoload :ClientError,          'plivo/client_error'
+  autoload :Endpoint,             'plivo/endpoint'
   autoload :RentedNumber,         'plivo/rented_number'
   autoload :Resource,             'plivo/resource'
   autoload :ResourceCollection,   'plivo/resource_collection'
