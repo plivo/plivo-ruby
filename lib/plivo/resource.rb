@@ -27,6 +27,13 @@ module Plivo
       def create(params = {})
         client.request("POST", "#{resource_name}/", params)
       end
+
+      # Generate a full resource URI given an id
+      #
+      # @param [String] id a resource identifier
+      def uri_from_id(id)
+        "/v1/Account/#{client.auth_id}/#{resource_name}/#{id}/"
+      end
     end
 
     # Convenience method.

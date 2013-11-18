@@ -41,3 +41,12 @@ describe Plivo::Resource, '.resource_name' do
     end
   end
 end
+
+describe Plivo::Resource, '.uri_from_id' do
+  context 'for the endpoint resource' do
+    it 'generates a full resource uri' do
+      auth_id = Plivo::RestAPI.client.auth_id
+      Plivo::Endpoint.uri_from_id('12345').should == "/v1/Account/#{auth_id}/Endpoint/12345/"
+    end
+  end
+end
