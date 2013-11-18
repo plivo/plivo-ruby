@@ -72,6 +72,7 @@ module Plivo
     end
 
     def request(method, path, params=nil)
+      path = "#{path}/" unless path =~ /\/$/
       if method == "POST"
         params ||= {}
         return @rest.post(path, params.to_json)
