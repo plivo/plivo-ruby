@@ -10,6 +10,7 @@ describe Plivo::Endpoint, '.create' do
 
       endpoint.should be_a(Plivo::Endpoint)
       endpoint.endpoint_id.should_not be_nil
+      endpoint.resource_uri.should =~ %r{/v1/Account/.*/Endpoint/.*/}
     end
   end
 end
