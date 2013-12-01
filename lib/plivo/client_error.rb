@@ -6,7 +6,7 @@ module Plivo
   class ClientError < Faraday::Error::ClientError
     def initialize(ex, response = nil)
       if ex.respond_to?(:each_key)
-        super("the server responded with status #{ex[:status]}. Error Message: #{ex[:body].error}")
+        super("the server responded with status #{ex[:status]}. Error Message: #{ex[:body]}")
       else
         super
       end
