@@ -111,17 +111,17 @@ module Plivo
     end
     
     def get_subaccount(params={})
-      subauth_id = params.delete("subauth_id")
+      subauth_id = params.delete("subauth_id") || params.delete(:subauth_id)
       return request('GET', "/Subaccount/#{subauth_id}/", params)
     end
     
     def modify_subaccount(params={})
-      subauth_id = params.delete("subauth_id")
+      subauth_id = params.delete("subauth_id") || params.delete(:subauth_id)
       return request('POST', "/Subaccount/#{subauth_id}/", params)
     end
     
     def delete_subaccount(params={})
-      subauth_id = params.delete("subauth_id")
+      subauth_id = params.delete("subauth_id") || params.delete(:subauth_id)
       return request('DELETE', "/Subaccount/#{subauth_id}/", params)
     end
     
