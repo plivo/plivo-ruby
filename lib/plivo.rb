@@ -37,7 +37,8 @@ module Plivo
       @version = version
       @api = @url + '/' + @version + '/Account/' + @auth_id
       @headers = {"User-Agent" => "RubyPlivo"}
-      @rest = RestClient::Resource.new(@api, @auth_id, @auth_token)
+      @timeout = 10
+      @rest = RestClient::Resource.new(@api, :user => auth_id, :password => @auth_token, :timeout => 20)
     end
 
     def hash_to_params(myhash)
