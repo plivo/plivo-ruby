@@ -8,7 +8,7 @@ require 'base64'
 
 module Plivo
   class PlivoError < Exception
-  end 
+  end
 
   class XPlivoSignature
     attr_accessor :signature, :uri, :post_params, :auth_token
@@ -97,87 +97,87 @@ module Plivo
     def get_account(params={})
       return request('GET', "/", params)
     end
-    
+
     def modify_account(params={})
       return request('POST', "/", params)
     end
-    
+
     def get_subaccounts(params={})
       return request('GET', "/Subaccount/", params)
     end
-    
+
     def create_subaccount(params={})
       return request('POST', "/Subaccount/", params)
     end
-    
+
     def get_subaccount(params={})
       subauth_id = params.delete("subauth_id") || params.delete(:subauth_id)
       return request('GET', "/Subaccount/#{subauth_id}/", params)
     end
-    
+
     def modify_subaccount(params={})
       subauth_id = params.delete("subauth_id") || params.delete(:subauth_id)
       return request('POST', "/Subaccount/#{subauth_id}/", params)
     end
-    
+
     def delete_subaccount(params={})
       subauth_id = params.delete("subauth_id") || params.delete(:subauth_id)
       return request('DELETE', "/Subaccount/#{subauth_id}/", params)
     end
-    
+
     ## Applications ##
     def get_applications(params={})
       return request('GET', "/Application/", params)
     end
-    
+
     def create_application(params={})
       return request('POST', "/Application/", params)
     end
-    
+
     def get_application(params={})
       app_id = params.delete("app_id")
       return request('GET', "/Application/#{app_id}/", params)
     end
-    
+
     def modify_application(params={})
       app_id = params.delete("app_id")
       return request('POST', "/Application/#{app_id}/", params)
     end
-    
+
     def delete_application(params={})
       app_id = params.delete("app_id")
       return request('DELETE', "/Application/#{app_id}/", params)
     end
-    
+
     ## Numbers ##
     def get_numbers(params={})
       return request('GET', "/Number/", params)
     end
-    
+
     def search_numbers(params={})
       return request('GET', "/AvailableNumber/", params)
     end
-    
+
     def get_number(params={})
       number = params.delete("number")
       return request('GET', "/Number/#{number}/", params)
     end
-    
+
     def rent_number(params={})
       number = params.delete("number")
       return request('POST', "/AvailableNumber/#{number}/", params)
     end
-    
+
     def unrent_number(params={})
       number = params.delete("number")
       return request('DELETE', "/Number/#{number}/", params)
     end
-    
+
     def link_application_number(params={})
       number = params.delete("number")
       return request('POST', "/Number/#{number}/", params)
     end
-    
+
     def unlink_application_number(params={})
       number = params.delete("number")
       params = {"app_id" => ""}
@@ -197,66 +197,66 @@ module Plivo
       group_id = params.delete('group_id')
       return request('POST', "/AvailableNumberGroup/#{group_id}/", params)
     end
-    
+
     ## Calls ##
     def get_cdrs(params={})
       return request('GET', "/Call/", params)
     end
-    
+
     def get_cdr(params={})
       record_id = params.delete('record_id')
       return request('GET', "/Call/#{record_id}/", params)
     end
-    
+
     def get_live_calls(params={})
       params["status"] = "live"
       return request('GET', "/Call/", params)
     end
-    
+
     def get_live_call(params={})
       call_uuid = params.delete('call_uuid')
       params["status"] = "live"
       return request('GET', "/Call/#{call_uuid}/", params)
     end
-    
+
     def make_call(params={})
       return request('POST', "/Call/", params)
     end
-    
+
     def hangup_all_calls(params={})
       return request('DELETE', "/Call/", params)
     end
-    
+
     def transfer_call(params={})
       call_uuid = params.delete('call_uuid')
       return request('POST', "/Call/#{call_uuid}/", params)
     end
-    
+
     def hangup_call(params={})
       call_uuid = params.delete('call_uuid')
       return request('DELETE', "/Call/#{call_uuid}/", params)
     end
-    
+
     def record(params={})
       call_uuid = params.delete('call_uuid')
       return request('POST', "/Call/#{call_uuid}/Record/", params)
     end
-    
+
     def stop_record(params={})
       call_uuid = params.delete('call_uuid')
       return request('DELETE', "/Call/#{call_uuid}/Record/", params)
     end
-    
+
     def play(params={})
       call_uuid = params.delete('call_uuid')
       return request('POST', "/Call/#{call_uuid}/Play/", params)
     end
-    
+
     def stop_play(params={})
       call_uuid = params.delete('call_uuid')
       return request('DELETE', "/Call/#{call_uuid}/Play/", params)
     end
-    
+
     def speak(params={})
       call_uuid = params.delete('call_uuid')
       params.update({"text" => HTMLEntities.new(:html4).encode(params['text'], :decimal)})
@@ -267,155 +267,155 @@ module Plivo
       call_uuid = params.delete('call_uuid')
       return request('DELETE', "/Call/#{call_uuid}/Speak/", params)
     end
-    
+
     def send_digits(params={})
       call_uuid = params.delete('call_uuid')
       return request('POST', "/Call/#{call_uuid}/DTMF/", params)
     end
-    
+
     ## Calls requests ##
     def hangup_request(params={})
       request_uuid = params.delete('request_uuid')
       return request('DELETE', "/Request/#{request_uuid}/", params)
     end
-    
+
     ## Conferences ##
     def get_live_conferences(params={})
       return request('GET', "/Conference/", params)
     end
-    
+
     def hangup_all_conferences(params={})
       return request('DELETE', "/Conference/", params)
     end
-    
+
     def get_live_conference(params={})
       conference_name = params.delete('conference_name')
       return request('GET', "/Conference/#{conference_name}/", params)
     end
-    
+
     def hangup_conference(params={})
       conference_name = params.delete('conference_name')
       return request('DELETE', "/Conference/#{conference_name}/", params)
     end
-    
+
     def hangup_member(params={})
       conference_name = params.delete('conference_name')
       member_id = params.delete('member_id')
       return request('DELETE', "/Conference/#{conference_name}/Member/#{member_id}/", params)
     end
-    
+
     def play_member(params={})
       conference_name = params.delete('conference_name')
       member_id = params.delete('member_id')
       return request('POST', "/Conference/#{conference_name}/Member/#{member_id}/Play/", params)
     end
-    
+
     def stop_play_member(params={})
       conference_name = params.delete('conference_name')
       member_id = params.delete('member_id')
       return request('DELETE', "/Conference/#{conference_name}/Member/#{member_id}/Play/", params)
     end
-    
+
     def speak_member(params={})
       conference_name = params.delete('conference_name')
       member_id = params.delete('member_id')
       params.update({"text" => HTMLEntities.new(:html4).encode(params['text'], :decimal)})
       return request('POST', "/Conference/#{conference_name}/Member/#{member_id}/Speak/", params)
     end
-    
+
     def deaf_member(params={})
       conference_name = params.delete('conference_name')
       member_id = params.delete('member_id')
       return request('POST', "/Conference/#{conference_name}/Member/#{member_id}/Deaf/", params)
     end
-    
+
     def undeaf_member(params={})
       conference_name = params.delete('conference_name')
       member_id = params.delete('member_id')
       return request('DELETE', "/Conference/#{conference_name}/Member/#{member_id}/Deaf/", params)
     end
-    
+
     def mute_member(params={})
       conference_name = params.delete('conference_name')
       member_id = params.delete('member_id')
       return request('POST', "/Conference/#{conference_name}/Member/#{member_id}/Mute/", params)
     end
-    
+
     def unmute_member(params={})
       conference_name = params.delete('conference_name')
       member_id = params.delete('member_id')
       return request('DELETE', "/Conference/#{conference_name}/Member/#{member_id}/Mute/", params)
     end
-    
+
     def kick_member(params={})
       conference_name = params.delete('conference_name')
       member_id = params.delete('member_id')
       return request('POST', "/Conference/#{conference_name}/Member/#{member_id}/Kick/", params)
     end
-    
-    def record_conference(params={}) 
+
+    def record_conference(params={})
       conference_name = params.delete('conference_name')
       return request('POST', "/Conference/#{conference_name}/Record/", params)
     end
-    
-    def stop_record_conference(params={}) 
+
+    def stop_record_conference(params={})
       conference_name = params.delete('conference_name')
       return request('DELETE', "/Conference/#{conference_name}/Record/", params)
     end
-    
+
     ## Recordings ##
     def get_recordings(params={})
       return request('GET', "/Recording/", params)
     end
-    
+
     def get_recording(params={})
       recording_id = params.delete('recording_id')
       return request('GET', "/Recording/#{recording_id}/", params)
     end
-    
+
     ## Endpoints ##
     def get_endpoints(params={})
       return request('GET', "/Endpoint/", params)
     end
-    
+
     def create_endpoint(params={})
       return request('POST', "/Endpoint/", params)
     end
-    
+
     def get_endpoint(params={})
       endpoint_id = params.delete('endpoint_id')
       return request('GET', "/Endpoint/#{endpoint_id}/", params)
     end
-    
+
     def modify_endpoint(params={})
       endpoint_id = params.delete('endpoint_id')
       return request('POST', "/Endpoint/#{endpoint_id}/", params)
     end
-    
+
     def delete_endpoint(params={})
       endpoint_id = params.delete('endpoint_id')
       return request('DELETE', "/Endpoint/#{endpoint_id}/", params)
     end
-    
+
     ## Incoming Carriers ##
     def get_incoming_carriers(params={})
       return request('GET', "/IncomingCarrier/", params)
     end
-    
+
     def create_incoming_carrier(params={})
       return request('POST', "/IncomingCarrier/", params)
     end
-    
+
     def get_incoming_carrier(params={})
       carrier_id = params.delete('carrier_id')
       return request('GET', "/IncomingCarrier/#{carrier_id}/", params)
     end
-    
+
     def modify_incoming_carrier(params={})
       carrier_id = params.delete('carrier_id')
       return request('POST', "/IncomingCarrier/#{carrier_id}/", params)
     end
-    
+
     def delete_incoming_carrier(params={})
       carrier_id = params.delete('carrier_id')
       return request('DELETE', "/IncomingCarrier/#{carrier_id}/", params)
@@ -425,45 +425,45 @@ module Plivo
     def get_outgoing_carriers(params={})
       return request('GET', "/OutgoingCarrier/", params)
     end
-    
+
     def create_outgoing_carrier(params={})
       return request('POST', "/OutgoingCarrier/", params)
     end
-    
+
     def get_outgoing_carrier(params={})
       carrier_id = params.delete('carrier_id')
       return request('GET', "/OutgoingCarrier/#{carrier_id}/", params)
     end
-    
+
     def modify_outgoing_carrier(params={})
       carrier_id = params.delete('carrier_id')
       return request('POST', "/OutgoingCarrier/#{carrier_id}/", params)
     end
-    
+
     def delete_outgoing_carrier(params={})
       carrier_id = params.delete('carrier_id')
       return request('DELETE', "/OutgoingCarrier/#{carrier_id}/", params)
     end
-    
+
     ## Outgoing Carrier Routings ##
     def get_outgoing_carrier_routings(params={})
       return request('GET', "/OutgoingCarrierRouting/", params)
     end
-    
+
     def create_outgoing_carrier_routing(params={})
       return request('POST', "/OutgoingCarrierRouting/", params)
     end
-    
+
     def get_outgoing_carrier_routing(params={})
       routing_id = params.delete('routing_id')
       return request('GET', "/OutgoingCarrierRouting/#{routing_id}/", params)
     end
-    
+
     def modify_outgoing_carrier_routing(params={})
       routing_id = params.delete('routing_id')
       return request('POST', "/OutgoingCarrierRouting/#{routing_id}/", params)
     end
-    
+
     def delete_outgoing_carrier_routing(params={})
       routing_id = params.delete('routing_id')
       return request('DELETE', "/OutgoingCarrierRouting/#{routing_id}/", params)
@@ -473,11 +473,11 @@ module Plivo
     def pricing(params={})
       return request('GET', "/Pricing/", params)
     end
-    
+
     ## Outgoing Carrier ##
-    
+
     ## To be added here ##
-    
+
     ## Message ##
     def send_message(params={})
       return request('POST', "/Message/", params)
@@ -496,9 +496,9 @@ module Plivo
 
 
   class Element
-    class << self 
+    class << self
       attr_accessor :valid_attributes, :nestables
-    end 
+    end
     @nestables = []
     @valid_attributes = []
 
@@ -661,7 +661,7 @@ module Plivo
     @valid_attributes = ['action', 'method', 'timeout', 'digitTimeout',
                          'numDigits', 'retries', 'invalidDigitsSound',
                          'validDigits', 'playBeep', 'redirect', "finishOnKey",
-                         'digitTimeout']
+                         'digitTimeout', 'log']
 
     def initialize(attributes={}, &block)
       super(nil, attributes, &block)
@@ -764,7 +764,7 @@ module Plivo
       end
       super(body, attributes)
     end
-  end  
+  end
 
   class DTMF < Element
     @nestables = []
