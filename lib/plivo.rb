@@ -373,6 +373,11 @@ module Plivo
       return request('GET', "/Recording/#{recording_id}/", params)
     end
 
+    def delete_recording(params={})
+      recording_id = params.delete('recording_id')
+      return request('DELETE', "/Recording/#{recording_id}/", params)
+    end
+
     ## Endpoints ##
     def get_endpoints(params={})
       return request('GET', "/Endpoint/", params)
