@@ -7,7 +7,7 @@ require 'openssl'
 require 'base64'
 
 module Plivo
-  class PlivoError < Exception
+  class PlivoError < StandardError
   end
 
   class XPlivoSignature
