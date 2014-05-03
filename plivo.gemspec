@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "plivo"
-  s.version = "0.3.11"
+  s.version = "0.3.12"
   s.author = "Plivo Inc"
   s.email = "support@plivo.com"
   s.homepage = "http://www.plivo.com"
