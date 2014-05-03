@@ -687,13 +687,13 @@ module Plivo
   end
 
 
-  class User < Element
+  class PlivoUser < Element
     @nestables = []
     @valid_attributes = ['sendDigits', 'sendOnPreanswer', 'sipHeaders']
 
     def initialize(body, attributes={})
       if not body
-        raise PlivoError, 'No user set for User'
+        raise PlivoError, 'No user set for PlivoUser'
       end
       super(body, attributes)
     end
@@ -701,7 +701,7 @@ module Plivo
 
 
   class Dial < Element
-    @nestables = ['Number', 'User']
+    @nestables = ['Number', 'PlivoUser']
     @valid_attributes = ['action','method','timeout','hangupOnStar',
                          'timeLimit','callerId', 'callerName', 'confirmSound',
                          'dialMusic', 'confirmKey', 'redirect',
