@@ -150,6 +150,15 @@ module Plivo
     end
 
     ## Numbers ##
+    def search_phone_number(params={})
+        return request('GET', "/PhoneNumber/", params)
+    end
+
+    def buy_phone_number(params={})
+        number = params.delete("number")
+        return request('POST', "/PhoneNumber/#{number}/", params)
+    end
+
     def get_numbers(params={})
       return request('GET', "/Number/", params)
     end
