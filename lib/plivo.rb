@@ -58,6 +58,9 @@ module Plivo
                     code = r.code
                     raw = r.to_str
                     response = JSON.parse(raw)
+                else
+                    code = response.http_code
+                    response = JSON.parse(response.response.to_s)
                 end
                 return [code, response]
             elsif method == "GET"
@@ -74,6 +77,9 @@ module Plivo
                     code = r.code
                     raw = r.to_str
                     response = JSON.parse(raw)
+                else
+                    code = response.http_code
+                    response = JSON.parse(response.response.to_s)
                 end
                 return [code, response]
             elsif method == "DELETE"
@@ -87,6 +93,9 @@ module Plivo
                 end
                 if not response
                     code = r.code
+                else
+                    code = response.http_code
+                    response = JSON.parse(response.response.to_s)
                 end
                 return [code, ""]
             end
