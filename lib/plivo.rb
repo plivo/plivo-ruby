@@ -723,7 +723,7 @@ module Plivo
         @valid_attributes = ['action','method','timeout','hangupOnStar',
             'timeLimit','callerId', 'callerName', 'confirmSound',
             'dialMusic', 'confirmKey', 'redirect',
-            'callbackUrl', 'callbackMethod', 'digitsMatch',
+            'callbackUrl', 'callbackMethod', 'digitsMatch', 'digitsMatchBLeg',
             'sipHeaders']
 
         def initialize(attributes={}, &block)
