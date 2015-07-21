@@ -1,3 +1,4 @@
+2015-07-21 (v0.3.17) Add support for digitsMatchBLeg in Dial XML
 2013-10-23 Added stop_speak()
 2013-09-25 Added relayDTMF to <Conference> and async to <DTMF>
 2013-08-17 Fix unicode characters only for speak element.
