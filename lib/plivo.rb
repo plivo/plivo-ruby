@@ -341,6 +341,12 @@ module Plivo
             return request('POST', "/Conference/#{conference_name}/Member/#{member_id}/Speak/", params)
         end
 
+        def stop_speak_member(params={})
+            conference_name = params.delete('conference_name')
+            member_id = params.delete('member_id')
+            return request('DELETE', "/Conference/#{conference_name}/Member/#{member_id}/Speak/", params)
+        end
+
         def deaf_member(params={})
             conference_name = params.delete('conference_name')
             member_id = params.delete('member_id')

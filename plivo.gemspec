@@ -1,4 +1,4 @@
-Gem::Specification.new do |s|
+  Gem::Specification.new do |s|
   s.name = 'plivo'
   s.version = '0.3.17'
   s.author = 'Plivo Inc'
@@ -16,4 +16,5 @@ Gem::Specification.new do |s|
   s.add_dependency('json', '~> 1.6', '>= 1.6.6')
   s.add_dependency('htmlentities', '~> 4.3', '>= 4.3.1')
   s.extensions = 'ext/mkrf_conf.rb'
+  s.bindir = 'bin'
 end
