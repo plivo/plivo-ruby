@@ -172,6 +172,11 @@ module Plivo
             return request('GET', "/Number/", params)
         end
 
+        def modify_number(params={})
+            number = params.delete("number")
+            return request('POST', "/Number/#{number}/", params)
+        end
+
         def search_numbers(params={})
             return request('GET', "/AvailableNumber/", params)
         end
