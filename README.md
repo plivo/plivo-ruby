@@ -12,7 +12,7 @@ See [Plivo Documentation](http://www.plivo.com/docs/) for more information.
 
 ## GEM Installation
 
-    $ sudo gem install plivo
+    $ gem install plivo
 
 
 ## Manual Installation
