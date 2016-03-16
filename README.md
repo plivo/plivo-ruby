@@ -28,13 +28,15 @@ Or install it yourself as:
 
 ## Usage
 
+Require the library:
+
+```ruby
+require 'plivo'
+```
+
 To use the Plivo Ruby library, you will need to specify the AUTH_ID and AUTH_TOKEN, before you can make REST requests.
 
 See [Plivo Documentation](http://www.plivo.com/docs/) for more information.
-
-## Files
-
-**lib/plivo.rb:** include this library in your code
 
 # License
 
