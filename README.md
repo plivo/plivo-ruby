@@ -26,14 +26,6 @@ Or install it yourself as:
 
     $ gem install plivo
 
-### Requirements
-
-```
-gem "rest-client", "~> 1.6.7"
-gem "json", "~> 1.6.6"
-gem "htmlentities", "~> 4.3.1"
-```
-
 ## Usage
 
 To use the Plivo Ruby library, you will need to specify the AUTH_ID and AUTH_TOKEN, before you can make REST requests.
