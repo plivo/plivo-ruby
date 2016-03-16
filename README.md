@@ -10,19 +10,21 @@ The Plivo Ruby library simplifies the process of making REST calls and generatin
 See [Plivo Documentation](http://www.plivo.com/docs/) for more information.
 
 
-## GEM Installation
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'plivo'
+```
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
 
     $ gem install plivo
-
-
-## Manual Installation
-
-To use the rake command to build the gem and
-
-**Download the source and run:**
-    $ sudo gem install /path/to/plivo/gem
-
-to finish the installation
 
 ### Requirements
 
