@@ -27,7 +27,7 @@ to finish the installation
 ### Requirements
 
 ```
-gem "rest-client", "~> 1.6.7"
+gem "rest-client", "~> 2.0"
 gem "json", "~> 1.6.6"
 gem "htmlentities", "~> 4.3.1"
 ```
