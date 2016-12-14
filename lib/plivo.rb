@@ -612,7 +612,8 @@ module Plivo
 
     class Response < Element
         @nestables = ['Speak', 'Play', 'GetDigits', 'Record', 'Dial', 'Message',
-            'Redirect', 'Wait', 'Hangup', 'PreAnswer', 'Conference', 'DTMF']
+            'Redirect', 'Wait', 'Hangup', 'PreAnswer', 'Conference', 'DTMF',
+            'Gather', 'Leave', 'Pause', 'Reject', 'Say', 'Sms']
         @valid_attributes = []
 
         def initialize()
@@ -646,7 +647,7 @@ module Plivo
 
     class Play < Element
         @nestables = []
-        @valid_attributes = ['loop']
+        @valid_attributes = ['loop', 'digits']
 
         def initialize(body, attributes={})
             if not body
@@ -666,6 +667,14 @@ module Plivo
         end
     end
 
+    class Pause < Element
+        @nestables = []
+        @valid_attributes = ['length', 'silence', 'min_silence', 'beep']
+
+        def initialize(attributes={})
+            super(nil, attributes)
+        end
+    end
 
     class Redirect < Element
         @nestables = []
@@ -702,10 +711,22 @@ module Plivo
         end
     end
 
+    class Gather < Element
+        @nestables = ['Speak', 'Play', 'Wait', 'Say', 'Pause']
+        @valid_attributes = ['action', 'method', 'timeout', 'digitTimeout',
+            'numDigits', 'retries', 'invalidDigitsSound',
+            'validDigits', 'playBeep', 'redirect', "finishOnKey",
+            'digitTimeout', 'log']
+
+        def initialize(attributes={}, &block)
+            super(nil, attributes, &block)
+        end
+    end
 
     class Number < Element
         @nestables = []
-        @valid_attributes = ['sendDigits', 'sendOnPreanswer']
+        @valid_attributes = ['sendDigits', 'sendOnPreanswer', 'url', 'method',
+            'statusCallbackEvent', 'statusCallback', 'statusCallbackMethod']
 
         def initialize(body, attributes={})
             if not body
@@ -728,14 +749,28 @@ module Plivo
         end
     end
 
+    class Sip < Element
+        @nestables = []
+        @valid_attributes = ['sendDigits', 'sendOnPreanswer', 'sipHeaders', 'url', 
+            'method', 'statusCallbackEvent', 'statusCallback',
+            'statusCallbackMethod', 'username', 'password']
+
+        def initialize(body, attributes={})
+            if not body
+                raise PlivoError, 'No sip address set for Sip element'
+            end
+            super(body, attributes)
+        end
+    end
 
     class Dial < Element
-        @nestables = ['Number', 'User']
+        @nestables = ['Number', 'User', 'Sip', 'Queue', 'Conference', 'Client']
         @valid_attributes = ['action','method','timeout','hangupOnStar',
             'timeLimit','callerId', 'callerName', 'confirmSound',
             'dialMusic', 'confirmKey', 'redirect',
             'callbackUrl', 'callbackMethod', 'digitsMatch', 'digitsMatchBLeg',
-            'sipHeaders']
+            'sipHeaders', 'record', 'trim', 'recordingStatusCallback',
+            'recordingStatusCallbackMethod']
 
         def initialize(attributes={}, &block)
             super(nil, attributes, &block)
@@ -770,7 +805,8 @@ module Plivo
             'startOnDialAnswer', 'redirect', 'fileFormat',
             'callbackUrl', 'callbackMethod',
             'transcriptionType', 'transcriptionUrl',
-            'transcriptionMethod']
+            'transcriptionMethod', 'trim', 'recordingStatusCallback',
+            'recordingStatusCallbackMethod', 'transcribe', 'transcribeCallback']
 
         def initialize(attributes={})
             super(nil, attributes)
