@@ -15,6 +15,6 @@ Gem::Specification.new do |s|
   s.add_dependency('rest-client', '~> 1.6', '>= 1.6.7')
   s.add_dependency('json', '~> 1.6', '>= 1.6.6')
   s.add_dependency('htmlentities', '~> 4.3', '>= 4.3.1')
-  s.extensions = 'ext/mkrf_conf.rb'
+  s.extensions = ['ext/mkrf_conf.rb']
   s.bindir = 'bin'
 end
