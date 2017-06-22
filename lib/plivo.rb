@@ -186,6 +186,11 @@ module Plivo
             return request('GET', "/Number/#{number}/", params)
         end
 
+        def edit_number(params={})
+             number = params.delete("number")
+             return request('POST', "/Number/#{number}/", params)
+        end
+
         def rent_number(params={})
             number = params.delete("number")
             return request('POST', "/AvailableNumber/#{number}/", params)
