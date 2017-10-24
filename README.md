@@ -1,7 +1,9 @@
 # Plivo Ruby Library
 
-[![Gem Version](https://badge.fury.io/rb/plivo.png)](http://badge.fury.io/rb/plivo) 
+[![Gem Version](https://badge.fury.io/rb/plivo.png)](http://badge.fury.io/rb/plivo)
 [![Dependency Status](https://gemnasium.com/plivo/plivo-ruby.png)](https://gemnasium.com/plivo/plivo-ruby)
+
+**Important:** A new version of the Ruby SDK `4.0.0.beta.2` is released as a public Beta and is now available on RubyGems.org. Visit the [4.0 release branch](https://github.com/plivo/plivo-ruby/tree/4.0) to know more.
 
 ## Description
 
