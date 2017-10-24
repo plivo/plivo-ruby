@@ -1,4 +1,11 @@
 # Change Log
+
+## [4.0.0.beta.2](https://github.com/plivo/plivo-ruby/releases/tag/v4.0.0.beta.2) (2017-10-24)
+- The new SDK works with Ruby >= 2. Tested against 2.0.0, 2.1, 2.2.0, 2.3.0, 2.4.0, 2.5-dev.
+- JSON serialization and deserialization is now handled by the SDK
+- The API interfaces are consistent and guessable
+- Handles pagination automatically when listing all objects of a resource
+
 ## [v0.3.19](https://github.com/plivo/plivo-ruby/tree/v0.3.19) (2015-11-24)
 - Add `modify_number` function
 
