@@ -1,0 +1,14 @@
+.idea/
+.DS_STORE
+.bundle/
+.yardoc
+Gemfile.lock
+_yardoc/
+coverage/
+pkg/
+doc/
+spec/reports/
+tmp/
+bin/
+# rspec failure tracking
+.rspec_status
