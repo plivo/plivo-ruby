@@ -1,3 +1,11 @@
+# Change Log
+
+## [4.0.0.beta.2](https://github.com/plivo/plivo-ruby/releases/tag/v4.0.0.beta.2) (2017-10-24)
+- The new SDK works with Ruby >= 2. Tested against 2.0.0, 2.1, 2.2.0, 2.3.0, 2.4.0, 2.5-dev.
+- JSON serialization and deserialization is now handled by the SDK
+- The API interfaces are consistent and guessable
+- Handles pagination automatically when listing all objects of a resource
+
 2015-11-24 (v0.3.19) Add modify_number function
 2015-07-21 (v0.3.17) Add support for digitsMatchBLeg in Dial XML
 2013-10-23 Added stop_speak()
