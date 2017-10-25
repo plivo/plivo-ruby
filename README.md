@@ -1,4 +1,7 @@
 # plivo-ruby
+
+[![Build Status](https://travis-ci.org/plivo/plivo-ruby.svg?branch=4.0)](https://travis-ci.org/plivo/plivo-ruby)
+
 The Plivo Ruby SDK makes it simpler to integrate communications into your Ruby applications using the Plivo REST API. Using the SDK, you will be able to make voice calls, send SMS and generate Plivo XML to control your call flows.
 
 ## Installation
