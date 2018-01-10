@@ -19,9 +19,10 @@ module Plivo
     attr_reader :pricings, :numbers, :calls, :conferences
     attr_reader :phone_numbers, :applications, :endpoints
 
-    def initialize(auth_id = nil, auth_token = nil, proxy_options = nil)
+    def initialize(auth_id = nil, auth_token = nil, proxy_options = nil, timeout=nil)
       configure_credentials(auth_id, auth_token)
       configure_proxies(proxy_options)
+      configure_timeout(timeout)
       configure_headers
       configure_connection
       configure_interfaces
@@ -46,6 +47,8 @@ module Plivo
     end
 
     def send_request(resource_path, method = 'GET', data = {}, timeout = nil)
+      timeout ||= @timeout
+
       response = case method
                  when 'GET' then send_get(resource_path, data, timeout)
                  when 'POST' then send_post(resource_path, data, timeout)
@@ -88,6 +91,10 @@ module Plivo
         user: proxy_dict[:proxy_user],
         password: proxy_dict[:proxy_pass]
       }
+    end
+
+    def configure_timeout(timeout)
+      @timeout = timeout
     end
 
     def user_agent
