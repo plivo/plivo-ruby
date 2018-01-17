@@ -19,7 +19,7 @@ module Plivo
     attr_reader :pricings, :numbers, :calls, :conferences
     attr_reader :phone_numbers, :applications, :endpoints
 
-    def initialize(auth_id = nil, auth_token = nil, proxy_options = nil, timeout=nil)
+    def initialize(auth_id = nil, auth_token = nil, proxy_options = nil, timeout=5)
       configure_credentials(auth_id, auth_token)
       configure_proxies(proxy_options)
       configure_timeout(timeout)
@@ -132,7 +132,7 @@ module Plivo
 
         faraday.basic_auth(auth_id, auth_token)
 
-        faraday.proxy(@proxy_hash) if @proxy_hash
+        faraday.proxy=@proxy_hash if @proxy_hash
         faraday.response :json, content_type: /\bjson$/
         faraday.adapter Faraday.default_adapter
       end
