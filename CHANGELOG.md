@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.0.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.0.0) (2018-01-18)
+- Now supports timeout & proxy (in a non-deprecated way) settings
+- A bug fixed (#55)
+
 ## [4.0.0.beta.2](https://github.com/plivo/plivo-ruby/releases/tag/v4.0.0.beta.2) (2017-10-24)
 - The new SDK works with Ruby >= 2. Tested against 2.0.0, 2.1, 2.2.0, 2.3.0, 2.4.0, 2.5-dev.
 - JSON serialization and deserialization is now handled by the SDK
