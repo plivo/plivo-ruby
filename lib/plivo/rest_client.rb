@@ -18,6 +18,7 @@ module Plivo
     attr_reader :messages, :account, :subaccounts, :recordings
     attr_reader :pricings, :numbers, :calls, :conferences
     attr_reader :phone_numbers, :applications, :endpoints
+    attr_reader :addresses, :identities
 
     def initialize(auth_id = nil, auth_token = nil, proxy_options = nil, timeout=5)
       configure_credentials(auth_id, auth_token)
@@ -46,12 +47,12 @@ module Plivo
       response[:body]
     end
 
-    def send_request(resource_path, method = 'GET', data = {}, timeout = nil)
+    def send_request(resource_path, method = 'GET', data = {}, timeout = nil, use_multipart_conn = false)
       timeout ||= @timeout
 
       response = case method
                  when 'GET' then send_get(resource_path, data, timeout)
-                 when 'POST' then send_post(resource_path, data, timeout)
+                 when 'POST' then send_post(resource_path, data, timeout, use_multipart_conn)
                  when 'DELETE' then send_delete(resource_path, timeout)
                  else raise_invalid_request("#{method} not supported by Plivo, yet")
                  end
@@ -121,6 +122,8 @@ module Plivo
       @calls = Resources::CallInterface.new(self)
       @endpoints = Resources::EndpointInterface.new(self)
       @applications = Resources::ApplicationInterface.new(self)
+      @addresses = Resources::AddressInterface.new(self)
+      @identities = Resources::IdentityInterface.new(self)
     end
 
     def configure_connection
@@ -146,11 +149,37 @@ module Plivo
       response
     end
 
-    def send_post(resource_path, data, timeout)
-      response = @conn.post do |req|
-        req.url resource_path
-        req.options.timeout = timeout if timeout
-        req.body = JSON.generate(data) if data
+    def send_post(resource_path, data, timeout, use_multipart_conn)
+      if use_multipart_conn
+        multipart_conn = Faraday.new(Base::PLIVO_API_URL) do |faraday|
+          faraday.headers = {
+            'User-Agent' => @headers['User-Agent'],
+            'Accept' => @headers['Accept']
+          }
+
+          # DANGER: Basic auth should always come after headers, else
+          # The headers will replace the basic_auth
+
+          faraday.request :multipart
+          faraday.request :url_encoded
+          faraday.basic_auth(auth_id, auth_token)
+
+          faraday.proxy=@proxy_hash if @proxy_hash
+          faraday.response :json, content_type: /\bjson$/
+          faraday.adapter Faraday.default_adapter
+        end
+
+        response = multipart_conn.post do |req|
+          req.url resource_path
+          req.options.timeout = timeout if timeout
+          req.body = data
+        end
+      else
+        response = @conn.post do |req|
+          req.url resource_path
+          req.options.timeout = timeout if timeout
+          req.body = JSON.generate(data) if data
+        end
       end
       response
     end

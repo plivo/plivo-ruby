@@ -210,6 +210,7 @@ module Plivo
           billed_duration: @billed_duration,
           call_direction: @call_direction,
           call_duration: @call_duration,
+          call_status: @call_status,
           call_uuid: @call_uuid,
           end_time: @end_time,
           from_number: @from_number,

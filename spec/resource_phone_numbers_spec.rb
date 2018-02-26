@@ -9,6 +9,7 @@ describe 'Phone Numbers test' do
       number: phone_number.number,
       type: phone_number.type,
       prefix: phone_number.prefix,
+      prerequisites: phone_number.prerequisites,
       rate_center: phone_number.rate_center,
       region: phone_number.region,
       resource_uri: phone_number.resource_uri,

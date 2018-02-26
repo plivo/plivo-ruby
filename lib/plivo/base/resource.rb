@@ -50,13 +50,13 @@ module Plivo
         @id = resource_json[@_identifier_string]
       end
 
-      def perform_update(params)
+      def perform_update(params, use_multipart_conn = false)
         unless @id
           raise_invalid_request("Cannot update a #{@_name} resource "\
           'without an identifier')
         end
 
-        response_json = @_client.send_request(@_resource_uri, 'POST', params)
+        response_json = @_client.send_request(@_resource_uri, 'POST', params, nil, use_multipart_conn)
 
         parse_and_set(params)
         parse_and_set(response_json)
