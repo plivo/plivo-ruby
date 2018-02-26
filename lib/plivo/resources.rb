@@ -7,6 +7,8 @@ require_relative 'resources/numbers'
 require_relative 'resources/conferences'
 require_relative 'resources/calls'
 require_relative 'resources/endpoints'
+require_relative 'resources/addresses'
+require_relative 'resources/identities'
 
 module Plivo
   module Resources

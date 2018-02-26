@@ -51,9 +51,9 @@ module Plivo
         @_resource_type.new(@_client, resource_json: response_json)
       end
 
-      def perform_create(params)
+      def perform_create(params, use_multipart_conn=false)
         Response.new(
-          @_client.send_request(@_resource_uri, 'POST', params),
+          @_client.send_request(@_resource_uri, 'POST', params, nil, use_multipart_conn),
           @_identifier_string
         )
       end

@@ -9,9 +9,10 @@ module Plivo
         super
       end
 
-      def buy(app_id = nil)
+      def buy(app_id = nil, verification_info = nil)
         params = {}
         params[:app_id] = app_id unless app_id.nil?
+        params[:verification_info] = verification_info unless verification_info.nil?
         perform_action(nil, 'POST', params, true)
       end
 
@@ -58,6 +59,7 @@ module Plivo
       #                                    - By default, numbers that have either voice or sms or both enabled are returned.
       # @option options [String] :lata Numbers can be searched using Local Access and Transport Area {http://en.wikipedia.org/wiki/Local_access_and_transport_area}. This filter is applicable only for country_iso US and CA.
       # @option options [String] :rate_center Numbers can be searched using Rate Center {http://en.wikipedia.org/wiki/Telephone_exchange}. This filter is application only for country_iso US and CA.
+      # @option options [Boolean] :eligible If set to true, lists only those numbers that you are eligible to buy at the moment. To list all numbers, ignore this option.
       # @option options [Int] :limit Used to display the number of results per page. The maximum number of results that can be fetched is 20.
       # @option options [Int] :offset Denotes the number of value items by which the results should be offset. Eg:- If the result contains a 1000 values and limit is set to 10 and offset is set to 705, then values 706 through 715 are displayed in the results. This parameter is also used for pagination of the results.
       def search(country_iso, options = nil)
@@ -79,6 +81,13 @@ module Plivo
         %i[offset limit].each do |param|
           if options.key?(param) && valid_param?(param, options[param],
                                                  [Integer, Integer], true)
+            params[param] = options[param]
+          end
+        end
+
+        %i[eligible].each do |param|
+          if options.key?(param) && valid_param?(param, options[param],
+                                                 nil, true, [true, false])
             params[param] = options[param]
           end
         end
@@ -105,10 +114,10 @@ module Plivo
         end
       end
 
-      def buy(number, app_id = nil)
+      def buy(number, app_id = nil, verification_info = nil)
         valid_param?(:number, number, [Integer, String, Symbol], true)
         PhoneNumber.new(@_client,
-                        resource_id: number).buy(app_id)
+                        resource_id: number).buy(app_id, verification_info)
       end
     end
 
@@ -132,6 +141,13 @@ module Plivo
         %i[alias app_id].each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [String, Symbol], true)
+            params[param] = options[param]
+          end
+        end
+
+        %i[verification_info].each do |param|
+          if options.key?(param) &&
+              valid_param?(param, options[param], Hash, true)
             params[param] = options[param]
           end
         end
