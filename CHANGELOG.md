@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.1.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.1.0) (2018-02-26)
+- Add Address and Identity resources
+- Change a few functions in number-related methods to support the verification flows
+
 ## [4.0.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.0.0) (2018-01-18)
 - Now supports timeout & proxy (in a non-deprecated way) settings
 - A bug fixed (#55)
