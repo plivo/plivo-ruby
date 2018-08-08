@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.1.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.1.1) (2018-08-08)
+- Upgraded version of faraday_middleware to 0.12.2 which parses YAML safely
+
 ## [4.1.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.1.0) (2018-02-26)
 - Add Address and Identity resources
 - Change a few functions in number-related methods to support the verification flows
