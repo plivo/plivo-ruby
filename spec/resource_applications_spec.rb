@@ -20,7 +20,8 @@ describe 'Applications test' do
       public_uri: application.public_uri,
       resource_uri: application.resource_uri,
       sip_uri: application.sip_uri,
-      sub_account: application.sub_account
+      sub_account: application.sub_account,
+      log_incoming_message: application.log_incoming_message
     }.to_json
   end
 
