@@ -329,7 +329,7 @@ module Plivo
         params_expected = %i[
           subaccount bill_duration bill_duration__gt bill_duration__gte
           bill_duration__lt bill_duration__lte end_time end_time__gt
-          end_time__gte end_time__lt end_time__lte
+          end_time__gte end_time__lt end_time__lte parent_call_uuid
         ]
         params_expected.each do |param|
           if options.key?(param) &&

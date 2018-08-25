@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.1.2](https://github.com/plivo/plivo-ruby/tree/v4.1.2) (2018-08-08)
+- List calls can be filtered based on parent_call_uuid
+
 ## [4.1.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.1.1) (2018-08-08)
 - Upgraded version of faraday_middleware to 0.12.2 which parses YAML safely
 
