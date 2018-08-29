@@ -94,7 +94,6 @@ describe 'Messages test' do
                                            '9898989890',
                                            %w[9090909090 9898989898],
                                            'message',
-                                           powepack_uuid: nil,
                                            type: 'sms',
                                            url: 'http://url.com',
                                            method: 'POST',
@@ -110,7 +109,8 @@ describe 'Messages test' do
                        type: 'sms',
                        url: 'http://url.com',
                        method: 'POST',
-                       log: true
+                       log: true,
+                       powepack_uuid: nil
                      })
   end
 
