@@ -296,6 +296,11 @@ module Plivo
         perform_get(call_uuid, status: 'live')
       end
 
+      # @param [String] call_uuid
+      def get_queued()
+        perform_get(call_uuid, status: 'queued')
+      end
+
       # @param [Hash] options
       # @option options [String] :subaccount - The id of the subaccount, if call details of the subaccount are needed.
       # @option options [String] :call_direction - Filter the results by call direction. The valid inputs are inbound and outbound.
@@ -378,10 +383,22 @@ module Plivo
         }
       end
 
+      def list_queued
+        perform_list_without_object(status: 'queued')
+        {
+            api_id: @api_id,
+            calls: @calls
+        }
+       end
+
       def each_live
         call_list = list_live
         call_list[:calls].each { |call| yield call }
       end
+
+      def each_queued
+        call_queued = list_queued
+        call_queued[:calls].each { |call| yield call}
 
       ##
       # Transfer a call
