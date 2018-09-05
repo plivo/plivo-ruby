@@ -297,7 +297,7 @@ module Plivo
       end
 
       # @param [String] call_uuid
-      def get_queued()
+      def get_queued(call_uuid)
         perform_get(call_uuid, status: 'queued')
       end
 
@@ -399,6 +399,7 @@ module Plivo
       def each_queued
         call_queued = list_queued
         call_queued[:calls].each { |call| yield call}
+      end
 
       ##
       # Transfer a call
