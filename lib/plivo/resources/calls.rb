@@ -222,7 +222,7 @@ module Plivo
           total_rate: @total_rate,
           to: @to,
           from: @from,
-          request_uuid: @request_uud,
+          request_uuid: @request_uuid,
           direction: @direction,
           caller_name: @caller_name
         }

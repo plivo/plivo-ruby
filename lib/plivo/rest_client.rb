@@ -120,6 +120,7 @@ module Plivo
       @phone_numbers = Resources::PhoneNumberInterface.new(self)
       @conferences = Resources::ConferenceInterface.new(self)
       @calls = Resources::CallInterface.new(self)
+      @queued_calls = Resources::QueuedCallInterface.new(self)
       @endpoints = Resources::EndpointInterface.new(self)
       @applications = Resources::ApplicationInterface.new(self)
       @addresses = Resources::AddressInterface.new(self)
