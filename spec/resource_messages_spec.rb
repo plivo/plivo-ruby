@@ -106,6 +106,7 @@ describe 'Messages test' do
                        src: '9898989890',
                        dst: '9090909090<9898989898',
                        text: 'message',
+                       powerpack_uuid: nil,
                        type: 'sms',
                        url: 'http://url.com',
                        method: 'POST',

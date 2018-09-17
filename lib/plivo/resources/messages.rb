@@ -60,10 +60,11 @@ module Plivo
       #                               - ErrorCode - Delivery Response code returned by the carrier attempting the delivery. See Supported error codes {https://www.plivo.com/docs/api/message/#standard-plivo-error-codes}.
       # @option options [String] :method The method used to call the url. Defaults to POST.
       # @option options [String] :log If set to false, the content of this message will not be logged on the Plivo infrastructure and the dst value will be masked (e.g., 141XXXXX528). Default is set to true.
-      def create(src, dst, text, options = nil)
-        valid_param?(:src, src, [Integer, String, Symbol], true)
+      def create(src, dst, text, options = nil, powerpack_uuid = nil)
+        valid_param?(:src, src, [Integer, String, Symbol], false)
         valid_param?(:text, text, [String, Symbol], true)
         valid_param?(:dst, dst, Array, true)
+        valid_param?(:powerpack_uuid, powerpack_uuid, [String, Symbol], false)
         dst.each do |dst_num|
           valid_param?(:dst_num, dst_num, [Integer, String, Symbol], true)
         end
@@ -72,10 +73,19 @@ module Plivo
           raise InvalidRequestError, 'src and dst cannot be same'
         end
 
+        if src.nil? && powerpack_uuid.nil?
+          raise InvalidRequestError, 'src and powerpack uuid both cannot be nil'
+        end
+
+        if !src.nil? && !powerpack_uuid.nil?
+          raise InvalidRequestError, 'src and powerpack uuid both cannot be present'
+        end
+
         params = {
           src: src,
           dst: dst.join('<'),
-          text: text
+          text: text,
+          powerpack_uuid: powerpack_uuid
         }
 
         return perform_create(params) if options.nil?
