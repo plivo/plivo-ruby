@@ -22,6 +22,7 @@ module Plivo
       # @option options [Boolean] :default_number_app - If set to true, this parameter ensures that newly created numbers, which don't have an app_id, point to this application.
       # @option options [Boolean] :default_endpoint_app - If set to true, this parameter ensures that newly created endpoints, which don't have an app_id, point to this application.
       # @option options [String] :subaccount - Id of the subaccount, in case only subaccount applications are needed.
+      # @option options [Boolean] :log_incoming_messages - If set to true, this parameter ensures that incoming messages are logged.
       # @return [Application] Application
       def update(options = nil)
         return perform_update({}) if options.nil?
@@ -79,7 +80,8 @@ module Plivo
           public_uri: @public_uri,
           resource_uri: @resource_uri,
           sip_uri: @sip_uri,
-          sub_account: @sub_account
+          sub_account: @sub_account,
+          log_incoming_messages: @log_incoming_messages
         }.to_s
       end
     end
@@ -115,6 +117,7 @@ module Plivo
       # @option options [Boolean] :default_number_app - If set to true, this parameter ensures that newly created numbers, which don't have an app_id, point to this application.
       # @option options [Boolean] :default_endpoint_app - If set to true, this parameter ensures that newly created endpoints, which don't have an app_id, point to this application.
       # @option options [String] :subaccount - Id of the subaccount, in case only subaccount applications are needed.
+      # @option options [Boolean] :log_incoming_messages - If set to true, this parameter ensures that incoming messages are logged.
       # @return [Application] Application
       def create(app_name, options = nil)
         valid_param?(:app_name, app_name, [String, Symbol], true)
@@ -213,6 +216,7 @@ module Plivo
       # @option options [Boolean] :default_number_app - If set to true, this parameter ensures that newly created numbers, which don't have an app_id, point to this application.
       # @option options [Boolean] :default_endpoint_app - If set to true, this parameter ensures that newly created endpoints, which don't have an app_id, point to this application.
       # @option options [String] :subaccount - Id of the subaccount, in case only subaccount applications are needed.
+      # @option options [Boolean] :log_incoming_messages - If set to true, this parameter ensures that incoming messages are logged.
       # @return [Application] Application
       def update(app_id, options = nil)
         valid_param?(:app_id, app_id, [String, Symbol], true)
