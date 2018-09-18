@@ -1,5 +1,10 @@
 # Change Log
 
+## [4.1.2](https://github.com/plivo/plivo-ruby/releases/tag/v4.1.2) (2018-09-18)
+- Added parent_call_uuid parameter to filter calls.
+- Queued status added for filtering calls in queued status.
+- Added log_incoming_messages parameter to application create and update.
+
 ## [4.1.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.1.1) (2018-08-08)
 - Upgraded version of faraday_middleware to 0.12.2 which parses YAML safely
 

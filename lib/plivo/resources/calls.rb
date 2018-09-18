@@ -203,7 +203,7 @@ module Plivo
       end
 
       def to_s
-        {
+        call_details = {
           answer_time: @answer_time,
           api_id: @api_id,
           bill_duration: @bill_duration,
@@ -219,8 +219,15 @@ module Plivo
           resource_uri: @resource_uri,
           to_number: @to_number,
           total_amount: @total_amount,
-          total_rate: @total_rate
-        }.to_s
+          total_rate: @total_rate,
+          to: @to,
+          from: @from,
+          request_uuid: @request_uuid,
+          direction: @direction,
+          caller_name: @caller_name
+        }
+        call_details = call_details.select {|k, v| !v.nil? }
+        call_details.to_s
       end
     end
 
@@ -296,6 +303,11 @@ module Plivo
         perform_get(call_uuid, status: 'live')
       end
 
+      # @param [String] call_uuid
+      def get_queued(call_uuid)
+        perform_get(call_uuid, status: 'queued')
+      end
+
       # @param [Hash] options
       # @option options [String] :subaccount - The id of the subaccount, if call details of the subaccount are needed.
       # @option options [String] :call_direction - Filter the results by call direction. The valid inputs are inbound and outbound.
@@ -329,7 +341,7 @@ module Plivo
         params_expected = %i[
           subaccount bill_duration bill_duration__gt bill_duration__gte
           bill_duration__lt bill_duration__lte end_time end_time__gt
-          end_time__gte end_time__lt end_time__lte
+          end_time__gte end_time__lt end_time__lte parent_call_uuid
         ]
         params_expected.each do |param|
           if options.key?(param) &&
@@ -378,9 +390,22 @@ module Plivo
         }
       end
 
+      def list_queued
+        perform_list_without_object(status: 'queued')
+        {
+            api_id: @api_id,
+            calls: @calls
+        }
+       end
+
       def each_live
         call_list = list_live
         call_list[:calls].each { |call| yield call }
+      end
+
+      def each_queued
+        call_queued = list_queued
+        call_queued[:calls].each { |call| yield call}
       end
 
       ##
