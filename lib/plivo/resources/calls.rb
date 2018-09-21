@@ -216,6 +216,9 @@ module Plivo
           from_number: @from_number,
           initiation_time: @initiation_time,
           parent_call_uuid: @parent_call_uuid,
+          plivo_hangup_cause_code: @plivo_hangup_cause_code,
+          plivo_hangup_cause_name: @plivo_hangup_cause_name,
+          plivo_hangup_source: @plivo_hangup_source,
           resource_uri: @resource_uri,
           to_number: @to_number,
           total_amount: @total_amount,
@@ -330,6 +333,9 @@ module Plivo
       #                                    - end_time\__lt: lt stands for lesser than. The format expected is YYYY-MM-DD HH:MM[:ss[.uuuuuu]]. E.g., To get all calls that ended before 2012-03-21 11:47, use end_time\__lt=2012-03-21 11:47
       #                                    - end_time\__lte: lte stands for lesser than or equal. The format expected is YYYY-MM-DD HH:MM[:ss[.uuuuuu]]. E.g., To get all calls that ended before or exactly at 2012-03-21 11:47[:30], use end_time\__lte=2012-03-21 11:47[:30]
       #                                    - Note: The above filters can be combined to get calls that ended in a particular time range. The timestamps need to be UTC timestamps.
+      # @option options [String] :parent_call_uuid - Filter the results by parent call uuid.
+      # @option options [String] :plivo_hangup_source - Filter the results by plivo hangup source
+      # @option options [String] :plivo_hangup_cause_code - Filter the results by plivo hangup cause code
       # @option options [Int] :limit - Used to display the number of results per page. The maximum number of results that can be fetched is 20.
       # @option options [Int] :offset - Denotes the number of value items by which the results should be offset. E.g., If the result contains a 1000 values and limit is set to 10 and offset is set to 705, then values 706 through 715 are displayed in the results. This parameter is also used for pagination of the results.
 
@@ -341,7 +347,7 @@ module Plivo
         params_expected = %i[
           subaccount bill_duration bill_duration__gt bill_duration__gte
           bill_duration__lt bill_duration__lte end_time end_time__gt
-          end_time__gte end_time__lt end_time__lte parent_call_uuid
+          end_time__gte end_time__lt end_time__lte parent_call_uuid plivo_hangup_source
         ]
         params_expected.each do |param|
           if options.key?(param) &&
@@ -356,7 +362,7 @@ module Plivo
           params[:call_direction] = options[:call_direction]
         end
 
-        %i[offset limit].each do |param|
+        %i[offset limit plivo_hangup_cause_code].each do |param|
           if options.key?(param) && valid_param?(param, options[param], [Integer, Integer], true)
             params[param] = options[param]
           end
