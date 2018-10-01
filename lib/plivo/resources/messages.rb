@@ -60,6 +60,7 @@ module Plivo
       #                               - ErrorCode - Delivery Response code returned by the carrier attempting the delivery. See Supported error codes {https://www.plivo.com/docs/api/message/#standard-plivo-error-codes}.
       # @option options [String] :method The method used to call the url. Defaults to POST.
       # @option options [String] :log If set to false, the content of this message will not be logged on the Plivo infrastructure and the dst value will be masked (e.g., 141XXXXX528). Default is set to true.
+      # @option options [String] :trackable set to false
       def create(src, dst, text, options = nil, powerpack_uuid = nil)
         valid_param?(:src, src, [Integer, String, Symbol], false)
         valid_param?(:text, text, [String, Symbol], true)
@@ -109,6 +110,11 @@ module Plivo
         if options.key?(:log) &&
            valid_param?(:log, options[:log], [TrueClass, FalseClass], true)
           params[:log] = options[:log]
+        end
+
+        if options.key?(:trackable) &&
+          valid_param?(:trackable, options[:trackable], [TrueClass, FalseClass], true)
+         params[:trackable] = options[:trackable]
         end
         perform_create(params)
       end
