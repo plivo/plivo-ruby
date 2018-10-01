@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.1.3](https://github.com/plivo/plivo-ruby/releases/tag/v4.1.3) (2018-10-01)
+- Added Trackable parameter in messages.
+
 ## [4.1.2](https://github.com/plivo/plivo-ruby/releases/tag/v4.1.2) (2018-09-18)
 - Added parent_call_uuid parameter to filter calls.
 - Queued status added for filtering calls in queued status.
