@@ -382,8 +382,41 @@ module Plivo
         end
       end
 
-      def list_live
-        perform_list_without_object(status: 'live')
+      # @param [Hash] options
+      # @option options [String] :call_direction - Filter the results by call direction. The valid inputs are inbound and outbound.
+      # @option options [String] :from_number - Filter the results by the number from where the call originated. For example:
+      #                                       - To filter out those numbers that contain a particular number sequence, use from_number={ sequence}
+      #                                       - To filter out a number that matches an exact number, use from_number={ exact_number}
+      # @option options [String] :to_number - Filter the results by the number to which the call was made. Tips to use this filter are:
+      #                                     - To filter out those numbers that contain a particular number sequence, use to_number={ sequence}
+      #                                     - To filter out a number that matches an exact number, use to_number={ exact_number}
+      def list_live(options = nil)
+        
+        if options.nil?
+          options = {}
+        else
+          valid_param?(:options, options, Hash, true)
+        end
+
+        params = {}
+        params[:status] = 'live'
+        params_expected = %i[
+          from_number to_number
+        ]
+        params_expected.each do |param|
+          if options.key?(param) &&
+             valid_param?(param, options[param], [String, Symbol], true)
+            params[param] = options[param]
+          end
+        end
+
+        if options.key?(:call_direction) &&
+          valid_param?(:call_direction, options[:call_direction],
+                       [String, Symbol], true, %w[inbound outbound])
+         params[:call_direction] = options[:call_direction]
+        end
+
+        perform_list_without_object(params)
         {
           api_id: @api_id,
           calls: @calls
