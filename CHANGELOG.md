@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.1.4](https://github.com/plivo/plivo-ruby/releases/tag/v4.1.4) (2018-10-29)
+- Add live calls filtering by from, to numbers and call_direction.
+
 ## [4.1.3](https://github.com/plivo/plivo-ruby/releases/tag/v4.1.3) (2018-10-01)
 - Added Trackable parameter in messages.
 
