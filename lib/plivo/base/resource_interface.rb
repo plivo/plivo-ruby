@@ -11,14 +11,14 @@ module Plivo
       private
 
       def configure_client(client)
-        valid_param?(:client, client, RestClient, true)
+        valid_param?(:client, client, [RestClient, Phlo], true)
         @_client = client
       end
 
       def configure_resource_uri
         to_join = ['', 'v1', 'Account', @_client.auth_id, @_name, '']
         to_join = ['', 'v1', 'Account', ''] if @_name == 'Account'
-
+        to_join = ['', @_name, ''] if @_name == 'Phlo'
         @_resource_uri = to_join.join('/')
       end
 

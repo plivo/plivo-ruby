@@ -9,6 +9,8 @@ require_relative 'resources/calls'
 require_relative 'resources/endpoints'
 require_relative 'resources/addresses'
 require_relative 'resources/identities'
+require_relative 'resources/phlos'
+require_relative 'resources/nodes'
 
 module Plivo
   module Resources
