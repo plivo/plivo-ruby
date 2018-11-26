@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.1.6](https://github.com/plivo/plivo-ruby/releases/tag/v4.1.6) (2018-11-26)
+- Fix bignum deprecated warning in Ruby 2.4+.
+
 ## [4.1.5](https://github.com/plivo/plivo-ruby/releases/tag/v4.1.5) (2018-11-21)
 - Add hangup party details to CDR. CDR filtering allowed by hangup_source and hangup_cause_code.
 - Add sub-account cascade delete support.
