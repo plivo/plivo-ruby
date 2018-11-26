@@ -21,6 +21,18 @@ RSpec.configure do |config|
                        body: $response)
     end
 
+    @phlo_client = Plivo::Phlo.new('MAXXXXXXXXXXXXXXXXXX', 'MjEyOWU5MGVlM2NjZDY1ZTNmZTU2NjZhZGNjMTc5')
+    def @phlo_client.send_request(uri, method, data = nil, timeout=nil, use_multipart_conn = false)
+      $request = {
+          uri: uri,
+          method: method,
+          data: data
+      }
+      process_response(method,
+                       status: $status,
+                       body: $response)
+    end
+
     def mock(status, response)
       $status = status
       $response = response
