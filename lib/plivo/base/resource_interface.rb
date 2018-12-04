@@ -18,7 +18,7 @@ module Plivo
       def configure_resource_uri
         to_join = ['', 'v1', 'Account', @_client.auth_id, @_name, '']
         to_join = ['', 'v1', 'Account', ''] if @_name == 'Account'
-        to_join = ['', @_name, ''] if @_name == 'Phlo'
+        to_join = ['', 'v1', @_name, ''] if @_name == 'phlo'
         @_resource_uri = to_join.join('/')
       end
 

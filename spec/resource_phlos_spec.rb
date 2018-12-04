@@ -22,7 +22,7 @@ describe 'phlos test' do
     mock(200, JSON.parse(contents))
     expect(JSON.parse(to_json(@phlo.run())))
         .to eql(JSON.parse(contents))
-    compare_requests(uri: '/Account/MAXXXXXXXXXXXXXXXXXX/Phlo/'\
+    compare_requests(uri: '/v1/account/MAXXXXXXXXXXXXXXXXXX/phlo/'\
                      'e564a84a-7910-4447-b16f-65c541dd552c/',
                      method: 'POST',
                      data: nil)

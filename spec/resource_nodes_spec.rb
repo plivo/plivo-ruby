@@ -30,7 +30,7 @@ describe 'node tests' do
       mock(201, JSON.parse(contents))
       expect(JSON.parse(to_json(@multi_party_call.call('9090909090', '9090909090', 'customer'))))
           .to eql(JSON.parse(contents))
-      compare_requests(uri: '/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/',
+      compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/',
                        method: 'POST',
                        data: {:action=>"call", :trigger_source=>"9090909090", :to=>"9090909090", :role=>"customer"})
 
@@ -42,7 +42,7 @@ describe 'node tests' do
       mock(201, JSON.parse(contents))
       expect(JSON.parse(to_json(@multi_party_call.warm_transfer('9090909090', '9090909090'))))
           .to eql(JSON.parse(contents))
-      compare_requests(uri: '/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/',
+      compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/',
                        method: 'POST',
                        data: {:action=>"warm_transfer", :trigger_source=>"9090909090", :to=>"9090909090", :role=>"agent"})
 
@@ -53,20 +53,9 @@ describe 'node tests' do
       mock(201, JSON.parse(contents))
       expect(JSON.parse(to_json(@multi_party_call.cold_transfer('9090909090', '9090909090', 'customer'))))
           .to eql(JSON.parse(contents))
-      compare_requests(uri: '/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/',
+      compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/',
                        method: 'POST',
                        data: {:action=>"cold_transfer", :trigger_source=>"9090909090", :to=>"9090909090", :role=>"customer"})
-
-    end
-
-    it 'agent abort transfer' do
-      contents = File.read(Dir.pwd + '/spec/mocks/multiPartyCallActionResponse.json')
-      mock(201, JSON.parse(contents))
-      expect(JSON.parse(to_json(@multi_party_call.abort_transfer('9090909090', '9090909090', 'customer'))))
-          .to eql(JSON.parse(contents))
-      compare_requests(uri: '/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/',
-                       method: 'POST',
-                       data: {:action=>"abort_transfer", :trigger_source=>"9090909090", :to=>"9090909090", :role=>"customer"})
 
     end
 
@@ -95,7 +84,7 @@ describe 'node tests' do
       mock(201, JSON.parse(contents))
       expect(JSON.parse(to_json(@member.hold)))
           .to eql(JSON.parse(contents))
-      compare_requests(uri: '/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
+      compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
                        method: 'POST',
                        data: {:action=>"hold"})
 
@@ -106,7 +95,7 @@ describe 'node tests' do
       mock(201, JSON.parse(contents))
       expect(JSON.parse(to_json(@member.unhold)))
           .to eql(JSON.parse(contents))
-      compare_requests(uri: '/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
+      compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
                        method: 'POST',
                        data: {:action=>"unhold"})
 
@@ -117,7 +106,7 @@ describe 'node tests' do
       mock(201, JSON.parse(contents))
       expect(JSON.parse(to_json(@member.voicemail_drop)))
           .to eql(JSON.parse(contents))
-      compare_requests(uri: '/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
+      compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
                        method: 'POST',
                        data: {:action=>"voicemail_drop"})
 
@@ -128,7 +117,7 @@ describe 'node tests' do
       mock(201, JSON.parse(contents))
       expect(JSON.parse(to_json(@member.resume_call)))
           .to eql(JSON.parse(contents))
-      compare_requests(uri: '/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
+      compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
                        method: 'POST',
                        data: {:action=>"resume_call"})
 
@@ -139,9 +128,20 @@ describe 'node tests' do
       mock(201, JSON.parse(contents))
       expect(JSON.parse(to_json(@member.hangup)))
           .to eql(JSON.parse(contents))
-      compare_requests(uri: '/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
+      compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
                        method: 'POST',
                        data: {:action=>"hangup"})
+
+    end
+
+    it 'agent abort transfer' do
+      contents = File.read(Dir.pwd + '/spec/mocks/memberActionResponse.json')
+      mock(201, JSON.parse(contents))
+      expect(JSON.parse(to_json(@member.abort_transfer)))
+          .to eql(JSON.parse(contents))
+      compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
+                       method: 'POST',
+                       data: {:action=>"abort_transfer"})
 
     end
 
@@ -150,7 +150,7 @@ describe 'node tests' do
       mock(204, JSON.parse(contents))
       expect(JSON.parse(to_json(@member.remove)))
           .to eql(JSON.parse(contents))
-      compare_requests(uri: '/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
+      compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
                        method: 'DELETE',
                        data: nil)
 
@@ -182,7 +182,7 @@ describe 'node tests' do
         mock(201, JSON.parse(contents))
         expect(JSON.parse(to_json(@member.mute)))
             .to eql(JSON.parse(contents))
-        compare_requests(uri: '/phlo/e564a84a-7910-4447-b16f-65c541dd552c/conference_bridge/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
+        compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/conference_bridge/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
                          method: 'POST',
                          data: {:action=>"mute"})
 
@@ -193,7 +193,7 @@ describe 'node tests' do
         mock(201, JSON.parse(contents))
         expect(JSON.parse(to_json(@member.unmute)))
             .to eql(JSON.parse(contents))
-        compare_requests(uri: '/phlo/e564a84a-7910-4447-b16f-65c541dd552c/conference_bridge/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
+        compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/conference_bridge/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
                          method: 'POST',
                          data: {:action=>"unmute"})
 
@@ -204,7 +204,7 @@ describe 'node tests' do
         mock(201, JSON.parse(contents))
         expect(JSON.parse(to_json(@member.hangup)))
             .to eql(JSON.parse(contents))
-        compare_requests(uri: '/phlo/e564a84a-7910-4447-b16f-65c541dd552c/conference_bridge/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
+        compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/conference_bridge/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
                          method: 'POST',
                          data: {:action=>"hangup"})
 

@@ -10,15 +10,15 @@ module Plivo
     attr_reader :phlo
 
     def initialize(auth_id = nil, auth_token = nil, proxy_options = nil, timeout=5)
+      configure_base_uri
       super
       configure_interfaces
-      configure_base_uri
     end
 
     private
 
     def configure_base_uri
-      @base_uri = Base::PHLO_API_URL + '/v1'
+      @base_uri = Base::PHLO_API_URL
     end
 
     def configure_interfaces

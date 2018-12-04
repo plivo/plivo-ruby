@@ -5,11 +5,20 @@ module Plivo
     class Phlo < Base::Resource
 
       def initialize(client, options = nil)
-        @_name = 'Phlo'
+        @_name = 'phlo'
         @_identifier_string = 'phlo_id'
         super
       end
 
+      def to_s
+        {
+            api_id: @api_id,
+            phlo_id: @phlo_id,
+            name: @name,
+            created_on: @created_on,
+            phlo_run_id: @phlo_run_id
+        }.to_s
+      end
 
       def multi_party_call(node_id)
         nodeInterface = NodeInterface.new(@_client, {_phlo_id: @id})
@@ -22,7 +31,7 @@ module Plivo
       end
 
       def run(params=nil)
-        @_resource_uri = ['', 'Account', @_client.auth_id, @_name, @id, ''].join('/')
+        @_resource_uri = ['', 'v1', 'account', @_client.auth_id, @_name, @id, ''].join('/')
         perform_update(params)
       end
     end
@@ -31,7 +40,7 @@ module Plivo
     class PhloInterface < Base::ResourceInterface
 
       def initialize(client, resource_list_json = nil)
-        @_name = 'Phlo'
+        @_name = 'phlo'
         @_resource_type = Phlo
         super
       end
