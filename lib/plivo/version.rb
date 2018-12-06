@@ -1,3 +1,3 @@
 module Plivo
-  VERSION = '4.1.4'.freeze
+  VERSION = '4.1.6'.freeze
 end

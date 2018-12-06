@@ -71,13 +71,13 @@ module Plivo
         self
       end
 
-      def perform_delete
+      def perform_delete(params=nil)
         unless @id
           raise_invalid_request("Cannot delete a #{@_name} resource "\
           'without an identifier')
         end
 
-        Response.new(@_client.send_request(@_resource_uri, 'DELETE', nil),
+        Response.new(@_client.send_request(@_resource_uri, 'DELETE', params),
                      @_identifier_string)
       end
     end

@@ -38,6 +38,5 @@ module Plivo
       @addresses = Resources::AddressInterface.new(self)
       @identities = Resources::IdentityInterface.new(self)
     end
-
   end
 end

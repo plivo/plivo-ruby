@@ -20,8 +20,15 @@ module Plivo
         perform_update(params)
       end
 
-      def delete
-        perform_delete
+      def delete(cascade = false)
+        valid_param?(:cascade, cascade, [TrueClass, FalseClass],
+          false, [true, false])
+        
+        params = {
+          :cascade => cascade
+        }
+          
+        perform_delete(params)
       end
 
       def to_s
@@ -109,9 +116,9 @@ module Plivo
         Subaccount.new(@_client, resource_id: subaccount_id).update(name, enabled)
       end
 
-      def delete(subaccount_id)
+      def delete(subaccount_id, cascade = false)
         valid_subaccount?(subaccount_id, true)
-        Subaccount.new(@_client, resource_id: subaccount_id).delete
+        Subaccount.new(@_client, resource_id: subaccount_id).delete(cascade)
       end
     end
 

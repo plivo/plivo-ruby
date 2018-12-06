@@ -7,6 +7,9 @@ module Plivo
   module Utils
     module_function
 
+    TYPE_WHITELIST = [Integer]
+    TYPE_WHITELIST.push(Fixnum, Bignum) unless 1.class == Integer
+
     def valid_account?(account_id, raise_directly = false)
       valid_subaccount?(account_id, raise_directly) || valid_mainaccount?(account_id, raise_directly)
     end
@@ -67,7 +70,7 @@ module Plivo
     def expected_type?(param_name, expected_types, param_value)
       return true if expected_types.nil?
       param_value_class = param_value.class
-      param_value_class = Integer if [Fixnum, Bignum].include? param_value_class
+      param_value_class = Integer if TYPE_WHITELIST.include? param_value_class
       if expected_types.is_a? Array
         return true if expected_types.include? param_value_class
         raise_invalid_request("#{param_name}: Expected one of #{expected_types}"\

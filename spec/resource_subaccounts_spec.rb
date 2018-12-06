@@ -107,6 +107,6 @@ describe 'Subaccounts test' do
     @api.subaccounts.delete(id)
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Subaccount/' + id + '/',
                      method: 'DELETE',
-                     data: nil)
+                     data: {:cascade=>false})
   end
 end
