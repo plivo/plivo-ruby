@@ -83,6 +83,14 @@ message_created = client.messages.create(
   %w[your_destination_number_1 your_destination_number_2],
   'Hello, world!'
 )
+
+## send message with a callback URL:
+message_created = client.messages.create(
+  'your_source_number',
+  %w[your_destination_number_1 your_destination_number_2],
+  'Hello, world!',
+  { 'url' => 'http://example.com/api/confirmsms/' }
+)
 ```
 
 ### Make a call
