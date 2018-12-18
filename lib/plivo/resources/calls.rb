@@ -282,8 +282,8 @@ module Plivo
                      true, %w[GET POST])
 
         params = {
-          from: from,
-          to: to.join('<'),
+          from: format_phone_number(from),
+          to: to.map{|x| format_phone_number(x)}.join('<'),
           answer_url: answer_url,
           answer_method: answer_method
         }
@@ -397,7 +397,6 @@ module Plivo
       #                                     - To filter out those numbers that contain a particular number sequence, use to_number={ sequence}
       #                                     - To filter out a number that matches an exact number, use to_number={ exact_number}
       def list_live(options = nil)
-        
         if options.nil?
           options = {}
         else
