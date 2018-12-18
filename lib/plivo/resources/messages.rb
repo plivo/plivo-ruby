@@ -186,7 +186,7 @@ module Plivo
           message_list = list(offset: offset)
           message_list[:objects].each { |message| yield message }
           offset += 20
-          return unless message_list.length == 20
+          return unless message_list[:objects].length == 20
         end
       end
     end
