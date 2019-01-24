@@ -15,41 +15,40 @@ module Plivo
 
       # Update an identity
       # @param [String] identity_id
-      # @param [String] file_to_upload
       # @param [Hash] options
+      # @option options [String] :phone_number_country - Country ISO 2 code for which you are submitted
+      # @option options [String] :number_type - This can only take values “local”, “national”, “mobile”, “tollfree”
       # @option options [String] :salutation - One of Mr or Ms
       # @option options [String] :first_name - First name of the user for whom the identity is created
       # @option options [String] :last_name - Last name of the user for whom the identity is created
-      # @option options [String] :country_iso - Country ISO 2 code
-      # @option options [String] :birth_place - Birthplace of the user for whom the identity is created
-      # @option options [String] :birth_date - Birth date in yyyy-mm-dd format of the user for whom the identity is created
-      # @option options [String] :nationality - Nationality of the user for whom the identity is created
-      # @option options [String] :id_nationality - Nationality mentioned in the identity proof
-      # @option options [String] :id_issue_date - Issue date in yyyy-mm-dd mentioned in the identity proof
-      # @option options [String] :id_type -
-      # @option options [String] :id_number - The unique number on the identifier
       # @option options [String] :address_line1 - Building name/number
       # @option options [String] :address_line2 - The street name/number of the address
       # @option options [String] :city - The city of the address for which the address proof is created
       # @option options [String] :region - The region of the address for which the address proof is created
       # @option options [String] :postal_code - The postal code of the address that is being created
+      # @option options [String] :country_iso - Country ISO 2 code
+      # @option options [String] :proof_type - The type of document that is provided as address proof
+      # @option options [String] :id_number - The unique number on the identifier
+      # @option options [String] :nationality - Nationality of the user for whom the identity is created
+      # @option options [String] :callback_url - The callback URL that gets the result of identity creation POSTed to.
       # @option options [String] :alias - Alias name of the identity
+      # @option options :file - A File to upload, which needs to be considered the proof of address. Max. file Size = 5 MB. File should be in jpg, pdf, or png format.
+      # @option options [String] :id_nationality - Nationality mentioned in the identity proof
+      # @option options [String] :birth_place - Birthplace of the user for whom the identity is created
+      # @option options [String] :birth_date - Birth date in yyyy-mm-dd format of the user for whom the identity is created
+      # @option options [String] :id_issue_date - Issue date in yyyy-mm-dd mentioned in the identity proof
       # @option options [String] :business_name - Business name of the user for whom the identity is created.
-      # @option options [String] :auto_correct_address - If set to true, the address will be auto-corrected by the system if necessary. The param needs to be set to false explicitly so that it is not auto-corrected.
       # @option options [String] :fiscal_identification_code - The code is valid for businesses alone
       # @option options [String] :street_code - Street code of the address
       # @option options [String] :municipal_code - Municipal code of the address
-      # @option options [String] :callback_url - The callback URL that gets the result of identity creation POSTed to.
-      # @option options [String] :subaccount - The link to the subaccount resource associated with the application. If the application belongs to the main account, this field will be null.
       # @return [Identity] Identity
-      def update(file_to_upload = nil, options = nil)
+
+      def update(options = nil)
         params = {}
 
         unless options.nil?
-          %i[salutation first_name last_name country_iso birth_place birth_date nationality id_nationality id_issue_date
-             id_type id_number address_line1 address_line2 city region postal_code alias business_name
-             fiscal_identification_code street_code municipal_code callback_url subaccount
-            ]
+          %i[phone_number_country first_name last_name address_line1 address_line2 city region postal_code country_iso
+            id_number nationality callback_url alias id_nationality birth_place birth_date id_issue_date business_name fiscal_identification_code street_code municipal_code]
               .each do |param|
             if options.key?(param) &&
                 valid_param?(param, options[param], [String, Symbol], true)
@@ -57,29 +56,45 @@ module Plivo
             end
           end
 
-          %i[auto_correct_address]
-              .each do |param|
-            if options.key?(param) &&
-                valid_param?(param, options[param], nil, true, [true, false])
-              params[param] = options[param]
+          if options[:salutation]
+            valid_param?(:salutation, options[:salutation], [String, Symbol], true, ['Mr', 'Ms', :Ms, :Mr])
+            params[:salutation] = options[:salutation]
+          end
+
+          if options[:number_type]
+            valid_param?(:number_type, options[:number_type], [String, Symbol], true, ['local', 'national', 'mobile', 'tollfree'])
+            params[:number_type] = options[:number_type]
+          end
+
+          if options[:proof_type]
+            if options[:country_iso]
+              if options[:country_iso] == 'ES'
+                valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['NIF', 'NIE', 'DNI'])
+              else
+                valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['national_id', 'passport', 'business_id'])
+              end
+            else
+              valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['NIF', 'NIE', 'DNI', 'national_id', 'passport', 'business_id'])
             end
+            params[:proof_type] = options[:proof_type]
+          end
+          unless options[:file].nil?
+            file_extension = options[:file].split('.')[-1].downcase
+            # add check on file size
+            content_type = case file_extension
+                             when 'jpeg' then 'image/jpeg'
+                             when 'jpg' then 'image/jpeg'
+                             when 'png' then 'image/png'
+                             when 'pdf' then 'application/pdf'
+                             else raise_invalid_request("#{file_extension} is not yet supported for upload")
+                           end
+            file_size = File.size("#{options[:file]}")
+            if file_size > 5000000
+             raise_invalid_request("Maximum file size can be 5 MB")
+            end
+            params[:file] = Faraday::UploadIO.new(options[:file], content_type)
           end
         end
-
-        unless file_to_upload.nil?
-          file_extension = file_to_upload.split('.')[-1]
-
-          content_type = case file_extension
-                           when 'jpeg' then 'image/jpeg'
-                           when 'jpg' then 'image/jpeg'
-                           when 'png' then 'image/png'
-                           when 'pdf' then 'application/pdf'
-                           else raise_invalid_request("#{file_extension} is not yet supported for upload")
-                         end
-
-          params[:file] = Faraday::UploadIO.new(file_to_upload, content_type)
-        end
-
         return perform_update(params, true)
       end
 
@@ -173,74 +188,70 @@ module Plivo
 
       ##
       # Create a new identity
-      # @param [String] country_iso
+      # @param [String] phone_number_country
+      # @param [String] number_type
       # @param [String] salutation
       # @param [String] first_name
       # @param [String] last_name
-      # @param [String] birth_place
-      # @param [String] birth_date
-      # @param [String] nationality
-      # @param [String] id_nationality
-      # @param [String] id_issue_date
-      # @param [String] id_type
-      # @param [String] id_number
       # @param [String] address_line1
       # @param [String] address_line2
       # @param [String] city
       # @param [String] region
       # @param [String] postal_code
-      # @param [String] file_to_upload
+      # @param [String] country_iso
+      # @param [String] proof_type
+      # @param [String] id_number
+      # @param [String] nationality
       # @param [Hash] options
+      # @option options [String] :callback_url - The callback URL that gets the result of identity creation POSTed to.
       # @option options [String] :alias - Alias name of the identity
+      # @option options :file - A File to upload, which needs to be considered the proof of address. Max. file Size = 5 MB. File should be in jpg, pdf, or png format.
+      # @option options [String] :id_nationality - Nationality of the user mentioned in the document
+      # @option options [String] :birth_place - Birth Place of the user mentioned in the document
+      # @option options [String] :birth_date - Birth Date of the user mentioned in the document
+      # @option options [String] :id_issue_date - Issued date of the proof being uploaded
       # @option options [String] :business_name - Business name of the user for whom the identity is created.
-      # @option options [String] :auto_correct_address - If set to true, the address will be auto-corrected by the system if necessary. The param needs to be set to false explicitly so that it is not auto-corrected.
       # @option options [String] :fiscal_identification_code - The code is valid for businesses alone
       # @option options [String] :street_code - Street code of the address
       # @option options [String] :municipal_code - Municipal code of the address
-      # @option options [String] :callback_url - The callback URL that gets the result of identity creation POSTed to.
-      # @option options [String] :subaccount - The link to the subaccount resource associated with the application. If the application belongs to the main account, this field will be null.
       # @return [Identity] Identity
-      def create(country_iso, salutation, first_name, last_name, birth_place, birth_date, nationality,
-                 id_nationality, id_issue_date, id_type, id_number, address_line1, address_line2,
-                 city, region, postal_code, file_to_upload=nil, options=nil)
-        valid_param?(:country_iso, country_iso, [String, Symbol], true)
+
+      def create(phone_number_country, number_type, salutation, first_name, last_name, address_line1, address_line2,
+                 city, region, postal_code, country_iso, proof_type, id_number, nationality, options=nil)
+        valid_param?(:phone_number_country, phone_number_country, [String, Symbol], true)
+        valid_param?(:number_type, number_type, [String, Symbol], true, ['local', 'national', 'mobile', 'tollfree'])
         valid_param?(:salutation, salutation, [String, Symbol], true, ['Mr', 'Ms', :Ms, :Mr])
         valid_param?(:first_name, first_name, [String, Symbol], true)
         valid_param?(:last_name, last_name, [String, Symbol], true)
-        valid_param?(:birth_place, birth_place, [String, Symbol], true)
-        valid_param?(:birth_date, birth_date, [String, Symbol], true)
-        valid_param?(:nationality, nationality, [String, Symbol], true)
-        valid_param?(:id_nationality, id_nationality, [String, Symbol], true)
-        valid_param?(:id_issue_date, id_issue_date, [String, Symbol], true)
-        valid_param?(:id_type, id_type, [String, Symbol], true)
-        valid_param?(:id_number, id_number, [String, Symbol], true)
         valid_param?(:address_line1, address_line1, [String, Symbol], true)
         valid_param?(:address_line2, address_line2, [String, Symbol], true)
         valid_param?(:city, city, [String, Symbol], true)
         valid_param?(:region, region, [String, Symbol], true)
         valid_param?(:postal_code, postal_code, [String, Symbol], true)
+        valid_param?(:country_iso, country_iso, [String, Symbol], true)
+        valid_param?(:proof_type, proof_type, [String, Symbol], true)
+        valid_param?(:id_number, id_number, [String, Symbol], true)
+        valid_param?(:nationality, nationality, [String, Symbol], true)
 
         params = {
-            country_iso: country_iso,
+            phone_number_country: phone_number_country,
+            number_type: number_type,
             salutation: salutation,
             first_name: first_name,
             last_name: last_name,
-            birth_place: birth_place,
-            birth_date: birth_date,
-            nationality: nationality,
-            id_nationality: id_nationality,
-            id_issue_date: id_issue_date,
-            id_type: id_type,
-            id_number: id_number,
             address_line1: address_line1,
             address_line2: address_line2,
             city: city,
             region: region,
-            postal_code: postal_code
+            postal_code: postal_code,
+            country_iso: country_iso,
+            proof_type: proof_type,
+            id_number: id_number,
+            nationality: nationality
         }
 
-        unless file_to_upload.nil?
-          file_extension = file_to_upload.split('.')[-1]
+        unless options[:file].nil?
+          file_extension = options[:file].split('.')[-1].downcase
 
           content_type = case file_extension
                            when 'jpeg' then 'image/jpeg'
@@ -249,61 +260,77 @@ module Plivo
                            when 'pdf' then 'application/pdf'
                            else raise_invalid_request("#{file_extension} is not yet supported for upload")
                          end
-
-          params[:file] = Faraday::UploadIO.new(file_to_upload, content_type)
+          file_size = File.size("#{options[:file]}")
+          if file_size > 5000000
+            raise_invalid_request("Maximum file size can be 5 MB")
+          end
+          params[:file] = Faraday::UploadIO.new(options[:file], content_type)
         end
 
-        %i[alias business_name fiscal_identification_code street_code municipal_code callback_url subaccount]
+        if country_iso == 'ES'
+          valid_param?(:fiscal_identification_code, options[:fiscal_identification_code], [String, Symbol], true)
+          params[:fiscal_identification_code] = options[:fiscal_identification_code]
+        end
+
+        if country_iso == 'DK'
+          valid_param?(:street_code, options[:street_code], [String, Symbol], true)
+          valid_param?(:municipal_code, options[:municipal_code], [String, Symbol], true)
+
+          params[:street_code] = options[:street_code]
+          params[:municipal_code] = options[:municipal_code]
+        end
+
+        if options[:proof_type]
+          if country_iso == 'ES'
+            valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['NIF', 'NIE', 'DNI'])
+          else
+            valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['national_id', 'passport', 'business_id'])
+          end
+          params[:proof_type] = options[:proof_type]
+        end
+
+        %i[callback_url alias id_nationality birth_place birth_date id_issue_date business_name fiscal_identification_code street_code municipal_code]
             .each do |param|
           if options.key?(param) &&
               valid_param?(param, options[param], [String, Symbol], true)
             params[param] = options[param]
           end
         end
-
-        %i[auto_correct_address]
-            .each do |param|
-          if options.key?(param) &&
-              valid_param?(param, options[param], nil, true, [true, false])
-            params[param] = options[param]
-          end
-        end
-
         perform_create(params, true)
       end
 
       # Update an identity
       # @param [String] identity_id
-      # @param [String] file_to_upload
       # @param [Hash] options
+      # @option options [String] :phone_number_country - Country ISO 2 code for which you are submitted
+      # @option options [String] :number_type - This can only take values “local”, “national”, “mobile”, “tollfree”
       # @option options [String] :salutation - One of Mr or Ms
       # @option options [String] :first_name - First name of the user for whom the identity is created
       # @option options [String] :last_name - Last name of the user for whom the identity is created
-      # @option options [String] :country_iso - Country ISO 2 code
-      # @option options [String] :birth_place - Birthplace of the user for whom the identity is created
-      # @option options [String] :birth_date - Birth date in yyyy-mm-dd format of the user for whom the identity is created
-      # @option options [String] :nationality - Nationality of the user for whom the identity is created
-      # @option options [String] :id_nationality - Nationality mentioned in the identity proof
-      # @option options [String] :id_issue_date - Issue date in yyyy-mm-dd mentioned in the identity proof
-      # @option options [String] :id_type -
-      # @option options [String] :id_number - The unique number on the identifier
       # @option options [String] :address_line1 - Building name/number
       # @option options [String] :address_line2 - The street name/number of the address
       # @option options [String] :city - The city of the address for which the address proof is created
       # @option options [String] :region - The region of the address for which the address proof is created
       # @option options [String] :postal_code - The postal code of the address that is being created
+      # @option options [String] :country_iso - Country ISO 2 code
+      # @option options [String] :proof_type - The type of document that is provided as address proof
+      # @option options [String] :id_number - The unique number on the identifier
+      # @option options [String] :nationality - Nationality of the user for whom the identity is created
+      # @option options [String] :callback_url - The callback URL that gets the result of identity creation POSTed to.
       # @option options [String] :alias - Alias name of the identity
+      # @option options :file - A File to upload, which needs to be considered the proof of address. Max. file Size = 5 MB. File should be in jpg, pdf, or png format.
+      # @option options [String] :id_nationality - Nationality mentioned in the identity proof
+      # @option options [String] :birth_place - Birthplace of the user for whom the identity is created
+      # @option options [String] :birth_date - Birth date in yyyy-mm-dd format of the user for whom the identity is created
+      # @option options [String] :id_issue_date - Issue date in yyyy-mm-dd mentioned in the identity proof
       # @option options [String] :business_name - Business name of the user for whom the identity is created.
-      # @option options [String] :auto_correct_address - If set to true, the address will be auto-corrected by the system if necessary. The param needs to be set to false explicitly so that it is not auto-corrected.
       # @option options [String] :fiscal_identification_code - The code is valid for businesses alone
       # @option options [String] :street_code - Street code of the address
       # @option options [String] :municipal_code - Municipal code of the address
-      # @option options [String] :callback_url - The callback URL that gets the result of identity creation POSTed to.
-      # @option options [String] :subaccount - The link to the subaccount resource associated with the application. If the application belongs to the main account, this field will be null.
       # @return [Identity] Identity
-      def update(identity_id, file_to_upload=nil, options=nil)
+      def update(identity_id, options=nil)
         Identity.new(@_client,
-                    resource_id: identity_id).update(file_to_upload, options)
+                    resource_id: identity_id).update(options)
       end
 
       ##

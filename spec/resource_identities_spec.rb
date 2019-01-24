@@ -49,55 +49,126 @@ describe 'Identities test' do
     }.to_json
   end
 
-  it 'creates an identity' do
-    contents = File.read(Dir.pwd + '/spec/mocks/identityCreateResponse.json')
-    mock(200, JSON.parse(contents))
+  describe 'create an identity' do
+    it 'creates an idenity sucessfully' do
+      contents = File.read(Dir.pwd + '/spec/mocks/identityCreateSuccessResponse.json')
+      mock(200, JSON.parse(contents))
 
-    expect(JSON.parse(to_json_create(@api.identities
-                                         .create(
-                                             'US',
-                                             'Mr',
-                                             'Bruce',
-                                             'Wayne',
-                                             'Gotham City',
-                                             '1900-01-01',
-                                             'US',
-                                             'American',
-                                             '1900-01-01',
-                                             'others',
-                                             'BATMANRETURNS',
-                                             '1234',
-                                             'Wayne Towers',
-                                             'New York',
-                                             'NY',
-                                             '12345',
-                                             nil,
-                                             {
-                                                 callback_url: 'https://callback.url',
-                                             }
-                                         ))))
-        .to eql(JSON.parse(contents).reject { |_, v| v.nil? })
-    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Verification/Identity/',
-                     method: 'POST',
-                     data: {
-                         country_iso: 'US',
-                         salutation: 'Mr',
-                         first_name: 'Bruce',
-                         last_name: 'Wayne',
-                         birth_place: 'Gotham City',
-                         birth_date: '1900-01-01',
-                         nationality: 'US',
-                         id_nationality: 'American',
-                         id_issue_date: '1900-01-01',
-                         id_type: 'others',
-                         id_number: 'BATMANRETURNS',
-                         address_line1: '1234',
-                         address_line2: 'Wayne Towers',
-                         city: 'New York',
-                         region: 'NY',
-                         postal_code: '12345',
-                         callback_url: 'https://callback.url'
-                     })
+      expect(JSON.parse(to_json_create(@api.identities
+                                           .create(
+                                               'US',
+                                               'local',
+                                               'Mr',
+                                               'Bruce',
+                                               'Wayne',
+                                               '1234',
+                                               'Wayne Towers',
+                                               'New York',
+                                               'NY',
+                                               '12345',
+                                               'US',
+                                               'passport',
+                                               '123456',
+                                               'US',
+                                               {
+                                                   callback_url: 'https://callback.url',
+                                                   birth_date: '1900-01-01',
+                                                   birth_place: 'Gotham City'
+                                               }
+                                           ))))
+          .to eql(JSON.parse(contents).reject { |_, v| v.nil? })
+      compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Verification/Identity/',
+                       method: 'POST',
+                       data: {
+                          phone_number_country: 'US',
+                          number_type: 'local',
+                          salutation: 'Mr',
+                          first_name: 'Bruce',
+                          last_name: 'Wayne',
+                          address_line1: '1234',
+                          address_line2: 'Wayne Towers',
+                          city: 'New York',
+                          region: 'NY',
+                          postal_code: '12345',
+                          country_iso: 'US',
+                          proof_type: 'passport',
+                          id_number: '123456',
+                          nationality: 'US',
+                          callback_url: 'https://callback.url',
+                          birth_date: '1900-01-01',
+                          birth_place: 'Gotham City'
+                       })
+    end
+
+    it "raises exception: in case of mandatory param - fiscal_identification_code is mandatory when country_iso is Spain" do
+      expect{@api.identities.create('ES',
+                                     'local',
+                                     'Mr',
+                                     'Bruce',
+                                     'Wayne',
+                                     '1234',
+                                     'Wayne Towers',
+                                     'New York',
+                                     'NY',
+                                     '12345',
+                                     'ES',
+                                     'passport',
+                                     '123456',
+                                     'ES',
+                                     {
+                                           callback_url: 'https://callback.url',
+                                           birth_date: '1900-01-01',
+                                           birth_place: 'Gotham City'
+                                     }
+                                 )}.to raise_error(Plivo::Exceptions::InvalidRequestError)
+    end
+
+    it "returns error: in case of invalid value for param" do
+      contents = File.read(Dir.pwd + '/spec/mocks/identityCreateErrorResponse.json')
+      mock(405, JSON.parse(contents))
+      expect{@api.identities.create('US',
+                                     'local',
+                                     'Mr',
+                                     'Bruce',
+                                     'Wayne',
+                                     '1234',
+                                     'Wayne Towers',
+                                     'New York',
+                                     'NY',
+                                     '12345',
+                                     'US',
+                                     'passport',
+                                     '123456',
+                                     'US',
+                                     {
+                                           callback_url: 'https://callback.url',
+                                           birth_date: '1900-01-01',
+                                           birth_place: 'Gotham City'
+                                     }
+                                 )}.to raise_error(Plivo::Exceptions::InvalidRequestError)
+      compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Verification/Identity/',
+                                            method: 'POST',
+                                            data: {
+                                                     phone_number_country: 'US',
+                                                     number_type: 'local',
+                                                     salutation: 'Mr',
+                                                     first_name: 'Bruce',
+                                                     last_name: 'Wayne',
+                                                     address_line1: '1234',
+                                                     address_line2: 'Wayne Towers',
+                                                     city: 'New York',
+                                                     region: 'NY',
+                                                     postal_code: '12345',
+                                                     country_iso: 'US',
+                                                     proof_type: 'passport',
+                                                     id_number: '123456',
+                                                     nationality: 'US',
+                                                     callback_url: 'https://callback.url',
+                                                     birth_date: '1900-01-01',
+                                                     birth_place: 'Gotham City'
+                                                  })
+
+    end
   end
 
   it 'fetches details of an identity' do
@@ -135,7 +206,7 @@ describe 'Identities test' do
     contents = File.read(Dir.pwd + '/spec/mocks/identityUpdateResponse.json')
     mock(200, JSON.parse(contents))
     expect(JSON.parse(to_json_update(@api.identities
-                                         .update(id, nil,
+                                         .update(id,
                                                  {
                                                      salutation: 'Mr',
                                                     first_name: 'Bruce'

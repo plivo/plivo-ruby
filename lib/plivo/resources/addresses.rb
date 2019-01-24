@@ -29,12 +29,21 @@ module Plivo
       # @option options [String] :alias - Alias name of the address
       # @option options [String] :auto_correct_address - If set to true, the address will be auto-corrected by the system if necessary. The param needs to be set to false explicitly so that it is not auto-corrected.
       # @option options [String] :callback_url - The callback URL that gets the result of address creation POSTed to.
+      # @option options [String] :phone_number_country
+      # @option options [String] :number_type
+      # @option options [String] :fiscal_identification_code
+      # @option options [String] :street_code
+      # @option options [String] :municipal_code
+      # @option options [String] :file
+      # @option options [String] :proof_type
+      # @option options [String] :id_number
+
       # @return [Address] Address
-      def update(file_to_upload = nil, options = nil)
+      def update(options = nil)
         params = {}
 
         unless options.nil?
-          %i[salutation first_name last_name country_iso address_line1 address_line2 city region postal_code alias callback_url]
+          %i[first_name last_name country_iso address_line1 address_line2 city region postal_code alias callback_url phone_number_country fiscal_identification_code street_code municipal_code file id_number]
               .each do |param|
             if options.key?(param) &&
                 valid_param?(param, options[param], [String, Symbol], true)
@@ -49,22 +58,47 @@ module Plivo
               params[param] = options[param]
             end
           end
+
+          if options[:salutation]
+            valid_param?(:salutation, options[:salutation], [String, Symbol], true, ['Mr', 'Ms', :Ms, :Mr])
+            params[:salutation] = options[:salutation]
+          end
+
+          if options[:number_type]
+            valid_param?(:number_type, options[:number_type], [String, Symbol], true, ['local', 'national', 'mobile', 'tollfree'])
+            params[:number_type] = options[:number_type]
+          end
+
+          if options[:proof_type]
+            if options[:country_iso]
+              if options[:country_iso] == 'ES'
+                valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['NIF', 'NIE', 'DNI'])
+              else
+                valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['national_id', 'passport', 'business_id'])
+              end
+            else
+              valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['NIF', 'NIE', 'DNI', 'national_id', 'passport', 'business_id'])
+            end
+            params[:proof_type] = options[:proof_type]
+          end
+
+          unless options[:file].nil?
+            file_extension = options[:file].split('.')[-1]
+
+            content_type = case file_extension
+                             when 'jpeg' then 'image/jpeg'
+                             when 'jpg' then 'image/jpeg'
+                             when 'png' then 'image/png'
+                             when 'pdf' then 'application/pdf'
+                             else raise_invalid_request("#{file_extension} is not yet supported for upload")
+                           end
+            file_size = File.size("#{options[:file]}")
+            if file_size > 5000000
+                 raise_invalid_request("Maximum file size can be 5 MB")
+            end
+            params[:file] = Faraday::UploadIO.new(options[:file], content_type)
+          end
         end
-
-        unless file_to_upload.nil?
-          file_extension = file_to_upload.split('.')[-1]
-
-          content_type = case file_extension
-                           when 'jpeg' then 'image/jpeg'
-                           when 'jpg' then 'image/jpeg'
-                           when 'png' then 'image/png'
-                           when 'pdf' then 'application/pdf'
-                           else raise_invalid_request("#{file_extension} is not yet supported for upload")
-                         end
-
-          params[:file] = Faraday::UploadIO.new(file_to_upload, content_type)
-        end
-
         return perform_update(params, true)
       end
 
@@ -161,6 +195,8 @@ module Plivo
 
       ##
       # Create a new address
+      # @param [String] phone_number_country
+      # @param [String] number_type
       # @param [String] country_iso
       # @param [String] salutation
       # @param [String] first_name
@@ -170,8 +206,6 @@ module Plivo
       # @param [String] city
       # @param [String] region
       # @param [String] postal_code
-      # @param [String] address_proof_type
-      # @param [String] file_to_upload
       # @param [Hash] options
       # @option options [String] :alias - Alias name of the address
       # @option options [String] :auto_correct_address - If set to true, the address will be auto-corrected by the system if necessary. The param needs to be set to false explicitly so that it is not auto-corrected.
@@ -179,11 +213,16 @@ module Plivo
       # @option options [String] :street_code - Street code of the address
       # @option options [String] :municipal_code - Municipal code of the address
       # @option options [String] :callback_url - The callback URL that gets the result of address creation POSTed to.
+      # @option options :file - A File to upload, which needs to be considered the proof of address. Max. file Size = 5 MB. File should be in jpg, pdf, or png format.
+      # @option options [String] :proof_type - The type of document that is provided as address proof
+      # @option options [String] :id_number - Unique Identifier for the address proof you have submitted
+
       # @return [Address] Address
-      def create(country_iso, salutation, first_name, last_name, address_line1, address_line2, city, region,
-                 postal_code, address_proof_type, file_to_upload=nil, options=nil)
-        valid_param?(:country_iso, country_iso, [String, Symbol], true)
-        valid_param?(:salutation, salutation, [String, Symbol], true, ['Mr', 'Ms', :Ms, :Mr])
+      def create(phone_number_country, number_type, salutation, first_name, last_name, address_line1, address_line2, city, region,
+                 postal_code, country_iso, options=nil)
+        valid_param?(:phone_number_country, phone_number_country, [String, Symbol], true)
+        valid_param?(:number_type, number_type, [String, Symbol], true, ['local', 'national', 'mobile', 'tollfree'])
+        valid_param?(:salutation, salutation, [String, Symbol], true, ['Mr', 'Ms'])
         valid_param?(:first_name, first_name, [String, Symbol], true)
         valid_param?(:last_name, last_name, [String, Symbol], true)
         valid_param?(:address_line1, address_line1, [String, Symbol], true)
@@ -191,14 +230,12 @@ module Plivo
         valid_param?(:city, city, [String, Symbol], true)
         valid_param?(:region, region, [String, Symbol], true)
         valid_param?(:postal_code, postal_code, [String, Symbol], true)
-        valid_param?(:address_proof_type,
-                     address_proof_type,
-                     [String, Symbol], true,
-                     ['national_id', 'passport', 'business_id', 'NIF', 'NIE', 'DNI', 'others',
-                      :national_id, :passport, :business_id, :NIF, :NIE, :DNI, :others])
+        valid_param?(:country_iso, country_iso, [String, Symbol], true)
+
 
         params = {
-          country_iso: country_iso,
+          phone_number_country: phone_number_country,
+          number_type: number_type,
           salutation: salutation,
           first_name: first_name,
           last_name: last_name,
@@ -207,7 +244,7 @@ module Plivo
           city: city,
           region: region,
           postal_code: postal_code,
-          address_proof_type: address_proof_type
+          country_iso: country_iso,
         }
 
         if country_iso == 'ES'
@@ -223,8 +260,18 @@ module Plivo
           params[:municipal_code] = options[:municipal_code]
         end
 
-        unless file_to_upload.nil?
-          file_extension = file_to_upload.split('.')[-1]
+        if options[:proof_type]
+          if country_iso == 'ES'
+            valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['NIF', 'NIE', 'DNI'])
+          else
+            valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['national_id', 'passport', 'business_id'])
+          end
+          params[:proof_type] = options[:proof_type]
+        end
+
+
+        unless options[:file].nil?
+          file_extension = options[:file].split('.')[-1].downcase
 
           content_type = case file_extension
                            when 'jpeg' then 'image/jpeg'
@@ -233,11 +280,15 @@ module Plivo
                            when 'pdf' then 'application/pdf'
                            else raise_invalid_request("#{file_extension} is not yet supported for upload")
                          end
-
-          params[:file] = Faraday::UploadIO.new(file_to_upload, content_type)
+          # add a check on file size
+          file_size = File.size("#{options[:file]}")
+          if file_size > 5000000
+            raise_invalid_request("Maximum file size can be 5 MB")
+          end
+          params[:file] = Faraday::UploadIO.new(options[:file], content_type)
         end
 
-        %i[alias fiscal_identification_code street_code municipal_code callback_url]
+        %i[alias fiscal_identification_code street_code municipal_code callback_url id_number]
             .each do |param|
           if options.key?(param) &&
               valid_param?(param, options[param], [String, Symbol], true)
@@ -252,7 +303,6 @@ module Plivo
             params[param] = options[param]
           end
         end
-
         perform_create(params, true)
       end
 
@@ -274,9 +324,8 @@ module Plivo
       # @option options [String] :auto_correct_address - If set to true, the address will be auto-corrected by the system if necessary. The param needs to be set to false explicitly so that it is not auto-corrected.
       # @option options [String] :callback_url - The callback URL that gets the result of address creation POSTed to.
       # @return [Address] Address
-      def update(address_id, file_to_upload=nil, options=nil)
-        Address.new(@_client,
-                        resource_id: address_id).update(file_to_upload, options)
+      def update(address_id, options=nil)
+        Address.new(@_client,resource_id: address_id).update(options)
       end
 
       ##

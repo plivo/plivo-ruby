@@ -1,0 +1,8 @@
+{
+    "api_id": "396f3832-0a89-11e9-b0b4-066a42519598",
+    "error": {
+        "error": "user already exists",
+        "message": "Could not complete idenity verification.",
+        "status": "error"
+    }
+}
