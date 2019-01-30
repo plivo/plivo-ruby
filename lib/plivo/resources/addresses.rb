@@ -246,6 +246,7 @@ module Plivo
           postal_code: postal_code,
           country_iso: country_iso,
         }
+        return perform_create(params, true) if options.nil?
 
         if country_iso == 'ES'
           valid_param?(:fiscal_identification_code, options[:fiscal_identification_code], [String, Symbol], true)

@@ -101,16 +101,18 @@ module Plivo
       def to_s
         {
           account: @account,
+          address_line1: @address_line1,
+          address_line2: @address_line2,
           alias: @alias,
           api_id: @api_id,
+          city: @city,
           country_iso: @country_iso,
           document_details: @document_details,
           first_name: @first_name,
           id: @id,
-          id_number: @id_number,
-          id_type: @id_type,
           last_name: @last_name,
-          nationality: @nationality,
+          postal_code: @postal_code,
+          region: @region,
           salutation: @salutation,
           subaccount: @subaccount,
           url: @url,
@@ -229,7 +231,6 @@ module Plivo
         valid_param?(:region, region, [String, Symbol], true)
         valid_param?(:postal_code, postal_code, [String, Symbol], true)
         valid_param?(:country_iso, country_iso, [String, Symbol], true)
-        valid_param?(:proof_type, proof_type, [String, Symbol], true)
         valid_param?(:id_number, id_number, [String, Symbol], true)
         valid_param?(:nationality, nationality, [String, Symbol], true)
 
@@ -245,11 +246,11 @@ module Plivo
             region: region,
             postal_code: postal_code,
             country_iso: country_iso,
-            proof_type: proof_type,
             id_number: id_number,
             nationality: nationality
         }
 
+        return perform_create(params, true) if options.nil?
         unless options[:file].nil?
           file_extension = options[:file].split('.')[-1].downcase
 
@@ -269,24 +270,17 @@ module Plivo
 
         if country_iso == 'ES'
           valid_param?(:fiscal_identification_code, options[:fiscal_identification_code], [String, Symbol], true)
+          valid_param?(:proof_type, proof_type, [String, Symbol], true, ['NIF', 'NIE', 'DNI'])
+          params[:proof_type] = proof_type
           params[:fiscal_identification_code] = options[:fiscal_identification_code]
-        end
-
-        if country_iso == 'DK'
+        elsif country_iso == 'DK'
           valid_param?(:street_code, options[:street_code], [String, Symbol], true)
           valid_param?(:municipal_code, options[:municipal_code], [String, Symbol], true)
-
           params[:street_code] = options[:street_code]
           params[:municipal_code] = options[:municipal_code]
-        end
-
-        if options[:proof_type]
-          if country_iso == 'ES'
-            valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['NIF', 'NIE', 'DNI'])
-          else
-            valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['national_id', 'passport', 'business_id'])
-          end
-          params[:proof_type] = options[:proof_type]
+        else
+          valid_param?(:proof_type, proof_type, [String, Symbol], true, ['national_id', 'passport', 'business_id'])
+          params[:proof_type] = proof_type
         end
 
         %i[callback_url alias id_nationality birth_place birth_date id_issue_date business_name fiscal_identification_code street_code municipal_code]
