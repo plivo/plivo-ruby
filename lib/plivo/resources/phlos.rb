@@ -25,10 +25,10 @@ module Plivo
         nodeInterface.getNode(node_id, 'multi_party_call')
       end
 
-      # def conference_bridge(node_id)
-      #   nodeInterface = NodeInterface.new(@_client, {_phlo_id: @id})
-      #   nodeInterface.getNode(node_id, 'conference_bridge')
-      # end
+      def conference_bridge(node_id)
+        nodeInterface = NodeInterface.new(@_client, {_phlo_id: @id})
+        nodeInterface.getNode(node_id, 'conference_bridge')
+      end
 
       def run(params=nil)
         @_resource_uri = ['', 'v1', 'account', @_client.auth_id, @_name, @id, ''].join('/')

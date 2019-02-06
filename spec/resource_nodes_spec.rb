@@ -158,57 +158,57 @@ describe 'node tests' do
 
   end
 
-  # describe 'member tests: for conference bridge node' do
-  #   before :each do
-  #     contents = File.read(Dir.pwd + '/spec/mocks/conferenceBridgeGetResponse.json')
-  #     mock(200, JSON.parse(contents))
-  #     @conference_bridge = @phlo.conference_bridge('36989807-a76f-4555-84d1-9dfdccca7a80')
-  #     @member = @conference_bridge.member('0000000000')
-  #   end
-  #
-  #   def to_json(member)
-  #     {
-  #         api_id: member.api_id,
-  #         phlo_id: member.phlo_id,
-  #         node_id: member.node_id,
-  #         node_type: member.node_type,
-  #         member_address: member.member_address
-  #     }.to_json
-  #   end
-  #
-  #   describe 'update a member in the conference bridge' do
-  #     it 'mutes the member' do
-  #       contents = File.read(Dir.pwd + '/spec/mocks/memberActionResponse.json')
-  #       mock(201, JSON.parse(contents))
-  #       expect(JSON.parse(to_json(@member.mute)))
-  #           .to eql(JSON.parse(contents))
-  #       compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/conference_bridge/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
-  #                        method: 'POST',
-  #                        data: {:action=>"mute"})
-  #
-  #     end
-  #
-  #     it 'unmutes the member' do
-  #       contents = File.read(Dir.pwd + '/spec/mocks/memberActionResponse.json')
-  #       mock(201, JSON.parse(contents))
-  #       expect(JSON.parse(to_json(@member.unmute)))
-  #           .to eql(JSON.parse(contents))
-  #       compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/conference_bridge/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
-  #                        method: 'POST',
-  #                        data: {:action=>"unmute"})
-  #
-  #     end
-  #
-  #     it 'member leaves the call' do
-  #       contents = File.read(Dir.pwd + '/spec/mocks/memberActionResponse.json')
-  #       mock(201, JSON.parse(contents))
-  #       expect(JSON.parse(to_json(@member.hangup)))
-  #           .to eql(JSON.parse(contents))
-  #       compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/conference_bridge/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
-  #                        method: 'POST',
-  #                        data: {:action=>"hangup"})
-  #
-  #     end
-  #   end
-  # end
+  describe 'member tests: for conference bridge node' do
+    before :each do
+      contents = File.read(Dir.pwd + '/spec/mocks/conferenceBridgeGetResponse.json')
+      mock(200, JSON.parse(contents))
+      @conference_bridge = @phlo.conference_bridge('36989807-a76f-4555-84d1-9dfdccca7a80')
+      @member = @conference_bridge.member('0000000000')
+    end
+
+    def to_json(member)
+      {
+          api_id: member.api_id,
+          phlo_id: member.phlo_id,
+          node_id: member.node_id,
+          node_type: member.node_type,
+          member_address: member.member_address
+      }.to_json
+    end
+
+    describe 'update a member in the conference bridge' do
+      it 'mutes the member' do
+        contents = File.read(Dir.pwd + '/spec/mocks/memberActionResponse.json')
+        mock(201, JSON.parse(contents))
+        expect(JSON.parse(to_json(@member.mute)))
+            .to eql(JSON.parse(contents))
+        compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/conference_bridge/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
+                         method: 'POST',
+                         data: {:action=>"mute"})
+
+      end
+
+      it 'unmutes the member' do
+        contents = File.read(Dir.pwd + '/spec/mocks/memberActionResponse.json')
+        mock(201, JSON.parse(contents))
+        expect(JSON.parse(to_json(@member.unmute)))
+            .to eql(JSON.parse(contents))
+        compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/conference_bridge/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
+                         method: 'POST',
+                         data: {:action=>"unmute"})
+
+      end
+
+      it 'member leaves the call' do
+        contents = File.read(Dir.pwd + '/spec/mocks/memberActionResponse.json')
+        mock(201, JSON.parse(contents))
+        expect(JSON.parse(to_json(@member.hangup)))
+            .to eql(JSON.parse(contents))
+        compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/conference_bridge/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
+                         method: 'POST',
+                         data: {:action=>"hangup"})
+
+      end
+    end
+  end
 end
