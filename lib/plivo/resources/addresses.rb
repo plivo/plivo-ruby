@@ -74,10 +74,10 @@ module Plivo
               if options[:country_iso] == 'ES'
                 valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['NIF', 'NIE', 'DNI'])
               else
-                valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['national_id', 'passport', 'business_id'])
+                valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['NATIONAL_ID_CARD', 'PASSPORT', 'BUSINESS_REGISTRATION', 'any'])
               end
             else
-              valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['NIF', 'NIE', 'DNI', 'national_id', 'passport', 'business_id'])
+              valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['NIF', 'NIE', 'DNI', 'NATIONAL_ID_CARD', 'PASSPORT', 'BUSINESS_REGISTRATION', 'any'])
             end
             params[:proof_type] = options[:proof_type]
           end
@@ -265,7 +265,7 @@ module Plivo
           if country_iso == 'ES'
             valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['NIF', 'NIE', 'DNI'])
           else
-            valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['national_id', 'passport', 'business_id'])
+            valid_param?(:proof_type, options[:proof_type], [String, Symbol], false, ['NATIONAL_ID_CARD', 'PASSPORT', 'BUSINESS_REGISTRATION', 'any'])
           end
           params[:proof_type] = options[:proof_type]
         end

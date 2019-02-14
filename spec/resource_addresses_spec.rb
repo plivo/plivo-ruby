@@ -70,7 +70,7 @@ describe "create an address" do
                                            'US',
                                            {
                                              callback_url: 'https://callback.url',
-                                             proof_type: 'passport'
+                                             proof_type: 'PASSPORT'
                                            }
                                          ))))
         .to eql(JSON.parse(contents).reject { |_, v| v.nil? })
@@ -89,7 +89,7 @@ describe "create an address" do
                          postal_code: '12345',
                          country_iso: 'US',
                          callback_url: 'https://callback.url',
-                         proof_type: 'passport'
+                         proof_type: 'PASSPORT'
                      })
   end
 
@@ -107,7 +107,7 @@ describe "create an address" do
                                  'ES',
                                  {
                                    callback_url: 'https://callback.url',
-                                   proof_type: 'passport'
+                                   proof_type: 'PASSPORT'
                                  }
                              )}.to raise_error(Plivo::Exceptions::InvalidRequestError)
   end
@@ -128,7 +128,7 @@ describe "create an address" do
                                   'US',
                                   {
                                       callback_url: 'https://callback.url',
-                                      proof_type: 'passport'
+                                      proof_type: 'PASSPORT'
                                   }
                 )}.to raise_error(Plivo::Exceptions::InvalidRequestError)
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Verification/Address/',
@@ -146,7 +146,7 @@ describe "create an address" do
                          postal_code: '12345',
                          country_iso: 'US',
                          callback_url: 'https://callback.url',
-                         proof_type: 'passport'
+                         proof_type: 'PASSPORT'
                      })
   end
 end
