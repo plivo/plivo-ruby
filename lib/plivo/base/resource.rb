@@ -80,6 +80,12 @@ module Plivo
         Response.new(@_client.send_request(@_resource_uri, 'DELETE', params),
                      @_identifier_string)
       end
+
+      def perform_run(params)
+        response_json = @_client.send_request(@_resource_uri, 'POST', params, nil)
+        parse_and_set(response_json)
+        Response.new(response_json, @_identifier_string)
+      end
     end
   end
 end

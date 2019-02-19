@@ -32,7 +32,7 @@ module Plivo
 
       def run(params=nil)
         @_resource_uri = ['', 'v1', 'account', @_client.auth_id, @_name, @id, ''].join('/')
-        perform_update(params)
+        perform_run(params)
       end
     end
 
