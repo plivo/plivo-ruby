@@ -24,6 +24,15 @@ module Plivo
         self.class.send(:attr_reader, :id)
         @id = response_hash[id_symbol]
       end
+
+      def to_s
+        h = self.instance_variables.map do |attribute|
+          key = attribute.to_s.gsub('@','')
+          [key, self.instance_variable_get(attribute)]
+        end.to_h
+        h.to_s
+      end
+
     end
   end
 end
