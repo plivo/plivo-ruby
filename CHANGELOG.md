@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.1.7](https://github.com/plivo/plivo-ruby/releases/tag/v4.1.7) (2019-02-20)
+- Fix responses for all API resources(responses were returning a hash).
+
 ## [4.1.6](https://github.com/plivo/plivo-ruby/releases/tag/v4.1.6) (2018-11-26)
 - Fix bignum deprecated warning in Ruby 2.4+.
 
