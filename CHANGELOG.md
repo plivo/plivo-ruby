@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.1.8](https://github.com/plivo/plivo-ruby/releases/tag/v4.1.8) (2019-02-27)
+- Fix log_incoming_messages having no effect while application creation
+
 ## [4.1.7](https://github.com/plivo/plivo-ruby/releases/tag/v4.1.7) (2019-02-20)
 - Fix responses for all API resources(responses were returning a hash).
 
