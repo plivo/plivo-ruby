@@ -13,7 +13,7 @@ module Plivo
       private
 
       def configure_client(client)
-        valid_param?(:client, client, RestClient, true)
+        valid_param?(:client, client, [RestClient, Phlo], true)
         @_client = client
       end
 
