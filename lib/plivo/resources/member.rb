@@ -39,9 +39,9 @@ module Plivo
         perform_update({action: 'hangup'})
       end
 
-      def remove
-        perform_delete
-      end
+      # def remove
+      #   perform_delete
+      # end
 
       def mute
         perform_update({action: 'mute'})

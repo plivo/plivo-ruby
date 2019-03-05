@@ -145,16 +145,16 @@ describe 'node tests' do
 
     end
 
-    it 'Remove a member from the Multi-Party Call' do
-      contents = File.read(Dir.pwd + '/spec/mocks/memberActionResponse.json')
-      mock(204, JSON.parse(contents))
-      expect(JSON.parse(to_json(@member.remove)))
-          .to eql(JSON.parse(contents))
-      compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
-                       method: 'DELETE',
-                       data: nil)
-
-    end
+    # it 'Remove a member from the Multi-Party Call' do
+    #   contents = File.read(Dir.pwd + '/spec/mocks/memberActionResponse.json')
+    #   mock(204, JSON.parse(contents))
+    #   expect(JSON.parse(to_json(@member.remove)))
+    #       .to eql(JSON.parse(contents))
+    #   compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/members/0000000000/',
+    #                    method: 'DELETE',
+    #                    data: nil)
+    #
+    # end
 
   end
 
