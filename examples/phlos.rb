@@ -33,7 +33,12 @@ end
 
 # initiate phlo via API request:
 begin
-  response = phlo.run()
+  #optional parameter - params
+  params = {
+     from: ‘12089001617’,
+     to: ‘918970604313’
+  }
+  response = phlo.run(params)
   puts response
 rescue PlivoRESTError => e
   puts 'Exception: ' + e.message
