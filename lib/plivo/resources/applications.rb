@@ -47,7 +47,7 @@ module Plivo
           end
         end
 
-        %i[default_number_app default_endpoint_app].each do |param|
+        %i[default_number_app default_endpoint_app log_incoming_messages].each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [TrueClass, FalseClass], true)
             params[param] = options[param]
@@ -145,7 +145,7 @@ module Plivo
           end
         end
 
-        %i[default_number_app default_endpoint_app].each do |param|
+        %i[default_number_app default_endpoint_app log_incoming_messages].each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [TrueClass, FalseClass], true)
             params[param] = options[param]
