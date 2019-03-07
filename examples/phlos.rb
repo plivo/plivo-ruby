@@ -35,8 +35,8 @@ end
 begin
   #optional parameter - params
   params = {
-     from: ‘12089001617’,
-     to: ‘918970604313’
+     from: '9999999999',
+     to: '0000000000'
   }
   response = phlo.run(params)
   puts response
