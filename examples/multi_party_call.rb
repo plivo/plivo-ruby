@@ -37,12 +37,12 @@ end
 # 1. Agent makes outbound call to customer:
 #
 # 'trigger_source' => Caller Id to be set when an outbound call is made to the users to be added to the multi-party call
-# 'to' => 'List of phone numbers and endpoints to which an outbound call should be initiated'
+# 'to' => 'phone number/SIP endpoint to which an outbound call should be initiated'
 # 'role' => 'customer'/'agent'/'supervisor'
 # multi_party_call.call(<trigger_source>, <to>, <role>)
 
 begin
-  response = multi_party_call.call('9999999999', %w(0000000000 8888888888), 'customer')
+  response = multi_party_call.call('9999999999', '0000000000', 'customer')
   puts response
 rescue PlivoRESTError => e
   puts 'Exception: ' + e.message
