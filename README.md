@@ -8,7 +8,7 @@ The Plivo Ruby SDK makes it simpler to integrate communications into your Ruby a
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'plivo', '>= 4.1.6'
+gem 'plivo', '>= 4.3.0'
 ```
 
 And then execute:
@@ -18,6 +18,10 @@ And then execute:
 Or install it yourself as:
 
     $ gem install plivo
+
+For features in beta, use the beta branch:
+
+    $ gem install plivo --pre
 
 If you have the `0.3.19` version (a.k.a legacy) already installed, you may have to first uninstall it before installing the new version.
 
@@ -123,6 +127,37 @@ This generates the following XML:
 <Response>
   <Speak>Hello, world!</Speak>
 </Response>
+```
+
+### Run a PHLO
+
+```ruby
+require 'rubygems'
+require 'plivo'
+
+include Plivo
+
+AUTH_ID = 'AUTH_ID'
+AUTH_TOKEN = 'AUTH_TOKEN'
+
+client = Phlo.new(AUTH_ID, AUTH_TOKEN)
+
+# if credentials are stored in the PLIVO_AUTH_ID and the PLIVO_AUTH_TOKEN environment variables
+# then initialize client as:
+# client = Phlo.new
+
+# run a phlo:
+begin
+    #parameters set in PHLO - params
+    params = {
+       from: '9999999999',
+       to: '0000000000'
+    }
+    response = phlo.run(params)
+    puts response
+  rescue PlivoRESTError => e
+    puts 'Exception: ' + e.message
+  end
 ```
 
 ### More examples
