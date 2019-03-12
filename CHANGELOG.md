@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.3.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.3.0) (2019-03-12)
+- Add PHLO support
+- Add Multi-Party Call triggers
+
 ## [4.2-beta1](https://github.com/plivo/plivo-ruby/releases/tag/v4.2-beta1) (2019-03-11)
 - Add PHLO support
 - Add Multi-Party Call triggers
