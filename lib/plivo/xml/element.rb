@@ -9,7 +9,7 @@ module Plivo
 
       attr_accessor :node, :name
 
-      def initialize(body = nil, attributes = {})
+      def initialize(body = nil, attributes = {}, nestables=self.class.nestables)
         @name = self.class.name.split('::')[2]
         @body = body
         @node = REXML::Element.new @name
@@ -20,7 +20,7 @@ module Plivo
             raise PlivoXMLError, "invalid attribute #{k} for #{@name}"
           end
         end
-
+        @nestables = nestables
         @node.text = @body if @body
 
         # Allow for nested "nestable" elements using a code block
@@ -31,6 +31,10 @@ module Plivo
         #   end
         # end
         yield(self) if block_given?
+      end
+
+      def add_attribute(attribute, value)
+        @node.add_attribute(attribute, value)
       end
 
       def method_missing(method, *args, &block)
@@ -63,7 +67,7 @@ module Plivo
 
       def add(element)
         raise PlivoXMLError, 'invalid element' unless element
-        if self.class.nestables.include?(element.name)
+        if @nestables.include?(element.name)
           @node.elements << element.node
           element
         else
