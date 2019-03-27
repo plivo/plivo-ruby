@@ -25,18 +25,23 @@ module Plivo
       # @option options [Boolean] :log_incoming_messages - If set to true, this parameter ensures that incoming messages are logged.
       # @return [Application] Application
       def update(options = nil)
-        return perform_update({}) if options.nil?
+        raise_invalid_request('At least one attribute is required for updating Application object') if options.nil?
 
         valid_param?(:options, options, Hash, true)
 
         params = {}
 
-        %i[answer_url hangup_url fallback_answer_url message_url subaccount]
+        %i[answer_url hangup_url fallback_answer_url message_url]
           .each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [String, Symbol], true)
             params[param] = options[param]
           end
+        end
+
+        if options.key?(:subaccount) &&
+           valid_subaccount?(options[:subaccount], true)
+          params[:subaccount] = options[:subaccount]
         end
 
         %i[answer_method hangup_method fallback_method message_method]
@@ -129,12 +134,17 @@ module Plivo
 
         return perform_create(params) if options.nil?
 
-        %i[answer_url hangup_url fallback_answer_url message_url subaccount]
+        %i[answer_url hangup_url fallback_answer_url message_url]
           .each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [String, Symbol], true)
             params[param] = options[param]
           end
+        end
+
+        if options.key?(:subaccount) &&
+           valid_subaccount?(options[:subaccount], true)
+          params[:subaccount] = options[:subaccount]
         end
 
         %i[answer_method hangup_method fallback_method message_method]
@@ -167,8 +177,7 @@ module Plivo
 
         params = {}
 
-        if options.key?(:subaccount) &&
-           valid_param?(:subaccount, options[:subaccount], [String, Symbol], true)
+        if options.key?(:subaccount) && valid_subaccount?(options[:subaccount], true)
           params[:subaccount] = options[:subaccount]
         end
 

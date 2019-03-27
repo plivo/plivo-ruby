@@ -94,8 +94,10 @@ module Plivo
           alias: alias_
         }
 
-        params[:app_id] = app_id unless app_id.nil?
-
+        unless app_id.nil?
+          valid_param?(:app_id, app_id, [String, Symbol], true)
+          params[:app_id] = app_id
+        end
         perform_create(params)
       end
 

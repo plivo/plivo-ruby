@@ -21,6 +21,8 @@ module Plivo
       end
 
       def multi_party_call(node_id)
+        valid_param?(:node_id, node_id, [String, Symbol], true)
+
         nodeInterface = NodeInterface.new(@_client, {_phlo_id: @id})
         nodeInterface.getNode(node_id, 'multi_party_call')
       end
@@ -31,6 +33,8 @@ module Plivo
       # end
 
       def run(params=nil)
+        valid_param?(:params, params, Hash, true) unless options.nil?
+
         @_resource_uri = ['', 'v1', 'account', @_client.auth_id, @_name, @id, ''].join('/')
         perform_run(params)
       end
@@ -46,6 +50,7 @@ module Plivo
       end
 
       def get(phlo_id)
+        valid_param?(:phlo_id, phlo_id, [String, Symbol], true)
         perform_get(phlo_id)
       end
 

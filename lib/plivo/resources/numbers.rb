@@ -11,6 +11,9 @@ module Plivo
 
       def buy(app_id = nil, verification_info = nil)
         params = {}
+        valid_param?(:app_id, app_id, [String, Symbol], true)
+        valid_param?(:verification_info, verification_info, Hash, true)
+
         params[:app_id] = app_id unless app_id.nil?
         params[:verification_info] = verification_info unless verification_info.nil?
         perform_action(nil, 'POST', params, true)
@@ -70,6 +73,8 @@ module Plivo
         params = { country_iso: country_iso }
 
         return perform_list(params) if options.nil?
+
+        valid_param?(:options, options, Hash, true)
 
         %i[type pattern region services lata rate_center].each do |param|
           if options.key?(param) &&
@@ -190,6 +195,7 @@ module Plivo
 
       # @param [String] number
       def get(number)
+        valid_param?(:number, number, [String, Symbol], true)
         perform_get(number)
       end
 
@@ -211,11 +217,16 @@ module Plivo
 
         params = {}
 
-        %i[number_startswith subaccount alias].each do |param|
+        %i[number_startswith alias].each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [String, Symbol], true)
             params[param] = options[param]
           end
+        end
+
+        if options.key?(:subaccount) &&
+           valid_subaccount?(options[:subaccount], true)
+          params[:subaccount] = options[:subaccount]
         end
 
         if options.key?(:services) &&
@@ -281,6 +292,7 @@ module Plivo
         }
 
         return perform_post(params) if options.nil?
+        valid_param?(:options, options, Hash, true)
 
         if options.key?(:subaccount) &&
            valid_subaccount?(options[:subaccount], true)

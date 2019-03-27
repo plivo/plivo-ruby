@@ -47,7 +47,7 @@ module Plivo
       # @param [String] url
       def play_member(member_id, url)
         valid_param?(:member_id, member_id, Array, true)
-        valid_param?(:url, url, String, true)
+        valid_param?(:url, url, [String, Symbol], true)
         member_id.each do |member|
           valid_param?(:member, member, [String, Symbol, Integer, Integer], true)
         end
@@ -224,6 +224,7 @@ module Plivo
       end
 
       def get(conference_name)
+        valid_param?(:conference_name, conference_name, [String, Symbol], true)
         perform_get(conference_name)
       end
 

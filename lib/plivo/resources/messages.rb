@@ -37,6 +37,7 @@ module Plivo
 
       # @param [String] message_uuid
       def get(message_uuid)
+        valid_param?(:message_uuid, message_uuid, [String, Symbol], true)
         perform_get(message_uuid)
       end
 
@@ -139,7 +140,7 @@ module Plivo
 
         params = {}
         params_expected = %i[
-          subaccount message_time message_time__gt message_time__gte
+          message_time message_time__gt message_time__gte
           message_time__lt message_time__lte error_code
         ]
         params_expected.each do |param|
@@ -147,6 +148,11 @@ module Plivo
              valid_param?(param, options[param], [String, Symbol], true)
             params[param] = options[param]
           end
+        end
+
+        if options.key?(:subaccount) &&
+           valid_subaccount?(options[:subaccount], true)
+          params[:subaccount] = options[:subaccount]
         end
 
         %i[offset limit].each do |param|

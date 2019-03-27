@@ -134,7 +134,8 @@ module Plivo
       # @return [Hash]
       def list(options=nil)
         return perform_list if options.nil?
-
+        
+        valid_param?(:options, options, Hash, true)
         params = {}
 
         %i[country_iso customer_name alias].each do |param|
