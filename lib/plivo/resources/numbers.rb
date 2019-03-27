@@ -12,7 +12,7 @@ module Plivo
       def buy(app_id = nil, verification_info = nil)
         params = {}
         valid_param?(:app_id, app_id, [String, Symbol], true)
-        valid_param?(:verification_info, verification_info, Hash, true)
+        valid_param?(:verification_info, verification_info, Hash, false)
 
         params[:app_id] = app_id unless app_id.nil?
         params[:verification_info] = verification_info unless verification_info.nil?

@@ -87,7 +87,7 @@ describe 'Applications test' do
     mock(200, JSON.parse(contents))
     response = to_json_list(@api.applications
                                 .list(
-                                  subaccount: 'SAXXXXXXXXXXXXXXXXX',
+                                  subaccount: 'SAXXXXXXXXXXXXXXXXXX',
                                   offset: 4
                                 ))
 
@@ -103,7 +103,7 @@ describe 'Applications test' do
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Application/',
                      method: 'GET',
                      data: {
-                       subaccount: 'SAXXXXXXXXXXXXXXXXX',
+                       subaccount: 'SAXXXXXXXXXXXXXXXXXX',
                        offset: 4
                      })
   end

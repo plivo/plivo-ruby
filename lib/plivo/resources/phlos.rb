@@ -33,7 +33,7 @@ module Plivo
       # end
 
       def run(params=nil)
-        valid_param?(:params, params, Hash, true) unless options.nil?
+        valid_param?(:params, params, Hash, true) unless params.nil?
 
         @_resource_uri = ['', 'v1', 'account', @_client.auth_id, @_name, @id, ''].join('/')
         perform_run(params)
