@@ -43,6 +43,8 @@ module Plivo
         params = {}
 
         unless options.nil?
+          valid_param?(:options, options, Hash, true)
+
           %i[first_name last_name country_iso address_line1 address_line2 city region postal_code alias callback_url phone_number_country fiscal_identification_code street_code municipal_code file id_number]
               .each do |param|
             if options.key?(param) &&
@@ -83,6 +85,7 @@ module Plivo
           end
 
           unless options[:file].nil?
+            valid_param?(:file, options[:file], [String, Symbol], true)
             file_extension = options[:file].split('.')[-1]
 
             content_type = case file_extension
@@ -158,6 +161,7 @@ module Plivo
         return perform_list if options.nil?
 
         params = {}
+        valid_param?(:options, options, Hash, true)
 
         %i[country_iso customer_name alias].each do |param|
           if options.key?(param) && valid_param?(param, options[param],
@@ -248,6 +252,8 @@ module Plivo
         }
         return perform_create(params, true) if options.nil?
 
+        valid_param?(:options, options, Hash, true)
+
         if country_iso == 'ES'
           valid_param?(:fiscal_identification_code, options[:fiscal_identification_code], [String, Symbol], true)
           params[:fiscal_identification_code] = options[:fiscal_identification_code]
@@ -272,6 +278,7 @@ module Plivo
 
 
         unless options[:file].nil?
+          valid_param?(:file, options[:file], [String, Symbol], true)
           file_extension = options[:file].split('.')[-1].downcase
 
           content_type = case file_extension
@@ -326,6 +333,7 @@ module Plivo
       # @option options [String] :callback_url - The callback URL that gets the result of address creation POSTed to.
       # @return [Address] Address
       def update(address_id, options=nil)
+        valid_param?(:address_id, address_id, [String, Symbol], true)
         Address.new(@_client,resource_id: address_id).update(options)
       end
 

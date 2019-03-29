@@ -47,6 +47,8 @@ module Plivo
         params = {}
 
         unless options.nil?
+          valid_param?(:options, options, Hash, true)
+
           %i[phone_number_country first_name last_name address_line1 address_line2 city region postal_code country_iso
             id_number nationality callback_url alias id_nationality birth_place birth_date id_issue_date business_name fiscal_identification_code street_code municipal_code]
               .each do |param|
@@ -79,6 +81,7 @@ module Plivo
             params[:proof_type] = options[:proof_type]
           end
           unless options[:file].nil?
+            valid_param?(:file, options[:file], [String, Symbol], true)
             file_extension = options[:file].split('.')[-1].downcase
             # add check on file size
             content_type = case file_extension
@@ -152,6 +155,7 @@ module Plivo
       def list(options=nil)
         return perform_list if options.nil?
 
+        valid_param?(:options, options, Hash, true)
         params = {}
 
         %i[country_iso customer_name alias].each do |param|
@@ -251,7 +255,9 @@ module Plivo
         }
 
         return perform_create(params, true) if options.nil?
+        valid_param?(:options, options, Hash, true)
         unless options[:file].nil?
+          valid_param?(:file, options[:file], [String, Symbol], true)
           file_extension = options[:file].split('.')[-1].downcase
 
           content_type = case file_extension
@@ -323,6 +329,7 @@ module Plivo
       # @option options [String] :municipal_code - Municipal code of the address
       # @return [Identity] Identity
       def update(identity_id, options=nil)
+        valid_param?(:identity_id, identity_id, [String, Symbol], true)
         Identity.new(@_client,
                     resource_id: identity_id).update(options)
       end
