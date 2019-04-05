@@ -83,8 +83,8 @@ module Plivo
         end
 
         params = {
-          src: src,
-          dst: dst.join('<'),
+          src: format_phone_number(src),
+          dst: dst.map{|x| format_phone_number(x)}.join('<'),
           text: text,
           powerpack_uuid: powerpack_uuid
         }

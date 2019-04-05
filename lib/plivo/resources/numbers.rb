@@ -275,7 +275,7 @@ module Plivo
         end
 
         params = {
-          numbers: numbers.join(','),
+          numbers: numbers.map{|x| format_phone_number(x)}.join(','),
           carrier: carrier,
           region: region
         }
