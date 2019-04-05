@@ -42,7 +42,7 @@ module Plivo
       end
 
       def member(member_address)
-        options = {'member_address' => format_phone_number(member_address), 'node_id' => @id, 'phlo_id' => @phlo_id, 'node_type' => @node_type}
+        options = {'member_address' => member_address, 'node_id' => @id, 'phlo_id' => @phlo_id, 'node_type' => @node_type}
         Member.new(@_client, {resource_json: options})
       end
 

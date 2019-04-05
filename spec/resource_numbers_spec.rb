@@ -55,7 +55,7 @@ describe 'Numbers test' do
     expect(JSON.parse(to_json(@api.numbers.get('SAXXXXXXXX'))))
       .to eql(JSON.parse(contents))
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Number/'\
-                     '+7299999999/',
+                     'SAXXXXXXXX/',
                      method: 'GET',
                      data: nil)
   end
@@ -107,7 +107,7 @@ describe 'Numbers test' do
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Number/',
                      method: 'POST',
                      data: {
-                       numbers: '+909090909090,+909090909091',
+                       numbers: ['909090909090',909090909091],
                        carrier: 'carrier',
                        region: 'region',
                        app_id: 'app id',
@@ -124,7 +124,7 @@ describe 'Numbers test' do
                                                  subaccount: 'SAXXXXXXXXXXXXXXXXXX',
                                                  alias: 'alias'))))
       .to eql(JSON.parse(contents))
-    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Number/+' + id + '/',
+    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Number/' + id + '/',
                      method: 'POST',
                      data: {
                        subaccount: 'SAXXXXXXXXXXXXXXXXXX',
@@ -137,7 +137,7 @@ describe 'Numbers test' do
     contents = '{}'
     mock(204, JSON.parse(contents))
     @api.numbers.delete(id)
-    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Number/+' + id + '/',
+    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Number/' + id + '/',
                      method: 'DELETE',
                      data: nil)
   end

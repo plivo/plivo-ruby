@@ -72,7 +72,7 @@ describe 'Phone Numbers test' do
     expect(JSON.parse(to_json_buy(@api.phone_numbers
                                       .buy('909090909090', 'app id'))))
       .to eql(JSON.parse(contents))
-    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/PhoneNumber/+909090909090/',
+    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/PhoneNumber/909090909090/',
                      method: 'POST',
                      data: {
                        app_id: 'app id'
