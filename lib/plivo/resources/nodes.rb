@@ -1,5 +1,6 @@
 module Plivo
   module Resources
+    include Plivo::Utils
     class NodeInterface < Base::ResourceInterface
       def initialize(client, resource_list_json=nil)
         super
@@ -58,17 +59,17 @@ module Plivo
       end
 
       def call(trigger_source, to, role)
-        payload = {action: 'call', trigger_source: trigger_source, to: to, role: role}
+        payload = {action: 'call', trigger_source: format_phone_number(trigger_source), to: format_phone_number(to), role: role}
         perform_update(payload)
       end
 
       def warm_transfer(trigger_source, to, role='agent')
-        payload = {action: 'warm_transfer', trigger_source: trigger_source, to: to, role: role}
+        payload = {action: 'warm_transfer', trigger_source: format_phone_number(trigger_source), to: format_phone_number(to), role: role}
         perform_update(payload)
       end
 
       def cold_transfer(trigger_source, to, role='agent')
-        payload = {action: 'cold_transfer', trigger_source: trigger_source, to: to, role: role}
+        payload = {action: 'cold_transfer', trigger_source: format_phone_number(trigger_source), to: format_phone_number(to), role: role}
         perform_update(payload)
       end
     end

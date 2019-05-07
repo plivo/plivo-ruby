@@ -32,7 +32,7 @@ describe 'node tests' do
           .to eql(JSON.parse(contents))
       compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/',
                        method: 'POST',
-                       data: {:action=>"call", :trigger_source=>"9090909090", :to=>"9090909090", :role=>"customer"})
+                       data: {:action=>"call", :trigger_source=>"+9090909090", :to=>"+9090909090", :role=>"customer"})
 
 
     end
@@ -44,7 +44,7 @@ describe 'node tests' do
           .to eql(JSON.parse(contents))
       compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/',
                        method: 'POST',
-                       data: {:action=>"warm_transfer", :trigger_source=>"9090909090", :to=>"9090909090", :role=>"agent"})
+                       data: {:action=>"warm_transfer", :trigger_source=>"+9090909090", :to=>"+9090909090", :role=>"agent"})
 
     end
 
@@ -55,7 +55,7 @@ describe 'node tests' do
           .to eql(JSON.parse(contents))
       compare_requests(uri: '/v1/phlo/e564a84a-7910-4447-b16f-65c541dd552c/multi_party_call/36989807-a76f-4555-84d1-9dfdccca7a80/',
                        method: 'POST',
-                       data: {:action=>"cold_transfer", :trigger_source=>"9090909090", :to=>"9090909090", :role=>"customer"})
+                       data: {:action=>"cold_transfer", :trigger_source=>"+9090909090", :to=>"+9090909090", :role=>"customer"})
 
     end
 

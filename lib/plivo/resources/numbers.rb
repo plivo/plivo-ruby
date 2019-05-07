@@ -275,7 +275,7 @@ module Plivo
         end
 
         params = {
-          numbers: numbers.join(','),
+          numbers: numbers,
           carrier: carrier,
           region: region
         }

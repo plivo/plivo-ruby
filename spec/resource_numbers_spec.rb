@@ -52,10 +52,10 @@ describe 'Numbers test' do
   it 'fetches details of a rented number' do
     contents = File.read(Dir.pwd + '/spec/mocks/numberGetResponse.json')
     mock(200, JSON.parse(contents))
-    expect(JSON.parse(to_json(@api.numbers.get('SAXXXXXXXXXXXXXXXXXX'))))
+    expect(JSON.parse(to_json(@api.numbers.get('SAXXXXXXXX'))))
       .to eql(JSON.parse(contents))
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Number/'\
-                     'SAXXXXXXXXXXXXXXXXXX/',
+                     'SAXXXXXXXX/',
                      method: 'GET',
                      data: nil)
   end
@@ -107,7 +107,7 @@ describe 'Numbers test' do
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Number/',
                      method: 'POST',
                      data: {
-                       numbers: '909090909090,909090909091',
+                       numbers: ['909090909090',909090909091],
                        carrier: 'carrier',
                        region: 'region',
                        app_id: 'app id',
@@ -116,7 +116,7 @@ describe 'Numbers test' do
   end
 
   it 'updates the number' do
-    id = 'SAXXXXXXXXXXXXXXXXXX'
+    id = '909090909090'
     contents = File.read(Dir.pwd + '/spec/mocks/numberUpdateResponse.json')
     mock(202, JSON.parse(contents))
     expect(JSON.parse(to_json_update(@api.numbers
@@ -133,7 +133,7 @@ describe 'Numbers test' do
   end
 
   it 'deletes the number' do
-    id = 'SAXXXXXXXXXXXXXXXXXX'
+    id = '909090909090'
     contents = '{}'
     mock(204, JSON.parse(contents))
     @api.numbers.delete(id)
