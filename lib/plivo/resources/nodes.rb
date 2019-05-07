@@ -41,6 +41,8 @@ module Plivo
       end
 
       def member(member_address)
+        valid_param?(:member_address, member_address, [String, Symbol], true)
+
         options = {'member_address' => member_address, 'node_id' => @id, 'phlo_id' => @phlo_id, 'node_type' => @node_type}
         Member.new(@_client, {resource_json: options})
       end
@@ -58,16 +60,28 @@ module Plivo
       end
 
       def call(trigger_source, to, role)
+        valid_param?(:trigger_source, trigger_source, [String, Symbol], true)
+        valid_param?(:to, to, [String, Symbol], true)
+        valid_param?(:role, role, [String, Symbol], true, %w(customer agent supervisor))
+
         payload = {action: 'call', trigger_source: trigger_source, to: to, role: role}
         perform_update(payload)
       end
 
       def warm_transfer(trigger_source, to, role='agent')
+        valid_param?(:trigger_source, trigger_source, [String, Symbol], true)
+        valid_param?(:to, to, [String, Symbol], true)
+        valid_param?(:role, role, [String, Symbol], true, %w(customer agent supervisor))
+
         payload = {action: 'warm_transfer', trigger_source: trigger_source, to: to, role: role}
         perform_update(payload)
       end
 
       def cold_transfer(trigger_source, to, role='agent')
+        valid_param?(:trigger_source, trigger_source, [String, Symbol], true)
+        valid_param?(:to, to, [String, Symbol], true)
+        valid_param?(:role, role, [String, Symbol], true, %w(customer agent supervisor))
+
         payload = {action: 'cold_transfer', trigger_source: trigger_source, to: to, role: role}
         perform_update(payload)
       end

@@ -23,11 +23,11 @@ module Plivo
       def delete(cascade = false)
         valid_param?(:cascade, cascade, [TrueClass, FalseClass],
           false, [true, false])
-        
+
         params = {
           :cascade => cascade
         }
-          
+
         perform_delete(params)
       end
 
@@ -82,7 +82,7 @@ module Plivo
       # @param [Array] options
       def list(options = nil)
         return perform_list if options.nil?
-
+        valid_param?(:options, options, Hash, true)
         params = {}
 
         %i[offset limit].each do |param|
@@ -113,6 +113,7 @@ module Plivo
       end
 
       def update(subaccount_id, name, enabled = false)
+        valid_subaccount?(subaccount_id, true)
         Subaccount.new(@_client, resource_id: subaccount_id).update(name, enabled)
       end
 
@@ -133,13 +134,13 @@ module Plivo
         valid_param?(:details, details, Hash, true)
 
         params = {}
-        %i[name city address].each do |param|
+        %i[name city address state timezone].each do |param|
           if details.key?(param) && valid_param?(param, details[param], [String, Symbol], true)
             params[param] = details[param]
           end
         end
 
-        raise_invalid_request('One parameter of name, city and address is required') if params == {}
+        raise_invalid_request('Please provide any of the following parameters to update: name, city, state, address, timezone') if params == {}
         perform_update(params)
       end
 

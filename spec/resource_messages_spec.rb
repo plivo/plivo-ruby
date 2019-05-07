@@ -61,7 +61,7 @@ describe 'Messages test' do
     mock(200, JSON.parse(contents))
     response = to_json_list(@api.messages
                                 .list(
-                                  subaccount: 'SAXXXXXXXXXXXXXXXXX',
+                                  subaccount: 'SAXXXXXXXXXXXXXXXXXX',
                                   offset: 3,
                                   message_direction: 'inbound',
                                   message_state: 'delivered'
@@ -79,7 +79,7 @@ describe 'Messages test' do
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Message/',
                      method: 'GET',
                      data: {
-                       subaccount: 'SAXXXXXXXXXXXXXXXXX',
+                       subaccount: 'SAXXXXXXXXXXXXXXXXXX',
                        offset: 3,
                        message_direction: 'inbound',
                        message_state: 'delivered'

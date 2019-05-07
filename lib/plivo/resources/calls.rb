@@ -14,8 +14,7 @@ module Plivo
         params = {}
 
         if options.key?(:legs) &&
-           valid_param?(:legs, options[:legs],
-                        [String, Symbol], true, %w[aleg bleg both])
+           valid_param?(:legs, options[:legs],[String, Symbol], true, %w[aleg bleg both])
           params[:legs] = options[:legs]
         end
 
@@ -23,6 +22,7 @@ module Plivo
           unless options.key?(:aleg_url)
             raise_invalid_request('default leg is aleg, aleg_url has to be specified')
           end
+          valid_param?(:aleg_url, options[:aleg_url], [String, Symbol], true)
           params[:aleg_url] = options[:aleg_url]
         end
 
@@ -30,6 +30,7 @@ module Plivo
           unless options.key?(:aleg_url)
             raise_invalid_request('leg is aleg, aleg_url has to be specified')
           end
+          valid_param?(:aleg_url, options[:aleg_url], [String, Symbol], true)
           params[:aleg_url] = options[:aleg_url]
         end
 
@@ -37,6 +38,7 @@ module Plivo
           unless options.key?(:bleg_url)
             raise_invalid_request('leg is bleg, bleg_url has to be specified')
           end
+          valid_param?(:bleg_url, options[:bleg_url], [String, Symbol], true)
           params[:bleg_url] = options[:bleg_url]
         end
 
@@ -44,6 +46,8 @@ module Plivo
           unless options.key?(:aleg_url) && options.key?(:bleg_url)
             raise_invalid_request('leg is both, aleg_url & bleg_url have to be specified')
           end
+          valid_param?(:aleg_url, options[:aleg_url], [String, Symbol], true)
+          valid_param?(:bleg_url, options[:bleg_url], [String, Symbol], true)
           params[:aleg_url] = options[:aleg_url]
           params[:bleg_url] = options[:bleg_url]
         end
@@ -159,14 +163,14 @@ module Plivo
 
         if options.key?(:voice) &&
            valid_param?(:voice, options[:voice],
-                        [String, Symbol], true, %w[MAN WOMAN])
+                        String, true, %w[MAN WOMAN])
           params[:voice] = options[:voice]
         end
 
-        if options.key?(:legs) &&
-           valid_param?(:legs, options[:legs],
+        if options.key?(:leg) &&
+           valid_param?(:leg, options[:leg],
                         [String, Symbol], true, %w[aleg bleg both])
-          params[:legs] = options[:legs]
+          params[:leg] = options[:leg]
         end
 
         %i[loop mix].each do |param|
@@ -269,7 +273,7 @@ module Plivo
       # @option options [String] :sip_headers- List of SIP headers in the form of 'key=value' pairs, separated by commas. E.g. head1=val1,head2=val2,head3=val3,...,headN=valN. The SIP headers are always prefixed with X-PH-. The SIP headers are present for every HTTP request made by the outbound call. Only [A-Z], [a-z] and [0-9] characters are allowed for the SIP headers key and value. Additionally, the '%' character is also allowed for the SIP headers value so that you can encode this value in the URL.
       # @option options [Int] :ring_timeout - Determines the time in seconds the call should ring. If the call is not answered within the ring_timeout value or the default value of 120s, it is canceled.
       # @option options [String] :parent_call_uuid - The call_uuid of the first leg in an ongoing conference call. It is recommended to use this parameter in scenarios where a member who is already present in the conference intends to add new members by initiating outbound API calls. This minimizes the delay in adding a new memeber to the conference.
-      # @option options [Boolean] :error_parent_not_found - if set to true and the parent_call_uuid cannot be found, the API request would return an error. If set to false, the outbound call API request will be executed even if the parent_call_uuid is not found. Defaults to false.
+      # @option options [Boolean] :error_if_parent_not_found - if set to true and the parent_call_uuid cannot be found, the API request would return an error. If set to false, the outbound call API request will be executed even if the parent_call_uuid is not found. Defaults to false.
       # @return [Call] Call
       def create(from, to, answer_url, answer_method = 'POST', options = nil)
         valid_param?(:from, from, [String, Symbol, Integer], true)
@@ -289,8 +293,56 @@ module Plivo
         }
 
         return perform_create(params) if options.nil?
+        valid_param?(:options, options, Hash, true)
 
-        perform_create(params.merge(options))
+        %i[ring_url hangup_url fallback_url caller_name machine_detection_url sip_headers parent_call_uuid send_digits]
+          .each do |param|
+          if options.key?(param) &&
+             valid_param?(param, options[param], [String, Symbol], true)
+            params[param] = options[param]
+          end
+        end
+
+        %i[time_limit hangup_on_ring ring_timeout].each do |param|
+          if options.key?(param) && valid_param?(param, options[param], [Integer], true)
+            if options[param] < 0
+              err_msg = 'Value for ' + param.to_s + ' should be an integer > 0'
+              raise_invalid_request(err_msg)
+            else
+              params[param] = options[param]
+            end
+          end
+        end
+
+        %i[ring_method hangup_method fallback_method machine_detection_method]
+          .each do |param|
+          if options.key?(param) &&
+             valid_param?(param, options[param], [String, Symbol], true, %w[GET POST])
+            params[param] = options[param]
+          end
+        end
+
+        %i[send_on_preanswer error_if_parent_not_found].each do |param|
+          if options.key?(param) &&
+             valid_param?(param, options[param], [TrueClass, FalseClass], true)
+            params[param] = options[param]
+          end
+        end
+
+        if options.key?(:machine_detection) &&
+            valid_param?(:machine_detection, options[:machine_detection], [String, Symbol], true, %w(hangup true))
+          params[:machine_detection] = options[:machine_detection]
+        end
+
+        if options.key?(:machine_detection_time) &&
+            valid_param?(:machine_detection_time, options[:machine_detection_time], [Integer], true)
+          if options[:machine_detection_time] > 10000 || options[:machine_detection_time] < 2000
+            raise_invalid_request('machine_detection_time should be an integer >= 2000 and <= 10000')
+          else
+            params[:machine_detection_time] = options[:machine_detection_time]
+          end
+        end
+        perform_create(params)
       end
 
       ##
@@ -303,11 +355,13 @@ module Plivo
 
       # @param [String] call_uuid
       def get_live(call_uuid)
+        valid_param?(:call_uuid, call_uuid, [String, Symbol], true)
         perform_get(call_uuid, status: 'live')
       end
 
       # @param [String] call_uuid
       def get_queued(call_uuid)
+        valid_param?(:call_uuid, call_uuid, [String, Symbol], true)
         perform_get(call_uuid, status: 'queued')
       end
 
@@ -335,7 +389,7 @@ module Plivo
       #                                    - Note: The above filters can be combined to get calls that ended in a particular time range. The timestamps need to be UTC timestamps.
       # @option options [String] :parent_call_uuid - Filter the results by parent call uuid.
       # @option options [String] :hangup_source - Filter the results by hangup source
-      # @option options [String] :hangup_cause_code - Filter the results by hangup cause code
+      # @option options [Int] :hangup_cause_code - Filter the results by hangup cause code
       # @option options [Int] :limit - Used to display the number of results per page. The maximum number of results that can be fetched is 20.
       # @option options [Int] :offset - Denotes the number of value items by which the results should be offset. E.g., If the result contains a 1000 values and limit is set to 10 and offset is set to 705, then values 706 through 715 are displayed in the results. This parameter is also used for pagination of the results.
 
@@ -345,7 +399,7 @@ module Plivo
 
         params = {}
         params_expected = %i[
-          subaccount bill_duration bill_duration__gt bill_duration__gte
+          from_number to_number bill_duration bill_duration__gt bill_duration__gte
           bill_duration__lt bill_duration__lte end_time end_time__gt
           end_time__gte end_time__lt end_time__lte parent_call_uuid hangup_source
         ]
@@ -354,6 +408,11 @@ module Plivo
              valid_param?(param, options[param], [String, Symbol], true)
             params[param] = options[param]
           end
+        end
+
+        if options.key?(:subaccount) &&
+           valid_subaccount?(options[:subaccount], true)
+          params[:subaccount] = options[:subaccount]
         end
 
         if options.key?(:call_direction) &&
@@ -397,7 +456,7 @@ module Plivo
       #                                     - To filter out those numbers that contain a particular number sequence, use to_number={ sequence}
       #                                     - To filter out a number that matches an exact number, use to_number={ exact_number}
       def list_live(options = nil)
-        
+
         if options.nil?
           options = {}
         else
