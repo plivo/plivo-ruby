@@ -1,0 +1,5 @@
+---
+language: ruby-sdk
+build:
+  command: |
+      gem build plivo.gemspec
