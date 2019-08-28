@@ -5,8 +5,8 @@ module Plivo
       @valid_attributes = %w(xmllang)
 
        VALID_LANG_ATTRIBUTE_VALUES = [
-        'cmn-CN','da-DK','nl-NL','en-AU','en-GB',
-        'en-IN','en-US','en-GB-WLS','fr-FR',
+        'arb', 'cmn-CN','da-DK','nl-NL','en-AU',
+        'en-GB', 'en-IN','en-US','en-GB-WLS','fr-FR',
         'fr-CA','de-DE','hi-IN','is-IS','it-IT',
         'ja-JP','ko-KR','nb-NO','pl-PL','pt-BR',
         'pt-PT','ro-RO','ru-RU','es-ES','es-MX',

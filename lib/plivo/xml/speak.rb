@@ -4,7 +4,7 @@ module Plivo
       @valid_attributes = %w[voice language loop]
 
       SUPPORTED_ENGINES=%w(Polly)
-      SUPPORTED_VOICES=%w(Nicole Russell Vitoria Ricardo Chantal Naja Mads Lotte Ruben Lea Celine Mathieu Vicki Marlene Hans Aditi Dora Karl Raveena Aditi Carla Giorgio Mizuki Takumi Seoyeon Zhiyu Liv Ewa Maja Jacek Jan Ines Cristiano Carmen Tatyana Maxim Conchita Enrique Astrid Filiz Amy Emma Brian Joanna Matthew Salli Justin Kendra Joey Kimberly Ivy Penelope Miguel Gwyneth Geraint)
+      SUPPORTED_VOICES=%w(Nicole Russell Vitoria Ricardo Chantal Naja Mads Lotte Ruben Lea Celine Mathieu Vicki Marlene Hans Aditi Dora Karl Raveena Aditi Carla Giorgio Mizuki Takumi Seoyeon Zhiyu Liv Ewa Maja Jacek Jan Ines Cristiano Carmen Tatyana Maxim Conchita Enrique Astrid Filiz Amy Emma Brian Joanna Matthew Salli Justin Kendra Joey Kimberly Ivy Penelope Miguel Gwyneth Geraint Zeina Mia)
 
       def initialize(body, attributes = {})
         if attributes.nil? || attributes[:voice].nil? || ['MAN', 'WOMAN'].include?(attributes[:voice])

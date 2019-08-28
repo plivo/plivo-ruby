@@ -6,13 +6,25 @@ module Plivo
       end
       @nestables = []
       @valid_attributes = []
+      SSML_TAGS=%w[Break Emphasis Lang P Phoneme Prosody S SayAs Sub W]
 
       attr_accessor :node, :name
+
+      def hyphenate(pascal_cased_word)
+        pascal_cased_word.to_s.gsub(/::/, '/').
+          gsub(/([A-Z]+)([A-Z][a-z])/,'\1-\2').
+          gsub(/([a-z\d])([A-Z])/,'\1-\2').
+          downcase
+      end
 
       def initialize(body = nil, attributes = {}, nestables=self.class.nestables)
         @name = self.class.name.split('::')[2]
         @body = body
-        @node = REXML::Element.new @name
+        tagname = @name
+        if SSML_TAGS.include?(@name)
+          tagname = hyphenate(@name)
+        end
+        @node = REXML::Element.new tagname
         attributes.each do |k, v|
           if self.class.valid_attributes.include?(k.to_s)
             @node.attributes[k.to_s] = convert_value(v)

@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'rspec'
 require 'plivo'
 
@@ -10,7 +11,7 @@ describe 'SSML elements test' do
       speak.addBreak(time: '300ms')
       xml = Plivo::XML::PlivoXML.new(resp)
       
-      expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<Break time='300ms'/></Speak></Response>")
+      expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<break time='300ms'/></Speak></Response>")
     end
 
     it 'should throw exception if wrong attribute value specified for strength attribute' do
@@ -39,7 +40,7 @@ describe 'SSML elements test' do
      speak.addEmphasis('test', level: 'strong')
      xml = Plivo::XML::PlivoXML.new(resp)
 
-     expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<Emphasis level='strong'>test</Emphasis></Speak></Response>")
+     expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<emphasis level='strong'>test</emphasis></Speak></Response>")
    end
 
    it 'should raise exception if invalid attribute value specified' do
@@ -58,7 +59,7 @@ describe 'SSML elements test' do
       xml = Plivo::XML::PlivoXML.new(resp)
       puts xml.to_xml
 
-      expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<Lang xml:lang='fr-FR'>test</Lang></Speak></Response>")
+      expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<lang xml:lang='fr-FR'>test</lang></Speak></Response>")
     end
 
     it 'should raise xml exception if required attribute is not specified' do
@@ -79,7 +80,7 @@ describe 'SSML elements test' do
     speak.addP('test')
     xml = Plivo::XML::PlivoXML.new(resp)
 
-    expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<P>test</P></Speak></Response>")
+    expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<p>test</p></Speak></Response>")
   end
 
   describe 'test for <phoneme>' do
@@ -89,7 +90,7 @@ describe 'SSML elements test' do
       speak.addPhoneme('test', ph: 'pɪˈkɑːn', alphabet: 'ipa')
       xml = Plivo::XML::PlivoXML.new(resp)
 
-      expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<Phoneme alphabet='ipa' ph='pɪˈkɑːn'>test</Phoneme></Speak></Response>")
+      expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<phoneme alphabet='ipa' ph='pɪˈkɑːn'>test</phoneme></Speak></Response>")
     end
 
     it 'should raise xml exception if required attribute is not specified' do
@@ -112,7 +113,7 @@ describe 'SSML elements test' do
       speak.addProsody('test', {volume: "-20dB", rate: '20%', pitch: '80%'})
       xml = Plivo::XML::PlivoXML.new(resp)
 
-      expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<Prosody pitch='80%' rate='20%' volume='-20dB'>test</Prosody></Speak></Response>")
+      expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<prosody pitch='80%' rate='20%' volume='-20dB'>test</prosody></Speak></Response>")
     end
 
     it 'should raise xml exception if required attribute is not specified' do
@@ -147,7 +148,7 @@ describe 'SSML elements test' do
       speak.addSub('test', alias: "new word")
       xml = Plivo::XML::PlivoXML.new(resp)
 
-      expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<Sub alias='new word'>test</Sub></Speak></Response>")
+      expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<sub alias='new word'>test</sub></Speak></Response>")
     end
 
     it 'should raise xml exception if required attribute is not specified' do
@@ -165,7 +166,7 @@ describe 'SSML elements test' do
       speak = resp.addSpeak('Test Call', voice: 'Polly.Salli')
       speak.addSayAs('test', "interpret-as" => "character")
       xml = Plivo::XML::PlivoXML.new(resp)
-      expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<SayAs interpret-as='character'>test</SayAs></Speak></Response>")
+      expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<say-as interpret-as='character'>test</say-as></Speak></Response>")
     end
 
     it 'should raise xml exception if required attribute is not specified' do
@@ -193,7 +194,7 @@ describe 'SSML elements test' do
     speak.addS('test')
     xml = Plivo::XML::PlivoXML.new(resp)
 
-    expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<S>test</S></Speak></Response>")
+    expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<s>test</s></Speak></Response>")
 
   end
 
@@ -204,7 +205,7 @@ describe 'SSML elements test' do
       speak.addW('test', role: 'amazon:VBD')
       xml = Plivo::XML::PlivoXML.new(resp)
 
-      expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<W role='amazon:VBD'>test</W></Speak></Response>")
+      expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<w role='amazon:VBD'>test</w></Speak></Response>")
     end
 
     it 'should raise exception if invalid attribute value specified' do

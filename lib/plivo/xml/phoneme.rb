@@ -4,7 +4,7 @@ module Plivo
       @nestables = []
       @valid_attributes = %w(alphabet ph)
 
-      VALID_ALPHABET_ATTRIBUTE_VALUES=%w(ipa x-sampa)
+      VALID_ALPHABET_ATTRIBUTE_VALUES=%w(ipa x-sampa x-amazon-pinyin)
 
       def initialize(body, attributes = {})
         unless attributes && attributes[:ph]
