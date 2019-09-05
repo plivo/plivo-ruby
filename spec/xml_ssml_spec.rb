@@ -54,12 +54,12 @@ describe 'SSML elements test' do
   describe 'test for <lang>' do
     it 'should succeed' do
       resp = Plivo::XML::Response.new
-      speak = resp.addSpeak('Test Call', voice: 'Polly.Salli')
-      speak.addLang('test', {xmllang: 'fr-FR'})
+      speak = resp.addSpeak('हिन्दी + !@#$%<', voice: 'Polly.Aditi')
+      speak.addLang('भाषा + ^&*()>', {xmllang: 'hi-IN'})
       xml = Plivo::XML::PlivoXML.new(resp)
       puts xml.to_xml
 
-      expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<lang xml:lang='fr-FR'>test</lang></Speak></Response>")
+      expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Aditi'>हिन्दी + !@#$%&lt;<lang xml:lang='hi-IN'>भाषा + ^&amp;*()&gt;</lang></Speak></Response>")
     end
 
     it 'should raise xml exception if required attribute is not specified' do
@@ -67,6 +67,7 @@ describe 'SSML elements test' do
       speak = resp.addSpeak('Test Call', voice: 'Polly.Salli')
       expect{speak.addLang('test')}.to raise_error(Plivo::Exceptions::PlivoXMLError, 'xmllang attribute is a required attribute for lang')
     end
+
     it 'should raise exception if invalid attribute value specified' do
       resp = Plivo::XML::Response.new
       speak = resp.addSpeak('Test Call', voice: 'Polly.Salli')

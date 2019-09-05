@@ -20,8 +20,6 @@ module Plivo
         end
         if !body
           raise PlivoXMLError, 'No text set for Speak'
-        else
-          body = HTMLEntities.new(:html4).encode(body, :decimal)
         end
         super(body, attributes, @nestables)
       end
