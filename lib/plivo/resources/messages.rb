@@ -61,32 +61,34 @@ module Plivo
       # @option options [String] :method The method used to call the url. Defaults to POST.
       # @option options [String] :log If set to false, the content of this message will not be logged on the Plivo infrastructure and the dst value will be masked (e.g., 141XXXXX528). Default is set to true.
       # @option options [String] :trackable set to false
-      def create(src, dst, text, options = nil, powerpack_uuid = nil)
-        valid_param?(:src, src, [Integer, String, Symbol], false)
-        valid_param?(:text, text, [String, Symbol], true)
-        valid_param?(:dst, dst, Array, true)
-        valid_param?(:powerpack_uuid, powerpack_uuid, [String, Symbol], false)
-        dst.each do |dst_num|
+      def create(data = nil)
+        valid_param?(data.key?(:src), [Integer, String, Symbol], false)
+        valid_param?(data.key?(:text), text, [String, Symbol], true)
+        valid_param?(data.key?(:dst), dst, Array, true)
+        valid_param?(data.key?(:powerpack_uuid), powerpack_uuid, [String, Symbol], false)
+        dest = Array.new()
+        dest = data.key?(:dst)
+        dest.each do |dst_num|
           valid_param?(:dst_num, dst_num, [Integer, String, Symbol], true)
         end
 
-        if dst.include? src
+        if data.key?(:dst) && data.key?(:src)
           raise InvalidRequestError, 'src and dst cannot be same'
         end
 
-        if src.nil? && powerpack_uuid.nil?
+        if data.key?(:src).nil? && data.key(:powerpack_uuid).nil?
           raise InvalidRequestError, 'src and powerpack uuid both cannot be nil'
         end
 
-        if !src.nil? && !powerpack_uuid.nil?
+        if !data.key?(:src).nil? && !data.key(:powerpack_uuid).nil?
           raise InvalidRequestError, 'src and powerpack uuid both cannot be present'
         end
 
         params = {
-          src: src,
-          dst: dst.join('<'),
-          text: text,
-          powerpack_uuid: powerpack_uuid
+          src: data.key?(:src),
+          dst: data.key?(:dst).join('<'),
+          text: data.key?(:text),
+          powerpack_uuid: data.key(:powerpack_uuid)
         }
 
         return perform_create(params) if options.nil?
