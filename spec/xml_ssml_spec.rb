@@ -164,9 +164,9 @@ describe 'SSML elements test' do
     it 'should succeed' do
       resp = Plivo::XML::Response.new
       speak = resp.addSpeak('Test Call', voice: 'Polly.Salli')
-      speak.addSayAs('test', "interpret-as" => "character")
+      speak.addSayAs('test', "interpret-as" => "characters")
       xml = Plivo::XML::PlivoXML.new(resp)
-      expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<say-as interpret-as='character'>test</say-as></Speak></Response>")
+      expect(xml.to_xml).to eql("<?xml version=\"1.0\" encoding=\"utf-8\" ?><Response><Speak voice='Polly.Salli'>Test Call<say-as interpret-as='characters'>test</say-as></Speak></Response>")
     end
 
     it 'should raise xml exception if required attribute is not specified' do
