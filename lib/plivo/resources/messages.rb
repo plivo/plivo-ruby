@@ -88,7 +88,7 @@ module Plivo
           src: data.key?(:src),
           dst: data.key?(:dst).join('<'),
           text: data.key?(:text),
-          powerpack_uuid: data.key(:powerpack_uuid)
+          powerpack_uuid: data.key?(:powerpack_uuid)
         }
 
         return perform_create(params) if options.nil?
