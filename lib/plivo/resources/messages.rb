@@ -61,33 +61,36 @@ module Plivo
       # @option options [String] :method The method used to call the url. Defaults to POST.
       # @option options [String] :log If set to false, the content of this message will not be logged on the Plivo infrastructure and the dst value will be masked (e.g., 141XXXXX528). Default is set to true.
       # @option options [String] :trackable set to false
-      def create(src, dst, text, options = nil, powerpack_uuid = nil)
-        valid_param?(:src, src, [Integer, String, Symbol], false)
-        valid_param?(:text, text, [String, Symbol], true)
-        valid_param?(:dst, dst, Array, true)
-        valid_param?(:powerpack_uuid, powerpack_uuid, [String, Symbol], false)
-        dst.each do |dst_num|
-          valid_param?(:dst_num, dst_num, [Integer, String, Symbol], true)
-        end
+      def create(options)
 
-        if dst.include? src
+        params = {}
+
+        if (options[:dst] == options[:src])
           raise InvalidRequestError, 'src and dst cannot be same'
         end
 
-        if src.nil? && powerpack_uuid.nil?
+        if options.key?(:src).nil? && options.key(:powerpack_uuid).nil?
           raise InvalidRequestError, 'src and powerpack uuid both cannot be nil'
         end
 
-        if !src.nil? && !powerpack_uuid.nil?
+        if !options.key?(:src).nil? && !options.key(:powerpack_uuid).nil?
           raise InvalidRequestError, 'src and powerpack uuid both cannot be present'
         end
 
-        params = {
-          src: src,
-          dst: dst.join('<'),
-          text: text,
-          powerpack_uuid: powerpack_uuid
-        }
+        if options.key?(:src) && valid_param?(options.key?(:src), options[:src],[Integer, String, Symbol], false)
+          params[:src] = options[:src]
+        end
+
+        if options.key?(:dst) && valid_param?(options.key?(:dst), options[:dst], Array, true)
+          options[:dst].each do |dst_num|
+            valid_param?(:dst_num, dst_num, [Integer, String, Symbol], true)
+          end
+          params[:dst] = options[:dst].join('<')
+        end
+
+        if options.key?(:text) && valid_param?(options.key?(:text), options[:text], [String, Symbol], true)
+          params[:text] = options[:text]
+        end
 
         return perform_create(params) if options.nil?
         valid_param?(:options, options, Hash, true)
