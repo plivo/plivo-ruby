@@ -61,63 +61,124 @@ module Plivo
       # @option options [String] :method The method used to call the url. Defaults to POST.
       # @option options [String] :log If set to false, the content of this message will not be logged on the Plivo infrastructure and the dst value will be masked (e.g., 141XXXXX528). Default is set to true.
       # @option options [String] :trackable set to false
-      def create(options)
+      def create(src = nil,  dst = nil, text = nil, options = nil, powerpack_uuid = nil)
 
-        params = {}
+        #All params in One HASH
+        if(src.is_a?(Hash))
+          valid_param?(:src, src[:src], [Integer, String, Symbol], false)
+          valid_param?(:text, src[:text], [String, Symbol], true)
+          valid_param?(:dst, src[:dst], [String, Array], true)
+          valid_param?(:powerpack_uuid, src[:powerpack_uuid], [String, Symbol], false)
 
-        if (options[:dst] == options[:src])
-          raise InvalidRequestError, 'src and dst cannot be same'
-        end
+          if (src[:dst] == src[:src])
+            raise InvalidRequestError, 'src and dst cannot be same'
+          end
 
-        if options.key?(:src).nil? && options.key(:powerpack_uuid).nil?
-          raise InvalidRequestError, 'src and powerpack uuid both cannot be nil'
-        end
+          if src.key?(:src).nil? && src.key(:powerpack_uuid).nil?
+            raise InvalidRequestError, 'src and powerpack uuid both cannot be nil'
+          end
 
-        if !options.key?(:src).nil? && !options.key(:powerpack_uuid).nil?
-          raise InvalidRequestError, 'src and powerpack uuid both cannot be present'
-        end
+          if !src.key?(:src).nil? && !src.key(:powerpack_uuid).nil?
+            raise InvalidRequestError, 'src and powerpack uuid both cannot be present'
+          end
 
-        if options.key?(:src) && valid_param?(options.key?(:src), options[:src],[Integer, String, Symbol], false)
-          params[:src] = options[:src]
-        end
+          params = {
+            src: src[:src],
+            dst: src[:dst].join('<'),
+            text: src[:text],
+            powerpack_uuid: src[:powerpack_uuid]
+          }
 
-        if options.key?(:dst) && valid_param?(options.key?(:dst), options[:dst], Array, true)
-          options[:dst].each do |dst_num|
+          if (src[:dst].is_a?(Array))
+            src[:dst].each do |dst_num|
+              valid_param?(:dst_num, dst_num, [Integer, String, Symbol], true)
+              params[:dst] = src[:dst].join('<')
+            end
+          else
+            params[:dst] = src[:dst]
+          end
+
+          #Handling optional params in One HASH
+          if src.key?(:type) && valid_param?(:type, src[:type],String, true, 'sms')
+             params[:type] = src[:type]
+          end         
+
+          if src.key?(:url) && valid_param?(:url, src[:url], String, true)
+             params[:url] = src[:url]
+             if src.key?(:method) &&
+              valid_param?(:method, src[:method], String, true, %w[POST GET])
+              params[:method] = src[:method]
+             else
+               params[:method] = 'POST'
+             end
+          end         
+          
+          if src.key?(:log) &&
+            valid_param?(:log, src[:log], [TrueClass, FalseClass], true)
+              params[:log] = src[:log]
+          end         
+
+          if src.key?(:trackable) &&
+              valid_param?(:trackable, src[:trackable], [TrueClass, FalseClass], true)
+              params[:trackable] = src[:trackable]
+          end
+
+        #legacy code compatibility
+        else
+          valid_param?(:src, src, [Integer, String, Symbol], false)
+          valid_param?(:text, text, [String, Symbol], true)
+          valid_param?(:dst, dst, Array, true)
+          valid_param?(:powerpack_uuid, powerpack_uuid, [String, Symbol], false)
+          dst.each do |dst_num|
             valid_param?(:dst_num, dst_num, [Integer, String, Symbol], true)
           end
-          params[:dst] = options[:dst].join('<')
-        end
 
-        if options.key?(:text) && valid_param?(options.key?(:text), options[:text], [String, Symbol], true)
-          params[:text] = options[:text]
-        end
-
-        return perform_create(params) if options.nil?
-        valid_param?(:options, options, Hash, true)
-
-        if options.key?(:type) &&
-           valid_param?(:type, options[:type], String, true, 'sms')
-          params[:type] = options[:type]
-        end
-
-        if options.key?(:url) && valid_param?(:url, options[:url], String, true)
-          params[:url] = options[:url]
-          if options.key?(:method) &&
-             valid_param?(:method, options[:method], String, true, %w[POST GET])
-            params[:method] = options[:method]
-          else
-            params[:method] = 'POST'
+          if dst.include? src
+            raise InvalidRequestError, 'src and dst cannot be same'
           end
-        end
 
-        if options.key?(:log) &&
-           valid_param?(:log, options[:log], [TrueClass, FalseClass], true)
-          params[:log] = options[:log]
-        end
+          if src.nil? && powerpack_uuid.nil?
+            raise InvalidRequestError, 'src and powerpack uuid both cannot be nil'
+          end
 
-        if options.key?(:trackable) &&
-          valid_param?(:trackable, options[:trackable], [TrueClass, FalseClass], true)
-         params[:trackable] = options[:trackable]
+          if !src.nil? && !powerpack_uuid.nil?
+            raise InvalidRequestError, 'src and powerpack uuid both cannot be present'
+          end
+
+          params = {
+            src: src,
+            dst: dst.join('<'),
+            text: text,
+            powerpack_uuid: powerpack_uuid
+          }
+
+          return perform_create(params) if options.nil?
+          valid_param?(:options, options, Hash, true)
+
+          if options.key?(:type) &&
+             valid_param?(:type, options[:type], String, true, 'sms')
+            params[:type] = options[:type]
+          end
+
+          if options.key?(:url) && valid_param?(:url, options[:url], String, true)
+            params[:url] = options[:url]
+            if options.key?(:method) &&
+               valid_param?(:method, options[:method], String, true, %w[POST GET])
+              params[:method] = options[:method]
+            else
+              params[:method] = 'POST'
+            end
+          end
+
+          if options.key?(:log) &&
+             valid_param?(:log, options[:log], [TrueClass, FalseClass], true)
+            params[:log] = options[:log]
+          end
+
+          if options.key?(:trackable) &&
+            valid_param?(:trackable, options[:trackable], [TrueClass, FalseClass], true)
+           params[:trackable] = options[:trackable]
+          end
         end
         perform_create(params)
       end
