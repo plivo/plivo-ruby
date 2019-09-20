@@ -127,11 +127,8 @@ module Plivo
         else
           valid_param?(:src, src, [Integer, String, Symbol], false)
           valid_param?(:text, text, [String, Symbol], true)
-          valid_param?(:dst, dst, Array, true)
+          valid_param?(:dst, dst, [String, Array], true)
           valid_param?(:powerpack_uuid, powerpack_uuid, [String, Symbol], false)
-          dst.each do |dst_num|
-            valid_param?(:dst_num, dst_num, [Integer, String, Symbol], true)
-          end
 
           if dst.include? src
             raise InvalidRequestError, 'src and dst cannot be same'
@@ -147,10 +144,18 @@ module Plivo
 
           params = {
             src: src,
-            dst: dst.join('<'),
             text: text,
             powerpack_uuid: powerpack_uuid
           }
+
+          if (dst.is_a?(Array))
+            dst.each do |dst_num|
+              valid_param?(:dst_num, dst_num, [Integer, String, Symbol], true)
+              params[:dst] = dst.join('<')
+            end
+          else
+            params[:dst] = dst
+          end
 
           return perform_create(params) if options.nil?
           valid_param?(:options, options, Hash, true)
