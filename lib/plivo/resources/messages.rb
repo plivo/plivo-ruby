@@ -84,7 +84,6 @@ module Plivo
 
           params = {
             src: src[:src],
-            dst: src[:dst].join('<'),
             text: src[:text],
             powerpack_uuid: src[:powerpack_uuid]
           }
