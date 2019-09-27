@@ -294,7 +294,8 @@ module Plivo
           else
             params[:to] = from[:to]
           end
-
+          perform_create(params)
+          
         else
         #legacy code compatibility
           valid_param?(:from, from, [String, Symbol, Integer], true)
@@ -311,7 +312,7 @@ module Plivo
             answer_url: answer_url,
             answer_method: answer_method
           }
-          
+
           if (to.is_a?(Array))
             to.each do |to_num|
               valid_param?(:to_num, to_num, [Integer, String, Symbol], true)
@@ -324,7 +325,6 @@ module Plivo
           return perform_create(params) if options.nil?
             perform_create(params.merge(options))
         end
-        perform_create(params)
       end
 
       ##
