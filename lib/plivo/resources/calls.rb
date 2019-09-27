@@ -271,26 +271,60 @@ module Plivo
       # @option options [String] :parent_call_uuid - The call_uuid of the first leg in an ongoing conference call. It is recommended to use this parameter in scenarios where a member who is already present in the conference intends to add new members by initiating outbound API calls. This minimizes the delay in adding a new memeber to the conference.
       # @option options [Boolean] :error_parent_not_found - if set to true and the parent_call_uuid cannot be found, the API request would return an error. If set to false, the outbound call API request will be executed even if the parent_call_uuid is not found. Defaults to false.
       # @return [Call] Call
-      def create(from, to, answer_url, answer_method = 'POST', options = nil)
-        valid_param?(:from, from, [String, Symbol, Integer], true)
-        valid_param?(:to, to, Array, true)
-        to.each do |to_num|
-          valid_param?(:to_num, to_num, [Integer, String, Symbol], true)
+      def create(from = nil, to = nil, answer_url = nil, answer_method = 'POST', options = nil)
+        #All params in One HASH
+        if(from.is_a?(Hash))
+          valid_param?(:from, from[:from], [String, Symbol, Integer], true)
+          valid_param?(:to, from[:to], [String, Array], true)
+          valid_param?(:answer_url, from[:answer_url], [String, Symbol], true)
+          valid_param?(:answer_method, from[:answer_method], [String, Symbol],
+                       true, %w[GET POST])
+
+          params = {
+            from: from[:from],
+            answer_url: from[:answer_url],
+            answer_method: from[:answer_method]
+          }
+
+          if (from[:to].is_a?(Array))
+            from[:to].each do |to_num|
+            valid_param?(:to_num, to_num, [Integer, String, Symbol], true)
+              params[:to] = from[:to].join('<')
+            end
+          else
+            params[:to] = from[:to]
+          end
+          perform_create(params)
+          
+        else
+        #legacy code compatibility
+          valid_param?(:from, from, [String, Symbol, Integer], true)
+          valid_param?(:to, to, [String, Array], true)
+          to.each do |to_num|
+            valid_param?(:to_num, to_num, [Integer, String, Symbol], true)
+          end
+          valid_param?(:answer_url, answer_url, [String, Symbol], true)
+          valid_param?(:answer_method, answer_method, [String, Symbol],
+                       true, %w[GET POST])
+
+          params = {
+            from: from,
+            answer_url: answer_url,
+            answer_method: answer_method
+          }
+
+          if (to.is_a?(Array))
+            to.each do |to_num|
+              valid_param?(:to_num, to_num, [Integer, String, Symbol], true)
+              params[:to] = to.join('<')
+            end
+          else
+            params[:to] = to
+          end
+
+          return perform_create(params) if options.nil?
+            perform_create(params.merge(options))
         end
-        valid_param?(:answer_url, answer_url, [String, Symbol], true)
-        valid_param?(:answer_method, answer_method, [String, Symbol],
-                     true, %w[GET POST])
-
-        params = {
-          from: from,
-          to: to.join('<'),
-          answer_url: answer_url,
-          answer_method: answer_method
-        }
-
-        return perform_create(params) if options.nil?
-
-        perform_create(params.merge(options))
       end
 
       ##
