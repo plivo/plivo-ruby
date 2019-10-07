@@ -29,7 +29,7 @@ module Plivo
     def process_response(method, response)
       handle_response_exceptions(response)
       if method == 'DELETE'
-        if response[:status] !([200, 204])
+        if !([200, 204].include? response[:status])
           raise Exceptions::PlivoRESTError, "Resource at #{response[:url]} "\
           'couldn\'t be deleted'
         end

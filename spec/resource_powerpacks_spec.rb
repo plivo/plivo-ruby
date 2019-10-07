@@ -49,10 +49,11 @@ describe 'Powerpack test' do
       it 'delete powerpack' do
         contents = File.read(Dir.pwd + '/spec/mocks/powerpackDeleteResponse.json')
         mock(200, JSON.parse(contents))
-        response = @api.powerpacks
-                       .delete(
+        powerpack = @api.powerpacks
+                       .get(
                          '86bbb125-97bb-4d72-89fd-81d5c515b015'
                        )
+        response = powerpack.delete()
         expect(JSON.parse(to_json(response)))
           .to eql(JSON.parse(contents))
         compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Powerpack/'\
@@ -62,6 +63,57 @@ describe 'Powerpack test' do
         expect(response.message).to eql(response.message)
       end
 
-      
+      it 'find shortcode' do
+        contents = File.read(Dir.pwd + '/spec/mocks/shortcodeResponse.json')
+        mock(200, JSON.parse(contents))
+        powerpack = @api.powerpacks
+                       .get(
+                         '86bbb125-97bb-4d72-89fd-81d5c515b015'
+                       )
+        response = powerpack.find_shortcode('444444')
+        # response = powerpack.numberpool.shortcodes.find('14845733594')
+        expect(JSON.parse(to_json(response)))
+          .to eql(JSON.parse(contents))
+        compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/NumerPool/'\
+                         '659c7f88-c819-46e2-8af4-2d8a84249099/Shortcode/444444/',
+                         method: 'GET',
+                         data: nil)
+        expect(response.shortcode).to eql('444444')
+      end
+      it 'find numbers' do
+        contents = File.read(Dir.pwd + '/spec/mocks/numberpoolResponse.json')
+        mock(200, JSON.parse(contents))
+        powerpack = @api.powerpacks
+                       .get(
+                         '86bbb125-97bb-4d72-89fd-81d5c515b015'
+                       )
+        response = powerpack.find_numbers('14845733594')
+        # response = powerpack.numberpool.numbers.find('14845733594')
+        expect(JSON.parse(to_json(response)))
+          .to eql(JSON.parse(contents))
+        compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/NumerPool/'\
+                         '659c7f88-c819-46e2-8af4-2d8a84249099/Numbers/14845733594/',
+                         method: 'GET',
+                         data: nil)
+        expect(response.number).to eql('14845733594')
+      end
+
+      it 'add numbers' do
+        contents = File.read(Dir.pwd + '/spec/mocks/numberpoolResponse.json')
+        mock(200, JSON.parse(contents))
+        powerpack = @api.powerpacks
+                       .get(
+                         '86bbb125-97bb-4d72-89fd-81d5c515b015'
+                       )
+        response = powerpack.add_numbers('14845733594')
+        # response = powerpack.numberpool.numbers.add('14845733594')
+        expect(JSON.parse(to_json(response)))
+          .to eql(JSON.parse(contents))
+        compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/NumerPool/'\
+                         '659c7f88-c819-46e2-8af4-2d8a84249099/Numbers/14845733594/',
+                         method: 'POST',
+                         data: nil)
+        expect(response.number).to eql('14845733594')
+      end
 
 end
