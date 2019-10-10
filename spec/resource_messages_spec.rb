@@ -56,6 +56,44 @@ describe 'Messages test' do
     expect(response.id).to eql(response.message_uuid)
   end
 
+  it 'fetches details of a mms medis' do
+    contents = File.read(Dir.pwd + '/spec/mocks/mmsMediaResponse.json')
+    mock(200, JSON.parse(contents))
+    response = @api.messages
+                   .get(
+                     'f734eeec-e59f-11e9-89dc-0242ac110003'
+                   ).getMedia('91f8f9ce-e236-474f-a2b8-f75d9c35988a')
+    expect(JSON.parse(to_json(response)))
+      .to eql(JSON.parse(contents))
+    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Message/'\
+                     'f734eeec-e59f-11e9-89dc-0242ac110003/Media/91f8f9ce-e236-474f-a2b8-f75d9c35988a/',
+                     method: 'GET',
+                     data: nil)
+    expect(response.id).to eql(response.message_uuid)
+  end
+
+  it 'lists all mms media' do
+    contents = File.read(Dir.pwd + '/spec/mocks/mmsmediaListResponse.json')
+    mock(200, JSON.parse(contents))
+    response = to_json_list(@api.messages
+                   .get(
+                     'f734eeec-e59f-11e9-89dc-0242ac110003'
+                   ).listMedia())
+
+    contents = JSON.parse(contents)
+    objects = contents['objects'].map do |obj|
+      obj.delete('api_id')
+      obj
+    end
+    contents['objects'] = objects
+
+    expect(JSON.parse(response))
+      .to eql(contents)
+    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Message/f734eeec-e59f-11e9-89dc-0242ac110003/Media/',
+                     method: 'GET',
+                     data: {})
+  end
+
   it 'lists all messages' do
     contents = File.read(Dir.pwd + '/spec/mocks/messageListResponse.json')
     mock(200, JSON.parse(contents))

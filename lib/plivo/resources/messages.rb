@@ -8,15 +8,15 @@ module Plivo
         super
       end
       def listMedia()
-        perform_action('/Media/', 'GET') 
+        perform_action_apiresponse('Media', 'GET') 
       end
       
       def deleteMedia()
-        perform_action('/Media/', 'DELETE') 
+        perform_action_apiresponse('Media', 'DELETE') 
       end
       
       def getMedia(media_id)
-        perform_action('/Media/' + media_id + '/', 'GET') 
+        perform_action_apiresponse('Media/' + media_id + '/', 'GET') 
       end
 
       def to_s
@@ -55,7 +55,7 @@ module Plivo
       # @param [Array] dst
       # @param [String] text
       # @param [Hash] options
-      # @option options [String] :type The type of message. Should be `sms` for a text message. Defaults to `sms`.
+      # @option options [String] :type The type of message. Should be `sms` or `mms`. Defaults to `sms`.
       # @option options [String] :url The URL to which with the status of the message is sent. The following parameters are sent to the URL:
       #                               - To - Phone number of the recipient
       #                               - From - Phone number of the sender
@@ -72,9 +72,11 @@ module Plivo
       # @option options [String] :method The method used to call the url. Defaults to POST.
       # @option options [String] :log If set to false, the content of this message will not be logged on the Plivo infrastructure and the dst value will be masked (e.g., 141XXXXX528). Default is set to true.
       # @option options [String] :trackable set to false
+      #@option options[List]: media_urls Minimum one media url should be present in Media urls list to send mms. Maximum allowd 10 media urls inside the list (e.g, media_urls : ['https//example.com/test.jpg', 'https://example.com/abcd.gif'])
+
       def create(src, dst, text = nil, options = nil, powerpack_uuid = nil)
         valid_param?(:src, src, [Integer, String, Symbol], false)
-        valid_param?(:text, text, [String, Symbol], true)
+        valid_param?(:text, text, [String, Symbol], false)
         valid_param?(:dst, dst, Array, true)
         valid_param?(:powerpack_uuid, powerpack_uuid, [String, Symbol], false)
         dst.each do |dst_num|
@@ -126,6 +128,11 @@ module Plivo
         if options.key?(:trackable) &&
           valid_param?(:trackable, options[:trackable], [TrueClass, FalseClass], true)
          params[:trackable] = options[:trackable]
+        end
+
+        if options.key?(:media_urls) &&
+          valid_param?(:media_urls, options[:media_urls], Array, true)
+         params[:media_urls] = options[:media_urls]
         end
         perform_create(params)
       end
