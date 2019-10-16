@@ -6,13 +6,25 @@ module Plivo
       end
       @nestables = []
       @valid_attributes = []
+      SSML_TAGS=%w[Break Emphasis Lang P Phoneme Prosody S SayAs Sub W]
 
       attr_accessor :node, :name
 
-      def initialize(body = nil, attributes = {})
+      def hyphenate(pascal_cased_word)
+        pascal_cased_word.to_s.gsub(/::/, '/').
+          gsub(/([A-Z]+)([A-Z][a-z])/,'\1-\2').
+          gsub(/([a-z\d])([A-Z])/,'\1-\2').
+          downcase
+      end
+
+      def initialize(body = nil, attributes = {}, nestables=self.class.nestables)
         @name = self.class.name.split('::')[2]
         @body = body
-        @node = REXML::Element.new @name
+        tagname = @name
+        if SSML_TAGS.include?(@name)
+          tagname = hyphenate(@name)
+        end
+        @node = REXML::Element.new tagname
         attributes.each do |k, v|
           if self.class.valid_attributes.include?(k.to_s)
             @node.attributes[k.to_s] = convert_value(v)
@@ -20,7 +32,7 @@ module Plivo
             raise PlivoXMLError, "invalid attribute #{k} for #{@name}"
           end
         end
-
+        @nestables = nestables
         @node.text = @body if @body
 
         # Allow for nested "nestable" elements using a code block
@@ -31,6 +43,10 @@ module Plivo
         #   end
         # end
         yield(self) if block_given?
+      end
+
+      def add_attribute(attribute, value)
+        @node.add_attribute(attribute, value)
       end
 
       def method_missing(method, *args, &block)
@@ -63,7 +79,7 @@ module Plivo
 
       def add(element)
         raise PlivoXMLError, 'invalid element' unless element
-        if self.class.nestables.include?(element.name)
+        if @nestables.include?(element.name)
           @node.elements << element.node
           element
         else
