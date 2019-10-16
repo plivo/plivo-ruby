@@ -4,8 +4,8 @@ module Plivo
       @nestables = %w[Speak Play Wait]
       @valid_attributes = %w[action method inputType executionTimeout
                              digitEndTimeout speechEndTimeout finishOnKey
-                             numDigits speechModel hints language
-                             interimSpeechResultsCallback log
+                             numDigits speechModel hints profanityFilter
+                             interimSpeechResultsCallback log language
                              interimSpeechResultsCallbackMethod redirect]
 
       def initialize(attributes = {}, &block)
