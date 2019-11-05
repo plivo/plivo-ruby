@@ -1,4 +1,6 @@
 ---
+parent: central
+serviceName: plivo-ruby
 language: ruby-sdk
 build:
   command: |
