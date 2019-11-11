@@ -89,6 +89,24 @@ message_created = client.messages.create(
 )
 ```
 
+#### Send a message using powerpack instead of a source number
+
+```ruby
+require 'rubygems'
+require 'plivo'
+
+include Plivo
+
+client = RestClient.new
+message_created = client.messages.create(
+  nil,
+  %w[your_destination_number_1 your_destination_number_2],
+  'Hello, world!',
+  { url: 'http://example.com/api/callback/' },
+  'your-powerpack-uuid'
+)
+```
+
 ### Make a call
 
 ```ruby

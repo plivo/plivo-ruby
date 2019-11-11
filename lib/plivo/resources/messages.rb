@@ -61,6 +61,7 @@ module Plivo
       # @option options [String] :method The method used to call the url. Defaults to POST.
       # @option options [String] :log If set to false, the content of this message will not be logged on the Plivo infrastructure and the dst value will be masked (e.g., 141XXXXX528). Default is set to true.
       # @option options [String] :trackable set to false
+      # @param [String] powerpack uuid
       def create(src, dst, text, options = nil, powerpack_uuid = nil)
         valid_param?(:src, src, [Integer, String, Symbol], false)
         valid_param?(:text, text, [String, Symbol], true)
