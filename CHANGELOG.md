@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.3.2](https://github.com/plivo/plivo-ruby/releases/tag/v4.3.2) (2019-11-13)
+- Add GetInput XML support
+
 ## [4.3.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.3.1) (2019-10-16)
 - Add SSML support
 
