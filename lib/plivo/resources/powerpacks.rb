@@ -375,7 +375,7 @@ module Plivo
           params = {}
           params[:rent] = true
           if options.key?(:number)
-            return perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Number/' + options[:number].to_s ,
+            return perform_custom_action_apiresponse('NumberPool/' + number_pool_id + '/Number/' + options[:number].to_s ,
                        'POST', params)
           end
           if options.key?(:country_iso2).nil?
