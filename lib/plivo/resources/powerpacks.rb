@@ -310,7 +310,7 @@ module Plivo
            params[:type] = options[:type]
           end
           perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Number',
-          'GET', param, true)
+          'GET', params, true)
         end
         def count(options = nil)
           if options.nil?
@@ -351,7 +351,7 @@ module Plivo
            params[:type] = options[:type]
           end
           response = perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Number',
-          'GET', param, true)
+          'GET', params, true)
           meta = response['meta']
           return meta['total_count']
         end
