@@ -84,6 +84,7 @@ module Plivo
         response = @_client.send_request(resource_path, method, params)
         parse ? parse_and_set(response) : self
         method == 'POST' ? parse_and_set(params) : self
+        method == 'DELETE' ? parse_and_set(params) : self
         return response
       end
 
@@ -92,6 +93,7 @@ module Plivo
         response = @_client.send_request(resource_path, method, params)
         parse ? parse_and_set(response) : self
         method == 'POST' ? parse_and_set(params) : self
+        method == 'DELETE' ? parse_and_set(params) : self
         return response
       end
 
