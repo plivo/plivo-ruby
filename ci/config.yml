@@ -1,0 +1,7 @@
+---
+parent: central
+serviceName: plivo-ruby
+language: ruby-sdk
+build:
+  command: |
+      gem build plivo.gemspec
