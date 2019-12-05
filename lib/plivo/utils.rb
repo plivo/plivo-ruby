@@ -7,6 +7,7 @@ module Plivo
   module Utils
     module_function
 
+    VANITY_4_LETTERS_KEYS_REGEX = /[SVYZ]/.freeze
     TYPE_WHITELIST = [Integer]
     TYPE_WHITELIST.push(Fixnum, Bignum) unless 1.class == Integer
 
@@ -106,6 +107,28 @@ module Plivo
       data_to_sign = uri_builder_module.build(uri_details).to_s + nonce
       sha256_digest = OpenSSL::Digest.new('sha256')
       Base64.encode64(OpenSSL::HMAC.digest(sha256_digest, auth_token, data_to_sign)).strip() == signature
+    end
+
+    def format_phone_number(number)
+      return if number.nil?
+      formatted_num = vanity_conversion(number)
+      formatted_num = formatted_num.gsub(/[^0-9]/, '')
+      if formatted_num.length >=7 && formatted_num.length <= 14
+        return '+' + formatted_num.to_s
+      else
+        raise_invalid_request("Please enter a valid phone number")
+      end
+    end
+
+    def vanity_conversion(phone)
+      return phone.gsub(Regexp.new('[a-zA-Z]')) do |c|
+        c.upcase!
+        # subtract "A"
+        n = (c.ord - 65) / 3
+        # account for #7 & #9 which have 4 chars
+        n -= 1 if c.match(VANITY_4_LETTERS_KEYS_REGEX)
+        (n + 2).to_s
+      end
     end
   end
 end

@@ -141,8 +141,8 @@ describe 'Messages test' do
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Message/',
                      method: 'POST',
                      data: {
-                       src: '9898989890',
-                       dst: '9090909090<9898989898',
+                       src: '+9898989890',
+                       dst: '+9090909090<+9898989898',
                        text: 'message',
                        powerpack_uuid: nil,
                        type: 'sms',
@@ -158,8 +158,8 @@ describe 'Messages test' do
     expect do
       @api.messages
           .create(
-            '9898989898',
-            %w[9090909090 9898989898],
+            '+9898989898',
+            %w[+9090909090 +9898989898],
             'message',
             type: 'sms',
             url: 'http://url.com',
