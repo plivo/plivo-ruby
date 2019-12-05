@@ -10,6 +10,7 @@ module Plivo
     attr_reader :pricings, :numbers, :calls, :conferences
     attr_reader :phone_numbers, :applications, :endpoints
     attr_reader :addresses, :identities
+    attr_reader :call_feedback
 
     def initialize(auth_id = nil, auth_token = nil, proxy_options = nil, timeout=5)
       configure_base_uri
@@ -21,6 +22,7 @@ module Plivo
 
     def configure_base_uri
       @base_uri = Base::PLIVO_API_URL
+      @callinsights_base_uri = Base::CALLINSIGHTS_API_URL
     end
 
     def configure_interfaces
@@ -37,6 +39,7 @@ module Plivo
       @applications = Resources::ApplicationInterface.new(self)
       @addresses = Resources::AddressInterface.new(self)
       @identities = Resources::IdentityInterface.new(self)
+      @call_feedback = Resources::CallFeedbackInterface.new(self)
     end
   end
 end
