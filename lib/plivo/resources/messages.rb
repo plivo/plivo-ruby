@@ -14,10 +14,6 @@ module Plivo
       def deleteMedia()
         perform_action_apiresponse('Media', 'DELETE') 
       end
-      
-      def getMedia(media_id)
-        perform_action_apiresponse('Media/' + media_id + '/', 'GET') 
-      end
 
       def to_s
         {
