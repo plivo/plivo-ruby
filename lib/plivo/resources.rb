@@ -1,4 +1,5 @@
 require_relative 'resources/messages'
+require_relative 'resources/powerpacks'
 require_relative 'resources/accounts'
 require_relative 'resources/applications'
 require_relative 'resources/recordings'
