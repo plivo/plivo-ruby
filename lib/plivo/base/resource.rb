@@ -70,7 +70,7 @@ module Plivo
         method == 'POST' ? parse_and_set(params) : self
         self
       end
-
+      
       def perform_custome_action(action = nil, method = 'GET', params = nil, parse = false)
         resource_path = action ? @_resource_uri + action + '/' : @_resource_uri
         response = @_client.send_request(resource_path, method, params)
@@ -78,7 +78,7 @@ module Plivo
         method == 'POST' ? parse_and_set(params) : self
         self
       end
-      
+
       def perform_action_apiresponse(action = nil, method = 'GET', params = nil, parse = false)
         resource_path = action ? @_resource_uri + action + '/' : @_resource_uri
         response = @_client.send_request(resource_path, method, params)
