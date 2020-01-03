@@ -216,6 +216,14 @@ module Plivo
               Exceptions::InvalidRequestError,
               'HTTP method used is not allowed to access resource'
           ],
+          409 => [
+            Exceptions::InvalidRequestError,
+            'Conflict'
+          ],
+          422 => [
+            Exceptions::InvalidRequestError,
+            'Unprocessable Entity'
+          ],
           500 => [
               Exceptions::PlivoServerError,
               'A server error occurred while accessing resource'
