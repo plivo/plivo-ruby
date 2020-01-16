@@ -57,8 +57,14 @@ module Plivo
         perform_update(params)
       end
 
-      def delete
-        perform_delete
+      def delete(cascade = true)
+        valid_param?(:cascade, cascade, [TrueClass, FalseClass], false, [true, false])
+
+        params = {
+          :cascade => cascade
+        }
+
+        perform_delete(params)
       end
 
       def to_s
@@ -227,10 +233,10 @@ module Plivo
       ##
       # Delete an application
       # @param [String] app_id
-      def delete(app_id)
+      def delete(app_id, cascade = true)
         valid_param?(:app_id, app_id, [String, Symbol], true)
         Application.new(@_client,
-                        resource_id: app_id).delete
+                        resource_id: app_id).delete(cascade)
       end
     end
   end
