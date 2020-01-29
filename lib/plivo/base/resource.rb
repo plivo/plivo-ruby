@@ -70,6 +70,32 @@ module Plivo
         method == 'POST' ? parse_and_set(params) : self
         self
       end
+      
+      def perform_custome_action(action = nil, method = 'GET', params = nil, parse = false)
+        resource_path = action ? @_resource_uri + action + '/' : @_resource_uri
+        response = @_client.send_request(resource_path, method, params)
+        parse ? parse_and_set(response) : self
+        method == 'POST' ? parse_and_set(params) : self
+        self
+      end
+
+      def perform_action_apiresponse(action = nil, method = 'GET', params = nil, parse = false)
+        resource_path = action ? @_resource_uri + action + '/' : @_resource_uri
+        response = @_client.send_request(resource_path, method, params)
+        parse ? parse_and_set(response) : self
+        method == 'POST' ? parse_and_set(params) : self
+        method == 'DELETE' ? parse_and_set(params) : self
+        return response
+      end
+
+      def perform_custom_action_apiresponse(action = nil, method = 'GET', params = nil, parse = false)
+        resource_path = action ? '/v1/Account/' + @_client.auth_id + '/'+ action + '/' : @_resource_uri
+        response = @_client.send_request(resource_path, method, params)
+        parse ? parse_and_set(response) : self
+        method == 'POST' ? parse_and_set(params) : self
+        method == 'DELETE' ? parse_and_set(params) : self
+        return response
+      end
 
       def perform_delete(params=nil)
         unless @id
