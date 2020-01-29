@@ -1,7 +1,7 @@
 # Change Log
 
 ## [4.3.5](https://github.com/plivo/plivo-ruby/releases/tag/v4.3.5) (2020-01-29)
-- Add Powerpack support
+- Send feedback for a Call
 
 ## [4.3.4](https://github.com/plivo/plivo-ruby/releases/tag/v4.3.4) (2019-12-20)
 - Add Powerpack support
