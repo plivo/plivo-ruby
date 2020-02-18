@@ -69,9 +69,10 @@ module Plivo
 
       ##
       # Create a new upload
-      def upload(file_to_upload)
+      def upload(filepath)
         params = {}
-        unless file_to_upload.nil?
+        for file_to_upload in filepath do
+          unless file_to_upload.nil?
           file_extension = file_to_upload.split('.')[-1]
 
           content_type = case file_extension
@@ -87,8 +88,8 @@ module Plivo
                          end
 
           params[:file] = Faraday::UploadIO.new(file_to_upload, content_type)
+          end
         end
-
         perform_create(params, true)
       end
     end
