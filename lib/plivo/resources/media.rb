@@ -2,7 +2,6 @@ module Plivo
   module Resources
     include Plivo::Utils
     class Media < Base::Resource
-
       def initialize(client, options = nil)
         @_name = 'Media'
         @_identifier_string = 'media_id'
@@ -15,11 +14,7 @@ module Plivo
           file_name: @file_name,
           api_id: @api_id,
           media_id: @media_id,
-          document_details: @document_details,
-          first_name: @first_name,
           size: @size,
-          status: @status,
-          status_code: @status_code,
           upload_time: @upload_time,
           url: @url
         }.to_s
@@ -29,7 +24,7 @@ module Plivo
     class MediaInterface < Base::ResourceInterface
       def initialize(client, resource_list_json = nil)
         @_name = 'Media'
-        @_resource_type = Identity
+        @_resource_type = Media
         @_identifier_string = 'media_id'
         super
       end
@@ -50,7 +45,7 @@ module Plivo
       # @option options [Int] :limit
       # @return [Hash]
       def list(options=nil)
-        return perform_list if options.nil?
+        return perform_list_without_object if options.nil?
 
         params = {}
         %i[offset limit].each do |param|
@@ -69,7 +64,7 @@ module Plivo
           raise_invalid_request("Offset can't be negative")
         end
 
-        perform_list(params)
+        perform_list_without_object(params)
       end
 
       ##
@@ -84,6 +79,10 @@ module Plivo
                            when 'jpg' then 'image/jpeg'
                            when 'png' then 'image/png'
                            when 'pdf' then 'application/pdf'
+                           when 'xcf' then 'image/xcf'
+                           when 'text' then 'text/plain'
+                           when 'mpeg' then 'video/mpeg'
+                           when 'mp4' then 'video/mp4'
                            else raise_invalid_request("#{file_extension} is not yet supported for upload")
                          end
 
