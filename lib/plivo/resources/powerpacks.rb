@@ -314,7 +314,7 @@ module Plivo
           options = {'number_pool_id' => @number_pool_id}
           Shortcode.new(@_client, {resource_json: options})
         end
-        def tollfrees
+        def tollfree
           options = {'number_pool_id' => @number_pool_id}
           Tollfree.new(@_client, {resource_json: options})
         end
