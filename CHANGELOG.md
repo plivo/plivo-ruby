@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.3.5](https://github.com/plivo/plivo-ruby/releases/tag/v4.3.5) (2019-12-28)
+- Add Media support
+
 ## [4.3.4](https://github.com/plivo/plivo-ruby/releases/tag/v4.3.4) (2019-12-20)
 - Add Powerpack support
 
