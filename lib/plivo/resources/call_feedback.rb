@@ -23,6 +23,16 @@ module Plivo
       def create(call_uuid, rating, issues = [], notes = "")
         
         valid_param?(:call_uuid, call_uuid, String, true)
+        valid_param?(:rating, rating, [Integer, Float], true)
+
+        if call_uuid == ""
+          raise_invalid_request("call_uuid cannot be empty")
+        end
+
+        if rating < 1 or rating > 5
+          raise_invalid_request("Rating has to be a float between 1 - 5")
+        end
+        
         params = {
           rating: rating,
         }
