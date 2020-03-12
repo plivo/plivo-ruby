@@ -14,6 +14,7 @@ require_relative 'resources/phlos'
 require_relative 'resources/nodes'
 require_relative 'resources/member'
 require_relative 'resources/call_feedback'
+require_relative 'resources/media'
 
 module Plivo
   module Resources
