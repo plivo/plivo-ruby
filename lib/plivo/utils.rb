@@ -107,5 +107,35 @@ module Plivo
       sha256_digest = OpenSSL::Digest.new('sha256')
       Base64.encode64(OpenSSL::HMAC.digest(sha256_digest, auth_token, data_to_sign)).strip() == signature
     end
+
+    def generate_url?(uri, params, method)
+      param_string = ""
+      parsed_uri = URI.parse(uri)
+      if method == "GET"
+        params.each do |key, value|
+          param_string += key + "=" + value + "&"
+        end
+        param_string.delete_suffix("&")
+        if parsed_uri.query
+          uri += "&" + param_string
+        else
+          uri += "/?" + param_string
+        end
+      else
+        params.keys.sort
+        params.each do |key, value|
+          param_string += key + value
+        end
+        uri += "." + param_string
+      end
+      return uri
+    end
+
+    def valid_signatureV3?(uri, nonce, signature, auth_token, method, params)
+      new_url = generate_url(uri, params, method) + "." + nonce
+      data_to_sign = uri_builder_module.build(uri_details).to_s + nonce
+      sha256_digest = OpenSSL::Digest.new('sha256')
+      Base64.encode64(OpenSSL::HMAC.digest(sha256_digest, auth_token, data_to_sign)).strip() == signature
+    end
   end
 end
