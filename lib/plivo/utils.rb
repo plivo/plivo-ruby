@@ -131,11 +131,19 @@ module Plivo
       return uri
     end
 
+    def compute_signatureV3?(sha256_digest, auth_token, data_to_sign)
+      return Base64.encode64(OpenSSL::HMAC.digest(sha256_digest, auth_token, data_to_sign)).strip()
+    end
+
     def valid_signatureV3?(uri, nonce, signature, auth_token, method, params)
-      new_url = generate_url(uri, params, method) + "." + nonce
-      data_to_sign = uri_builder_module.build(uri_details).to_s + nonce
+      new_url = generate_url(uri, params, method)
+      parsed_uri = URI.parse(new_url)
+      uri_details = { host: parsed_uri.host, path: parsed_uri.path }
+      uri_builder_module = parsed_uri.scheme == 'https' ? URI::HTTPS : URI::HTTP
+      data_to_sign = uri_builder_module.build(uri_details).to_s + "." + nonce
       sha256_digest = OpenSSL::Digest.new('sha256')
-      Base64.encode64(OpenSSL::HMAC.digest(sha256_digest, auth_token, data_to_sign)).strip() == signature
+      generated_signature = compute_signature(sha256_digest, auth_token, data_to_sign)
+      return signature.split(",").include? generated_signature
     end
   end
 end
