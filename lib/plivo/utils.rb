@@ -112,19 +112,18 @@ module Plivo
       param_string = ""
       parsed_uri = URI.parse(uri)
       if method == "GET"
-        params.each do |key, value|
-          param_string += key + "=" + value + "&"
+        for key in params.keys
+          param_string += key + "=" + params[key] + "&"
         end
-        param_string.delete_suffix("&")
+        param_string = param_string.chomp("&")
         if parsed_uri.query
           uri += "&" + param_string
         else
           uri += "/?" + param_string
         end
       else
-        params.keys.sort
-        params.each do |key, value|
-          param_string += key + value
+        for key in params.keys.sort
+          param_string += key + params[key]
         end
         uri += "." + param_string
       end
@@ -136,13 +135,10 @@ module Plivo
     end
 
     def valid_signatureV3?(uri, nonce, signature, auth_token, method, params)
-      new_url = generate_url(uri, params, method)
-      parsed_uri = URI.parse(new_url)
-      uri_details = { host: parsed_uri.host, path: parsed_uri.path }
-      uri_builder_module = parsed_uri.scheme == 'https' ? URI::HTTPS : URI::HTTP
-      data_to_sign = uri_builder_module.build(uri_details).to_s + "." + nonce
+      new_url = generate_url?(uri.chomp("/"), params, method) + "." + nonce
       sha256_digest = OpenSSL::Digest.new('sha256')
-      generated_signature = compute_signature(sha256_digest, auth_token, data_to_sign)
+      generated_signature = compute_signatureV3?(sha256_digest, auth_token, new_url)
+      puts generated_signature
       return signature.split(",").include? generated_signature
     end
   end
