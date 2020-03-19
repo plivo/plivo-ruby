@@ -29,7 +29,7 @@ describe 'Signature validation test' do
     sig_matching_result = Plivo::Utils.valid_signatureV3?(
       "https://answer.url",
 			"12345",
-			"rXj4UwTSVxH6Kj+W0qX8LaCvVOOvmzPGzY8sQVn3d1I=",
+			"pETJPPuss8j7tRO1V76pMhutvY1EbD905bph1xlJQhE=",
 			"my_auth_token",
       "GET",
       {
