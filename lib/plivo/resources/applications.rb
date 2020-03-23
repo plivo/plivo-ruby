@@ -61,14 +61,15 @@ module Plivo
       # @option options [Boolean] :cascade - delete associated endpoints
       # @option options [String] :new_endpoint_application - Link associated endpoints to this app
       def delete(options = nil)
+        return perform_delete if options.nil?
         params = {}
 
-        if options.key?(cascade) && valid_param?(:cascade, options[cascade], [TrueClass, FalseClass], false, [true, false])
-          params[cascade] = options[cascade]
+        if options.key?(:cascade) && valid_param?(:cascade, options[:cascade], [TrueClass, FalseClass], false, [true, false])
+          params[:cascade] = options[:cascade]
         end
 
-        if options.key?(new_endpoint_application) && valid_param?(:new_endpoint_application, options[new_endpoint_application], [String, Symbol])
-          params[new_endpoint_application] = options[new_endpoint_application]
+        if options.key?(:new_endpoint_application) && valid_param?(:new_endpoint_application, options[:new_endpoint_application], [String, Symbol])
+          params[:new_endpoint_application] = options[:new_endpoint_application]
         end
 
         perform_delete(params)
