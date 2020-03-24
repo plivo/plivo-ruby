@@ -10,7 +10,7 @@ module Plivo
     attr_reader :pricings, :numbers, :calls, :conferences
     attr_reader :phone_numbers, :applications, :endpoints
     attr_reader :addresses, :identities
-    attr_reader :powerpacks
+    attr_reader :powerpacks, :media
 
     def initialize(auth_id = nil, auth_token = nil, proxy_options = nil, timeout=5)
       configure_base_uri
@@ -28,6 +28,7 @@ module Plivo
       @account = Resources::AccountInterface.new(self)
       @messages = Resources::MessagesInterface.new(self)
       @powerpacks = Resources::PowerpackInterface.new(self)
+      @media = Resources::MediaInterface.new(self)
       @subaccounts = Resources::SubaccountInterface.new(self)
       @recordings = Resources::RecordingInterface.new(self)
       @pricings = Resources::PricingInterface.new(self)
