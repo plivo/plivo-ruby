@@ -1,6 +1,6 @@
 # Change Log
 
-## [4.4.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.4.1) (2020-03-30)
+## [4.5.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.5.0) (2020-03-30)
 - Add Tollfree support for Powerpack
 
 ## [4.4.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.4.0) (2020-03-27)
