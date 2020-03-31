@@ -46,7 +46,7 @@ module Plivo
       response = case method
                  when 'GET' then send_get(resource_path, data, timeout)
                  when 'POST' then send_post(resource_path, data, timeout, use_multipart_conn)
-                 when 'DELETE' then send_delete(resource_path, timeout)
+                 when 'DELETE' then send_delete(resource_path, data, timeout)
                  else raise_invalid_request("#{method} not supported by Plivo, yet")
                  end
 
@@ -190,10 +190,11 @@ module Plivo
       response
     end
 
-    def send_delete(resource_path, timeout)
+    def send_delete(resource_path, data, timeout)
       response = @conn.delete do |req|
         req.url resource_path
         req.options.timeout = timeout if timeout
+        req.body = JSON.generate(data) if data
       end
       response
     end
