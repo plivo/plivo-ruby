@@ -1,5 +1,11 @@
 # Change Log
 
+## [4.5.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.5.0) (2020-03-30)
+- Add Tollfree support for Powerpack
+
+## [4.4.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.4.0) (2020-03-27)
+- Add post call quality feedback API support.
+
 ## [4.3.5](https://github.com/plivo/plivo-ruby/releases/tag/v4.3.5) (2019-12-28)
 - Add Media support
 

@@ -153,6 +153,12 @@ module Plivo
           perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Number/' + number.to_s ,
                        'POST')
         end
+
+        def add_tollfree(tollfree)
+          number_pool_uuid = getnumberpool_uuid(uuid)
+          perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Tollfree/' + tollfree.to_s ,
+                       'POST')
+        end
   
         def remove_number(number, unrent= false)
           number_pool_uuid = getnumberpool_uuid(uuid)
@@ -160,6 +166,17 @@ module Plivo
                        'DELETE', { unrent: unrent }, false)
         end
 
+        def remove_tollfree(number, unrent= false)
+          number_pool_uuid = getnumberpool_uuid(uuid)
+          perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Tollfree/' + number.to_s ,
+                       'DELETE', { unrent: unrent }, false)
+        end
+
+        def remove_shortcode(number)
+          number_pool_uuid = getnumberpool_uuid(uuid)
+          perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Shortcode/' + number.to_s ,
+                       'DELETE', { unrent: false }, false)
+        end
 
         def list_shortcodes(options = nil)
           number_pool_uuid = getnumberpool_uuid(uuid)
@@ -184,10 +201,40 @@ module Plivo
           perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Shortcode',
                        'GET', params)
         end
+
+        def list_tollfree(options = nil)
+          number_pool_uuid = getnumberpool_uuid(uuid)
+          return perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Tollfree',
+                       'GET') if options.nil?
+          params = {}
+          %i[offset limit].each do |param|
+            if options.key?(param) && valid_param?(param, options[param],
+                                                   [Integer, Integer], true)
+              params[param] = options[param]
+            end
+          end
+  
+          if options.key?(:limit) && (options[:limit] > 20 || options[:limit] <= 0)
+            raise_invalid_request('The maximum number of results that can be '\
+            "fetched is 20. limit can't be more than 20 or less than 1")
+          end
+  
+          if options.key?(:offset) && options[:offset] < 0
+            raise_invalid_request("Offset can't be negative")
+          end
+          perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Tollfree',
+                       'GET', params)
+        end
         
         def find_shortcode(shortcode)
           number_pool_uuid = getnumberpool_uuid(uuid)
           perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Shortcode/' + shortcode.to_s ,
+                       'GET')
+        end
+
+        def find_tollfree(tollfree)
+          number_pool_uuid = getnumberpool_uuid(uuid)
+          perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Tollfree/' + tollfree.to_s ,
                        'GET')
         end
 
@@ -266,6 +313,10 @@ module Plivo
         def shortcodes
           options = {'number_pool_id' => @number_pool_id}
           Shortcode.new(@_client, {resource_json: options})
+        end
+        def tollfree
+          options = {'number_pool_id' => @number_pool_id}
+          Tollfree.new(@_client, {resource_json: options})
         end
       end
 
@@ -454,6 +505,57 @@ module Plivo
         def find(shortcode)
           perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Shortcode/' + shortcode.to_s ,
                        'GET')
+        end
+
+        def remove(shortcode)
+          perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Shortcode/' + shortcode.to_s ,
+                       'DELETE', { unrent: false }, false)
+        end
+      end
+
+      class Tollfree < Base::Resource
+        def initialize(client, options = nil)
+          @_name = 'Tollfree'
+          @_identifier_string = 'number_pool_id'
+          super
+        end
+
+        def add(tollfree)
+          perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Tollfree/' + tollfree.to_s ,
+                       'POST')
+        end
+
+        def list(options = nil)
+          return perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Tollfree',
+                       'GET') if options.nil?
+          params = {}
+          %i[offset limit].each do |param|
+            if options.key?(param) && valid_param?(param, options[param],
+                                                   [Integer, Integer], true)
+              params[param] = options[param]
+            end
+          end
+  
+          if options.key?(:limit) && (options[:limit] > 20 || options[:limit] <= 0)
+            raise_invalid_request('The maximum number of results that can be '\
+            "fetched is 20. limit can't be more than 20 or less than 1")
+          end
+  
+          if options.key?(:offset) && options[:offset] < 0
+            raise_invalid_request("Offset can't be negative")
+          end
+          perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Tollfree',
+                       'GET')
+        end
+        
+        def find(tollfree)
+          perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Tollfree/' + tollfree.to_s ,
+                       'GET')
+        end
+
+        def remove(tollfree, unrent= false)
+          perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Tollfree/' + tollfree.to_s ,
+                       'DELETE', { unrent: unrent }, false)
         end
       end
   
