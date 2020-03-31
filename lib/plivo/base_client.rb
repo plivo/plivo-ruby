@@ -167,7 +167,7 @@ module Plivo
           req.body = data
         end
       else
-        if data.has_key? 'is_callinsights_request'
+        if !data.nil? && (data.has_key? 'is_callinsights_request')
           callinsight_base_url = data['callinsight_base_url']
           resource_path = data['request_url']
           data.delete('is_callinsights_request')
