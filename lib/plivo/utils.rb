@@ -122,10 +122,12 @@ module Plivo
           uri += "/?" + param_string
         end
       else
-        for key in params.keys.sort
-          param_string += key + params[key]
+        if params.keys.length > 0
+          for key in params.keys.sort
+            param_string += key + params[key]
+          end
+          uri += "." + param_string
         end
-        uri += "." + param_string
       end
       return uri
     end
