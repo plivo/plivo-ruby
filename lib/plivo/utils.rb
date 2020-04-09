@@ -101,7 +101,7 @@ module Plivo
     # @param [String] auth_token
     def valid_signature?(uri, nonce, signature, auth_token)
       parsed_uri = URI.parse(uri)
-      uri_details = { host: parsed_uri.host, path: parsed_uri.path }
+      uri_details = {host: parsed_uri.host, path: parsed_uri.path}
       uri_builder_module = parsed_uri.scheme == 'https' ? URI::HTTPS : URI::HTTP
       data_to_sign = uri_builder_module.build(uri_details).to_s + nonce
       sha256_digest = OpenSSL::Digest.new('sha256')
@@ -109,28 +109,63 @@ module Plivo
     end
 
     def generate_url?(uri, params, method)
-      param_string = ""
       parsed_uri = URI.parse(uri)
-      if method == "GET"
-        for key in params.keys.sort
-          param_string += key + "=" + params[key] + "&"
-        end
-        param_string = param_string.chomp("&")
-        if parsed_uri.query
-          uri += "&" + param_string
+      uri = parsed_uri.scheme + "://" + parsed_uri.host + parsed_uri.path
+      if params.to_s.length > 0 || parsed_uri.query.to_s.length > 0
+        uri += "?"
+      end
+      if parsed_uri.query.to_s.length > 0
+        if method == "GET"
+          queryParamMap = getMapFromQueryString(parsed_uri.query)
+          for key in params.keys.sort
+            queryParamMap[key] = params[key]
+          end
+          uri += GetSortedQueryParamString(queryParamMap, true)
         else
-          uri += "/?" + param_string
+          uri += GetSortedQueryParamString(getMapFromQueryString(parsed_uri.query), true) + "." + GetSortedQueryParamString(params, false)
+          uri = uri.chomp(".")
         end
       else
-        if params.keys.length > 0
-          for key in params.keys.sort
-            param_string += key + params[key]
-          end
-          uri += "." + param_string
+        if method == "GET"
+          uri += GetSortedQueryParamString(params, true)
+        else
+          uri += GetSortedQueryParamString(params, false)
         end
       end
+      puts(uri)
       return uri
     end
+
+    def getMapFromQueryString(query)
+      mp = Hash.new
+      if query.to_s.length == 0
+        return mp
+      end
+      keyValuePairs = query.split("&")
+      for key in keyValuePairs
+        params = key.split("=")
+        if params.length == 2
+          mp[params[0]] = params[1]
+        end
+      end
+      return mp
+    end
+
+    def GetSortedQueryParamString(params, queryParams)
+      url = ""
+      if queryParams
+        for key in params.keys.sort
+            url += key + "=" + params[key] + "&"
+        end
+        url = url.chomp("&")
+      else
+        for key in params.keys.sort
+            url += key + params[key]
+        end
+      end
+      return url
+    end
+
 
     def compute_signatureV3?(url, auth_token, nonce)
       sha256_digest = OpenSSL::Digest.new('sha256')
