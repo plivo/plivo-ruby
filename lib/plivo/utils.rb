@@ -114,54 +114,55 @@ module Plivo
       if params.to_s.length > 0 || parsed_uri.query.to_s.length > 0
         uri += "?"
       end
+      parsed_uri_query = URI.decode(parsed_uri.query)
       if parsed_uri.query.to_s.length > 0
         if method == "GET"
-          queryParamMap = getMapFromQueryString(parsed_uri.query)
-          for key in params.keys.sort
+          queryParamMap = getMapFromQueryString?(parsed_uri_query)
+          params.keys.sort.each { |key|
             queryParamMap[key] = params[key]
-          end
-          uri += GetSortedQueryParamString(queryParamMap, true)
+          }
+          uri += GetSortedQueryParamString?(queryParamMap, true)
         else
-          uri += GetSortedQueryParamString(getMapFromQueryString(parsed_uri.query), true) + "." + GetSortedQueryParamString(params, false)
+          uri += GetSortedQueryParamString?(getMapFromQueryString?(parsed_uri_query), true) + "." + GetSortedQueryParamString?(params, false)
           uri = uri.chomp(".")
         end
       else
         if method == "GET"
-          uri += GetSortedQueryParamString(params, true)
+          uri += GetSortedQueryParamString?(params, true)
         else
-          uri += GetSortedQueryParamString(params, false)
+          uri += GetSortedQueryParamString?(params, false)
         end
       end
-      puts(uri)
+      puts uri
       return uri
     end
 
-    def getMapFromQueryString(query)
+    def getMapFromQueryString?(query)
       mp = Hash.new
       if query.to_s.length == 0
         return mp
       end
       keyValuePairs = query.split("&")
-      for key in keyValuePairs
-        params = key.split("=")
+      keyValuePairs.each { |key|
+        params = key.split("=", 2)
         if params.length == 2
           mp[params[0]] = params[1]
         end
-      end
+      }
       return mp
     end
 
-    def GetSortedQueryParamString(params, queryParams)
+    def GetSortedQueryParamString?(params, queryParams)
       url = ""
       if queryParams
-        for key in params.keys.sort
-            url += key + "=" + params[key] + "&"
-        end
+        params.keys.sort.each { |key|
+          url += key + "=" + params[key] + "&"
+        }
         url = url.chomp("&")
       else
-        for key in params.keys.sort
-            url += key + params[key]
-        end
+        params.keys.sort.each { |key|
+          url += key.to_s + params[key].to_s
+        }
       end
       return url
     end
