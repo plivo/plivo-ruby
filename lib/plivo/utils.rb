@@ -133,7 +133,6 @@ module Plivo
           uri += GetSortedQueryParamString?(params, false)
         end
       end
-      puts uri
       return uri
     end
 
