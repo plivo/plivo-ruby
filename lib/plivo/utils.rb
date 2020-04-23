@@ -174,7 +174,7 @@ module Plivo
     end
 
     def valid_signatureV3?(uri, nonce, signature, auth_token, method, params)
-      new_url = generate_url?(uri.chomp("/"), params, method)
+      new_url = generate_url?(uri, params, method)
       generated_signature = compute_signatureV3?(new_url, auth_token, nonce)
       return signature.split(",").include? generated_signature
     end
