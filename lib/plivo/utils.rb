@@ -114,8 +114,8 @@ module Plivo
       if params.to_s.length > 0 || parsed_uri.query.to_s.length > 0
         uri += "?"
       end
-      parsed_uri_query = URI.decode(parsed_uri.query)
       if parsed_uri.query.to_s.length > 0
+        parsed_uri_query = URI.decode(parsed_uri.query)
         if method == "GET"
           queryParamMap = getMapFromQueryString?(parsed_uri_query)
           params.keys.sort.each { |key|
