@@ -109,6 +109,7 @@ module Plivo
     end
 
     def generate_url?(uri, params, method)
+      uri.sub!("+", "%20")
       parsed_uri = URI.parse(uri)
       uri = parsed_uri.scheme + "://" + parsed_uri.host + parsed_uri.path
       if params.to_s.length > 0 || parsed_uri.query.to_s.length > 0
