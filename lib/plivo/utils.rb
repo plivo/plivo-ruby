@@ -174,7 +174,7 @@ module Plivo
       return Base64.encode64(OpenSSL::HMAC.digest(sha256_digest, auth_token, new_url)).strip()
     end
 
-    def valid_signatureV3?(uri, nonce, signature, auth_token, method, params: {})
+    def valid_signatureV3?(uri, nonce, signature, auth_token, method, params={})
       new_url = generate_url?(uri, params, method)
       generated_signature = compute_signatureV3?(new_url, auth_token, nonce)
       return signature.split(",").include? generated_signature
