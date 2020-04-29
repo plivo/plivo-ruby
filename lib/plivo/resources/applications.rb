@@ -57,8 +57,22 @@ module Plivo
         perform_update(params)
       end
 
-      def delete
-        perform_delete
+      # @param [Hash] options
+      # @option options [Boolean] :cascade - delete associated endpoints
+      # @option options [String] :new_endpoint_application - Link associated endpoints to this app
+      def delete(options = nil)
+        return perform_delete if options.nil?
+        params = {}
+
+        if options.key?(:cascade) && valid_param?(:cascade, options[:cascade], [TrueClass, FalseClass], false, [true, false])
+          params[:cascade] = options[:cascade]
+        end
+
+        if options.key?(:new_endpoint_application) && valid_param?(:new_endpoint_application, options[:new_endpoint_application], [String, Symbol])
+          params[:new_endpoint_application] = options[:new_endpoint_application]
+        end
+
+        perform_delete(params)
       end
 
       def to_s
@@ -227,10 +241,13 @@ module Plivo
       ##
       # Delete an application
       # @param [String] app_id
-      def delete(app_id)
+      # @param [Hash] options
+      # @option options [Boolean] :cascade - delete associated endpoints
+      # @option options [String] :new_endpoint_application - Link associated endpoints to this app
+      def delete(app_id, options = nil)
         valid_param?(:app_id, app_id, [String, Symbol], true)
         Application.new(@_client,
-                        resource_id: app_id).delete
+                        resource_id: app_id).delete(options)
       end
     end
   end
