@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.4.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.4.0) (2020-04-29)
+- Add V3 signature helper functions.
+
 ## [4.3.5](https://github.com/plivo/plivo-ruby/releases/tag/v4.3.5) (2019-12-28)
 - Add Media support
 
