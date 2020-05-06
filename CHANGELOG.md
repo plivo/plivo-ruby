@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.7.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.7.1) (2020-05-06)
+- Fix Send MMS with existing media_ids.
+
 ## [4.7.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.7.0) (2020-04-29)
 - Add V3 signature helper functions.
 
