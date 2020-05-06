@@ -21,6 +21,3 @@ begin
 rescue ValidationError => e
   puts 'Exception: ' + e.message
 end
-
-# Sample Response:
-#
