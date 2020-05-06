@@ -33,7 +33,7 @@ module Plivo
           raise Exceptions::PlivoRESTError, "Resource at #{response[:url]} "\
           'couldn\'t be deleted'
         end
-      elsif !([200, 201, 202].include? response[:status])
+      elsif !([200, 201, 202, 207].include? response[:status])
         raise Exceptions::PlivoRESTError, "Received #{response[:status]} for #{method}"
       end
 
@@ -46,7 +46,7 @@ module Plivo
       response = case method
                  when 'GET' then send_get(resource_path, data, timeout)
                  when 'POST' then send_post(resource_path, data, timeout, use_multipart_conn)
-                 when 'DELETE' then send_delete(resource_path, timeout)
+                 when 'DELETE' then send_delete(resource_path, data, timeout)
                  else raise_invalid_request("#{method} not supported by Plivo, yet")
                  end
 
@@ -117,6 +117,20 @@ module Plivo
         faraday.response :json, content_type: /\bjson$/
         faraday.adapter Faraday.default_adapter
       end
+
+      @callinsights_conn = Faraday.new(@callinsights_base_uri) do |faraday|
+        faraday.headers = @headers
+
+        # DANGER: Basic auth should always come after headers, else
+        # The headers will replace the basic_auth
+
+        faraday.basic_auth(auth_id, auth_token)
+
+        faraday.proxy=@proxy_hash if @proxy_hash
+        faraday.response :json, content_type: /\bjson$/
+        faraday.adapter Faraday.default_adapter
+      end
+
     end
 
     def send_get(resource_path, data, timeout)
@@ -153,19 +167,34 @@ module Plivo
           req.body = data
         end
       else
-        response = @conn.post do |req|
-          req.url resource_path
-          req.options.timeout = timeout if timeout
-          req.body = JSON.generate(data) if data
+        if !data.nil? && (data.has_key? 'is_callinsights_request')
+          callinsight_base_url = data['callinsight_base_url']
+          resource_path = data['request_url']
+          data.delete('is_callinsights_request')
+          data.delete('request_url')
+
+          response = @callinsights_conn.post do |req|
+            req.url resource_path
+            req.options.timeout = timeout if timeout
+            req.body = JSON.generate(data) if data
+          end
+
+        else
+          response = @conn.post do |req|
+            req.url resource_path
+            req.options.timeout = timeout if timeout
+            req.body = JSON.generate(data) if data
+          end
         end
       end
       response
     end
 
-    def send_delete(resource_path, timeout)
+    def send_delete(resource_path, data, timeout)
       response = @conn.delete do |req|
         req.url resource_path
         req.options.timeout = timeout if timeout
+        req.body = JSON.generate(data) if data
       end
       response
     end
@@ -187,6 +216,14 @@ module Plivo
           405 => [
               Exceptions::InvalidRequestError,
               'HTTP method used is not allowed to access resource'
+          ],
+          409 => [
+            Exceptions::InvalidRequestError,
+            'Conflict'
+          ],
+          422 => [
+            Exceptions::InvalidRequestError,
+            'Unprocessable Entity'
           ],
           500 => [
               Exceptions::PlivoServerError,

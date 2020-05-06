@@ -1,5 +1,23 @@
 # Change Log
 
+## [4.7.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.7.0) (2020-04-29)
+- Add V3 signature helper functions.
+
+## [4.6.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.6.1) (2020-04-02)
+- Add nil check for API requests.
+
+## [4.6.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.6.0) (2020-03-31)
+- Add application cascade delete support.
+
+## [4.5.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.5.0) (2020-03-30)
+- Add Tollfree support for Powerpack
+
+## [4.4.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.4.0) (2020-03-27)
+- Add post call quality feedback API support.
+
+## [4.3.5](https://github.com/plivo/plivo-ruby/releases/tag/v4.3.5) (2019-12-28)
+- Add Media support
+
 ## [4.3.4](https://github.com/plivo/plivo-ruby/releases/tag/v4.3.4) (2019-12-20)
 - Add Powerpack support
 
