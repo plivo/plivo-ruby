@@ -194,27 +194,6 @@ module Plivo
         return response_json.to_s
       end
 
-      #
-      # def to_s
-      #   response_json = @
-      #   unless @members.nil?
-      #     members_json = @members.map do |member|
-      #       JSON.parse(to_json_member(member))
-      #     end
-      #     response_json["members"] = members_json
-      #   end
-      #   unless @conference_name.nil?
-      #     response_json["conference_name"] = @conference_name
-      #   end
-      #   unless @conference_run_time.nil?
-      #     response_json["conference_run_time"] = @conference_run_time
-      #   end
-      #   unless @conference_member_count.nil?
-      #     response_json["conference_member_count"] = @conference_member_count
-      #   end
-      #   return response_json.to_s
-      # end
-
       def to_json_member(member)
         {
           muted: member['muted'],
