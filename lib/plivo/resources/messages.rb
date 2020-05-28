@@ -69,6 +69,7 @@ module Plivo
       # @option options [String] :log If set to false, the content of this message will not be logged on the Plivo infrastructure and the dst value will be masked (e.g., 141XXXXX528). Default is set to true.
       # @option options [String] :trackable set to false
       #@option options[List]: media_urls Minimum one media url should be present in Media urls list to send mms. Maximum allowd 10 media urls inside the list (e.g, media_urls : ['https//example.com/test.jpg', 'https://example.com/abcd.gif'])
+      #@option options[List]: media_ids Minimum one media ids should be present in Media ids list to send mms. Maximum allowd 10 media ids inside the list (e.g, media_ids : ['1fs211ba-355b-11ea-bbc9-02121c1190q7'])
 
       def create(src, dst, text = nil, options = nil, powerpack_uuid = nil)
         valid_param?(:src, src, [Integer, String, Symbol], false)
@@ -130,6 +131,10 @@ module Plivo
           valid_param?(:media_urls, options[:media_urls], Array, true)
          params[:media_urls] = options[:media_urls]
         end
+        if options.key?(:media_ids) &&
+          valid_param?(:media_ids, options[:media_ids], Array, true)
+         params[:media_ids] = options[:media_ids]
+        end
         perform_create(params)
       end
 
@@ -148,6 +153,7 @@ module Plivo
       # @option options [Int] :offset Denotes the number of value items by which the results should be offset. Eg:- If the result contains a 1000 values and limit is set to 10 and offset is set to 705, then values 706 through 715 are displayed in the results. This parameter is also used for pagination of the results.
       # @option options [String] :error_code Delivery Response code returned by the carrier attempting the delivery. See Supported error codes {https://www.plivo.com/docs/api/message/#standard-plivo-error-codes}.
       #@option options[List]: media_urls Minimum one media url should be present in Media urls list to send mms. Maximum allowd 10 media urls inside the list (e.g, media_urls : ['https//example.com/test.jpg', 'https://example.com/abcd.gif'])
+      #@option options[List]: media_ids Minimum one media ids should be present in Media ids list to send mms. Maximum allowd 10 media ids inside the list (e.g, media_ids : ['1fs211ba-355b-11ea-bbc9-02121c1190q7'])
       def list(options = nil)
         return perform_list if options.nil?
         valid_param?(:options, options, Hash, true)

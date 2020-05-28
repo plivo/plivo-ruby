@@ -1,7 +1,13 @@
 # Change Log
 
-## [4.7.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.7.0) (2020-05-04)
+## [4.8.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.8.0) (2020-05-28)
 - Add JWT helper functions.
+
+## [4.7.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.7.1) (2020-05-06)
+- Fix Send MMS with existing media_ids.
+
+## [4.7.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.7.0) (2020-04-29)
+- Add V3 signature helper functions.
 
 ## [4.6.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.6.1) (2020-04-02)
 - Add nil check for API requests.
