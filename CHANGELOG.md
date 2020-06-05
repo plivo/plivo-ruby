@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.8.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.8.1) (2020-06-05)
+- Fix Record a Conference API response.
+
 ## [4.8.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.8.0) (2020-05-28)
 - Add JWT helper functions.
 
