@@ -13,11 +13,20 @@ begin
     '{username}',
     '{uid}'
   )
-  # update token validity (from, lifetime, till)
+  # update token validity (from, lifetime)
   acctkn.update_validity(Time.now, 300)
+  # add voice grants (incoming, outgoing)
+  acctkn.add_voice_grants(Plivo::Token::VoiceGrants.new(true, true))
+  puts acctkn.to_jwt
+
+  # update token validity (from, nil, till)
+  acctkn.update_validity(Time.now, nil, Time.now + 300)
   # add voice grants (incoming, outgoing)
   acctkn.add_voice_grants(Plivo::Token::VoiceGrants.new(true, true))
   puts acctkn.to_jwt
 rescue ValidationError => e
   puts 'Exception: ' + e.message
 end
+
+# Sample Response:
+#
