@@ -33,7 +33,7 @@ module Plivo
           raise Exceptions::PlivoRESTError, "Resource at #{response[:url]} "\
           'couldn\'t be deleted'
         end
-      elsif !([200, 201, 202, 207].include? response[:status])
+      elsif !([200, 201, 202, 204, 207].include? response[:status])
         raise Exceptions::PlivoRESTError, "Received #{response[:status]} for #{method}"
       end
       @@voice_retry_count = 0
@@ -266,6 +266,7 @@ module Plivo
           req.url resource_path
           req.options.timeout = timeout if timeout
           req.body = data
+          puts req
         end
       else
         if !data.nil? && (data.has_key? 'is_callinsights_request')
