@@ -2,7 +2,7 @@ module Plivo
   module XML
     class Response < Element
       @nestables = %w[Speak Play GetDigits GetInput Record Dial Message
-                      Redirect Wait Hangup PreAnswer Conference DTMF]
+                      Redirect Wait Hangup PreAnswer Conference DTMF MultiPartyCall]
       @valid_attributes = []
 
       def initialize
