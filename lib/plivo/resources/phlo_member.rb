@@ -1,6 +1,6 @@
 module Plivo
   module Resources
-    class Member < Base::Resource
+    class PhloMember < Base::Resource
       def initialize(client, options)
         @_name = 'member'
         @_identifier_string = 'member_address'
