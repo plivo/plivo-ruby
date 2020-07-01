@@ -67,6 +67,25 @@ module Plivo
       expected_value?(param_name, expected_values, param_value)
     end
 
+    def multi_valid_param?(param_name, param_value, expected_types = nil, mandatory = false, expected_values = nil, make_down_case = false, seperator = ',')
+    if mandatory && param_value.nil?
+      raise_invalid_request("#{param_name} is a required parameter")
+    end
+
+    return true if param_value.nil?
+
+    if make_down_case
+      param_value = param_value.downcase
+    else
+      param_value = param_value.uppercase
+    end
+
+    for val in param_value.split(seperator)
+      return expected_type?(param_name, expected_types, val.strip) unless expected_values
+      expected_value?(param_name, expected_values, val.strip)
+    end
+  end
+
     def expected_type?(param_name, expected_types, param_value)
       return true if expected_types.nil?
       param_value_class = param_value.class

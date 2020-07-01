@@ -47,7 +47,7 @@ module Plivo
                           record=false,
                           record_file_format='mp3',
                           status_callback_events='mpc-state-changes,participant-state-changes',
-                          stay_alone=true,
+                          stay_alone=false,
                           coach_mode=true,
                           mute=false,
                           hold=false,
@@ -96,7 +96,7 @@ module Plivo
         valid_param?(:on_exit_action_method, on_exit_action_method, String, false, %w[GET POST])
         valid_param?(:record, record, [TrueClass, FalseClass], false )
         valid_param?(:record_file_format, record_file_format, String, false, %w[mp3 wav])
-        valid_param?(:status_callback_events, status_callback_events, String, false)
+        multi_valid_param?(:status_callback_events, status_callback_events, String, false, %w[mpc-state-changes participant-state-changes participant-speak-events participant-digit-input-events add-participant-api-events], true, ',')
         valid_param?(:stay_alone, stay_alone, [TrueClass, FalseClass], false)
         valid_param?(:coach_mode, coach_mode, [TrueClass, FalseClass], false)
         valid_param?(:mute, mute, [TrueClass, FalseClass],false)
@@ -191,11 +191,43 @@ module Plivo
         valid_param?(:call_uuid, call_uuid, String, false) unless call_uuid.nil?
         params = {}
         params[:call_uuid] = call_uuid unless call_uuid.nil?
-        perform_action_apiresponse('Participant', 'GET', params, true)
+        perform_action('Participant', 'GET', params, true)
       end
 
       def update_participant(participant_id, coach_mode = nil, mute = nil , hold = nil)
         valid_param?(:participant_id, participant_id, [String, Integer], true)
+        MultiPartyCallParticipant.new(@_client, resource_id: @id, participant_prefix: participant_id).update_participant(coach_mode, mute, hold)
+      end
+
+      def kick_participant(participant_id)
+        valid_param?(:participant_id, participant_id, [String, Integer], true)
+        MultiPartyCallParticipant.new(@_client, resource_id: @id, participant_prefix: participant_id).kick_participant
+      end
+
+      def get_participant(participant_id)
+        valid_param?(:participant_id, participant_id, [String, Integer], true)
+        MultiPartyCallParticipant.new(@_client,resource_id: @id, participant_prefix: participant_id).get_participant
+      end
+    end
+
+    class MultiPartyCallParticipant < Base::SecondaryResource
+      def initialize(client, options = nil)
+        @_name = 'MultiPartyCall'
+        @_identifier_string = 'mpc_uuid'
+        @_secondary_name = 'Participant'
+        @_secondary_identifier_string = 'member_id'
+        super
+        if options.key? :multi_party_prefix
+          @id = options[:multi_party_prefix] + '_' + @id
+        elsif @id.split('_').size > 1
+          nil
+        else
+          @id = 'uuid_' + @id
+        end
+        configure_secondary_resource_uri
+      end
+
+      def update_participant(coach_mode = nil, mute= nil, hold = nil)
         valid_param?(:coach_mode, coach_mode, [TrueClass, FalseClass], false) unless coach_mode.nil?
         valid_param?(:mute, mute, [TrueClass, FalseClass], false) unless mute.nil?
         valid_param?(:hold, hold, [TrueClass, FalseClass], false) unless hold.nil?
@@ -203,17 +235,15 @@ module Plivo
         params[:coach_mode] = coach_mode unless coach_mode.nil?
         params[:mute] = mute unless mute.nil?
         params[:hold] = hold unless hold.nil?
-        perform_action_apiresponse('Participant/' + participant_id.to_s, 'POST', params, true)
+        perform_action_apiresponse(nil, 'POST', params, true )
       end
 
-      def kick_participant(participant_id)
-        valid_param?(:participant_id, participant_id, [String, Integer], true)
-        perform_action_apiresponse('Participant/' + participant_id.to_s, 'DELETE', nil, true)
+      def kick_participant
+        perform_action_apiresponse(nil, 'DELETE', nil, true)
       end
 
-      def get_participant(participant_id)
-        valid_param?(:participant_id, participant_id, [String, Integer], true)
-        perform_action_apiresponse('Participant/' + participant_id.to_s, 'GET', nil, true)
+      def get_participant
+        perform_action(nil,'GET',nil,false)
       end
     end
 
@@ -324,7 +354,7 @@ module Plivo
                           record=false,
                           record_file_format='mp3',
                           status_callback_events='mpc-state-changes,participant-state-changes',
-                          stay_alone=true,
+                          stay_alone=false,
                           coach_mode=true,
                           mute=false,
                           hold=false,
@@ -396,24 +426,27 @@ module Plivo
       end
 
       def update_participant(participant_id, uuid=nil, friendly_name=nil, coach_mode=nil, mute=nil, hold=nil)
+        valid_param?(:participant_id, participant_id, [String, Integer], true)
         valid_param?(:uuid, uuid, String, false) unless uuid.nil?
         valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
         mpc_id = self.make_mpc_id(uuid, friendly_name)
-        MultiPartyCall.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).update_participant(participant_id,coach_mode, mute, hold)
+        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], participant_prefix: participant_id).update_participant(coach_mode, mute, hold)
       end
 
       def kick_participant(participant_id, uuid = nil, friendly_name = nil)
+        valid_param?(:participant_id, participant_id, [String, Integer], true)
         valid_param?(:uuid, uuid, String, false) unless uuid.nil?
         valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
         mpc_id = make_mpc_id(uuid, friendly_name)
-        MultiPartyCall.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).kick_participant(participant_id)
+        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], participant_prefix: participant_id).kick_participant
       end
 
       def get_participant(participant_id, uuid = nil, friendly_name = nil)
+        valid_param?(:participant_id, participant_id, [String, Integer], true)
         valid_param?(:uuid, uuid, String, false) unless uuid.nil?
         valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
         mpc_id = make_mpc_id(uuid, friendly_name)
-        MultiPartyCall.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).get_participant(participant_id)
+        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0],participant_prefix: participant_id).get_participant
       end
     end
   end
