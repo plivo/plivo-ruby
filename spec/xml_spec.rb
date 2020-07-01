@@ -1,6 +1,6 @@
 require 'rspec'
 require 'plivo'
-
+include Plivo::Utils
 describe 'XML test' do
   it 'should succeed' do
     resp = Plivo::XML::Response.new

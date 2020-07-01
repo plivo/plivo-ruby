@@ -16,15 +16,15 @@ module Plivo
       VALID_BOOL_VALUES = [true, false]
       VALID_RECORD_FILE_FORMAT_VALUES = %w[mp3 wav]
 
-      def multi_is_in(status_call_back_events)
-        possible_values = %w[mpc-state-changes participant-state-changes participant-speak-events participant-digit-input-events add-participant-api-events]
-        for val in status_call_back_events.split(',')
-          unless possible_values.include? val.strip
-            return false
-          end
-        end
-        return true
-      end
+      # def multi_is_in(status_call_back_events)
+      #   possible_values = %w[mpc-state-changes participant-state-changes participant-speak-events participant-digit-input-events add-participant-api-events]
+      #   for val in status_call_back_events.split(',')
+      #     unless possible_values.include? val.strip
+      #       return false
+      #     end
+      #   end
+      #   return true
+      # end
       
 
       def initialize(body, attributes = {})
@@ -82,7 +82,7 @@ module Plivo
           attributes[:recordingCallbackMethod] = 'mp3'
         end
 
-        if attributes[:statusCallbackEvents] && !multi_is_in(attributes[:statusCallbackEvents])
+        if attributes[:statusCallbackEvents] && multi_valid_param?(:statusCallbackEvents, attributes[:statusCallbackEvents], String, false, %w[mpc-state-changes participant-state-changes participant-speak-events participant-digit-input-events add-participant-api-events], true, ',') == true
           raise PlivoXMLError, "invalid attribute value #{attributes[:statusCallbackEvents]} for statusCallbackEvents"
         elsif !attributes[:statusCallbackEvents]
           attributes[:statusCallbackEvents] = 'mpc-state-changes,participant-state-changes'
