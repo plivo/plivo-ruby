@@ -15,7 +15,7 @@ module Plivo
       end
 
       def get
-        perform_action(nil,'GET',nil,false)
+        perform_action(nil,'GET',nil,true)
       end
 
       def add_participant(role,
@@ -313,7 +313,7 @@ module Plivo
         params[:limit] = limit unless limit.nil?
         valid_param?(:offset, offset, Integer, false, (0..Float::INFINITY).to_a) unless offset.nil?
         params[:offset] = offset unless offset.nil?
-        perform_action(nil ,'GET', params ,true)
+        perform_action(nil ,'GET', params ,true )
       end
       
       def get(uuid = nil, friendly_name = nil)
