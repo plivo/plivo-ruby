@@ -6,6 +6,7 @@ module Plivo
         @_name = 'Conference'
         @_identifier_string = 'conference_name'
         super
+        @_is_voice_request = true
       end
 
       def delete
@@ -215,6 +216,7 @@ module Plivo
         @_resource_type = Conference
         @_identifier_string = 'conference_name'
         super
+        @_is_voice_request = true
       end
 
       def get(conference_name)

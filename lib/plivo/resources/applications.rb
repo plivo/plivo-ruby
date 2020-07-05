@@ -8,6 +8,7 @@ module Plivo
         @_name = 'Application'
         @_identifier_string = 'app_id'
         super
+        @_is_voice_request = true
       end
 
       # @param [Hash] options
@@ -109,6 +110,7 @@ module Plivo
         @_resource_type = Application
         @_identifier_string = 'app_id'
         super
+        @_is_voice_request = true
       end
 
       # @param [String] app_id

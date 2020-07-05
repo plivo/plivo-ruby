@@ -6,6 +6,7 @@ module Plivo
         configure_client(client)
         configure_resource_uri
         parse_and_set(resource_list_json) if resource_list_json
+        @_is_voice_request = false
       end
 
       private
@@ -41,25 +42,25 @@ module Plivo
 
       def perform_get(identifier, params = nil)
         valid_param?(:identifier, identifier, [String, Symbol], true)
-        response_json = @_client.send_request(@_resource_uri + identifier.to_s + '/', 'GET', params)
+        response_json = @_client.send_request(@_resource_uri + identifier.to_s + '/', 'GET', params, nil, false, is_voice_request: @_is_voice_request)
         @_resource_type.new(@_client, resource_json: response_json)
       end
 
       def perform_get_without_identifier(params)
         valid_param?(:params, params, Hash, true)
-        response_json = @_client.send_request(@_resource_uri, 'GET', params)
+        response_json = @_client.send_request(@_resource_uri, 'GET', params, nil, false, is_voice_request: @_is_voice_request)
         @_resource_type.new(@_client, resource_json: response_json)
       end
 
       def perform_create(params, use_multipart_conn=false)
         Response.new(
-          @_client.send_request(@_resource_uri, 'POST', params, nil, use_multipart_conn),
+          @_client.send_request(@_resource_uri, 'POST', params, nil, use_multipart_conn, is_voice_request: @_is_voice_request),
           @_identifier_string
         )
       end
 
       def perform_post(params)
-        response_json = @_client.send_request(@_resource_uri, 'POST', params)
+        response_json = @_client.send_request(@_resource_uri, 'POST', params, nil, false, is_voice_request: @_is_voice_request)
 
         parse_and_set(response_json)
         self
@@ -74,7 +75,7 @@ module Plivo
       end
 
       def perform_list(params = nil)
-        response_json = @_client.send_request(@_resource_uri, 'GET', params)
+        response_json = @_client.send_request(@_resource_uri, 'GET', params, nil, false, is_voice_request: @_is_voice_request)
         parse_and_set(response_json)
         {
           api_id: @api_id,
@@ -85,14 +86,14 @@ module Plivo
       
       def perform_action(action = nil, method = 'GET', params = nil, parse = false)
         resource_path = action ? @_resource_uri + action + '/' : @_resource_uri
-        response = @_client.send_request(resource_path, method, params)
+        response = @_client.send_request(resource_path, method, params, nil, false, is_voice_request: @_is_voice_request)
         parse ? parse_and_set(response) : self
         method == 'POST' ? parse_and_set(params) : self
         self
       end
 
       def perform_list_without_object(params = nil)
-        response_json = @_client.send_request(@_resource_uri, 'GET', params)
+        response_json = @_client.send_request(@_resource_uri, 'GET', params, nil, false, is_voice_request: @_is_voice_request)
         parse_and_set(response_json)
         response_json
       end

@@ -6,6 +6,7 @@ module Plivo
         @_name = 'Recording'
         @_identifier_string = 'recording_id'
         super
+        @_is_voice_request = true
       end
 
       def delete
@@ -36,6 +37,7 @@ module Plivo
         @_resource_type = Recording
         @_identifier_string = 'recording_id'
         super
+        @_is_voice_request = true
       end
 
       # @param [Hash] options
