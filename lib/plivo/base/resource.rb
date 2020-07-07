@@ -125,8 +125,7 @@ module Plivo
 
       def configure_secondary_options(options)
         valid_param?(:options, options, Hash, false)
-        @id = options[:resource_id] if options.key?(:resource_id)
-        @secondary_id = options[:participant_prefix] if options.key?(:participant_prefix)
+        @secondary_id = options[:member_id] if options.key?(:member_id)
         secondary_parse_and_set(options[:resource_json]) if options.key?(:resource_json)
       end
 
@@ -134,12 +133,6 @@ module Plivo
         return unless resource_json
 
         valid_param?(:resource_json, resource_json, Hash, true)
-
-        resource_json.each do |k, v|
-          instance_variable_set("@#{k}", v)
-          self.class.send(:attr_reader, k)
-        end
-
         return unless @_secondary_identifier_string && (resource_json.key? @_secondary_identifier_string)
         @secondary_id = resource_json[@_secondary_identifier_string]
       end

@@ -72,31 +72,31 @@ module Plivo
         valid_param?(:from, from, String, false ) unless from.nil?
         valid_param?(:to, to, String, false ) unless to.nil?
         valid_param?(:call_uuid, call_uuid, String, false ) unless call_uuid.nil?
-        valid_param?(:call_status_callback_url, call_status_callback_url, String, false) unless call_status_callback_url.nil?
-        valid_param?(:call_status_callback_method, call_status_callback_method, String, false, %w[GET POST])
+        valid_url?(:call_status_callback_url, call_status_callback_url, false) unless call_status_callback_url.nil?
+        valid_param?(:call_status_callback_method, call_status_callback_method.upcase, String, false, %w[GET POST])
         valid_param?(:sip_headers, sip_headers, String, false) unless sip_headers.nil?
         valid_param?(:confirm_key, confirm_key, String, false , %w[0 1 2 3 4 5 6 7 8 9 # *]) unless confirm_key.nil?
-        valid_param?(:confirm_key_sound_url, confirm_key_sound_url, String, false ) unless confirm_key_sound_url.nil?
-        valid_param?(:confirm_key_sound_method, confirm_key_sound_method, String, false, %w[GET POST])
-        valid_param?(:dial_music, dial_music, String, false)
-        valid_param?(:ring_timeout, ring_timeout, Integer, false, (15..120).to_a)
-        valid_param?(:max_duration, max_duration, Integer, false, (300..28800).to_a)
-        valid_param?(:max_participants, max_participants, Integer, false, (2..10).to_a)
-        valid_param?(:wait_music_url, wait_music_url, String, false ) unless wait_music_url.nil?
-        valid_param?(:wait_music_method, wait_music_method, String, false , %w[GET POST])
-        valid_param?(:agent_hold_music_url, agent_hold_music_url, String, false ) unless agent_hold_music_url.nil?
-        valid_param?(:agent_hold_music_method, agent_hold_music_method, String, false , %w[GET POST])
-        valid_param?(:customer_hold_music_url, customer_hold_music_url, String, false) unless customer_hold_music_url.nil?
-        valid_param?(:customer_hold_music_method, customer_hold_music_method, String, false, %w[GET POST])
-        valid_param?(:recording_callback_url, recording_callback_url, String, false) unless recording_callback_url.nil?
-        valid_param?(:recording_callback_method, recording_callback_method, String, false, %w[GET POST])
-        valid_param?(:status_callback_url, status_callback_url, String, false) unless status_callback_url.nil?
-        valid_param?(:status_callback_method, status_callback_method, String, false, %w[GET POST])
-        valid_param?(:on_exit_action_url, on_exit_action_url, String, false) unless on_exit_action_url.nil?
-        valid_param?(:on_exit_action_method, on_exit_action_method, String, false, %w[GET POST])
+        valid_url?(:confirm_key_sound_url, confirm_key_sound_url, false) unless confirm_key_sound_url.nil?
+        valid_param?(:confirm_key_sound_method, confirm_key_sound_method.upcase, String, false, %w[GET POST])
+        is_one?(:dial_music, dial_music, false, %w[real none])
+        valid_range?(:ring_timeout, ring_timeout, false, 15, 120)
+        valid_range?(:max_duration, max_duration, false, 300, 28800)
+        valid_range?(:max_participants, max_participants, false, 2, 10)
+        valid_url?(:wait_music_url, wait_music_url, false ) unless wait_music_url.nil?
+        valid_param?(:wait_music_method, wait_music_method.upcase, String, false , %w[GET POST])
+        valid_url?(:agent_hold_music_url, agent_hold_music_url, false) unless agent_hold_music_url.nil?
+        valid_param?(:agent_hold_music_method, agent_hold_music_method.upcase, String, false , %w[GET POST])
+        valid_url?(:customer_hold_music_url, customer_hold_music_url, false) unless customer_hold_music_url.nil?
+        valid_param?(:customer_hold_music_method, customer_hold_music_method.upcase, String, false, %w[GET POST])
+        valid_url?(:recording_callback_url, recording_callback_url, false) unless recording_callback_url.nil?
+        valid_param?(:recording_callback_method, recording_callback_method.upcase, String, false, %w[GET POST])
+        valid_url?(:status_callback_url, status_callback_url, false) unless status_callback_url.nil?
+        valid_param?(:status_callback_method, status_callback_method.upcase, String, false, %w[GET POST])
+        valid_url?(:on_exit_action_url, on_exit_action_url, false ) unless on_exit_action_url.nil?
+        valid_param?(:on_exit_action_method, on_exit_action_method.upcase, String, false, %w[GET POST])
         valid_param?(:record, record, [TrueClass, FalseClass], false )
-        valid_param?(:record_file_format, record_file_format, String, false, %w[mp3 wav])
-        multi_valid_param?(:status_callback_events, status_callback_events, String, false, %w[mpc-state-changes participant-state-changes participant-speak-events participant-digit-input-events add-participant-api-events], true, ',')
+        valid_param?(:record_file_format, record_file_format.downcase, String, false, %w[mp3 wav])
+        multi_valid_param?(:status_callback_events, status_callback_events.downcase, String, false, %w[mpc-state-changes participant-state-changes participant-speak-events participant-digit-input-events add-participant-api-events], true, ',')
         valid_param?(:stay_alone, stay_alone, [TrueClass, FalseClass], false)
         valid_param?(:coach_mode, coach_mode, [TrueClass, FalseClass], false)
         valid_param?(:mute, mute, [TrueClass, FalseClass],false)
@@ -104,10 +104,10 @@ module Plivo
         valid_param?(:start_mpc_on_enter, start_mpc_on_enter, [TrueClass, FalseClass], false)
         valid_param?(:end_mpc_on_exit, end_mpc_on_exit, [TrueClass, FalseClass], false)
         valid_param?(:relay_dtmf_inputs, relay_dtmf_inputs, [TrueClass, FalseClass], false)
-        valid_param?(:enter_sound, enter_sound, String, false)
-        valid_param?(:enter_sound_method, enter_sound_method, String, false, %w[GET POST])
-        valid_param?(:exit_sound, exit_sound, String, false)
-        valid_param?(:exit_sound_method, exit_sound_method, String, false, %w[GET POST])
+        is_one?(:enter_sound, enter_sound, false, %w[beep:1 beep:2 none])
+        valid_param?(:enter_sound_method, enter_sound_method.upcase, String, false, %w[GET POST])
+        is_one?(:exit_sound, exit_sound, false , %w[beep:1 beep:2 none])
+        valid_param?(:exit_sound_method, exit_sound_method.upcase, String, false, %w[GET POST])
 
         params = {}
         params[:role] = role unless role.nil?
@@ -115,30 +115,30 @@ module Plivo
         params[:to] = to unless to.nil?
         params[:call_uuid] = call_uuid unless call_uuid.nil?
         params[:call_status_callback_url] = call_status_callback_url unless call_status_callback_url.nil?
-        params[:call_status_callback_method] = call_status_callback_method unless call_status_callback_method.nil?
+        params[:call_status_callback_method] = call_status_callback_method.upcase unless call_status_callback_method.nil?
         params[:sip_headers] = sip_headers unless sip_headers.nil?
         params[:confirm_key] = confirm_key unless confirm_key.nil?
         params[:confirm_key_sound_url] = confirm_key_sound_url unless confirm_key_sound_url.nil?
-        params[:confirm_key_sound_method] = confirm_key_sound_method unless confirm_key_sound_method.nil?
+        params[:confirm_key_sound_method] = confirm_key_sound_method.upcase unless confirm_key_sound_method.nil?
         params[:dial_music] = dial_music unless dial_music.nil?
         params[:ring_timeout] = ring_timeout unless ring_timeout.nil?
         params[:max_duration] = max_duration unless max_duration.nil?
         params[:max_participants] = max_participants unless max_participants.nil?
         params[:wait_music_url] = wait_music_url unless wait_music_url.nil?
-        params[:wait_music_method] = wait_music_method unless wait_music_method.nil?
+        params[:wait_music_method] = wait_music_method.upcase unless wait_music_method.nil?
         params[:agent_hold_music_url] = agent_hold_music_url unless agent_hold_music_url.nil?
-        params[:agent_hold_music_method] = agent_hold_music_method unless agent_hold_music_method.nil?
+        params[:agent_hold_music_method] = agent_hold_music_method.upcase unless agent_hold_music_method.nil?
         params[:customer_hold_music_url] = customer_hold_music_url unless customer_hold_music_url.nil?
-        params[:customer_hold_music_method] = customer_hold_music_method unless customer_hold_music_method.nil?
+        params[:customer_hold_music_method] = customer_hold_music_method.upcase unless customer_hold_music_method.nil?
         params[:recording_callback_url] = recording_callback_url unless recording_callback_url.nil?
-        params[:recording_callback_method] = recording_callback_method unless recording_callback_method.nil?
+        params[:recording_callback_method] = recording_callback_method.upcase unless recording_callback_method.nil?
         params[:status_callback_url] = status_callback_url unless status_callback_url.nil?
-        params[:status_callback_method] = status_callback_method unless status_callback_method.nil?
+        params[:status_callback_method] = status_callback_method.upcase unless status_callback_method.nil?
         params[:on_exit_action_url] = on_exit_action_url unless on_exit_action_url.nil?
-        params[:on_exit_action_method] = on_exit_action_method unless on_exit_action_method.nil?
+        params[:on_exit_action_method] = on_exit_action_method.upcase unless on_exit_action_method.nil?
         params[:record] = record unless record.nil?
-        params[:record_file_format] = record_file_format unless record_file_format.nil?
-        params[:status_callback_events] = status_callback_events unless status_callback_events.nil?
+        params[:record_file_format] = record_file_format.downcase unless record_file_format.nil?
+        params[:status_callback_events] = status_callback_events.downcase unless status_callback_events.nil?
         params[:stay_alone] = stay_alone unless stay_alone.nil?
         params[:coach_mode] = coach_mode unless coach_mode.nil?
         params[:mute] = mute unless mute.nil?
@@ -147,9 +147,9 @@ module Plivo
         params[:end_mpc_on_exit] = end_mpc_on_exit unless end_mpc_on_exit.nil?
         params[:relay_dtmf_inputs] = relay_dtmf_inputs unless relay_dtmf_inputs.nil?
         params[:enter_sound] = enter_sound unless enter_sound.nil?
-        params[:enter_sound_method] = enter_sound_method unless exit_sound_method.nil?
+        params[:enter_sound_method] = enter_sound_method.upcase unless exit_sound_method.nil?
         params[:exit_sound] = exit_sound unless exit_sound.nil?
-        params[:exit_sound_method] = exit_sound_method unless exit_sound_method.nil?
+        params[:exit_sound_method] = exit_sound_method.upcase unless exit_sound_method.nil?
 
         perform_action_apiresponse('Participant', 'POST', params, true )
       end
@@ -164,13 +164,14 @@ module Plivo
 
       def start_recording(file_format = 'mp3', status_callback_url = nil, status_callback_method='POST')
         valid_param?(:file_format, file_format, String, false , %w[mp3 wav])
-        valid_param?(:status_callback_url, status_callback_url, String, false) unless status_callback_url.nil?
-        valid_param?(:status_callback_method, status_callback_method,String, false, %w[GET POST])
+        # valid_param?(:status_callback_url, status_callback_url, String, false) unless status_callback_url.nil?
+        valid_url?(:status_callback_url, status_callback_url, false) unless status_callback_url.nil?
+        valid_param?(:status_callback_method, status_callback_method.upcase,String, false, %w[GET POST])
 
         params = {}
-        params[:file_format] = file_format unless file_format.nil?
+        params[:file_format] = file_format.downcase unless file_format.nil?
         params[:status_callback_url] = status_callback_url unless status_callback_url.nil?
-        params[:status_callback_method] = status_callback_method unless status_callback_method.nil?
+        params[:status_callback_method] = status_callback_method.upcase unless status_callback_method.nil?
 
         perform_action_apiresponse('Record', 'POST', params, true)
       end
@@ -194,19 +195,19 @@ module Plivo
         perform_action('Participant', 'GET', params, true)
       end
 
-      def update_participant(participant_id, coach_mode = nil, mute = nil , hold = nil)
-        valid_param?(:participant_id, participant_id, [String, Integer], true)
-        MultiPartyCallParticipant.new(@_client, resource_id: @id, participant_prefix: participant_id).update_participant(coach_mode, mute, hold)
+      def update_participant(member_id, coach_mode = nil, mute = nil , hold = nil)
+        valid_param?(:member_id, member_id, [String, Integer], true)
+        MultiPartyCallParticipant.new(@_client, resource_id: @id, member_id: member_id).update_participant(coach_mode, mute, hold)
       end
 
-      def kick_participant(participant_id)
-        valid_param?(:participant_id, participant_id, [String, Integer], true)
-        MultiPartyCallParticipant.new(@_client, resource_id: @id, participant_prefix: participant_id).kick_participant
+      def kick_participant(member_id)
+        valid_param?(:member_id, member_id, [String, Integer], true)
+        MultiPartyCallParticipant.new(@_client, resource_id: @id, member_id: member_id).kick_participant
       end
 
-      def get_participant(participant_id)
-        valid_param?(:participant_id, participant_id, [String, Integer], true)
-        MultiPartyCallParticipant.new(@_client,resource_id: @id, participant_prefix: participant_id).get_participant
+      def get_participant(member_id)
+        valid_param?(:member_id, member_id, [String, Integer], true)
+        MultiPartyCallParticipant.new(@_client,resource_id: @id, member_id: member_id).get_participant
       end
     end
 
@@ -293,25 +294,25 @@ module Plivo
         params[:status] = status unless status.nil?
         valid_param?(:termination_cause_code, termination_cause_code, Integer, false) unless termination_cause_code.nil?
         params[:termination_cause_code] = termination_cause_code unless termination_cause_code.nil?
-        valid_param?(:end_time__gt, end_time__gt, String, false ) unless end_time__gt.nil?
+        valid_date_format?(:end_time__gt, end_time__gt, false ) unless end_time__gt.nil?
         params[:end_time__gt] = end_time__gt unless end_time__gt.nil?
-        valid_param?(:end_time__gte, end_time__gte, String, false ) unless end_time__gte.nil?
+        valid_date_format?(:end_time__gte, end_time__gte, false ) unless end_time__gte.nil?
         params[:end_time__gte] = end_time__gte unless end_time__gte.nil?
-        valid_param?(:end_time__lt, end_time__lt, String, false ) unless end_time__lt.nil?
+        valid_date_format?(:end_time__lt, end_time__lt, String) unless end_time__lt.nil?
         params[:end_time__lt] = end_time__lt unless end_time__lt.nil?
-        valid_param?(:end_time__lt, end_time__lte, String, false ) unless end_time__lte.nil?
+        valid_date_format?(:end_time__lte, end_time__lte, false) unless end_time__lte.nil?
         params[:end_time__lte] = end_time__lte unless end_time__lte.nil?
-        valid_param?(:creation_time__gt, creation_time__gt, String, false ) unless creation_time__gt.nil?
+        valid_date_format?(:creation_time__gt, creation_time__gt, false) unless creation_time__gt.nil?
         params[:creation_time__gt] = creation_time__gt unless creation_time__gt.nil?
-        valid_param?(:creation_time__gte, creation_time__gte, String, false ) unless creation_time__gte.nil?
+        valid_date_format?(:creation_time__gte, creation_time__gte, false) unless creation_time__gte.nil?
         params[:creation_time__gte] = creation_time__gte unless creation_time__gte.nil?
-        valid_param?(:creation_time__lt, creation_time__lt, String, false ) unless creation_time__lt.nil?
+        valid_date_format?(:creation_time__lt, creation_time__lt, false) unless creation_time__lt.nil?
         params[:creation_time__lt] = creation_time__lt unless creation_time__lt.nil?
-        valid_param?(:creation_time__lte, creation_time__lte, String, false ) unless creation_time__lte.nil?
+        valid_date_format?(:creation_time__lte, creation_time__lte, false) unless creation_time__lte.nil?
         params[:creation_time__lte] = creation_time__lte unless creation_time__lte.nil?
-        valid_param?(:limit, limit, Integer, false, (1..20).to_a) unless limit.nil?
+        valid_range?(:limit, limit, false, 1, 20)
         params[:limit] = limit unless limit.nil?
-        valid_param?(:offset, offset, Integer, false, (0..Float::INFINITY).to_a) unless offset.nil?
+        valid_range?(:offset, offset, false, 0)
         params[:offset] = offset unless offset.nil?
         perform_action(nil ,'GET', params ,true )
       end
@@ -425,28 +426,28 @@ module Plivo
         MultiPartyCall.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).list_participants(call_uuid)
       end
 
-      def update_participant(participant_id, uuid=nil, friendly_name=nil, coach_mode=nil, mute=nil, hold=nil)
-        valid_param?(:participant_id, participant_id, [String, Integer], true)
+      def update_participant(member_id, uuid=nil, friendly_name=nil, coach_mode=nil, mute=nil, hold=nil)
+        valid_param?(:member_id, member_id, [String, Integer], true)
         valid_param?(:uuid, uuid, String, false) unless uuid.nil?
         valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
         mpc_id = self.make_mpc_id(uuid, friendly_name)
-        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], participant_prefix: participant_id).update_participant(coach_mode, mute, hold)
+        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: member_id).update_participant(coach_mode, mute, hold)
       end
 
-      def kick_participant(participant_id, uuid = nil, friendly_name = nil)
-        valid_param?(:participant_id, participant_id, [String, Integer], true)
+      def kick_participant(member_id, uuid = nil, friendly_name = nil)
+        valid_param?(:member_id, member_id, [String, Integer], true)
         valid_param?(:uuid, uuid, String, false) unless uuid.nil?
         valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
         mpc_id = make_mpc_id(uuid, friendly_name)
-        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], participant_prefix: participant_id).kick_participant
+        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: member_id).kick_participant
       end
 
-      def get_participant(participant_id, uuid = nil, friendly_name = nil)
-        valid_param?(:participant_id, participant_id, [String, Integer], true)
+      def get_participant(member_id, uuid = nil, friendly_name = nil)
+        valid_param?(:member_id, member_id, [String, Integer], true)
         valid_param?(:uuid, uuid, String, false) unless uuid.nil?
         valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
         mpc_id = make_mpc_id(uuid, friendly_name)
-        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0],participant_prefix: participant_id).get_participant
+        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: member_id).get_participant
       end
     end
   end
