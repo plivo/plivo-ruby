@@ -67,24 +67,95 @@ module Plivo
       expected_value?(param_name, expected_values, param_value)
     end
 
+    def valid_url?(param_name, param_value, mandatory = false)
+      if mandatory && param_value.nil?
+        raise_invalid_request("#{param_name} is a required parameter")
+      end
+
+      return true if param_value.nil?
+      return raise_invalid_request("#{param_name}: Expected a String but received #{param_value.class} instead") unless expected_type?(param_name, String, param_value)
+
+      if param_value =~ /^(http[s]?:\/\/([a-zA-Z]|[0-9]|[\$\-\_\@\.\&\+\/\#]|[\!\*\(\)\,]|(%[0-9a-fA-F][0-9a-fA-F]))+|nil)$/ix
+        return true
+      else
+        return raise_invalid_request("Invalid URL : Doesn't satisfy the URL format")
+      end
+    end
+
+    def valid_range?(param_name, param_value, mandatory = false, lower_bound = nil, upper_bound = nil)
+      if mandatory && param_value.nil?
+        raise_invalid_request("#{param_name} is a required parameter")
+      end
+
+      return true if param_value.nil?
+
+      return raise_invalid_request("#{param_name}: Expected an Integer but received #{param_value.class} instead") unless expected_type?(param_name, Integer, param_value)
+      if lower_bound && upper_bound
+        return raise_invalid_request("#{param_name} ranges between #{lower_bound} and #{upper_bound}") if param_value < lower_bound or param_value > upper_bound
+
+        return true if param_value >= lower_bound and param_value <= upper_bound
+      elsif lower_bound
+        return raise_invalid_request("#{param_name} should be greater than #{lower_bound}") if param_value < lower_bound
+
+        return true if param_value >= lower_bound
+      elsif upper_bound
+        return raise_invalid_request("#{param_name} should be lesser than #{upper_bound}") if param_value > upper_bound
+
+        return true if param_value >= upper_bound
+      else
+        return raise_invalid_request("Any one or both of lower and upper bound should be provided")
+      end
+    end
+
     def multi_valid_param?(param_name, param_value, expected_types = nil, mandatory = false, expected_values = nil, make_down_case = false, seperator = ',')
-    if mandatory && param_value.nil?
-      raise_invalid_request("#{param_name} is a required parameter")
+      if mandatory && param_value.nil?
+        raise_invalid_request("#{param_name} is a required parameter")
+      end
+
+      return true if param_value.nil?
+
+      if make_down_case
+        param_value = param_value.downcase
+      else
+        param_value = param_value.uppercase
+      end
+
+      for val in param_value.split(seperator)
+        return expected_type?(param_name, expected_types, val.strip) unless expected_values
+        expected_value?(param_name, expected_values, val.strip)
+      end
     end
 
-    return true if param_value.nil?
+    def valid_date_format?(param_name, param_value, mandatory = false)
+      if mandatory && param_value.nil?
+        raise_invalid_request("#{param_name} is a required parameter")
+      end
 
-    if make_down_case
-      param_value = param_value.downcase
-    else
-      param_value = param_value.uppercase
+      return true if param_value.nil?
+
+      if param_value =~ /^(\d{4}\-\d{2}\-\d{2}\ \d{2}\:\d{2}(\:\d{2}(\.\d{1,6})?)?)$/ix
+        return true
+      else
+        return raise_invalid_request("Invalid Date Format")
+      end
     end
 
-    for val in param_value.split(seperator)
-      return expected_type?(param_name, expected_types, val.strip) unless expected_values
-      expected_value?(param_name, expected_values, val.strip)
+    def is_one?(param_name, param_value, mandatory = false, expected_values= nil)
+      if mandatory && param_value.nil?
+        raise_invalid_request("#{param_name} is a required parameter")
+      end
+
+      return true if param_value.nil?
+      return raise_invalid_request("#{param_name}: Expected a String but received #{param_value.class} instead") unless expected_type?(param_name, String, param_value)
+
+      if expected_values.include? param_value.downcase or expected_values.include? param_value.upcase
+        return true
+      elsif valid_url?(param_name, param_value)
+        return true
+      else
+        raise_invalid_request("#{param_name} neither a valid URL nor in the expected values")
+      end
     end
-  end
 
     def expected_type?(param_name, expected_types, param_value)
       return true if expected_types.nil?

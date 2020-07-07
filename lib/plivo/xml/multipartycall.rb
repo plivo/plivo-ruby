@@ -71,7 +71,7 @@ module Plivo
           attributes[:recordingCallbackMethod] = 'mp3'
         end
 
-        if attributes[:statusCallbackEvents] && multi_valid_param?(:statusCallbackEvents, attributes[:statusCallbackEvents], String, false, %w[mpc-state-changes participant-state-changes participant-speak-events participant-digit-input-events add-participant-api-events], true, ',') == true
+        if attributes[:statusCallbackEvents] && !multi_valid_param?(:statusCallbackEvents, attributes[:statusCallbackEvents], String, false, %w[mpc-state-changes participant-state-changes participant-speak-events participant-digit-input-events add-participant-api-events], true, ',') == true
           raise PlivoXMLError, "invalid attribute value #{attributes[:statusCallbackEvents]} for statusCallbackEvents"
         elsif !attributes[:statusCallbackEvents]
           attributes[:statusCallbackEvents] = 'mpc-state-changes,participant-state-changes'
@@ -119,7 +119,9 @@ module Plivo
           attributes[:endMpcOnExit] = false
         end
 
-        if !attributes[:enterSound]
+        if attributes[:enterSound] && !is_one?(:enterSound, attributes[:enterSound], false, %w[beep:1 beep:2 none])
+          raise PlivoXMLError, "invalid attribute value #{attributes[:enterSound]} for enterSound"
+        elsif !attributes[:enterSound]
           attributes[:enterSound] = 'beep:1'
         end
 
@@ -129,7 +131,9 @@ module Plivo
           attributes[:enterSoundMethod] = 'GET'
         end
 
-        if !attributes[:exitSound]
+        if attributes[:exitSound] && !is_one?(:exitSound, attributes[:exitSound], false, %w[beep:1 beep:2 none])
+          raise PlivoXMLError, "invalid attribute value #{attributes[:exitSound]} for exitSound"
+        elsif !attributes[:exitSound]
           attributes[:exitSound] = 'beep:2'
         end
 
@@ -149,6 +153,30 @@ module Plivo
           raise PlivoXMLError, "invalid attribute value #{attributes[:relayDTMFInputs]} for relayDTMFInputs"
         elsif !attributes[:relayDTMFInputs]
           attributes[:relayDTMFInputs] = false
+        end
+
+        if attributes[:waitMusicUrl] && !valid_url?(:waitMusicUrl, attributes[:waitMusicUrl], false)
+          raise PlivoXMLError, "invalid attribute value #{attributes[:waitMusicUrl]} for waitMusicUrl"
+        end
+
+        if attributes[:agentHoldMusicUrl] && !valid_url?(:agentHoldMusicUrl, attributes[:agentHoldMusicUrl], false)
+          raise PlivoXMLError, "invalid attribute value #{attributes[:agentHoldMusicUrl]} for agentHoldMusicUrl"
+        end
+
+        if attributes[:customerHoldMusicUrl] && !valid_url?(:customerHoldMusicUrl, attributes[:customerHoldMusicUrl], false)
+          raise PlivoXMLError, "invalid attribute value #{attributes[:customerHoldMusicUrl]} for customerHoldMusicUrl"
+        end
+
+        if attributes[:recordingCallbackUrl] && !valid_url?(:recordingCallbackUrl, attributes[:recordingCallbackUrl], false)
+          raise PlivoXMLError, "invalid attribute value #{attributes[:recordingCallbackUrl]} for recordingCallbackUrl"
+        end
+
+        if attributes[:statusCallbackUrl] && !valid_url?(:statusCallbackUrl, attributes[:statusCallbackUrl], false)
+          raise PlivoXMLError, "invalid attribute value #{attributes[:statusCallbackUrl]} for statusCallbackUrl"
+        end
+
+        if attributes[:customerHoldMusicUrl] && !valid_url?(:customerHoldMusicUrl, attributes[:customerHoldMusicUrl], false)
+          raise PlivoXMLError, "invalid attribute value #{attributes[:customerHoldMusicUrl]} for customerHoldMusicUrl"
         end
 
         raise PlivoXMLError, 'No MPC name set for the MPC' unless body
