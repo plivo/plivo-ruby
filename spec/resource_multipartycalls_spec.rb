@@ -78,17 +78,6 @@ describe 'MultiPartyCalls test' do
                      })
   end
 
-  it 'starts MPC' do
-    contents = File.read(Dir.pwd + '/spec/mocks/multiPartyCallsStartMpcResponse.json')
-    mock(200, JSON.parse(contents))
-    expect(JSON.parse(to_json_MPC_funcs(@api.multipartycalls.start(nil,'Voice')))).to eql(JSON.parse(contents))
-    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/MultiPartyCall/name_Voice/',
-                     method: 'POST',
-                     data:{
-                         "status" => 'active'
-                     })
-  end
-
   it 'ends MPC' do
     contents = File.read(Dir.pwd + '/spec/mocks/multiPartyCallsEndMpcResponse.json')
     mock(200, JSON.parse(contents))

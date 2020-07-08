@@ -67,6 +67,16 @@ module Plivo
       expected_value?(param_name, expected_values, param_value)
     end
 
+    def valid_multiple_destination_nos?(param_name, param_value, options = nil)
+      if param_value.split(options[:delimiter]).size > 1 && options[:role].downcase != 'agent'
+        raise_invalid_request("Multiple #{param_name} values given for role #{options[:role]}")
+      elsif param_value.split(options[:delimiter]).size >= options[:agent_limit]
+        raise_invalid_request("No of #{param_name} values provided should be lesser than #{options[:agent_limit]}")
+      else
+        return true
+      end
+    end
+
     def valid_url?(param_name, param_value, mandatory = false)
       if mandatory && param_value.nil?
         raise_invalid_request("#{param_name} is a required parameter")
@@ -140,7 +150,7 @@ module Plivo
       end
     end
 
-    def is_one?(param_name, param_value, mandatory = false, expected_values= nil)
+    def is_one_among_string_url?(param_name, param_value, mandatory = false, expected_values= nil)
       if mandatory && param_value.nil?
         raise_invalid_request("#{param_name} is a required parameter")
       end

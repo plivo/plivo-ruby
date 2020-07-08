@@ -71,6 +71,7 @@ module Plivo
         valid_param?(:role, role.downcase, String, true, %w[agent supervisor customer])
         valid_param?(:from, from, String, false ) unless from.nil?
         valid_param?(:to, to, String, false ) unless to.nil?
+        valid_multiple_destination_nos?(:to, to, role: role, delimiter: '<', agent_limit: 20) unless to.nil?
         valid_param?(:call_uuid, call_uuid, String, false ) unless call_uuid.nil?
         valid_url?(:call_status_callback_url, call_status_callback_url, false) unless call_status_callback_url.nil?
         valid_param?(:call_status_callback_method, call_status_callback_method.upcase, String, false, %w[GET POST])
@@ -78,7 +79,7 @@ module Plivo
         valid_param?(:confirm_key, confirm_key, String, false , %w[0 1 2 3 4 5 6 7 8 9 # *]) unless confirm_key.nil?
         valid_url?(:confirm_key_sound_url, confirm_key_sound_url, false) unless confirm_key_sound_url.nil?
         valid_param?(:confirm_key_sound_method, confirm_key_sound_method.upcase, String, false, %w[GET POST])
-        is_one?(:dial_music, dial_music, false, %w[real none])
+        is_one_among_string_url?(:dial_music, dial_music, false, %w[real none])
         valid_range?(:ring_timeout, ring_timeout, false, 15, 120)
         valid_range?(:max_duration, max_duration, false, 300, 28800)
         valid_range?(:max_participants, max_participants, false, 2, 10)
@@ -104,9 +105,9 @@ module Plivo
         valid_param?(:start_mpc_on_enter, start_mpc_on_enter, [TrueClass, FalseClass], false)
         valid_param?(:end_mpc_on_exit, end_mpc_on_exit, [TrueClass, FalseClass], false)
         valid_param?(:relay_dtmf_inputs, relay_dtmf_inputs, [TrueClass, FalseClass], false)
-        is_one?(:enter_sound, enter_sound, false, %w[beep:1 beep:2 none])
+        is_one_among_string_url?(:enter_sound, enter_sound, false, %w[beep:1 beep:2 none])
         valid_param?(:enter_sound_method, enter_sound_method.upcase, String, false, %w[GET POST])
-        is_one?(:exit_sound, exit_sound, false , %w[beep:1 beep:2 none])
+        is_one_among_string_url?(:exit_sound, exit_sound, false , %w[beep:1 beep:2 none])
         valid_param?(:exit_sound_method, exit_sound_method.upcase, String, false, %w[GET POST])
 
         params = {}
@@ -164,7 +165,6 @@ module Plivo
 
       def start_recording(file_format = 'mp3', status_callback_url = nil, status_callback_method='POST')
         valid_param?(:file_format, file_format, String, false , %w[mp3 wav])
-        # valid_param?(:status_callback_url, status_callback_url, String, false) unless status_callback_url.nil?
         valid_url?(:status_callback_url, status_callback_url, false) unless status_callback_url.nil?
         valid_param?(:status_callback_method, status_callback_method.upcase,String, false, %w[GET POST])
 
