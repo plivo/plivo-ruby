@@ -45,9 +45,6 @@ module Plivo
       timeout ||= @timeout
 
       if options[:is_voice_request] == true
-        if @@voice_retry_count == 0
-          @base_uri = Plivo::Base::API_VOICE
-        end
         response = case method
                    when 'GET' then send_get(resource_path, data, timeout, is_voice_request: options[:is_voice_request], voice_retry_count: @@voice_retry_count)
                    when 'POST' then send_post(resource_path, data, timeout, use_multipart_conn, is_voice_request: options[:is_voice_request], voice_retry_count: @@voice_retry_count)
@@ -57,15 +54,11 @@ module Plivo
 
         if response.status >= 500
           @@voice_retry_count += 1
-          if @@voice_retry_count == 1
-              @base_uri = Plivo::Base::API_VOICE_FALLBACK_1
-          elsif @@voice_retry_count == 2
-              @base_uri = Plivo::Base::API_VOICE_FALLBACK_2
-          else
+          if @@voice_retry_count > 2
               process_response(method, response.to_hash)
           end
           is_voice_request = true
-          return send_request(resource_path, method, data, timeout, use_multipart_conn, is_voice_request)
+          return send_request(resource_path, method, data, timeout, use_multipart_conn, is_voice_request: is_voice_request)
         end
         process_response(method, response.to_hash)
 
