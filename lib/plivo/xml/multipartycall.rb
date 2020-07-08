@@ -119,7 +119,7 @@ module Plivo
           attributes[:endMpcOnExit] = false
         end
 
-        if attributes[:enterSound] && !is_one?(:enterSound, attributes[:enterSound], false, %w[beep:1 beep:2 none])
+        if attributes[:enterSound] && !is_one_among_string_url?(:enterSound, attributes[:enterSound], false, %w[beep:1 beep:2 none])
           raise PlivoXMLError, "invalid attribute value #{attributes[:enterSound]} for enterSound"
         elsif !attributes[:enterSound]
           attributes[:enterSound] = 'beep:1'
@@ -131,7 +131,7 @@ module Plivo
           attributes[:enterSoundMethod] = 'GET'
         end
 
-        if attributes[:exitSound] && !is_one?(:exitSound, attributes[:exitSound], false, %w[beep:1 beep:2 none])
+        if attributes[:exitSound] && !is_one_among_string_url?(:exitSound, attributes[:exitSound], false, %w[beep:1 beep:2 none])
           raise PlivoXMLError, "invalid attribute value #{attributes[:exitSound]} for exitSound"
         elsif !attributes[:exitSound]
           attributes[:exitSound] = 'beep:2'
