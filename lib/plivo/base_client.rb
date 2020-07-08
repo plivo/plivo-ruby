@@ -55,10 +55,10 @@ module Plivo
         if response.status >= 500
           @@voice_retry_count += 1
           if @@voice_retry_count > 2
-              process_response(method, response.to_hash)
+            return process_response(method, response.to_hash)
           end
           is_voice_request = true
-          return send_request(resource_path, method, data, timeout, use_multipart_conn, is_voice_request: is_voice_request)
+          send_request(resource_path, method, data, timeout, use_multipart_conn, is_voice_request: is_voice_request)
         end
         process_response(method, response.to_hash)
 
@@ -139,33 +139,7 @@ module Plivo
         faraday.adapter Faraday.default_adapter
       end
 
-      @voice_conn_no_retry = Faraday.new(@voice_base_uri) do |faraday|
-        faraday.headers = @headers
-
-        # DANGER: Basic auth should always come after headers, else
-        # The headers will replace the basic_auth
-
-        faraday.basic_auth(auth_id, auth_token)
-
-        faraday.proxy=@proxy_hash if @proxy_hash
-        faraday.response :json, content_type: /\bjson$/
-        faraday.adapter Faraday.default_adapter
-      end
-
-      @voice_conn_retry_1 = Faraday.new(@voice_base_uri_fallback_1) do |faraday|
-        faraday.headers = @headers
-
-        # DANGER: Basic auth should always come after headers, else
-        # The headers will replace the basic_auth
-
-        faraday.basic_auth(auth_id, auth_token)
-
-        faraday.proxy=@proxy_hash if @proxy_hash
-        faraday.response :json, content_type: /\bjson$/
-        faraday.adapter Faraday.default_adapter
-      end
-
-      @voice_conn_retry_2 = Faraday.new(@voice_base_uri_fallback_2) do |faraday|
+      @voice_conn_retry = Faraday.new(@voice_base_uri) do |faraday|
         faraday.headers = @headers
 
         # DANGER: Basic auth should always come after headers, else
@@ -194,20 +168,17 @@ module Plivo
     end
 
     def send_get(resource_path, data, timeout, options = nil)
-      if options[:voice_retry_count] == 0 and options[:is_voice_request] == true
-        response = @voice_conn_no_retry.get do |req|
-          req.url resource_path, data
-          req.options.timeout = timeout if timeout
+      if options[:is_voice_request] == true
+        if options[:voice_retry_count] == 1
+          @voice_base_uri = @voice_base_uri_fallback_1
         end
-      elsif options[:voice_retry_count] == 1 and options[:is_voice_request] == true
-        response = @voice_conn_retry_1.get do |req|
-          req.url resource_path, data
-          req.options.timeout = timeout if timeout
+        if options[:voice_retry_count] == 2
+          @voice_base_uri = @voice_base_uri_fallback_2
         end
-      elsif options[:voice_retry_count] == 2 and options[:is_voice_request] == true
-        response = @voice_conn_retry_2.get do |req|
-          req.url resource_path, data
+        response = @voice_conn_retry.get do |req|
+          req.url resource_path
           req.options.timeout = timeout if timeout
+          req.body = JSON.generate(data) if data
         end
       else
         response = @conn.get do |req|
@@ -255,20 +226,14 @@ module Plivo
             req.options.timeout = timeout if timeout
             req.body = JSON.generate(data) if data
           end
-        elsif options[:voice_retry_count] == 0 and options[:is_voice_request] == true
-          response = @voice_conn_no_retry.post do |req|
-            req.url resource_path
-            req.options.timeout = timeout if timeout
-            req.body = JSON.generate(data) if data
+        elsif options[:is_voice_request] == true
+          if options[:voice_retry_count] == 1
+            @voice_base_uri = @voice_base_uri_fallback_1
           end
-        elsif options[:voice_retry_count] == 1 and options[:is_voice_request] == true
-          response = @voice_conn_retry_1.post do |req|
-            req.url resource_path
-            req.options.timeout = timeout if timeout
-            req.body = JSON.generate(data) if data
+          if options[:voice_retry_count] == 2
+            @voice_base_uri = @voice_base_uri_fallback_2
           end
-        elsif options[:voice_retry_count] == 2 and options[:is_voice_request] == true
-          response = @voice_conn_retry_2.post do |req|
+          response = @voice_conn_retry.post do |req|
             req.url resource_path
             req.options.timeout = timeout if timeout
             req.body = JSON.generate(data) if data
@@ -285,20 +250,14 @@ module Plivo
     end
 
     def send_delete(resource_path, data, timeout, options = nil)
-      if options[:voice_retry_count] == 0 and options[:is_voice_request] == true
-        response = @voice_conn_no_retry.delete do |req|
-          req.url resource_path
-          req.options.timeout = timeout if timeout
-          req.body = JSON.generate(data) if data
+      if options[:is_voice_request] == true
+        if options[:voice_retry_count] == 1
+          @voice_base_uri = @voice_base_uri_fallback_1
         end
-      elsif options[:voice_retry_count] == 1 and options[:is_voice_request] == true
-        response = @voice_conn_retry_1.delete do |req|
-          req.url resource_path
-          req.options.timeout = timeout if timeout
-          req.body = JSON.generate(data) if data
+        if options[:voice_retry_count] == 2
+          @voice_base_uri = @voice_base_uri_fallback_2
         end
-      elsif options[:voice_retry_count] == 2 and options[:is_voice_request] == true
-        response = @voice_conn_retry_2.delete do |req|
+        response = @voice_conn_retry.delete do |req|
           req.url resource_path
           req.options.timeout = timeout if timeout
           req.body = JSON.generate(data) if data
