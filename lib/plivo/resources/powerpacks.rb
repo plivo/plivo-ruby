@@ -85,6 +85,10 @@ module Plivo
             valid_param?(:type, options[:type], String, true)
            params[:type] = options[:type]
           end
+          if options.key?(:service) &&
+            valid_param?(:service, options[:service], String, true)
+           params[:service] = options[:service]
+          end
           perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Number',
           'GET', params, true)
         end
@@ -136,22 +140,46 @@ module Plivo
             valid_param?(:type, options[:type], String, true)
            params[:type] = options[:type]
           end
+          if options.key?(:service) &&
+            valid_param?(:service, options[:service], String, true)
+           params[:service] = options[:service]
+          end
           response = perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Number',
           'GET', param, true)
           meta = response['meta']
           return meta['total_count']
         end
 
-        def find_number(number)
+        def find_number(number, options = nil)
           number_pool_uuid = getnumberpool_uuid(uuid)
-          perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Number/' + number.to_s ,
+          if options.nil?
+            perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Number/' + number.to_s ,
                        'GET')
+            return
+          end
+          params = {}
+          if options.key?(:service) &&
+            valid_param?(:service, options[:service], String, true)
+           params[:service] = options[:service]
+          end
+          perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Number/' + number.to_s ,
+                       'GET', params)
         end
 
-        def add_number(number)
+        def add_number(number, options = nil)
           number_pool_uuid = getnumberpool_uuid(uuid)
-          perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Number/' + number.to_s ,
+          if options.nil?
+            perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Number/' + number.to_s ,
                        'POST')
+            return
+          end
+          params = {}
+          if options.key?(:service) &&
+            valid_param?(:service, options[:service], String, true)
+           params[:service] = options[:service]
+          end
+          perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Number/' + number.to_s ,
+                       'POST', params)
         end
 
         def add_tollfree(tollfree)
@@ -242,6 +270,10 @@ module Plivo
           number_pool_uuid = getnumberpool_uuid(uuid)
           params = {}
           params[:rent] = true
+          if options.key?(:service) &&
+            valid_param?(:service, options[:service], String, true)
+           params[:service] = options[:service]
+          end
           if options.key?(:number)
             return perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Number/' + options[:number].to_s ,
                        'POST', params)
@@ -360,6 +392,10 @@ module Plivo
             valid_param?(:type, options[:type], String, true)
            params[:type] = options[:type]
           end
+          if options.key?(:service) &&
+            valid_param?(:service, options[:service], String, true)
+           params[:service] = options[:service]
+          end
           perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Number',
           'GET', params, true)
         end
@@ -401,20 +437,44 @@ module Plivo
             valid_param?(:type, options[:type], String, true)
            params[:type] = options[:type]
           end
+          if options.key?(:service) &&
+            valid_param?(:service, options[:service], String, true)
+           params[:service] = options[:service]
+          end
           response = perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Number',
           'GET', params, true)
           meta = response['meta']
           return meta['total_count']
         end
 
-        def find(number)
-          perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Number/' + number.to_s ,
+        def find(number, options = nil)
+          if options.nil?
+            perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Number/' + number.to_s ,
                        'GET')
+            return
+          end
+          params = {}
+          if options.key?(:service) &&
+            valid_param?(:service, options[:service], String, true)
+           params[:service] = options[:service]
+          end
+          perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Number/' + number.to_s ,
+                       'GET', params)
         end
 
-        def add(number)
-          perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Number/' + number.to_s ,
+        def add(number, options = nil)
+          if options.nil?
+            perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Number/' + number.to_s ,
                        'POST')
+            return
+          end
+          params = {}
+          if options.key?(:service) &&
+            valid_param?(:service, options[:service], String, true)
+           params[:service] = options[:service]
+          end
+          perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Number/' + number.to_s ,
+                       'POST', params)
         end
   
         def remove(number, unrent= false)
@@ -425,6 +485,10 @@ module Plivo
         def buy_add_number(options = nil)
           params = {}
           params[:rent] = true
+          if options.key?(:service) &&
+            valid_param?(:service, options[:service], String, true)
+           params[:service] = options[:service]
+          end
           if options.key?(:number)
             return perform_custom_action_apiresponse('NumberPool/' + number_pool_id + '/Number/' + options[:number].to_s ,
                        'POST', params)
