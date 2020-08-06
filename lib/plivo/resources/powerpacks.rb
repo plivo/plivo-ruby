@@ -153,9 +153,8 @@ module Plivo
         def find_number(number, options = nil)
           number_pool_uuid = getnumberpool_uuid(uuid)
           if options.nil?
-            perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Number/' + number.to_s ,
+            return perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Number/' + number.to_s ,
                        'GET')
-            return
           end
           params = {}
           if options.key?(:service) &&
@@ -169,7 +168,7 @@ module Plivo
         def add_number(number, options = nil)
           number_pool_uuid = getnumberpool_uuid(uuid)
           if options.nil?
-            perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Number/' + number.to_s ,
+            return perform_custom_action_apiresponse('NumberPool/' + number_pool_uuid + '/Number/' + number.to_s ,
                        'POST')
             return
           end
@@ -449,9 +448,8 @@ module Plivo
 
         def find(number, options = nil)
           if options.nil?
-            perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Number/' + number.to_s ,
+            return perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Number/' + number.to_s ,
                        'GET')
-            return
           end
           params = {}
           if options.key?(:service) &&
@@ -464,9 +462,8 @@ module Plivo
 
         def add(number, options = nil)
           if options.nil?
-            perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Number/' + number.to_s ,
+            return perform_custom_action_apiresponse('NumberPool/' + @number_pool_id + '/Number/' + number.to_s ,
                        'POST')
-            return
           end
           params = {}
           if options.key?(:service) &&
