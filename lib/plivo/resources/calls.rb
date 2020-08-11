@@ -225,8 +225,6 @@ module Plivo
           to_number: @to_number,
           total_amount: @total_amount,
           total_rate: @total_rate,
-          to: @to_number,
-          from: @from_number,
           request_uuid: @request_uuid,
           direction: @direction,
           caller_name: @caller_name
