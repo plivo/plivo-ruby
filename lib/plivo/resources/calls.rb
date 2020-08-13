@@ -211,6 +211,7 @@ module Plivo
           billed_duration: @billed_duration,
           call_direction: @call_direction,
           call_duration: @call_duration,
+          call_status: @call_status,
           call_state: @call_state,
           call_uuid: @call_uuid,
           conference_uuid: @conference_uuid,
@@ -225,10 +226,13 @@ module Plivo
           to_number: @to_number,
           total_amount: @total_amount,
           total_rate: @total_rate,
+          to: @to,
+          from: @from,
           request_uuid: @request_uuid,
           direction: @direction,
           caller_name: @caller_name
         }
+        call_details = call_details.select {|k, v| !v.nil? }
         call_details.to_s
       end
     end
