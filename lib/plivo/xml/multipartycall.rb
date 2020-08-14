@@ -18,36 +18,36 @@ module Plivo
 
       def initialize(body, attributes = {})
         if attributes[:role] && !VALID_ROLE_VALUES.include?(attributes[:role].downcase)
-          raise PlivoXMLError, "invalid attribute value #{attributes[:role]} for maxDuration"
+          raise PlivoXMLError, "invalid attribute value #{attributes[:role]} for role"
         elsif !attributes[:role]
           raise PlivoXMLError, "role not mentioned : possible values - Agent / Supervisor / Customer"
         end
 
-        if attributes[:maxDuration] && attributes[:maxDuration]<300 && attributes[:maxDuration]>28800
+        if attributes[:maxDuration] && (attributes[:maxDuration]<300 || attributes[:maxDuration]>28800)
           raise PlivoXMLError, "invalid attribute value #{attributes[:maxDuration]} for maxDuration"
         elsif !attributes[:maxDuration]
           attributes[:maxDuration] = 14400
         end
 
-        if attributes[:maxParticipants] && attributes[:maxParticipants]<2 && attributes[:maxParticipants]>10
+        if attributes[:maxParticipants] && (attributes[:maxParticipants]<2 || attributes[:maxParticipants]>10)
           raise PlivoXMLError, "invalid attribute value #{attributes[:maxParticipants]} for maxParticipants"
         elsif !attributes[:maxParticipants]
           attributes[:maxParticipants] = 10
         end
 
-        if attributes[:waitMusicMethod] && !VALID_METHOD_VALUES.include?(attributes[:waitMusicMethod].uppercase)
+        if attributes[:waitMusicMethod] && !VALID_METHOD_VALUES.include?(attributes[:waitMusicMethod].upcase)
           raise PlivoXMLError, "invalid attribute value #{attributes[:waitMusicMethod]} for waitMusicMethod"
         elsif !attributes[:waitMusicMethod]
           attributes[:waitMusicMethod] = 'GET'
         end
 
-        if attributes[:agentHoldMusicMethod] && !VALID_METHOD_VALUES.include?(attributes[:agentHoldMusicMethod].uppercase)
+        if attributes[:agentHoldMusicMethod] && !VALID_METHOD_VALUES.include?(attributes[:agentHoldMusicMethod].upcase)
           raise PlivoXMLError, "invalid attribute value #{attributes[:agentHoldMusicMethod]} for agentHoldMusicMethod"
         elsif !attributes[:agentHoldMusicMethod]
           attributes[:agentHoldMusicMethod] = 'GET'
         end
 
-        if attributes[:customerHoldMusicMethod] && !VALID_METHOD_VALUES.include?(attributes[:customerHoldMusicMethod].uppercase)
+        if attributes[:customerHoldMusicMethod] && !VALID_METHOD_VALUES.include?(attributes[:customerHoldMusicMethod].upcase)
           raise PlivoXMLError, "invalid attribute value #{attributes[:customerHoldMusicMethod]} for customerHoldMusicMethod"
         elsif !attributes[:customerHoldMusicMethod]
           attributes[:customerHoldMusicMethod] = 'GET'
@@ -65,10 +65,10 @@ module Plivo
           attributes[:recordFileFormat] = 'mp3'
         end
 
-        if attributes[:recordingCallbackMethod] && !VALID_METHOD_VALUES.include?(attributes[:recordingCallbackMethod].uppercase)
+        if attributes[:recordingCallbackMethod] && !VALID_METHOD_VALUES.include?(attributes[:recordingCallbackMethod].upcase)
           raise PlivoXMLError, "invalid attribute value #{attributes[:recordingCallbackMethod]} for recordingCallbackMethod"
         elsif !attributes[:recordingCallbackMethod]
-          attributes[:recordingCallbackMethod] = 'mp3'
+          attributes[:recordingCallbackMethod] = 'GET'
         end
 
         if attributes[:statusCallbackEvents] && !multi_valid_param?(:statusCallbackEvents, attributes[:statusCallbackEvents], String, false, %w[mpc-state-changes participant-state-changes participant-speak-events participant-digit-input-events add-participant-api-events], true, ',') == true
@@ -77,7 +77,7 @@ module Plivo
           attributes[:statusCallbackEvents] = 'mpc-state-changes,participant-state-changes'
         end
 
-        if attributes[:statusCallbackMethod] && !VALID_METHOD_VALUES.include?(attributes[:statusCallbackMethod].uppercase)
+        if attributes[:statusCallbackMethod] && !VALID_METHOD_VALUES.include?(attributes[:statusCallbackMethod].upcase)
           raise PlivoXMLError, "invalid attribute value #{attributes[:statusCallbackMethod]} for statusCallbackMethod"
         elsif !attributes[:statusCallbackMethod]
           attributes[:statusCallbackMethod] = 'POST'
@@ -125,7 +125,7 @@ module Plivo
           attributes[:enterSound] = 'beep:1'
         end
 
-        if attributes[:enterSoundMethod] && !VALID_METHOD_VALUES.include?(attributes[:enterSoundMethod].uppercase)
+        if attributes[:enterSoundMethod] && !VALID_METHOD_VALUES.include?(attributes[:enterSoundMethod].upcase)
           raise PlivoXMLError, "invalid attribute value #{attributes[:enterSoundMethod]} for enterSoundMethod"
         elsif !attributes[:enterSoundMethod]
           attributes[:enterSoundMethod] = 'GET'
@@ -137,13 +137,13 @@ module Plivo
           attributes[:exitSound] = 'beep:2'
         end
 
-        if attributes[:exitSoundMethod] && !VALID_METHOD_VALUES.include?(attributes[:exitSoundMethod].uppercase)
+        if attributes[:exitSoundMethod] && !VALID_METHOD_VALUES.include?(attributes[:exitSoundMethod].upcase)
           raise PlivoXMLError, "invalid attribute value #{attributes[:exitSoundMethod]} for exitSoundMethod"
         elsif !attributes[:exitSoundMethod]
           attributes[:exitSoundMethod] = 'GET'
         end
 
-        if attributes[:onExitActionMethod] && !VALID_METHOD_VALUES.include?(attributes[:onExitActionMethod].uppercase)
+        if attributes[:onExitActionMethod] && !VALID_METHOD_VALUES.include?(attributes[:onExitActionMethod].upcase)
           raise PlivoXMLError, "invalid attribute value #{attributes[:onExitActionMethod]} for onExitActionMethod"
         elsif !attributes[:onExitActionMethod]
           attributes[:onExitActionMethod] = 'POST'
