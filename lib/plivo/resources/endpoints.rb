@@ -6,6 +6,7 @@ module Plivo
         @_name = 'Endpoint'
         @_identifier_string = 'endpoint_id'
         super
+        @_is_voice_request = true
       end
 
       # @param [Hash] options
@@ -71,6 +72,7 @@ module Plivo
         @_resource_type = Endpoint
         @_identifier_string = 'endpoint_id'
         super
+        @_is_voice_request = true
       end
 
       # @param [String] endpoint_id
