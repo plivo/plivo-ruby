@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.9.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.9.1) (2020-08-19)
+- Internal changes in Phlo for MultiPartyCall component
+
 ## [4.9.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.9.0) (2020-07-23)
 - Add retries to multiple regions for voice requests.
 
