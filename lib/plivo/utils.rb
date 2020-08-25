@@ -111,7 +111,7 @@ module Plivo
       elsif upper_bound
         return raise_invalid_request("#{param_name} should be lesser than #{upper_bound}") if param_value > upper_bound
 
-        return true if param_value >= upper_bound
+        return true if param_value <= upper_bound
       else
         return raise_invalid_request("Any one or both of lower and upper bound should be provided")
       end

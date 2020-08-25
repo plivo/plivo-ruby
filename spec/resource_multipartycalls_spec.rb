@@ -1,5 +1,5 @@
 require 'rspec'
-
+require 'json'
 describe 'MultiPartyCalls test' do
 
   def to_json_MPC_funcs(mpc)
