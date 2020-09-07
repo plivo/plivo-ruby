@@ -1,7 +1,7 @@
 # Change Log
 
 ## [4.11.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.9.0) (2020-08-25)
-- Powerpack for mms
+- Add Powerpack for mms
 
 ## [4.10.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.10.0) (2020-09-04)
 - Add ConferenceUuid & CallState for Get Details of a Call API 
