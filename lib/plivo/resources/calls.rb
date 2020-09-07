@@ -6,6 +6,7 @@ module Plivo
         @_name = 'Call'
         @_identifier_string = 'call_uuid'
         super
+        @_is_voice_request = true
       end
 
       def update(options)
@@ -199,7 +200,7 @@ module Plivo
 
       def cancel_request
         resource_path = @_resource_uri.sub('Call', 'Request')
-        @_client.send_request(resource_path, 'DELETE', nil)
+        @_client.send_request(resource_path, 'DELETE', nil, nil, false , is_voice_request: @_is_voice_request)
       end
 
       def to_s
@@ -211,7 +212,9 @@ module Plivo
           call_direction: @call_direction,
           call_duration: @call_duration,
           call_status: @call_status,
+          call_state: @call_state,
           call_uuid: @call_uuid,
+          conference_uuid: @conference_uuid,
           end_time: @end_time,
           from_number: @from_number,
           initiation_time: @initiation_time,
@@ -240,6 +243,7 @@ module Plivo
         @_resource_type = Call
         @_identifier_string = 'call_uuid'
         super
+        @_is_voice_request = true
       end
 
       ##
@@ -288,9 +292,9 @@ module Plivo
           answer_method: answer_method
         }
 
-        return perform_create(params) if options.nil?
+        return perform_create(params, false) if options.nil?
 
-        perform_create(params.merge(options))
+        perform_create(params.merge(options), false)
       end
 
       ##
@@ -397,7 +401,7 @@ module Plivo
       #                                     - To filter out those numbers that contain a particular number sequence, use to_number={ sequence}
       #                                     - To filter out a number that matches an exact number, use to_number={ exact_number}
       def list_live(options = nil)
-        
+
         if options.nil?
           options = {}
         else

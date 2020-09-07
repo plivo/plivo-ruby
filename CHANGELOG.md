@@ -1,7 +1,17 @@
 # Change Log
 
-## [4.9.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.9.0) (2020-08-25)
+## [4.11.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.9.0) (2020-08-25)
 - Powerpack for mms
+
+## [4.10.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.10.0) (2020-09-04)
+- Add ConferenceUuid & CallState for Get Details of a Call API 
+- Upgrade faraday & faraday_middleware dependencies
+
+## [4.9.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.9.1) (2020-08-19)
+- Internal changes in Phlo for MultiPartyCall component
+
+## [4.9.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.9.0) (2020-07-23)
+- Add retries to multiple regions for voice requests.
 
 ## [4.8.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.8.1) (2020-06-05)
 - Fix Record a Conference API response.
