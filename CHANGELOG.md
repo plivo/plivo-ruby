@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.12.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.12.0) (2020-09-24)
+- Add "public_uri" optional param support for Application API.
+
 ## [4.11.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.9.0) (2020-08-25)
 - Add Powerpack for mms
 
