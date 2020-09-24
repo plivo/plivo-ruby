@@ -212,7 +212,9 @@ module Plivo
           call_direction: @call_direction,
           call_duration: @call_duration,
           call_status: @call_status,
+          call_state: @call_state,
           call_uuid: @call_uuid,
+          conference_uuid: @conference_uuid,
           end_time: @end_time,
           from_number: @from_number,
           initiation_time: @initiation_time,
@@ -399,7 +401,7 @@ module Plivo
       #                                     - To filter out those numbers that contain a particular number sequence, use to_number={ sequence}
       #                                     - To filter out a number that matches an exact number, use to_number={ exact_number}
       def list_live(options = nil)
-        
+
         if options.nil?
           options = {}
         else
