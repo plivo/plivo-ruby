@@ -1,6 +1,6 @@
-require_relative 'resources'
-require_relative 'base_client'
-require_relative 'base'
+require_relative "resources"
+require_relative "base_client"
+require_relative "base"
 
 module Plivo
   class RestClient < BaseClient
@@ -13,8 +13,9 @@ module Plivo
     attr_reader :call_feedback
     attr_reader :powerpacks
     attr_reader :powerpacks, :media
+    attr_reader :lookup
 
-    def initialize(auth_id = nil, auth_token = nil, proxy_options = nil, timeout=5)
+    def initialize(auth_id = nil, auth_token = nil, proxy_options = nil, timeout = 5)
       configure_base_uri
       super
       configure_interfaces
@@ -47,6 +48,7 @@ module Plivo
       @addresses = Resources::AddressInterface.new(self)
       @identities = Resources::IdentityInterface.new(self)
       @call_feedback = Resources::CallFeedbackInterface.new(self)
+      @lookup = Resources::LookupInterface.new(self)
     end
   end
 end
