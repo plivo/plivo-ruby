@@ -1,5 +1,8 @@
 # Change Log
 
+## [5.0.0](https://github.com/plivo/plivo-ruby/releases/tag/v5.0.0) (2020-10-23)
+- Add support for Voice MultiPartyCall APIs (includes retry) and XML, validate voice UTs
+
 ## [4.17.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.17.0) (2021-06-15)
 - Added stir verification param as part of Get CDR and live call APIs response.
 
