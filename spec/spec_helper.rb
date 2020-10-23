@@ -7,7 +7,7 @@ RSpec.configure do |config|
   config.before(:each) do
     @api = Plivo::RestClient.new('MAXXXXXXXXXXXXXXXXXX', 'MjEyOWU5MGVlM2NjZDY1ZTNmZTU2NjZhZGNjMTc5')
 
-    def @api.send_request(uri, method, data = nil, timeout=nil, use_multipart_conn = false, is_lookup_request = false)
+    def @api.send_request(uri, method, data = nil, timeout=nil, use_multipart_conn = false, options = nil, is_lookup_request = false)
       # puts "Resource URI: #{uri}"
       # puts "Method: #{method}"
       # puts "Data: #{data}"
