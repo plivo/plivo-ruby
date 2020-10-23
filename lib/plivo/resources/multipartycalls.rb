@@ -6,6 +6,7 @@ module Plivo
         @_name = 'MultiPartyCall'
         @_identifier_string = 'mpc_uuid'
         super
+        @_is_voice_request = true
         if options.key? :multi_party_prefix
           @id = options[:multi_party_prefix] + '_' + @id
         else
@@ -218,6 +219,7 @@ module Plivo
         @_secondary_name = 'Participant'
         @_secondary_identifier_string = 'member_id'
         super
+        @_is_voice_request = true
         if options.key? :multi_party_prefix
           @id = options[:multi_party_prefix] + '_' + @id
         elsif @id.split('_').size > 1
@@ -244,7 +246,7 @@ module Plivo
       end
 
       def get_participant
-        perform_action(nil,'GET',nil,false)
+        perform_action_apiresponse(nil,'GET',nil,false)
       end
     end
 
@@ -254,6 +256,7 @@ module Plivo
         @_resource_type = MultiPartyCall
         @_identifier_string = 'mpc_uuid'
         super
+        @_is_voice_request = true
       end
 
       def make_mpc_id(uuid=nil, friendly_name=nil)
