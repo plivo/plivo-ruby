@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.14.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.14.0) (2020-10-30)
+- Change lookup API endpoint and response.
+
 ## [4.13.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.13.0) (2020-09-30)
 - Add support for Lookup API
 

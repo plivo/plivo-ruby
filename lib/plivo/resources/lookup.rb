@@ -63,7 +63,7 @@ module Plivo
         @_identifier_string = "phone_number"
         super
         # Override _resource_uri only after calling super
-        @_resource_uri = "/v1/Lookup/Number/"
+        @_resource_uri = "/v1/Number/"
       end
 
       ##
@@ -80,7 +80,7 @@ module Plivo
       # overridden to ensure 'Account' and extra shash isn't added to URL path
       def perform_get(identifier, params = nil)
         valid_param?(:identifier, identifier, [String, Symbol], true)
-        response_json = @_client.send_request(@_resource_uri + identifier.to_s, "GET", params, nil, false, is_voice_request: @_is_voice_request)
+        response_json = @_client.send_request(@_resource_uri + identifier.to_s, "GET", params, nil, false, is_voice_request: @_is_voice_request, is_lookup_request: true)
         @_resource_type.new(@_client, resource_json: response_json)
       end
     end
