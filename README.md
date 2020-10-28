@@ -114,10 +114,7 @@ require 'plivo'
 include Plivo
 
 client = RestClient.new
-resp = client.lookup.get(
-  '<number-here>',
-  "carrier"
-)
+resp = client.lookup.get('<number-here>')
 ```
 
 ### Generate Plivo XML
