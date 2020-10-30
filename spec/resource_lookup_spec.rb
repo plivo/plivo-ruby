@@ -12,7 +12,7 @@ describe "Lookup test" do
                      "carrier"
                    )
     expect(JSON.parse(to_json(response))).to eql(JSON.parse(contents))
-    compare_requests(uri: "/v1/Lookup/Number/+14154305555",
+    compare_requests(uri: "/v1/Number/+14154305555",
                      method: "GET",
                      data: nil)
     expect(response.phone_number).to eql("+14154305555")

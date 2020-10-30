@@ -29,6 +29,7 @@ module Plivo
       @voice_base_uri_fallback_1 = Base::API_VOICE_FALLBACK_1
       @voice_base_uri_fallback_2 = Base::API_VOICE_FALLBACK_2
       @callinsights_base_uri = Base::CALLINSIGHTS_API_URL
+      @lookup_base_uri = Base::LOOKUP_API_URL
     end
 
     def configure_interfaces

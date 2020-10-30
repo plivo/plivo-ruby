@@ -12,5 +12,6 @@ module Plivo
 
     CALLINSIGHTS_API_URL = 'https://stats.plivo.com'.freeze
     PHLO_API_URL = 'https://phlorunner.plivo.com'.freeze
+    LOOKUP_API_URL = 'https://lookup.plivo.com'.freeze
   end
 end
