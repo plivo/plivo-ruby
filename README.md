@@ -8,7 +8,7 @@ The Plivo Ruby SDK makes it simpler to integrate communications into your Ruby a
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'plivo', '>= 4.9.0'
+gem 'plivo', '>= 4.14.0'
 ```
 
 And then execute:
@@ -103,6 +103,18 @@ call_made = client.calls.create(
   ['your_destination_number'],
   'https://answer.url'
 )
+```
+
+### Lookup a number
+
+```ruby
+require 'rubygems'
+require 'plivo'
+
+include Plivo
+
+client = RestClient.new
+resp = client.lookup.get('<number-here>')
 ```
 
 ### Generate Plivo XML

@@ -61,7 +61,12 @@ module Plivo
         else
           process_response(method, response.to_hash)
         end
-
+      elsif options[:is_lookup_request] == true
+        response = case method
+                   when 'GET' then send_get(resource_path, data, timeout, is_lookup_request: options[:is_lookup_request])
+                   else raise_invalid_request("#{method} not supported by Plivo, yet")
+                   end
+        process_response(method, response.to_hash)
       else
         response = case method
                    when 'GET' then send_get(resource_path, data, timeout)
@@ -191,6 +196,18 @@ module Plivo
         faraday.adapter Faraday.default_adapter
       end
 
+      @lookup_conn = Faraday.new(@lookup_base_uri) do |faraday|
+        faraday.headers = @headers
+
+        # DANGER: Basic auth should always come after headers, else
+        # The headers will replace the basic_auth
+
+        faraday.basic_auth(auth_id, auth_token)
+
+        faraday.proxy=@proxy_hash if @proxy_hash
+        faraday.response :json, content_type: /\bjson$/
+        faraday.adapter Faraday.default_adapter
+      end
     end
 
     def send_get(resource_path, data, timeout, options = nil)
@@ -207,6 +224,11 @@ module Plivo
           end
         elsif options[:voice_retry_count] == 2 and options[:is_voice_request] == true
           response = @voice_conn_retry_2.get do |req|
+            req.url resource_path, data
+            req.options.timeout = timeout if timeout
+          end
+        elsif options[:is_lookup_request] == true
+          response = @lookup_conn.get do |req|
             req.url resource_path, data
             req.options.timeout = timeout if timeout
           end

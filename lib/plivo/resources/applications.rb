@@ -24,6 +24,7 @@ module Plivo
       # @option options [Boolean] :default_endpoint_app - If set to true, this parameter ensures that newly created endpoints, which don't have an app_id, point to this application.
       # @option options [String] :subaccount - Id of the subaccount, in case only subaccount applications are needed.
       # @option options [Boolean] :log_incoming_messages - If set to true, this parameter ensures that incoming messages are logged.
+      # @option options [Boolean] :public_uri - If set to true, this parameter enables public_uri.
       # @return [Application] Application
       def update(options = nil)
         return perform_update({}) if options.nil?
@@ -48,7 +49,7 @@ module Plivo
           end
         end
 
-        %i[default_number_app default_endpoint_app log_incoming_messages].each do |param|
+        %i[default_number_app default_endpoint_app log_incoming_messages public_uri].each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [TrueClass, FalseClass], true)
             params[param] = options[param]
@@ -134,6 +135,7 @@ module Plivo
       # @option options [Boolean] :default_endpoint_app - If set to true, this parameter ensures that newly created endpoints, which don't have an app_id, point to this application.
       # @option options [String] :subaccount - Id of the subaccount, in case only subaccount applications are needed.
       # @option options [Boolean] :log_incoming_messages - If set to true, this parameter ensures that incoming messages are logged.
+      # @option options [Boolean] :public_uri - If set to true, this parameter enables public_uri.
       # @return [Application] Application
       def create(app_name, options = nil)
         valid_param?(:app_name, app_name, [String, Symbol], true)
@@ -161,7 +163,7 @@ module Plivo
           end
         end
 
-        %i[default_number_app default_endpoint_app log_incoming_messages].each do |param|
+        %i[default_number_app default_endpoint_app log_incoming_messages public_uri].each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [TrueClass, FalseClass], true)
             params[param] = options[param]
