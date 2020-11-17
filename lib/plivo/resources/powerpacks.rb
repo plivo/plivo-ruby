@@ -47,6 +47,9 @@ module Plivo
           if options.key?(:name) 
             params[:name] = options[:name]
           end
+          if options.key?(:number_priority) 
+            params[:number_priority] = options[:number_priority]
+          end
           perform_action_apiresponse('', 'POST', params)
         end
 
@@ -326,7 +329,8 @@ module Plivo
             local_connect: @local_connect,
             uuid: @uuid,
             number_pool:@number_pool,
-            created_on:@created_on
+            created_on:@created_on,
+            number_priority:@number_priority
           }.to_s
         end
       end
@@ -662,6 +666,12 @@ module Plivo
             valid_param?(:local_connect, options[:local_connect], [TrueClass, FalseClass], true)
            params[:local_connect] = options[:local_connect]
          end
+
+          if options.key?(:number_priority) &&
+             valid_param?(:number_priority, options[:number_priority], Array, true)
+            params[:number_priority] = options[:number_priority]
+          end
+
           perform_create(params)
         end
   

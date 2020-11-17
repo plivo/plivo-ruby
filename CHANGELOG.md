@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.15.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.15.0) (2020-11-17)
+- Add number_priority support for Powerpack API.
+
 ## [4.14.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.14.0) (2020-10-30)
 - Change lookup API endpoint and response.
 
