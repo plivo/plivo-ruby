@@ -63,6 +63,7 @@ module Plivo
       # @option options [Int] :limit Used to display the number of results per page. The maximum number of results that can be fetched is 20.
       # @option options [Int] :offset Denotes the number of value items by which the results should be offset. Eg:- If the result contains a 1000 values and limit is set to 10 and offset is set to 705, then values 706 through 715 are displayed in the results. This parameter is also used for pagination of the results.
       def search(country_iso, options = nil)
+        puts options+"@#!@#!@#@!#@!#@!#!@#@!#@!#@!#"
         valid_param?(:country_iso, country_iso, [String, Symbol], true)
         unless country_iso.length == 2
           raise_invalid_request('country_iso should be of length 2')
