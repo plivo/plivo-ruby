@@ -75,8 +75,6 @@ module Plivo
           if options.key?(param) &&
              valid_param?(param, options[param], [String, Symbol], true)
             params[param] = options[param]
-            print param
-            print city
           end
         end
 
