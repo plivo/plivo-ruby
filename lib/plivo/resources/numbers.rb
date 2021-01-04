@@ -71,7 +71,7 @@ module Plivo
 
         return perform_list(params) if options.nil?
 
-        %i[type pattern region services lata rate_center].each do |param|
+        %i[type pattern region services lata rate_center city].each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [String, Symbol], true)
             params[param] = options[param]
