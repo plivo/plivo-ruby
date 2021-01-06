@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.15.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.15.1) (2021-01-06)
+- Fix Search Phone Numbers API using City Attribute.
+
 ## [4.15.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.15.0) (2020-11-17)
 - Add number_priority support for Powerpack API.
 
