@@ -14,6 +14,8 @@ module Plivo
     attr_reader :powerpacks
     attr_reader :powerpacks, :media
     attr_reader :lookup
+    attr_reader :end_users
+    attr_reader :compliance_document_types, :compliance_documents, :compliance_requirements, :compliance_applications
 
     def initialize(auth_id = nil, auth_token = nil, proxy_options = nil, timeout = 5)
       configure_base_uri
@@ -50,6 +52,11 @@ module Plivo
       @identities = Resources::IdentityInterface.new(self)
       @call_feedback = Resources::CallFeedbackInterface.new(self)
       @lookup = Resources::LookupInterface.new(self)
+      @end_users = Resources::EndUsersInterface.new(self)
+      @compliance_document_types = Resources::ComplianceDocumentTypesInterface.new(self)
+      @compliance_documents = Resources::ComplianceDocumentsInterface.new(self)
+      @compliance_requirements = Resources::ComplianceRequirementsInterface.new(self)
+      @compliance_applications = Resources::ComplianceApplicationsInterface.new(self)
     end
   end
 end

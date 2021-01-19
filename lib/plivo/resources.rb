@@ -16,6 +16,7 @@ require_relative 'resources/phlo_member'
 require_relative 'resources/call_feedback'
 require_relative 'resources/media'
 require_relative 'resources/lookup'
+require_relative 'resources/regulatory_compliance'
 
 module Plivo
   module Resources
