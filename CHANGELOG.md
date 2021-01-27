@@ -1,7 +1,7 @@
 # Change Log
 
 ## [4.15.2](https://github.com/plivo/plivo-ruby/releases/tag/v4.15.2) (2021-01-27)
-- Fix default answer_method for Call API resource.
+- Fix Call API resource - Set answer_method as Optional param.
 
 ## [4.15.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.15.1) (2021-01-06)
 - Fix Search Phone Numbers API using City Attribute.
