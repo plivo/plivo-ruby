@@ -61,8 +61,7 @@ module Plivo
       # @option options [String] :method The method used to call the url. Defaults to POST.
       # @option options [String] :log If set to false, the content of this message will not be logged on the Plivo infrastructure and the dst value will be masked (e.g., 141XXXXX528). Default is set to true.
       # @option options [String] :trackable set to false
-      def create(src = nil,  dst = nil, text = nil, options = nil, powerpack_uuid = nil)
-
+      def create(src = nil, dst = nil, text = nil, options = nil, powerpack_uuid = nil)
         #All params in One HASH
         if(src.is_a?(Hash))
           valid_param?(:src, src[:src], [Integer, String, Symbol], false)
@@ -82,21 +81,16 @@ module Plivo
             raise InvalidRequestError, 'src and powerpack uuid both cannot be present'
           end
 
+          if !src.key?(:dst).nil? && !src.key(:powerpack_uuid).nil?
+            raise InvalidRequestError, 'dst is a required parameter'
+          end
+
           params = {
             src: src[:src],
-            dst: src[:dst].split(//).join('<'),
+            dst: src[:dst],
             text: src[:text],
             powerpack_uuid: src[:powerpack_uuid]
           }
-
-          if (src[:dst].is_a?(Array))
-            src[:dst].each do |dst_num|
-              valid_param?(:dst_num, dst_num, [Integer, String, Symbol], true)
-              params[:dst] = src[:dst].join('<')
-            end
-          else
-            params[:dst] = src[:dst]
-          end
 
           #Handling optional params in One HASH
           if src.key?(:type) && valid_param?(:type, src[:type],String, true, 'sms')
