@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.16.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.16.0) (2021-02-08)
+- Add support for Regulatory Compliance APIs.
+
 ## [4.15.2](https://github.com/plivo/plivo-ruby/releases/tag/v4.15.2) (2021-01-27)
 - Fix Call API resource - Set answer_method as Optional param.
 
