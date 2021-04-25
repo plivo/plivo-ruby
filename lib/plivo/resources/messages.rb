@@ -7,6 +7,13 @@ module Plivo
         @_identifier_string = 'message_uuid'
         super
       end
+      def listMedia()
+        perform_action_apiresponse('Media', 'GET') 
+      end
+      
+      def deleteMedia()
+        perform_action_apiresponse('Media', 'DELETE') 
+      end
 
       def to_s
         {
@@ -44,7 +51,7 @@ module Plivo
       # @param [Array] dst
       # @param [String] text
       # @param [Hash] options
-      # @option options [String] :type The type of message. Should be `sms` for a text message. Defaults to `sms`.
+      # @option options [String] :type The type of message. Should be `sms` or `mms`. Defaults to `sms`.
       # @option options [String] :url The URL to which with the status of the message is sent. The following parameters are sent to the URL:
       #                               - To - Phone number of the recipient
       #                               - From - Phone number of the sender
@@ -223,6 +230,8 @@ module Plivo
       # @option options [Int] :limit Used to display the number of results per page. The maximum number of results that can be fetched is 20.
       # @option options [Int] :offset Denotes the number of value items by which the results should be offset. Eg:- If the result contains a 1000 values and limit is set to 10 and offset is set to 705, then values 706 through 715 are displayed in the results. This parameter is also used for pagination of the results.
       # @option options [String] :error_code Delivery Response code returned by the carrier attempting the delivery. See Supported error codes {https://www.plivo.com/docs/api/message/#standard-plivo-error-codes}.
+      # @option options[List]: media_urls Minimum one media url should be present in Media urls list to send mms. Maximum allowd 10 media urls inside the list (e.g, media_urls : ['https//example.com/test.jpg', 'https://example.com/abcd.gif'])
+      # @option options[List]: media_ids Minimum one media ids should be present in Media ids list to send mms. Maximum allowd 10 media ids inside the list (e.g, media_ids : ['1fs211ba-355b-11ea-bbc9-02121c1190q7'])
       def list(options = nil)
         return perform_list if options.nil?
         valid_param?(:options, options, Hash, true)
