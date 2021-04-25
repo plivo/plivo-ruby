@@ -61,60 +61,72 @@ module Plivo
       # @option options [String] :method The method used to call the url. Defaults to POST.
       # @option options [String] :log If set to false, the content of this message will not be logged on the Plivo infrastructure and the dst value will be masked (e.g., 141XXXXX528). Default is set to true.
       # @option options [String] :trackable set to false
+      
       def create(src = nil, dst = nil, text = nil, options = nil, powerpack_uuid = nil)
         #All params in One HASH
-        if(src.is_a?(Hash))
-          valid_param?(:src, src[:src], [Integer, String, Symbol], false)
-          valid_param?(:text, src[:text], [String, Symbol], true)
-          valid_param?(:dst, src[:dst], [String, Array], true)
-          valid_param?(:powerpack_uuid, src[:powerpack_uuid], [String, Symbol], false)
+        value = src
+        if(value.is_a?(Hash))
+          valid_param?(:src, value[:src], [Integer, String, Symbol], false)
+          valid_param?(:text, value[:text], [String, Symbol], true)
+          valid_param?(:dst, value[:dst], [String, Array], true)
+          valid_param?(:powerpack_uuid, value[:powerpack_uuid], [String, Symbol], false)
 
-          if (src[:dst] == src[:src])
+          if (value[:dst] == value[:src])
             raise InvalidRequestError, 'src and dst cannot be same'
           end
 
-          if src.key?(:src).nil? && src.key(:powerpack_uuid).nil?
-            raise InvalidRequestError, 'src and powerpack uuid both cannot be nil'
+          if value.key?(:value).nil? && value.key(:powerpack_uuid).nil?
+            raise InvalidRequestError, 'value and powerpack uuid both cannot be nil'
           end
 
-          if !src.key?(:src).nil? && !src.key(:powerpack_uuid).nil?
-            raise InvalidRequestError, 'src and powerpack uuid both cannot be present'
+          if !value.key?(:value).nil? && !value.key(:powerpack_uuid).nil?
+            raise InvalidRequestError, 'value and powerpack uuid both cannot be present'
           end
 
-          if !src.key?(:dst).nil? && !src.key(:powerpack_uuid).nil?
+          if !value.key?(:dst).nil? && !value.key(:powerpack_uuid).nil?
             raise InvalidRequestError, 'dst is a required parameter'
           end
 
           params = {
-            src: src[:src],
-            dst: src[:dst],
-            text: src[:text],
-            powerpack_uuid: src[:powerpack_uuid]
+            src: value[:src],
+            dst: value[:dst],
+            text: value[:text],
+            powerpack_uuid: value[:powerpack_uuid]
           }
 
           #Handling optional params in One HASH
-          if src.key?(:type) && valid_param?(:type, src[:type],String, true, 'sms')
-             params[:type] = src[:type]
-          end         
+          if value.key?(:type) && valid_param?(:type, value[:type],String, true, %w[sms mms])
+            params[:type] = value[:type]
+          end
 
-          if src.key?(:url) && valid_param?(:url, src[:url], String, true)
-             params[:url] = src[:url]
-             if src.key?(:method) &&
-              valid_param?(:method, src[:method], String, true, %w[POST GET])
-              params[:method] = src[:method]
+          if value.key?(:url) && valid_param?(:url, value[:url], String, true)
+             params[:url] = value[:url]
+             if value.key?(:method) &&
+              valid_param?(:method, value[:method], String, true, %w[POST GET])
+              params[:method] = value[:method]
              else
                params[:method] = 'POST'
              end
           end         
           
-          if src.key?(:log) &&
-            valid_param?(:log, src[:log], [TrueClass, FalseClass], true)
-              params[:log] = src[:log]
+          if value.key?(:log) &&
+            valid_param?(:log, value[:log], [TrueClass, FalseClass], true)
+              params[:log] = value[:log]
           end         
 
-          if src.key?(:trackable) &&
-              valid_param?(:trackable, src[:trackable], [TrueClass, FalseClass], true)
-              params[:trackable] = src[:trackable]
+          if value.key?(:trackable) &&
+              valid_param?(:trackable, value[:trackable], [TrueClass, FalseClass], true)
+              params[:trackable] = value[:trackable]
+          end
+
+          if value.key?(:media_urls) &&
+            valid_param?(:media_urls, value[:media_urls], Array, true)
+           params[:media_urls] = value[:media_urls]
+          end
+
+          if value.key?(:media_ids) &&
+            valid_param?(:media_ids, value[:media_ids], Array, true)
+           params[:media_ids] = value[:media_ids]
           end
 
         #legacy code compatibility
@@ -123,7 +135,10 @@ module Plivo
           valid_param?(:text, text, [String, Symbol], true)
           valid_param?(:dst, dst, [String, Array], true)
           valid_param?(:powerpack_uuid, powerpack_uuid, [String, Symbol], false)
-
+          dst.each do |dst_num|
+            valid_param?(:dst_num, dst_num, [Integer, String, Symbol], true)
+          end
+  
           if dst.include? src
             raise InvalidRequestError, 'src and dst cannot be same'
           end
@@ -155,7 +170,7 @@ module Plivo
           valid_param?(:options, options, Hash, true)
 
           if options.key?(:type) &&
-             valid_param?(:type, options[:type], String, true, 'sms')
+             valid_param?(:type, options[:type], String, true, %w[sms mms])
             params[:type] = options[:type]
           end
 
@@ -172,6 +187,16 @@ module Plivo
           if options.key?(:log) &&
              valid_param?(:log, options[:log], [TrueClass, FalseClass], true)
             params[:log] = options[:log]
+          end
+
+          if options.key?(:media_urls) &&
+            valid_param?(:media_urls, options[:media_urls], Array, true)
+           params[:media_urls] = options[:media_urls]
+          end
+  
+          if options.key?(:media_ids) &&
+            valid_param?(:media_ids, options[:media_ids], Array, true)
+           params[:media_ids] = options[:media_ids]
           end
 
           if options.key?(:trackable) &&
