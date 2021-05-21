@@ -8,6 +8,7 @@ module Plivo
         configure_client(client)
         configure_options(options) if options
         configure_resource_uri
+        @_is_voice_request = false
       end
 
       private
@@ -56,7 +57,7 @@ module Plivo
           'without an identifier')
         end
 
-        response_json = @_client.send_request(@_resource_uri, 'POST', params, nil, use_multipart_conn)
+        response_json = @_client.send_request(@_resource_uri, 'POST', params, nil, use_multipart_conn, is_voice_request: @_is_voice_request)
 
         parse_and_set(params)
         parse_and_set(response_json)
@@ -65,10 +66,36 @@ module Plivo
 
       def perform_action(action = nil, method = 'GET', params = nil, parse = false)
         resource_path = action ? @_resource_uri + action + '/' : @_resource_uri
-        response = @_client.send_request(resource_path, method, params)
+        response = @_client.send_request(resource_path, method, params,nil,false,is_voice_request: @_is_voice_request)
         parse ? parse_and_set(response) : self
         method == 'POST' ? parse_and_set(params) : self
         self
+      end
+      
+      def perform_custome_action(action = nil, method = 'GET', params = nil, parse = false)
+        resource_path = action ? @_resource_uri + action + '/' : @_resource_uri
+        response = @_client.send_request(resource_path, method, params,nil,false,is_voice_request: @_is_voice_request)
+        parse ? parse_and_set(response) : self
+        method == 'POST' ? parse_and_set(params) : self
+        self
+      end
+
+      def perform_action_apiresponse(action = nil, method = 'GET', params = nil, parse = false)
+        resource_path = action ? @_resource_uri + action + '/' : @_resource_uri
+        response = @_client.send_request(resource_path, method, params,nil,false,is_voice_request: @_is_voice_request)
+        parse ? parse_and_set(response) : self
+        method == 'POST' ? parse_and_set(params) : self
+        method == 'DELETE' ? parse_and_set(params) : self
+        return response
+      end
+
+      def perform_custom_action_apiresponse(action = nil, method = 'GET', params = nil, parse = false)
+        resource_path = action ? '/v1/Account/' + @_client.auth_id + '/'+ action + '/' : @_resource_uri
+        response = @_client.send_request(resource_path, method, params,nil,false,is_voice_request: @_is_voice_request)
+        parse ? parse_and_set(response) : self
+        method == 'POST' ? parse_and_set(params) : self
+        method == 'DELETE' ? parse_and_set(params) : self
+        return response
       end
 
       def perform_delete(params=nil)
@@ -77,12 +104,12 @@ module Plivo
           'without an identifier')
         end
 
-        Response.new(@_client.send_request(@_resource_uri, 'DELETE', params),
+        Response.new(@_client.send_request(@_resource_uri, 'DELETE', params, nil, false, is_voice_request: @_is_voice_request),
                      @_identifier_string)
       end
 
       def perform_run(params)
-        response_json = @_client.send_request(@_resource_uri, 'POST', params, nil)
+        response_json = @_client.send_request(@_resource_uri, 'POST', params, nil,false,is_voice_request: @_is_voice_request)
         parse_and_set(response_json)
         Response.new(response_json, @_identifier_string)
       end

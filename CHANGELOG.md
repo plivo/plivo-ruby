@@ -1,5 +1,78 @@
 # Change Log
 
+## [4.16.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.16.0) (2021-02-08)
+- Add support for Regulatory Compliance APIs.
+
+## [4.15.2](https://github.com/plivo/plivo-ruby/releases/tag/v4.15.2) (2021-01-27)
+- Fix Call API resource - Set answer_method as Optional param.
+
+## [4.15.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.15.1) (2021-01-06)
+- Fix Search Phone Numbers API using City Attribute.
+
+## [4.15.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.15.0) (2020-11-17)
+- Add number_priority support for Powerpack API.
+
+## [4.14.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.14.0) (2020-10-30)
+- Change lookup API endpoint and response.
+
+## [4.13.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.13.0) (2020-09-30)
+- Add support for Lookup API
+
+## [4.12.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.12.0) (2020-09-24)
+- Add "public_uri" optional param support for Application API.
+
+## [4.11.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.11.0) (2020-08-25)
+- Add Powerpack for mms
+
+## [4.10.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.10.0) (2020-09-04)
+- Add ConferenceUuid & CallState for Get Details of a Call API 
+- Upgrade faraday & faraday_middleware dependencies
+
+## [4.9.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.9.1) (2020-08-19)
+- Internal changes in Phlo for MultiPartyCall component
+
+## [4.9.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.9.0) (2020-07-23)
+- Add retries to multiple regions for voice requests.
+
+## [4.8.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.8.1) (2020-06-05)
+- Fix Record a Conference API response.
+
+## [4.8.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.8.0) (2020-05-28)
+- Add JWT helper functions.
+
+## [4.7.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.7.1) (2020-05-06)
+- Fix Send MMS with existing media_ids.
+
+## [4.7.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.7.0) (2020-04-29)
+- Add V3 signature helper functions.
+
+## [4.6.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.6.1) (2020-04-02)
+- Add nil check for API requests.
+
+## [4.6.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.6.0) (2020-03-31)
+- Add application cascade delete support.
+
+## [4.5.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.5.0) (2020-03-30)
+- Add Tollfree support for Powerpack
+
+## [4.4.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.4.0) (2020-03-27)
+- Add post call quality feedback API support.
+
+## [4.3.5](https://github.com/plivo/plivo-ruby/releases/tag/v4.3.5) (2019-12-28)
+- Add Media support
+
+## [4.3.4](https://github.com/plivo/plivo-ruby/releases/tag/v4.3.4) (2019-12-20)
+- Add Powerpack support
+
+## [4.3.3](https://github.com/plivo/plivo-ruby/releases/tag/v4.3.3) (2019-12-04)
+- Add MMS support
+
+## [4.3.2](https://github.com/plivo/plivo-ruby/releases/tag/v4.3.2) (2019-11-13)
+- Add GetInput XML support
+
+## [4.3.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.3.1) (2019-10-16)
+- Add SSML support
+
 ## [4.3.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.3.0) (2019-03-12)
 - Add PHLO support
 - Add Multi-Party Call triggers

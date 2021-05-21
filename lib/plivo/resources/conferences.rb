@@ -6,6 +6,7 @@ module Plivo
         @_name = 'Conference'
         @_identifier_string = 'conference_name'
         super
+        @_is_voice_request = true
       end
 
       def delete
@@ -186,18 +187,12 @@ module Plivo
       end
 
       def to_s
-        unless @members.nil?
-          members_json = @members.map do |member|
-            JSON.parse(to_json_member(member))
-          end
+        response_json = {}
+        response_variables = self.instance_variables.drop(5)
+        response_variables.each do |variable|
+          response_json[variable.to_s[1..-1]] = self.instance_variable_get(variable)
         end
-        {
-          conference_name: @conference_name,
-          conference_run_time: @conference_run_time,
-          conference_member_count: @conference_member_count,
-          members: members_json,
-          api_id: @api_id
-        }.to_s
+        return response_json.to_s
       end
 
       def to_json_member(member)
@@ -221,6 +216,7 @@ module Plivo
         @_resource_type = Conference
         @_identifier_string = 'conference_name'
         super
+        @_is_voice_request = true
       end
 
       def get(conference_name)

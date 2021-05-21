@@ -59,6 +59,7 @@ module Plivo
       #                                    - By default, numbers that have either voice or sms or both enabled are returned.
       # @option options [String] :lata Numbers can be searched using Local Access and Transport Area {http://en.wikipedia.org/wiki/Local_access_and_transport_area}. This filter is applicable only for country_iso US and CA.
       # @option options [String] :rate_center Numbers can be searched using Rate Center {http://en.wikipedia.org/wiki/Telephone_exchange}. This filter is application only for country_iso US and CA.
+      # @option options [String] :city Filter phone number based on the city name. This filter is only applicable when the type is Local
       # @option options [Boolean] :eligible If set to true, lists only those numbers that you are eligible to buy at the moment. To list all numbers, ignore this option.
       # @option options [Int] :limit Used to display the number of results per page. The maximum number of results that can be fetched is 20.
       # @option options [Int] :offset Denotes the number of value items by which the results should be offset. Eg:- If the result contains a 1000 values and limit is set to 10 and offset is set to 705, then values 706 through 715 are displayed in the results. This parameter is also used for pagination of the results.
@@ -71,7 +72,7 @@ module Plivo
 
         return perform_list(params) if options.nil?
 
-        %i[type pattern region services lata rate_center].each do |param|
+        %i[type pattern region services lata rate_center city].each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [String, Symbol], true)
             params[param] = options[param]

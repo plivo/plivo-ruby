@@ -6,6 +6,7 @@ module Plivo
         @_name = 'Call'
         @_identifier_string = 'call_uuid'
         super
+        @_is_voice_request = true
       end
 
       def update(options)
@@ -199,7 +200,7 @@ module Plivo
 
       def cancel_request
         resource_path = @_resource_uri.sub('Call', 'Request')
-        @_client.send_request(resource_path, 'DELETE', nil)
+        @_client.send_request(resource_path, 'DELETE', nil, nil, false , is_voice_request: @_is_voice_request)
       end
 
       def to_s
@@ -211,7 +212,9 @@ module Plivo
           call_direction: @call_direction,
           call_duration: @call_duration,
           call_status: @call_status,
+          call_state: @call_state,
           call_uuid: @call_uuid,
+          conference_uuid: @conference_uuid,
           end_time: @end_time,
           from_number: @from_number,
           initiation_time: @initiation_time,
@@ -240,6 +243,7 @@ module Plivo
         @_resource_type = Call
         @_identifier_string = 'call_uuid'
         super
+        @_is_voice_request = true
       end
 
       ##
@@ -248,7 +252,6 @@ module Plivo
       # @param [String] from
       # @param [Array] to
       # @param [String] answer_url
-      # @param [String] answer_method
       # @param [Hash] options
       # @option options [String] :answer_method - The method used to call the answer_url. Defaults to POST.
       # @option options [String] :ring_url - The URL that is notified by Plivo when the call is ringing. Defaults not set.
@@ -271,26 +274,24 @@ module Plivo
       # @option options [String] :parent_call_uuid - The call_uuid of the first leg in an ongoing conference call. It is recommended to use this parameter in scenarios where a member who is already present in the conference intends to add new members by initiating outbound API calls. This minimizes the delay in adding a new memeber to the conference.
       # @option options [Boolean] :error_parent_not_found - if set to true and the parent_call_uuid cannot be found, the API request would return an error. If set to false, the outbound call API request will be executed even if the parent_call_uuid is not found. Defaults to false.
       # @return [Call] Call
-      def create(from, to, answer_url, answer_method = 'POST', options = nil)
+      def create(from, to, answer_url, options = nil) 
         valid_param?(:from, from, [String, Symbol, Integer], true)
         valid_param?(:to, to, Array, true)
         to.each do |to_num|
           valid_param?(:to_num, to_num, [Integer, String, Symbol], true)
         end
         valid_param?(:answer_url, answer_url, [String, Symbol], true)
-        valid_param?(:answer_method, answer_method, [String, Symbol],
-                     true, %w[GET POST])
+      
 
         params = {
           from: from,
           to: to.join('<'),
           answer_url: answer_url,
-          answer_method: answer_method
         }
 
-        return perform_create(params) if options.nil?
+        return perform_create(params, false) if options.nil?
 
-        perform_create(params.merge(options))
+        perform_create(params.merge(options), false)
       end
 
       ##
@@ -397,7 +398,7 @@ module Plivo
       #                                     - To filter out those numbers that contain a particular number sequence, use to_number={ sequence}
       #                                     - To filter out a number that matches an exact number, use to_number={ exact_number}
       def list_live(options = nil)
-        
+
         if options.nil?
           options = {}
         else

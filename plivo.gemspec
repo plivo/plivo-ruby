@@ -31,9 +31,10 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.0.0'
 
-  spec.add_dependency 'faraday', '~> 0.9'
-  spec.add_dependency 'faraday_middleware', '~> 0.12.2'
+  spec.add_dependency 'faraday', '~> 1.0.1'
+  spec.add_dependency 'faraday_middleware', '~> 1.0.0'
   spec.add_dependency 'htmlentities'
+  spec.add_dependency 'jwt'
 
   spec.add_development_dependency 'bundler', '>= 1.14', '<3.0'
   spec.add_development_dependency 'rake', '~> 10.0'

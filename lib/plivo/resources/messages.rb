@@ -213,6 +213,15 @@ module Plivo
            params[:trackable] = options[:trackable]
           end
         end
+
+        if options.key?(:media_urls) &&
+          valid_param?(:media_urls, options[:media_urls], Array, true)
+         params[:media_urls] = options[:media_urls]
+        end
+        if options.key?(:media_ids) &&
+          valid_param?(:media_ids, options[:media_ids], Array, true)
+         params[:media_ids] = options[:media_ids]
+        end
         perform_create(params)
       end
 

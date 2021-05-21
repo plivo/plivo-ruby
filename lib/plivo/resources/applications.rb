@@ -8,6 +8,7 @@ module Plivo
         @_name = 'Application'
         @_identifier_string = 'app_id'
         super
+        @_is_voice_request = true
       end
 
       # @param [Hash] options
@@ -23,6 +24,7 @@ module Plivo
       # @option options [Boolean] :default_endpoint_app - If set to true, this parameter ensures that newly created endpoints, which don't have an app_id, point to this application.
       # @option options [String] :subaccount - Id of the subaccount, in case only subaccount applications are needed.
       # @option options [Boolean] :log_incoming_messages - If set to true, this parameter ensures that incoming messages are logged.
+      # @option options [Boolean] :public_uri - If set to true, this parameter enables public_uri.
       # @return [Application] Application
       def update(options = nil)
         return perform_update({}) if options.nil?
@@ -47,7 +49,7 @@ module Plivo
           end
         end
 
-        %i[default_number_app default_endpoint_app log_incoming_messages].each do |param|
+        %i[default_number_app default_endpoint_app log_incoming_messages public_uri].each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [TrueClass, FalseClass], true)
             params[param] = options[param]
@@ -57,8 +59,22 @@ module Plivo
         perform_update(params)
       end
 
-      def delete
-        perform_delete
+      # @param [Hash] options
+      # @option options [Boolean] :cascade - delete associated endpoints
+      # @option options [String] :new_endpoint_application - Link associated endpoints to this app
+      def delete(options = nil)
+        return perform_delete if options.nil?
+        params = {}
+
+        if options.key?(:cascade) && valid_param?(:cascade, options[:cascade], [TrueClass, FalseClass], false, [true, false])
+          params[:cascade] = options[:cascade]
+        end
+
+        if options.key?(:new_endpoint_application) && valid_param?(:new_endpoint_application, options[:new_endpoint_application], [String, Symbol])
+          params[:new_endpoint_application] = options[:new_endpoint_application]
+        end
+
+        perform_delete(params)
       end
 
       def to_s
@@ -95,6 +111,7 @@ module Plivo
         @_resource_type = Application
         @_identifier_string = 'app_id'
         super
+        @_is_voice_request = true
       end
 
       # @param [String] app_id
@@ -118,6 +135,7 @@ module Plivo
       # @option options [Boolean] :default_endpoint_app - If set to true, this parameter ensures that newly created endpoints, which don't have an app_id, point to this application.
       # @option options [String] :subaccount - Id of the subaccount, in case only subaccount applications are needed.
       # @option options [Boolean] :log_incoming_messages - If set to true, this parameter ensures that incoming messages are logged.
+      # @option options [Boolean] :public_uri - If set to true, this parameter enables public_uri.
       # @return [Application] Application
       def create(app_name, options = nil)
         valid_param?(:app_name, app_name, [String, Symbol], true)
@@ -145,7 +163,7 @@ module Plivo
           end
         end
 
-        %i[default_number_app default_endpoint_app log_incoming_messages].each do |param|
+        %i[default_number_app default_endpoint_app log_incoming_messages public_uri].each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [TrueClass, FalseClass], true)
             params[param] = options[param]
@@ -227,10 +245,13 @@ module Plivo
       ##
       # Delete an application
       # @param [String] app_id
-      def delete(app_id)
+      # @param [Hash] options
+      # @option options [Boolean] :cascade - delete associated endpoints
+      # @option options [String] :new_endpoint_application - Link associated endpoints to this app
+      def delete(app_id, options = nil)
         valid_param?(:app_id, app_id, [String, Symbol], true)
         Application.new(@_client,
-                        resource_id: app_id).delete
+                        resource_id: app_id).delete(options)
       end
     end
   end
