@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.17.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.17.0) (2021-05-28)
+- New Send Message interface along with existing interface support.
+
 ## [4.16.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.16.0) (2021-02-08)
 - Add support for Regulatory Compliance APIs.
 
