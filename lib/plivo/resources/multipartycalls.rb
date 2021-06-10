@@ -421,8 +421,7 @@ module Plivo
                           enter_sound='beep:1',
                           enter_sound_method='GET',
                           exit_sound='beep:2',
-                          exit_sound_method='GET',
-                          keyword_init: true)
+                          exit_sound_method='GET')
         valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
         valid_param?(:uuid, uuid, String, false) unless uuid.nil?
         mpc_id = make_mpc_id(uuid, friendly_name)
