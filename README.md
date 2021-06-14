@@ -39,7 +39,7 @@ client = RestClient.new;
 Alternatively, you can specifiy the authentication credentials while initializing the `RestClient`.
 
 ```ruby
-client = RestClient.new('your_auth_id', 'your_auth_token');
+client = RestClient.new('<auth_id>', '<auth_token>');
 ```
 
 ### The basics
@@ -83,8 +83,8 @@ include Plivo
 
 client = RestClient.new
 message_created = client.messages.create(
-  'your_source_number',
-  %w[your_destination_number_1 your_destination_number_2],
+  '+14156667778',
+  ['+14156667777'],
   'Hello, world!'
 )
 ```
@@ -99,8 +99,8 @@ include Plivo
 
 client = RestClient.new
 call_made = client.calls.create(
-  'your_source_number',
-  ['your_destination_number'],
+  '+14156667778',
+  ['+14156667777'],
   'https://answer.url'
 )
 ```
@@ -149,10 +149,7 @@ require 'plivo'
 
 include Plivo
 
-AUTH_ID = 'AUTH_ID'
-AUTH_TOKEN = 'AUTH_TOKEN'
-
-client = Phlo.new(AUTH_ID, AUTH_TOKEN)
+client = Phlo.new('<auth_id>', '<auth_token>')
 
 # if credentials are stored in the PLIVO_AUTH_ID and the PLIVO_AUTH_TOKEN environment variables
 # then initialize client as:
@@ -162,8 +159,8 @@ client = Phlo.new(AUTH_ID, AUTH_TOKEN)
 begin
     #parameters set in PHLO - params
     params = {
-       from: '9999999999',
-       to: '0000000000'
+       from: '+14156667778',
+       to: '+14156667777'
     }
     response = phlo.run(params)
     puts response
@@ -173,7 +170,7 @@ begin
 ```
 
 ### More examples
-Refer to the [Ruby API Reference](https://api-reference.plivo.com/latest/ruby/introduction/overview) for more examples. Also refer to the [guide to setting up dev environment](https://developers.plivo.com/getting-started/setting-up-dev-environment/) on [Plivo Developers Portal](https://developers.plivo.com) to setup a Sinatra server & use it to test out your integration in under 5 minutes.
+More examples are available [here](https://github.com/plivo/plivo-examples-ruby). Also refer to the [guides for configuring the Rails server to run various scenarios](https://www.plivo.com/docs/sms/quickstart/ruby-rails/) & use it to test out your integration in under 5 minutes.
 
 ## Reporting issues
 Report any feedback or problems with this version by [opening an issue on Github](https://github.com/plivo/plivo-ruby/issues).
