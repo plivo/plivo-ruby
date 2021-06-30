@@ -1,6 +1,6 @@
 # Change Log
 
-## [4.17.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.16.1) (2021-06-18)
+## [4.17.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.17.1) (2021-06-18)
 - Removed total_count field from meta data for list MDR response
 
 ## [4.17.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.17.0) (2021-06-15)
