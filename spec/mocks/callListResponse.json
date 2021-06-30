@@ -23,7 +23,8 @@
       "resource_uri": "/v1/Account/MANWVLYTK4ZWU1YTY4ZT/Call/eba53b9e-8fbd-45c1-9444-696d2172fbc8/",
       "to_number": "14153268174",
       "total_amount": "0.13600",
-      "total_rate": "0.00850"
+      "total_rate": "0.00850",
+      "stir_verification": "Not Verified"
     },
     {
       "answer_time": "2015-07-26 16:45:02+05:30",
@@ -40,7 +41,8 @@
       "resource_uri": "/v1/Account/MANWVLYTK4ZWU1YTY4ZT/Call/eba53b9e-8fbd-45c1-9444-696d2172fbc8/",
       "to_number": "14153268174",
       "total_amount": "0.13600",
-      "total_rate": "0.00850"
+      "total_rate": "0.00850",
+      "stir_verification": "Not Applicable"
     }
   ]
 }
