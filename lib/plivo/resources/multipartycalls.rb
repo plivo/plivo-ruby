@@ -89,6 +89,7 @@ module Plivo
         valid_multiple_destination_integers?(:ring_timeout, ring_timeout)
         valid_param?(:delay_dial, delay_dial, [String,Integer], false)
         valid_multiple_destination_integers?(:delay_dial, delay_dial)
+        valid_range?(:ring_timeout, ring_timeout, false, 15, 120)
         valid_range?(:max_duration, max_duration, false, 300, 28800)
         valid_range?(:max_participants, max_participants, false, 2, 10)
         valid_url?(:wait_music_url, wait_music_url, false ) unless wait_music_url.nil?
@@ -197,6 +198,7 @@ module Plivo
         perform_action_apiresponse('Record/Resume', 'POST')
       end
 
+
       def start_participant_recording(member_id, file_format='mp3', status_callback_url=nil, status_callback_method='POST')
         valid_param?(:member_id, member_id, [String, Integer], true)
         MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], member_id: member_id).start_participant_recording(file_format, status_callback_url, status_callback_method)
@@ -216,7 +218,7 @@ module Plivo
         valid_param?(:member_id, member_id, [String, Integer], true)
         MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], member_id: member_id).resume_participant_recording
       end
-
+      
       def list_participants(call_uuid = nil )
         valid_param?(:call_uuid, call_uuid, String, false) unless call_uuid.nil?
         params = {}
@@ -372,7 +374,7 @@ module Plivo
         params[:offset] = offset unless offset.nil?
         perform_action(nil ,'GET', params ,true )
       end
-
+      
       def get(uuid = nil, friendly_name = nil)
         valid_param?(:uuid, uuid, String, false) unless uuid.nil?
         valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
@@ -427,6 +429,7 @@ module Plivo
         valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
         valid_param?(:uuid, uuid, String, false) unless uuid.nil?
         mpc_id = make_mpc_id(uuid, friendly_name)
+
         MultiPartyCall.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).add_participant(role,from,to,call_uuid,caller_name,call_status_callback_url,call_status_callback_method,sip_headers,confirm_key,
                                                                           confirm_key_sound_url,confirm_key_sound_method,dial_music, ring_timeout,delay_dial,max_duration, max_participants,wait_music_url,
                                                                           wait_music_method,agent_hold_music_url,agent_hold_music_method,customer_hold_music_url,customer_hold_music_method,
@@ -508,7 +511,7 @@ module Plivo
         mpc_id = make_mpc_id(uuid, friendly_name)
         MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: member_id).resume_participant_recording
       end
-
+      
       def list_participants(uuid = nil, friendly_name = nil, call_uuid = nil)
         valid_param?(:uuid, uuid, String, false) unless uuid.nil?
         valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
