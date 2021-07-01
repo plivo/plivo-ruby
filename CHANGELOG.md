@@ -1,6 +1,6 @@
 # Change Log
 
-## [5.0.0](https://github.com/plivo/plivo-ruby/releases/tag/v5.0.0) (2020-10-23)
+## [4.18.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.18.0) (2021-07-01)
 - Add support for Voice MultiPartyCall APIs (includes retry) and XML, validate voice UTs
 
 ## [4.17.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.17.0) (2021-06-15)
