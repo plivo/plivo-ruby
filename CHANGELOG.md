@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.18.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.18.0) (2021-07-06)
+-  Powerpack ID filter for list MDR
+
 ## [4.17.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.17.1) (2021-06-18)
 - **WARNING**: Remove total_count field from meta data for list MDR response
 

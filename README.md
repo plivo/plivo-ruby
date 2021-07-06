@@ -9,7 +9,7 @@ Add this line to your application's Gemfile:
 
 ```ruby
 
-gem 'plivo', '>= 4.17.1'
+gem 'plivo', '>= 4.18.0'
 
 ```
 
