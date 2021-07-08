@@ -86,9 +86,6 @@ module Plivo
           end
         end
       end
-      unless ((param_value.is_a? Integer) || (param_value.is_a? String))
-        raise_invalid_request("#{param_name} Destination Value must be integer") 
-      end
     end
     
     def valid_url?(param_name, param_value, mandatory = false)
