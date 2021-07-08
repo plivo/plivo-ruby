@@ -89,7 +89,6 @@ module Plivo
         valid_multiple_destination_integers?(:ring_timeout, ring_timeout)
         valid_param?(:delay_dial, delay_dial, [String,Integer], false)
         valid_multiple_destination_integers?(:delay_dial, delay_dial)
-        valid_range?(:ring_timeout, ring_timeout, false, 15, 120)
         valid_range?(:max_duration, max_duration, false, 300, 28800)
         valid_range?(:max_participants, max_participants, false, 2, 10)
         valid_url?(:wait_music_url, wait_music_url, false ) unless wait_music_url.nil?
