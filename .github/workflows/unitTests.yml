@@ -12,13 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-         ruby-version: [ 'ruby-head', '2.3', '2.2' ,'2.1' , '2.0' ]
+         ruby-version: [ 'head', '2.3', '2.2' ,'2.1' , '2.0' ]
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Set up Ruby ${{ matrix.ruby-version }}
-        uses: actions/setup-ruby@master
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby-version }}
       - name: Dependencies Installation
