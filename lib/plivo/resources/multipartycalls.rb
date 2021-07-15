@@ -117,6 +117,13 @@ module Plivo
         valid_param?(:enter_sound_method, enter_sound_method.upcase, String, false, %w[GET POST])
         is_one_among_string_url?(:exit_sound, exit_sound, false , %w[beep:1 beep:2 none])
         valid_param?(:exit_sound_method, exit_sound_method.upcase, String, false, %w[GET POST])
+        if (to!=nil) && (ring_timeout.is_a?(String)) && (to.split('<').size < ring_timeout.split('<').size)
+          raise_invalid_request("RingTimeout:number of ring_timout(s) should be same as number of destination(s)")
+        end
+          
+        if (to!=nil) && (delay_dial.is_a?(String)) && (to.split('<').size < delay_dial.split('<').size)
+          raise_invalid_request("Delaydial : number of delay_dial(s) should be same as number of destination(s)")
+        end
 
         params = {}
         params[:role] = role unless role.nil?
@@ -328,218 +335,220 @@ module Plivo
         return identifier
       end
 
-      def list(sub_account=nil,
-               friendly_name=nil,
-               status=nil,
-               termination_cause_code=nil,
-               end_time__gt=nil,
-               end_time__gte=nil,
-               end_time__lt=nil,
-               end_time__lte=nil,
-               creation_time__gt=nil,
-               creation_time__gte=nil,
-               creation_time__lt=nil,
-               creation_time__lte=nil,
-               limit=nil,
-               offset=nil)
-        params = {}
-        valid_subaccount?(sub_account, true) unless sub_account.nil?
-        params[:sub_account] = sub_account unless sub_account.nil?
-        valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
-        params[:friendly_name] = friendly_name unless friendly_name.nil?
-        valid_param?(:status, status.downcase, String, false, %w[initialized active ended]) unless status.nil?
-        params[:status] = status unless status.nil?
-        valid_param?(:termination_cause_code, termination_cause_code, Integer, false) unless termination_cause_code.nil?
-        params[:termination_cause_code] = termination_cause_code unless termination_cause_code.nil?
-        valid_date_format?(:end_time__gt, end_time__gt, false ) unless end_time__gt.nil?
-        params[:end_time__gt] = end_time__gt unless end_time__gt.nil?
-        valid_date_format?(:end_time__gte, end_time__gte, false ) unless end_time__gte.nil?
-        params[:end_time__gte] = end_time__gte unless end_time__gte.nil?
-        valid_date_format?(:end_time__lt, end_time__lt, String) unless end_time__lt.nil?
-        params[:end_time__lt] = end_time__lt unless end_time__lt.nil?
-        valid_date_format?(:end_time__lte, end_time__lte, false) unless end_time__lte.nil?
-        params[:end_time__lte] = end_time__lte unless end_time__lte.nil?
-        valid_date_format?(:creation_time__gt, creation_time__gt, false) unless creation_time__gt.nil?
-        params[:creation_time__gt] = creation_time__gt unless creation_time__gt.nil?
-        valid_date_format?(:creation_time__gte, creation_time__gte, false) unless creation_time__gte.nil?
-        params[:creation_time__gte] = creation_time__gte unless creation_time__gte.nil?
-        valid_date_format?(:creation_time__lt, creation_time__lt, false) unless creation_time__lt.nil?
-        params[:creation_time__lt] = creation_time__lt unless creation_time__lt.nil?
-        valid_date_format?(:creation_time__lte, creation_time__lte, false) unless creation_time__lte.nil?
-        params[:creation_time__lte] = creation_time__lte unless creation_time__lte.nil?
-        valid_range?(:limit, limit, false, 1, 20)
-        params[:limit] = limit unless limit.nil?
-        valid_range?(:offset, offset, false, 0)
-        params[:offset] = offset unless offset.nil?
+      def list(options={})
+        valid_param?(:options, options, Hash, false)
+        params = options
+        valid_subaccount?(options[:sub_account], true) unless options[:sub_account].nil?
+        valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
+        valid_param?(:status, options[:status].downcase, String, false, %w[initialized active ended]) unless options[:status].nil?
+        valid_param?(:termination_cause_code, options[:termination_cause_code], Integer, false) unless options[:termination_cause_code].nil?
+        valid_date_format?(:end_time__gt, options[:end_time__gt], false ) unless options[:end_time__gt].nil?
+        valid_date_format?(:end_time__gte, options[:end_time__gte], false ) unless options[:end_time__gte].nil?
+        valid_date_format?(:end_time__lt, options[:end_time__lt], String) unless options[:end_time__lt].nil?
+        valid_date_format?(:end_time__lte, options[:end_time__lte], false) unless options[:end_time__lte].nil?
+        valid_date_format?(:creation_time__gt, options[:creation_time__gt], false) unless options[:creation_time__gt].nil?
+        valid_date_format?(:creation_time__gte, options[:creation_time__gte], false) unless options[:creation_time__gte].nil?
+        valid_date_format?(:creation_time__lt, options[:creation_time__lt], false) unless options[:creation_time__lt].nil?
+        valid_date_format?(:creation_time__lte, options[:creation_time__lte], false) unless options[:creation_time__lte].nil?
+        valid_range?(:limit, options[:limit], false, 1, 20)
+        valid_range?(:offset, options[:offset], false, 0)
         perform_action(nil ,'GET', params ,true )
       end
       
-      def get(uuid = nil, friendly_name = nil)
-        valid_param?(:uuid, uuid, String, false) unless uuid.nil?
-        valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
-        mpc_id = make_mpc_id(uuid, friendly_name)
+      def get(options = {})
+        valid_param?(:options, options, Hash, false)
+        valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
+        valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
+        mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
         MultiPartyCall.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).get
       end
 
-      def add_participant(role,
-                          friendly_name = nil,
-                          uuid=nil,
-                          from=nil,
-                          to=nil,
-                          call_uuid=nil,
-                          caller_name=nil,
-                          call_status_callback_url=nil,
-                          call_status_callback_method='POST',
-                          sip_headers=nil,
-                          confirm_key=nil,
-                          confirm_key_sound_url=nil,
-                          confirm_key_sound_method='GET',
-                          dial_music='Real',
-                          ring_timeout=45,
-                          delay_dial=0,
-                          max_duration=14400,
-                          max_participants=10,
-                          wait_music_url=nil,
-                          wait_music_method='GET',
-                          agent_hold_music_url=nil,
-                          agent_hold_music_method='GET',
-                          customer_hold_music_url=nil,
-                          customer_hold_music_method='GET',
-                          recording_callback_url=nil,
-                          recording_callback_method='GET',
-                          status_callback_url=nil,
-                          status_callback_method='GET',
-                          on_exit_action_url=nil,
-                          on_exit_action_method='POST',
-                          record=false,
-                          record_file_format='mp3',
-                          status_callback_events='mpc-state-changes,participant-state-changes',
-                          stay_alone=false,
-                          coach_mode=true,
-                          mute=false,
-                          hold=false,
-                          start_mpc_on_enter=true,
-                          end_mpc_on_exit=false,
-                          relay_dtmf_inputs=false,
-                          enter_sound='beep:1',
-                          enter_sound_method='GET',
-                          exit_sound='beep:2',
-                          exit_sound_method='GET')
-        valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
-        valid_param?(:uuid, uuid, String, false) unless uuid.nil?
-        mpc_id = make_mpc_id(uuid, friendly_name)
+      def add_participant(options = {})
+        valid_param?(:options, options, Hash, false)
+        if not options[:role ]
+          raise_invalid_request("Role is mandatory")
+        end
+        options[:call_status_callback_method] = 'POST' unless options.key?(:call_status_callback_method)
+        options[:confirm_key_sound_method] = 'GET' unless options.key?(:confirm_key_sound_method)
+        options[:dial_music] = 'Real' unless options.key?(:dial_music)
+        options[:ring_timeout] = 45 unless options.key?(:ring_timeout) 
+        options[:delay_dial] = 0 unless options.key?(:delay_dial)
+        options[:max_duration] = 14400 unless options.key?(:max_duration)
+        options[:max_participants] = 10 unless options.key?(:max_participants)
+        options[:wait_music_method] = 'GET' unless options.key?(:wait_music_method)
+        options[:agent_hold_music_method] = 'GET' unless options.key?(:agent_hold_music_method)
+        options[:customer_hold_music_method] = 'GET' unless options.key?(:customer_hold_music_method)
+        options[:recording_callback_method] ='GET' unless options.key?(:recording_callback_method)
+        options[:status_callback_method] = 'GET' unless options.key?(:status_callback_method)
+        options[:on_exit_action_method] = 'POST' unless options.key?(:on_exit_action_method)
+        options[:record] = false  unless options.key?(:record)
+        options[:record_file_format] = 'mp3' unless options.key?(:record_file_format)
+        options[:status_callback_events] = 'mpc-state-changes,participant-state-changes' unless options.key?(:status_callback_events)
+        options[:stay_alone] = false unless options.key?(:stay_alone)
+        options[:coach_mode] = true unless options.key?(:coach_mode)
+        options[:mute] = false unless options.key?(:mute)
+        options[:hold] = false unless options.key?(:hold)
+        options[:start_mpc_on_enter] = true unless options.key?(:start_mpc_on_enter)
+        options[:end_mpc_on_exit] = false unless options.key?(:end_mpc_on_exit)
+        options[:relay_dtmf_inputs] = false unless options.key?(:relay_dtmf_inputs)
+        options[:enter_sound] = 'beep:1' unless options.key?(:enter_sound)
+        options[:enter_sound_method] = 'GET' unless options.key?(:enter_sound_method)
+        options[:exit_sound] = 'beep:2' unless options.key?(:exit_sound)
+        options[:exit_sound_method] = 'GET' unless options.key?(:exit_sound_method)
+        valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
+        valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
+        mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
 
-        MultiPartyCall.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).add_participant(role,from,to,call_uuid,caller_name,call_status_callback_url,call_status_callback_method,sip_headers,confirm_key,
-                                                                          confirm_key_sound_url,confirm_key_sound_method,dial_music, ring_timeout,delay_dial,max_duration, max_participants,wait_music_url,
-                                                                          wait_music_method,agent_hold_music_url,agent_hold_music_method,customer_hold_music_url,customer_hold_music_method,
-                                                                          recording_callback_url,recording_callback_method,status_callback_url,status_callback_method,on_exit_action_url, on_exit_action_method,
-                                                                          record,record_file_format,status_callback_events,stay_alone, coach_mode,mute,hold,start_mpc_on_enter,end_mpc_on_exit,
-                                                                          relay_dtmf_inputs,enter_sound,enter_sound_method,exit_sound,exit_sound_method)
+        MultiPartyCall.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).add_participant(options[:role],options[:from],options[:to],options[:call_uuid],options[:caller_name],options[:call_status_callback_url],options[:call_status_callback_method],options[:sip_headers],options[:confirm_key],
+                                                                          options[:confirm_key_sound_url],options[:confirm_key_sound_method],options[:dial_music],options[:ring_timeout],options[:delay_dial],options[:max_duration], options[:max_participants],options[:wait_music_url],
+                                                                          options[:wait_music_method],options[:agent_hold_music_url],options[:agent_hold_music_method],options[:customer_hold_music_url],options[:customer_hold_music_method],
+                                                                          options[:recording_callback_url],options[:recording_callback_method],options[:status_callback_url],options[:status_callback_method],options[:on_exit_action_url], options[:on_exit_action_method],
+                                                                          options[:record],options[:record_file_format],options[:status_callback_events],options[:stay_alone], options[:coach_mode],options[:mute],options[:hold],options[:start_mpc_on_enter],options[:end_mpc_on_exit],
+                                                                          options[:relay_dtmf_inputs],options[:enter_sound],options[:enter_sound_method],options[:exit_sound],options[:exit_sound_method])
       end
 
-      def start(uuid = nil, friendly_name = nil)
-        valid_param?(:uuid, uuid, String, false)
-        valid_param?(:friendly_name, friendly_name, String, false)
-        mpc_id = make_mpc_id(uuid, friendly_name)
+      def start(options = {})
+        valid_param?(:options, options, Hash, false)
+        valid_param?(:uuid, options[:uuid], String, false)
+        valid_param?(:friendly_name, options[:friendly_name], String, false)
+        mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
         MultiPartyCall.new(@_client,resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).start
       end
 
-      def stop(uuid = nil, friendly_name = nil)
-        valid_param?(:uuid, uuid, String, false) unless uuid.nil?
-        valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
-        mpc_id = make_mpc_id(uuid, friendly_name)
+      def stop(options = {})
+        valid_param?(:options, options, Hash, false)
+        valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
+        valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
+        mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
         MultiPartyCall.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).stop
       end
 
-      def start_recording(uuid = nil, friendly_name = nil, file_format='mp3', status_callback_url=nil, status_callback_method='POST')
-        valid_param?(:uuid, uuid, String, false) unless uuid.nil?
-        valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
-        mpc_id = make_mpc_id(uuid, friendly_name)
-        MultiPartyCall.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).start_recording(file_format, status_callback_url, status_callback_method)
+      def start_recording(options = {})
+        valid_param?(:options, options, Hash, false)
+        options[:file_format] = 'mp3' unless options.key?(:file_format)
+        options[:status_callback_method] = 'POST' unless options.key?(:status_callback_method)
+        valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
+        valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
+        mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
+        MultiPartyCall.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).start_recording(options[:file_format], options[:status_callback_url], options[:status_callback_method])
       end
 
-      def stop_recording(uuid = nil, friendly_name = nil)
-        valid_param?(:uuid, uuid, String, false) unless uuid.nil?
-        valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
-        mpc_id = make_mpc_id(uuid, friendly_name)
+      def stop_recording(options = {})
+        valid_param?(:options, options, Hash, false)
+        valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
+        valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
+        mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
         MultiPartyCall.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).stop_recording
       end
 
-      def pause_recording(uuid = nil, friendly_name = nil)
-        valid_param?(:uuid, uuid, String, false) unless uuid.nil?
-        valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
-        mpc_id = make_mpc_id(uuid, friendly_name)
+      def pause_recording(options = {})
+        valid_param?(:options, options, Hash, false)
+        valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
+        valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
+        mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
         MultiPartyCall.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).pause_recording
       end
 
-      def resume_recording(uuid = nil, friendly_name = nil)
-        valid_param?(:uuid, uuid, String, false) unless uuid.nil?
-        valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
-        mpc_id = make_mpc_id(uuid, friendly_name)
+      def resume_recording(options = {})
+        valid_param?(:options, options, Hash, false)
+        valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
+        valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
+        mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
         MultiPartyCall.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).resume_recording
       end
 
-      def start_participant_recording(member_id, uuid = nil, friendly_name = nil, file_format='mp3', status_callback_url=nil, status_callback_method='POST')
-        valid_param?(:member_id, member_id, [String, Integer], true)
-        valid_param?(:uuid, uuid, String, false) unless uuid.nil?
-        valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
-        mpc_id = make_mpc_id(uuid, friendly_name)
-        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: member_id).start_participant_recording(file_format, status_callback_url, status_callback_method)
+      def start_participant_recording(options = {})
+        valid_param?(:options, options, Hash, false)
+        if not options[:member_id]
+          raise_invalid_request("Member Id is mandatory")
+        end
+        options[:file_format] = 'mp3' unless options.key?(:file_format)
+        options[:status_callback_method] = 'POST' unless options.key?(:status_callback_method)
+        valid_param?(:member_id, options[:member_id], [String, Integer], true)
+        valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
+        valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
+        mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
+        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: options[:member_id]).start_participant_recording(options[:file_format], options[:status_callback_url], options[:status_callback_method])
       end
 
-      def stop_participant_recording(member_id, uuid = nil, friendly_name = nil)
-        valid_param?(:member_id, member_id, [String, Integer], true)
-        valid_param?(:uuid, uuid, String, false) unless uuid.nil?
-        valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
-        mpc_id = make_mpc_id(uuid, friendly_name)
-        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: member_id).stop_participant_recording
+      def stop_participant_recording(options = {})
+        valid_param?(:options, options, Hash, false)
+        if not options[:member_id]
+          raise_invalid_request("Member Id is mandatory")
+        end
+        valid_param?(:member_id, options[:member_id], [String, Integer], true)
+        valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
+        valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
+        mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
+        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: options[:member_id]).stop_participant_recording
       end
 
-      def pause_participant_recording(member_id, uuid = nil, friendly_name = nil)
-        valid_param?(:member_id, member_id, [String, Integer], true)
-        valid_param?(:uuid, uuid, String, false) unless uuid.nil?
-        valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
-        mpc_id = make_mpc_id(uuid, friendly_name)
-        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: member_id).pause_participant_recording
+      def pause_participant_recording(options = {})
+        valid_param?(:options, options, Hash, false)
+        if not options[:member_id]
+          raise_invalid_request("Member Id is mandatory")
+        end
+        valid_param?(:member_id, options[:member_id], [String, Integer], true)
+        valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
+        valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
+        mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
+        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: options[:member_id]).pause_participant_recording
       end
 
-      def resume_participant_recording(member_id, uuid = nil, friendly_name = nil)
-        valid_param?(:member_id, member_id, [String, Integer], true)
-        valid_param?(:uuid, uuid, String, false) unless uuid.nil?
-        valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
-        mpc_id = make_mpc_id(uuid, friendly_name)
-        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: member_id).resume_participant_recording
+      def resume_participant_recording(options = {})
+        valid_param?(:options, options, Hash, false)
+        if not options[:member_id]
+          raise_invalid_request("Member Id is mandatory")
+        end
+        valid_param?(:member_id, options[:member_id], [String, Integer], true)
+        valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
+        valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
+        mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
+        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: options[:member_id]).resume_participant_recording
       end
       
-      def list_participants(uuid = nil, friendly_name = nil, call_uuid = nil)
-        valid_param?(:uuid, uuid, String, false) unless uuid.nil?
-        valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
-        mpc_id = make_mpc_id(uuid, friendly_name)
-        MultiPartyCall.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).list_participants(call_uuid)
+      def list_participants(options = {})
+        valid_param?(:options, options, Hash, false)
+        valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
+        valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
+        mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
+        MultiPartyCall.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).list_participants(options[:call_uuid])
       end
 
-      def update_participant(member_id, uuid=nil, friendly_name=nil, coach_mode=nil, mute=nil, hold=nil)
-        valid_param?(:member_id, member_id, [String, Integer], true)
-        valid_param?(:uuid, uuid, String, false) unless uuid.nil?
-        valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
-        mpc_id = self.make_mpc_id(uuid, friendly_name)
-        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: member_id).update_participant(coach_mode, mute, hold)
+      def update_participant(options =  {})
+        valid_param?(:options, options, Hash, false)
+        if not options[:member_id]
+          raise_invalid_request("Member Id is mandatory")
+        end
+        valid_param?(:member_id, options[:member_id], [String, Integer], true)
+        valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
+        valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
+        mpc_id = self.make_mpc_id(options[:uuid], options[:friendly_name])
+        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: options[:member_id]).update_participant(options[:coach_mode], options[:mute], options[:hold])
       end
 
-      def kick_participant(member_id, uuid = nil, friendly_name = nil)
-        valid_param?(:member_id, member_id, [String, Integer], true)
-        valid_param?(:uuid, uuid, String, false) unless uuid.nil?
-        valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
-        mpc_id = make_mpc_id(uuid, friendly_name)
-        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: member_id).kick_participant
+      def kick_participant(options = {})
+        valid_param?(:options, options, Hash, false)
+        if not options[:member_id]
+          raise_invalid_request("Member Id is mandatory")
+        end
+        valid_param?(:member_id, options[:member_id], [String, Integer], true)
+        valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
+        valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
+        mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
+        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: options[:member_id]).kick_participant
       end
 
-      def get_participant(member_id, uuid = nil, friendly_name = nil)
-        valid_param?(:member_id, member_id, [String, Integer], true)
-        valid_param?(:uuid, uuid, String, false) unless uuid.nil?
-        valid_param?(:friendly_name, friendly_name, String, false) unless friendly_name.nil?
-        mpc_id = make_mpc_id(uuid, friendly_name)
-        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: member_id).get_participant
+      def get_participant(options = {})
+        valid_param?(:options, options, Hash, false)
+        if not options[:member_id]
+          raise_invalid_request("Member Id is mandatory")
+        end
+        valid_param?(:member_id, options[:member_id], [String, Integer], true)
+        valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
+        valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
+        mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
+        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: options[:member_id]).get_participant
       end
     end
   end
