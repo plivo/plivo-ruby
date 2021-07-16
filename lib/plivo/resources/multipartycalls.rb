@@ -337,7 +337,6 @@ module Plivo
 
       def list(options={})
         valid_param?(:options, options, Hash, false)
-        params = options
         valid_subaccount?(options[:sub_account], true) unless options[:sub_account].nil?
         valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
         valid_param?(:status, options[:status].downcase, String, false, %w[initialized active ended]) unless options[:status].nil?
@@ -352,7 +351,7 @@ module Plivo
         valid_date_format?(:creation_time__lte, options[:creation_time__lte], false) unless options[:creation_time__lte].nil?
         valid_range?(:limit, options[:limit], false, 1, 20)
         valid_range?(:offset, options[:offset], false, 0)
-        perform_action(nil ,'GET', params ,true )
+        perform_action(nil ,'GET', options ,true )
       end
       
       def get(options = {})
