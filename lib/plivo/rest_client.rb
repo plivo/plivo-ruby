@@ -8,7 +8,7 @@ module Plivo
     # Resources
     attr_reader :messages, :account, :subaccounts, :recordings
     attr_reader :pricings, :numbers, :calls, :conferences
-    attr_reader :phone_numbers, :applications, :endpoints
+    attr_reader :phone_numbers, :applications, :endpoints, :multipartycalls
     attr_reader :addresses, :identities
     attr_reader :call_feedback
     attr_reader :powerpacks
@@ -51,6 +51,7 @@ module Plivo
       @addresses = Resources::AddressInterface.new(self)
       @identities = Resources::IdentityInterface.new(self)
       @call_feedback = Resources::CallFeedbackInterface.new(self)
+      @multipartycalls = Resources::MultiPartyCallInterface.new( self)
       @lookup = Resources::LookupInterface.new(self)
       @end_users = Resources::EndUsersInterface.new(self)
       @compliance_document_types = Resources::ComplianceDocumentTypesInterface.new(self)

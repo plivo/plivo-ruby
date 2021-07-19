@@ -114,5 +114,35 @@ module Plivo
         Response.new(response_json, @_identifier_string)
       end
     end
+
+    class SecondaryResource < Resource
+      attr_reader :secondary_id
+      def initialize(client, options = nil)
+        super
+        configure_secondary_options(options) if options
+        configure_secondary_resource_uri
+      end
+
+      def configure_secondary_options(options)
+        valid_param?(:options, options, Hash, false)
+        @secondary_id = options[:member_id] if options.key?(:member_id)
+        secondary_parse_and_set(options[:resource_json]) if options.key?(:resource_json)
+      end
+
+      def secondary_parse_and_set(resource_json)
+        return unless resource_json
+
+        valid_param?(:resource_json, resource_json, Hash, true)
+        return unless @_secondary_identifier_string && (resource_json.key? @_secondary_identifier_string)
+        @secondary_id = resource_json[@_secondary_identifier_string]
+      end
+
+      def configure_secondary_resource_uri
+        to_join = @secondary_id ? [@_client.auth_id, @_name, @id, @_secondary_name, @secondary_id] : [@_client.auth_id, @_name, @id]
+        to_join = ['', 'v1', 'Account'] << to_join
+        to_join << ''
+        @_resource_uri = to_join.join('/')
+      end
+    end
   end
 end

@@ -17,6 +17,7 @@ require_relative 'resources/call_feedback'
 require_relative 'resources/media'
 require_relative 'resources/lookup'
 require_relative 'resources/regulatory_compliance'
+require_relative 'resources/multipartycalls'
 
 module Plivo
   module Resources
