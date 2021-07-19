@@ -78,22 +78,10 @@ module Plivo
     end
 
     def valid_multiple_destination_integers?(param_name, param_value)
-      if (param_value.is_a? Integer)
-        if (param_name == :delay_dial)
-          valid_range?(param_name, param_value, false, 0, 120)
-        else
-          valid_range?(param_name, param_value, false,15, 120)
-        end
-      else
+      if (param_value.is_a? String)
         values = param_value.split("<")
         for i in values
-          if (Integer(i) rescue false)
-            if (param_name == :delay_dial)
-              valid_range?("DelayDial Destination Value", Integer(i), false, 0,120)
-            else
-              valid_range?("RingTimeout Destination Value", Integer(i), false, 15,120)
-            end
-          else
+          unless (Integer(i) rescue false)
             raise_invalid_request("#{param_name} Destination Value must be integer")
           end
         end
