@@ -1,7 +1,17 @@
 # Change Log
 
-## [4.17.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.17.0) (2021-05-28)
-- New Send Message interface along with existing interface support.
+## [4.19.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.19.0) (2021-07-19)
+- Add support for Voice MultiPartyCall APIs (includes retry) and XML, validate voice UTs
+
+## [4.18.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.18.0) (2021-07-13)
+- Power pack ID has been included to the response for the [list all messages API](https://www.plivo.com/docs/sms/api/message/list-all-messages/) and the [get message details API](https://www.plivo.com/docs/sms/api/message#retrieve-a-message).
+- Support for filtering messages by Power pack ID has been added to the [list all messages API](https://www.plivo.com/docs/sms/api/message#list-all-messages).
+
+## [4.17.1](https://github.com/plivo/plivo-ruby/releases/tag/v4.17.1) (2021-06-18)
+- **WARNING**: Remove total_count field from meta data for list MDR response
+
+## [4.17.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.17.0) (2021-06-15)
+- Added stir verification param as part of Get CDR and live call APIs response.
 
 ## [4.16.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.16.0) (2021-02-08)
 - Add support for Regulatory Compliance APIs.

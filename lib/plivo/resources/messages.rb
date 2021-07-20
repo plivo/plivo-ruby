@@ -29,6 +29,7 @@ module Plivo
           to_number: @to_number,
           total_amount: @total_amount,
           total_rate: @total_rate,
+          powerpack_id: @powerpack_id,
           units: @units
         }.to_s
       end
@@ -242,6 +243,7 @@ module Plivo
       # @option options [String] :error_code Delivery Response code returned by the carrier attempting the delivery. See Supported error codes {https://www.plivo.com/docs/api/message/#standard-plivo-error-codes}.
       # @option options[List]: media_urls Minimum one media url should be present in Media urls list to send mms. Maximum allowd 10 media urls inside the list (e.g, media_urls : ['https//example.com/test.jpg', 'https://example.com/abcd.gif'])
       # @option options[List]: media_ids Minimum one media ids should be present in Media ids list to send mms. Maximum allowd 10 media ids inside the list (e.g, media_ids : ['1fs211ba-355b-11ea-bbc9-02121c1190q7'])
+      # @option options [String] :powerpack_id Filter the results by powerpack id
       def list(options = nil)
         return perform_list if options.nil?
         valid_param?(:options, options, Hash, true)
@@ -249,7 +251,7 @@ module Plivo
         params = {}
         params_expected = %i[
           subaccount message_time message_time__gt message_time__gte
-          message_time__lt message_time__lte error_code
+          message_time__lt message_time__lte error_code powerpack_id
         ]
         params_expected.each do |param|
           if options.key?(param) &&

@@ -17,7 +17,8 @@ describe 'Calls test' do
       resource_uri: call.resource_uri,
       to_number: call.to_number,
       total_amount: call.total_amount,
-      total_rate: call.total_rate
+      total_rate: call.total_rate,
+      stir_verification: call.stir_verification
     }.to_json
   end
 
@@ -31,7 +32,8 @@ describe 'Calls test' do
       caller_name: call.caller_name,
       call_uuid: call.call_uuid,
       request_uuid: call.request_uuid,
-      session_start: call.session_start
+      session_start: call.session_start,
+      stir_verification: call.stir_verification
     }.to_json
   end
 
