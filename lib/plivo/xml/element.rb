@@ -80,8 +80,15 @@ module Plivo
       def add(element)
         raise PlivoXMLError, 'invalid element' unless element
         if @nestables.include?(element.name)
-          @node.elements << element.node
-          element
+          if element.name == "Cont"
+            @node.elements << element.node 
+            element
+            temp = REXML::Text.new element.node.text
+            @node.elements['Cont'] = temp
+          else
+            @node.elements << element.node 
+            element
+          end
         else
           raise PlivoXMLError, "#{element.name} not nestable in #{@name}"
         end
