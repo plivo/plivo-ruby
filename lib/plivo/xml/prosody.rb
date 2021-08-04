@@ -1,7 +1,7 @@
 module Plivo
   module XML
     class Prosody < Element
-      @nestables = %w(Break Emphasis Lang P Phoneme Prosody S SayAs Sub W)
+      @nestables = %w(Break Cont Emphasis Lang P Phoneme Prosody S SayAs Sub W)
       @valid_attributes = %w(volume rate pitch)
 
       VALID_VOLUME_ATTRIBUTE_VALUES=%w(default silent x-soft soft medium loud x-loud)

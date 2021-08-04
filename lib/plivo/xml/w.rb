@@ -1,7 +1,7 @@
 module Plivo
   module XML
     class W < Element
-      @nestables = %w(Break Emphasis Phoneme Prosody SayAs Sub)
+      @nestables = %w(Break Cont Emphasis Phoneme Prosody SayAs Sub)
       @valid_attributes = %w(role)
 
       VALID_ROLE_ATTRIBUTE_VALUES=%w(amazon:VB amazon:VBD amazon:SENSE_1)

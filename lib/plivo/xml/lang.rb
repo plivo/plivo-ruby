@@ -1,7 +1,7 @@
 module Plivo
   module XML
     class Lang < Element
-      @nestables = %w(Break Emphasis Lang P Phoneme Prosody S SayAs Sub W)
+      @nestables = %w(Break Cont Emphasis Lang P Phoneme Prosody S SayAs Sub W)
       @valid_attributes = %w(xmllang)
 
        VALID_LANG_ATTRIBUTE_VALUES = [
