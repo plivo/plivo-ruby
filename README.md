@@ -28,18 +28,18 @@ If you have the `0.3.19` version (a.k.a legacy) already installed, you may have 
 ## Getting started
 
 ### Authentication
-To make the API requests, you need to create a `RestClient` and provide it with authentication credentials (which can be found at [https://console.plivo.com/dashboard/](https://console.plivo.com/dashboard/)).
+To make the API requests, you need to create a `Plivo::RestClient` and provide it with authentication credentials (which can be found at [https://console.plivo.com/dashboard/](https://console.plivo.com/dashboard/)).
 
 We recommend that you store your credentials in the `PLIVO_AUTH_ID` and the `PLIVO_AUTH_TOKEN` environment variables, so as to avoid the possibility of accidentally committing them to source control. If you do this, you can initialise the client with no arguments and it will automatically fetch them from the environment variables:
 
 ```ruby
-client = RestClient.new;
+client = Plivo::RestClient.new;
 ```
 
-Alternatively, you can specifiy the authentication credentials while initializing the `RestClient`.
+Alternatively, you can specifiy the authentication credentials while initializing the `Plivo::RestClient`.
 
 ```ruby
-client = RestClient.new('your_auth_id', 'your_auth_token');
+client = Plivo::RestClient.new('your_auth_id', 'your_auth_token');
 ```
 
 ### The basics
@@ -81,7 +81,7 @@ require 'plivo'
 
 include Plivo
 
-client = RestClient.new
+client = Plivo::RestClient.new
 message_created = client.messages.create(
   'your_source_number',
   %w[your_destination_number_1 your_destination_number_2],
@@ -97,7 +97,7 @@ require 'plivo'
 
 include Plivo
 
-client = RestClient.new
+client = Plivo::RestClient.new
 call_made = client.calls.create(
   'your_source_number',
   ['your_destination_number'],
