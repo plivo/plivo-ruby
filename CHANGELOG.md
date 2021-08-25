@@ -1,7 +1,7 @@
 # Change Log
 
-## [4.20.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.20.0) (2021-07-20)
-- This version includes advancements to the Messaging Interface that deals with the [Send SMS/MMS](https://www.plivo.com/docs/sms/api/message#send-a-message) interface, Creating a standard structure for `request/input` arguments to make implementation easier and incorporating support for the older interface.
+## [4.20.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.20.0) (2021-08-04)
+- Added continue speak XML element support.
 
 ## [4.19.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.19.0) (2021-07-19)
 - Add support for Voice MultiPartyCall APIs (includes retry) and XML, validate voice UTs
