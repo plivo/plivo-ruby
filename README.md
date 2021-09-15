@@ -76,17 +76,15 @@ end
 ### Send a message
 
 ```ruby
-require 'rubygems'
-require 'plivo'
-
+require "plivo"
 include Plivo
 
 client = RestClient.new
-message_created = client.messages.create(
-  '+14156667778',
-  ['+14156667777'],
-  'Hello, world!'
-)
+response = client.messages.create(
+  src: '+14156667778',
+  dst: '+14156667777',
+  text: 'Hello, this is a sample text'
+  )
 ```
 
 ### Make a call
