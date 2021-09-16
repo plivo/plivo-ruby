@@ -85,10 +85,7 @@ describe 'Calls test' do
     expect(JSON.parse(to_json_create(@api.calls
                                          .create('+919090909090',
                                                  ['+919898989898'],
-                                                 'http://www.answer.url',
-                                                 'POST',
-                                                 ring_url: 'http://www.ring.url',
-                                                 ring_method: 'POST'))))
+                                                 'http://www.answer.url'))))
       .to eql(JSON.parse(contents))
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Call/',
                      method: 'POST',
