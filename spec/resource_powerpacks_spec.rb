@@ -104,7 +104,7 @@ describe 'Powerpack test' do
                        .get(
                          '86bbb125-97bb-4d72-89fd-81d5c515b015'
                        )
-        response = powerpack.find_numbers('14845733594')
+        response = powerpack.find_number('14845733594')
         # response = powerpack.numberpool.numbers.find('14845733594')
         expect(JSON.parse(to_json(response)))
           .to eql(JSON.parse(contents))
@@ -122,7 +122,7 @@ describe 'Powerpack test' do
                        .get(
                          '86bbb125-97bb-4d72-89fd-81d5c515b015'
                        )
-        response = powerpack.add_numbers('14845733594')
+        response = powerpack.add_number('14845733594')
         # response = powerpack.numberpool.numbers.add('14845733594')
         expect(JSON.parse(to_json(response)))
           .to eql(JSON.parse(contents))
