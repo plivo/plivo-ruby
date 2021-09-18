@@ -1,7 +1,10 @@
 # Change Log
 
-## [4.21.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.21.0) (2021-09-16)
+## [4.21.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.21.0) (2021-09-20)
+**Features - Messaging**
 - This version includes advancements to the Messaging Interface that deals with the [Send SMS/MMS](https://www.plivo.com/docs/sms/api/message#send-a-message) interface, Creating a standard structure for `request/input` arguments to make implementation easier and incorporating support for the older interface.
+
+  Example for [send SMS](https://github.com/plivo/plivo-ruby/blob/master/README.md#send-a-message)
 
 ## [4.20.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.20.0) (2021-08-04)
 - Added continue speak XML element support.
