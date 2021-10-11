@@ -69,72 +69,160 @@ module Plivo
       # @option options [String] :method The method used to call the url. Defaults to POST.
       # @option options [String] :log If set to false, the content of this message will not be logged on the Plivo infrastructure and the dst value will be masked (e.g., 141XXXXX528). Default is set to true.
       # @option options [String] :trackable set to false
-      #@option options[List]: media_urls Minimum one media url should be present in Media urls list to send mms. Maximum allowd 10 media urls inside the list (e.g, media_urls : ['https//example.com/test.jpg', 'https://example.com/abcd.gif'])
-      #@option options[List]: media_ids Minimum one media ids should be present in Media ids list to send mms. Maximum allowd 10 media ids inside the list (e.g, media_ids : ['1fs211ba-355b-11ea-bbc9-02121c1190q7'])
+      # @option options[List]: media_urls Minimum one media url should be present in Media urls list to send mms. Maximum allowd 10 media urls inside the list (e.g, media_urls : ['https//example.com/test.jpg', 'https://example.com/abcd.gif'])
+      # @option options[List]: media_ids Minimum one media ids should be present in Media ids list to send mms. Maximum allowd 10 media ids inside the list (e.g, media_ids : ['1fs211ba-355b-11ea-bbc9-02121c1190q7'])
+      
+      def create(src = nil, dst = nil, text = nil, options = nil, powerpack_uuid = nil)
+        #All params in One HASH
+        value = src
+        if(value.is_a?(Hash))
+          valid_param?(:src, value[:src], [Integer, String, Symbol], false)
+          valid_param?(:text, value[:text], [String, Symbol], true)
+          valid_param?(:dst, value[:dst], [String, Array], true)
+          valid_param?(:powerpack_uuid, value[:powerpack_uuid], [String, Symbol], false)
 
-      def create(src, dst, text = nil, options = nil, powerpack_uuid = nil)
-        valid_param?(:src, src, [Integer, String, Symbol], false)
-        valid_param?(:text, text, [String, Symbol], false)
-        valid_param?(:dst, dst, Array, true)
-        valid_param?(:powerpack_uuid, powerpack_uuid, [String, Symbol], false)
-        dst.each do |dst_num|
-          valid_param?(:dst_num, dst_num, [Integer, String, Symbol], true)
-        end
-
-        if dst.include? src
-          raise InvalidRequestError, 'src and dst cannot be same'
-        end
-
-        if src.nil? && powerpack_uuid.nil?
-          raise InvalidRequestError, 'src and powerpack uuid both cannot be nil'
-        end
-
-        if !src.nil? && !powerpack_uuid.nil?
-          raise InvalidRequestError, 'src and powerpack uuid both cannot be present'
-        end
-
-        params = {
-          src: src,
-          dst: dst.join('<'),
-          text: text,
-          powerpack_uuid: powerpack_uuid
-        }
-
-        return perform_create(params) if options.nil?
-        valid_param?(:options, options, Hash, true)
-
-        if options.key?(:type) &&
-          valid_param?(:type, options[:type], String, true, ['sms', 'mms'])
-          params[:type] = options[:type]
-        end
-
-        if options.key?(:url) && valid_param?(:url, options[:url], String, true)
-          params[:url] = options[:url]
-          if options.key?(:method) &&
-             valid_param?(:method, options[:method], String, true, %w[POST GET])
-            params[:method] = options[:method]
-          else
-            params[:method] = 'POST'
+          if (value[:dst] == value[:src])
+            raise InvalidRequestError, 'src and dst cannot be same'
           end
-        end
 
-        if options.key?(:log) &&
-           valid_param?(:log, options[:log], [TrueClass, FalseClass], true)
-          params[:log] = options[:log]
-        end
+          if value.key?(:value).nil? && value.key(:powerpack_uuid).nil?
+            raise InvalidRequestError, 'value and powerpack uuid both cannot be nil'
+          end
 
-        if options.key?(:trackable) &&
-          valid_param?(:trackable, options[:trackable], [TrueClass, FalseClass], true)
-         params[:trackable] = options[:trackable]
-        end
+          if !value.key?(:value).nil? && !value.key(:powerpack_uuid).nil?
+            raise InvalidRequestError, 'value and powerpack uuid both cannot be present'
+          end
 
-        if options.key?(:media_urls) &&
-          valid_param?(:media_urls, options[:media_urls], Array, true)
-         params[:media_urls] = options[:media_urls]
-        end
-        if options.key?(:media_ids) &&
-          valid_param?(:media_ids, options[:media_ids], Array, true)
-         params[:media_ids] = options[:media_ids]
+          if !value.key?(:dst).nil? && !value.key(:powerpack_uuid).nil?
+            raise InvalidRequestError, 'dst is a required parameter'
+          end
+
+          params = {
+            src: value[:src],
+            dst: value[:dst],
+            text: value[:text],
+            powerpack_uuid: value[:powerpack_uuid]
+          }
+
+          #Handling optional params in One HASH
+          if value.key?(:type) && valid_param?(:type, value[:type],String, true, %w[sms mms])
+            params[:type] = value[:type]
+          end
+
+          if value.key?(:url) && valid_param?(:url, value[:url], String, true)
+             params[:url] = value[:url]
+             if value.key?(:method) &&
+              valid_param?(:method, value[:method], String, true, %w[POST GET])
+              params[:method] = value[:method]
+             else
+               params[:method] = 'POST'
+             end
+          end         
+          
+          if value.key?(:log) &&
+            valid_param?(:log, value[:log], [TrueClass, FalseClass], true)
+              params[:log] = value[:log]
+          end         
+
+          if value.key?(:trackable) &&
+              valid_param?(:trackable, value[:trackable], [TrueClass, FalseClass], true)
+              params[:trackable] = value[:trackable]
+          end
+
+          if value.key?(:media_urls) &&
+            valid_param?(:media_urls, value[:media_urls], Array, true)
+           params[:media_urls] = value[:media_urls]
+          end
+
+          if value.key?(:media_ids) &&
+            valid_param?(:media_ids, value[:media_ids], Array, true)
+           params[:media_ids] = value[:media_ids]
+          end
+
+        #legacy code compatibility
+        else
+          valid_param?(:src, src, [Integer, String, Symbol], false)
+          valid_param?(:text, text, [String, Symbol], true)
+          valid_param?(:dst, dst, [String, Array], true)
+          valid_param?(:powerpack_uuid, powerpack_uuid, [String, Symbol], false)
+          dst.each do |dst_num|
+            valid_param?(:dst_num, dst_num, [Integer, String, Symbol], true)
+          end
+  
+          if dst.include? src
+            raise InvalidRequestError, 'src and dst cannot be same'
+          end
+
+          if src.nil? && powerpack_uuid.nil?
+            raise InvalidRequestError, 'src and powerpack uuid both cannot be nil'
+          end
+
+          if !src.nil? && !powerpack_uuid.nil?
+            raise InvalidRequestError, 'src and powerpack uuid both cannot be present'
+          end
+
+          params = {
+            src: src,
+            text: text,
+            powerpack_uuid: powerpack_uuid
+          }
+
+          if (dst.is_a?(Array))
+            dst.each do |dst_num|
+              valid_param?(:dst_num, dst_num, [Integer, String, Symbol], true)
+              params[:dst] = dst.join('<')
+            end
+          else
+            params[:dst] = dst
+          end
+
+          return perform_create(params) if options.nil?
+          valid_param?(:options, options, Hash, true)
+
+          if options.key?(:type) &&
+             valid_param?(:type, options[:type], String, true, %w[sms mms])
+            params[:type] = options[:type]
+          end
+
+          if options.key?(:url) && valid_param?(:url, options[:url], String, true)
+            params[:url] = options[:url]
+            if options.key?(:method) &&
+               valid_param?(:method, options[:method], String, true, %w[POST GET])
+              params[:method] = options[:method]
+            else
+              params[:method] = 'POST'
+            end
+          end
+
+          if options.key?(:media_urls) &&
+            valid_param?(:media_urls, options[:media_urls], Array, true)
+           params[:media_urls] = options[:media_urls]
+          end
+          
+          if options.key?(:media_ids) &&
+            valid_param?(:media_ids, options[:media_ids], Array, true)
+           params[:media_ids] = options[:media_ids]
+          end
+
+          if options.key?(:log) &&
+             valid_param?(:log, options[:log], [TrueClass, FalseClass], true)
+            params[:log] = options[:log]
+          end
+
+          if options.key?(:media_urls) &&
+            valid_param?(:media_urls, options[:media_urls], Array, true)
+           params[:media_urls] = options[:media_urls]
+          end
+  
+          if options.key?(:media_ids) &&
+            valid_param?(:media_ids, options[:media_ids], Array, true)
+           params[:media_ids] = options[:media_ids]
+          end
+
+          if options.key?(:trackable) &&
+            valid_param?(:trackable, options[:trackable], [TrueClass, FalseClass], true)
+           params[:trackable] = options[:trackable]
+          end
         end
         perform_create(params)
       end
@@ -153,7 +241,9 @@ module Plivo
       # @option options [Int] :limit Used to display the number of results per page. The maximum number of results that can be fetched is 20.
       # @option options [Int] :offset Denotes the number of value items by which the results should be offset. Eg:- If the result contains a 1000 values and limit is set to 10 and offset is set to 705, then values 706 through 715 are displayed in the results. This parameter is also used for pagination of the results.
       # @option options [String] :error_code Delivery Response code returned by the carrier attempting the delivery. See Supported error codes {https://www.plivo.com/docs/api/message/#standard-plivo-error-codes}.
-      # @option options [String] :powerpack_id Filter the results by powerpack id.
+      # @option options[List]: media_urls Minimum one media url should be present in Media urls list to send mms. Maximum allowd 10 media urls inside the list (e.g, media_urls : ['https//example.com/test.jpg', 'https://example.com/abcd.gif'])
+      # @option options[List]: media_ids Minimum one media ids should be present in Media ids list to send mms. Maximum allowd 10 media ids inside the list (e.g, media_ids : ['1fs211ba-355b-11ea-bbc9-02121c1190q7'])
+      # @option options [String] :powerpack_id Filter the results by powerpack id
       def list(options = nil)
         return perform_list if options.nil?
         valid_param?(:options, options, Hash, true)

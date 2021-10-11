@@ -136,6 +136,35 @@ describe 'Messages test' do
                      })
   end
 
+  # new messaging interface
+  it 'sends a message' do
+    contents = File.read(Dir.pwd + '/spec/mocks/messageSendResponse.json')
+    mock(201, JSON.parse(contents))
+    expect(JSON.parse(to_json_create(@api.messages
+                                         .create(
+                                           src:'9898989890',
+                                           dst: '9090909090<9898989898',
+                                           text:'message',
+                                           type: 'sms',
+                                           url: 'http://url.com',
+                                           method: 'POST',
+                                           log: true
+                                         ))))
+      .to eql(JSON.parse(contents))
+    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Message/',
+                     method: 'POST',
+                     data: {
+                       src: '9898989890',
+                       dst: '9090909090<9898989898',
+                       text: 'message',
+                       powerpack_uuid: nil,
+                       type: 'sms',
+                       url: 'http://url.com',
+                       method: 'POST',
+                       log: true
+                     })
+  end
+
   it 'src same as dst exception while sending a message' do
     contents = File.read(Dir.pwd + '/spec/mocks/messageSendResponse.json')
     mock(201, JSON.parse(contents))
