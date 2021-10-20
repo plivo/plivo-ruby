@@ -86,9 +86,9 @@ describe 'Calls test' do
                                          .create('+919090909090',
                                                  ['+919898989898'],
                                                  'http://www.answer.url',
-                                                 'POST',
+                                                 {answer_method: 'POST',
                                                  ring_url: 'http://www.ring.url',
-                                                 ring_method: 'POST'))))
+                                                 ring_method: 'POST'}))))
       .to eql(JSON.parse(contents))
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Call/',
                      method: 'POST',
