@@ -13,7 +13,7 @@ module Plivo
           engine = attributes[:voice].split('.')[0]
           voice = attributes[:voice].split('.')[1]
           if SUPPORTED_ENGINES.include?(engine) && SUPPORTED_VOICES.include?(voice)
-            @nestables = %w(Break Emphasis Lang P Phoneme Prosody S SayAs Sub W)
+            @nestables = %w(Break Cont Emphasis Lang P Phoneme Prosody S SayAs Sub W)
           else
             raise PlivoXMLError, "<Speak> voice #{attributes[:voice]} is not valid."
           end

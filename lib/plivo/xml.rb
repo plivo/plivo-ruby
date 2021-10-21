@@ -29,7 +29,8 @@ require_relative 'xml/say_as'
 require_relative 'xml/sub'
 require_relative 'xml/w'
 require_relative 'xml/plivo_xml'
-
+require_relative 'xml/multipartycall'
+require_relative 'xml/cont'
 include Plivo::Exceptions
 
 module Plivo

@@ -1,7 +1,7 @@
 module Plivo
   module XML
     class Emphasis < Element
-      @nestables = %w(Break Emphasis Lang Phoneme Prosody SayAs Sub W)
+      @nestables = %w(Break Cont Emphasis Lang Phoneme Prosody SayAs Sub W)
       @valid_attributes = %w(level)
 
       VALID_LEVEL_ATTRIBUTE_VALUE=%w(strong moderate reduced)
