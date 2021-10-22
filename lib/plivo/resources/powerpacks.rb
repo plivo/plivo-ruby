@@ -346,6 +346,7 @@ module Plivo
             number_priority:@number_priority
           }.to_json
         end
+      end
       class NumberPool< Base::Resource
         def initialize(client, options = nil)
           @_name = 'Numberpool'
