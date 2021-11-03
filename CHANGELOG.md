@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.22.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.22.0) (2021-11-03)
+- Added Voice MPC enhancements.
+
 ## [4.21.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.21.0) (2021-10-11)
 **Features - Messaging**
 - This version includes advancements to the Messaging Interface that deals with the [Send SMS/MMS](https://www.plivo.com/docs/sms/api/message#send-a-message) interface, Creating a standard structure for `request/input` arguments to make implementation easier and incorporating support for the older interface.
