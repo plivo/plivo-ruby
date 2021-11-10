@@ -20,6 +20,15 @@ describe 'MultiPartyCalls test' do
     }.to_json
   end
 
+  def to_json_MPC_start_play(mpc)
+    {
+      "api_id": mpc["api_id"],
+      "message": mpc["message"],
+      "mpcMemberId": mpc["mpcMemberId"],
+      "mpcName": mpc["mpcName"]
+    }.to_json
+  end
+
   it 'lists MPC' do
     contents = File.read(Dir.pwd + '/spec/mocks/multiPartyCallsListMpcResponse.json')
     mock(200, JSON.parse(contents))
@@ -76,7 +85,9 @@ describe 'MultiPartyCalls test' do
                          'call_uuid': '1234-5678-4321-0987',
                          'role': 'Agent',
                          'caller_name': nil,
-                         'delay_dial': 0
+                         'delay_dial': 0,
+                         'start_recording_audio_method': 'GET',
+                         'stop_recording_audio_method': 'GET'
                      })
   end
 
@@ -174,6 +185,62 @@ describe 'MultiPartyCalls test' do
     response.is_a?( Plivo::Resources::MultiPartyCallParticipant)
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/MultiPartyCall/uuid_12345678-90123456/Participant/12/',
                      method: 'GET')
+  end
+
+  it 'starts MPC Participant Recording' do
+    contents = File.read(Dir.pwd + '/spec/mocks/multiPartyCallsStartParticipantRecordingResponse.json')
+    mock(200, JSON.parse(contents))
+    expect(JSON.parse(to_json_MPC_start_record(@api.multipartycalls.start_participant_recording({member_id: 10, friendly_name: 'Voice', file_format: 'wav',
+                                                                                     status_callback_url: 'https://plivo.com/status',
+                                                                                     status_callback_method: 'POST'})))).to eql(JSON.parse(contents))
+    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/MultiPartyCall/name_Voice/Participant/10/Record/',
+                     method: 'POST',
+                     data: {'file_format': 'wav',
+                            'status_callback_url': 'https://plivo.com/status',
+                            'status_callback_method': 'POST'
+                     })
+  end
+
+  it 'stops MPC Participant Recording' do
+    contents = '{}'
+    mock(204, JSON.parse(contents))
+    @api.multipartycalls.stop_participant_recording({member_id: 10, friendly_name: 'Voice'})
+    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/MultiPartyCall/name_Voice/Participant/10/Record/',
+                     method: 'DELETE')
+  end
+
+  it 'pauses MPC Participant Recording' do
+    contents = '{}'
+    mock(204, JSON.parse(contents))
+    @api.multipartycalls.pause_participant_recording({member_id: 10, friendly_name: 'Voice'})
+    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/MultiPartyCall/name_Voice/Participant/10/Record/Pause/',
+                     method: 'POST')
+  end
+
+  it 'resumes MPC Participant Recording' do
+    contents = '{}'
+    mock(204, JSON.parse(contents))
+    @api.multipartycalls.resume_participant_recording({member_id: 10, friendly_name: 'Voice'})
+    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/MultiPartyCall/name_Voice/Participant/10/Record/Resume/',
+                     method: 'POST')
+  end
+
+  it 'starts MPC Member Play Audio' do
+    contents = File.read(Dir.pwd + '/spec/mocks/multiPartyCallsStartMemberPlayAudioResponse.json')
+    mock(202, JSON.parse(contents))
+    expect(JSON.parse(to_json_MPC_start_play(@api.multipartycalls.start_play_audio({member_id: 10, friendly_name: 'Voice',
+                                                                                    url: 'https://s3.amazonaws.com/XXX/XXX.mp3'})))).to eql(JSON.parse(contents))
+    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/MultiPartyCall/name_Voice/Member/10/Play/',
+                     method: 'POST',
+                     data: {'url': 'https://s3.amazonaws.com/XXX/XXX.mp3'})
+  end
+
+  it 'stops MPC Member Play Audio' do
+    contents = '{}'
+    mock(204, JSON.parse(contents))
+    @api.multipartycalls.stop_play_audio({member_id: 10, friendly_name: 'Voice'})
+    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/MultiPartyCall/name_Voice/Member/10/Play/',
+                     method: 'DELETE')
   end
 
 end

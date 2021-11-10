@@ -60,7 +60,11 @@ module Plivo
                           enter_sound='beep:1',
                           enter_sound_method='GET',
                           exit_sound='beep:2',
-                          exit_sound_method='GET')
+                          exit_sound_method='GET',
+                          start_recording_audio=nil,
+                          start_recording_audio_method='GET',
+                          stop_recording_audio=nil,
+                          stop_recording_audio_method='GET')
         if (from and to) and call_uuid
           raise_invalid_request('cannot specify call_uuid when (from, to) is provided')
         end
@@ -117,6 +121,10 @@ module Plivo
         valid_param?(:enter_sound_method, enter_sound_method.upcase, String, false, %w[GET POST])
         is_one_among_string_url?(:exit_sound, exit_sound, false , %w[beep:1 beep:2 none])
         valid_param?(:exit_sound_method, exit_sound_method.upcase, String, false, %w[GET POST])
+        valid_param?(:start_recording_audio_method, start_recording_audio_method.upcase, String, false, %w[GET POST])
+        valid_url?(:start_recording_audio, start_recording_audio, false ) unless start_recording_audio.nil?
+        valid_param?(:stop_recording_audio_method, stop_recording_audio_method.upcase, String, false, %w[GET POST])
+        valid_url?(:stop_recording_audio, stop_recording_audio, false ) unless stop_recording_audio.nil?
         if (to!=nil) && (ring_timeout.is_a?(String)) && (to.split('<').size < ring_timeout.split('<').size)
           raise_invalid_request("RingTimeout:number of ring_timout(s) should be same as number of destination(s)")
         end
@@ -168,6 +176,10 @@ module Plivo
         params[:enter_sound_method] = enter_sound_method.upcase unless exit_sound_method.nil?
         params[:exit_sound] = exit_sound unless exit_sound.nil?
         params[:exit_sound_method] = exit_sound_method.upcase unless exit_sound_method.nil?
+        params[:start_recording_audio] = start_recording_audio unless start_recording_audio.nil?
+        params[:start_recording_audio_method] = start_recording_audio_method.upcase unless start_recording_audio_method.nil?
+        params[:stop_recording_audio] = stop_recording_audio unless stop_recording_audio.nil?
+        params[:stop_recording_audio_method] = stop_recording_audio_method.upcase unless stop_recording_audio_method.nil?
         perform_action_apiresponse('Participant', 'POST', params, true )
       end
 
@@ -203,7 +215,6 @@ module Plivo
       def resume_recording
         perform_action_apiresponse('Record/Resume', 'POST')
       end
-
 
       def start_participant_recording(member_id, file_format='mp3', status_callback_url=nil, status_callback_method='POST')
         valid_param?(:member_id, member_id, [String, Integer], true)
@@ -245,6 +256,17 @@ module Plivo
       def get_participant(member_id)
         valid_param?(:member_id, member_id, [String, Integer], true)
         MultiPartyCallParticipant.new(@_client,resource_id: @id, member_id: member_id).get_participant
+      end
+
+      def start_play_audio(member_id, url)
+        valid_param?(:member_id, member_id, [String, Integer], true)
+        valid_url?(:url, url, true)
+        MultiPartyCallMember.new(@_client, resource_id: @id, member_id: member_id).start_play_audio(url)
+      end
+
+      def stop_play_audio(member_id)
+        valid_param?(:member_id, member_id, [String, Integer], true)
+        MultiPartyCallMember.new(@_client, resource_id: @id, member_id: member_id).stop_play_audio
       end
     end
 
@@ -308,6 +330,36 @@ module Plivo
 
       def get_participant
         perform_action_apiresponse(nil,'GET',nil,false)
+      end
+    end
+
+    class MultiPartyCallMember < Base::SecondaryResource
+      def initialize(client, options = nil)
+        @_name = 'MultiPartyCall'
+        @_identifier_string = 'mpc_uuid'
+        @_secondary_name = 'Member'
+        @_secondary_identifier_string = 'member_id'
+        super
+        @_is_voice_request = true
+        if options.key? :multi_party_prefix
+          @id = options[:multi_party_prefix] + '_' + @id
+        elsif @id.split('_').size > 1
+          nil
+        else
+          @id = 'uuid_' + @id
+        end
+        configure_secondary_resource_uri
+      end
+
+      def start_play_audio(url)
+        valid_url?(:url, url, true)
+        params = {}
+        params[:url] = url unless url.nil?
+        perform_action_apiresponse('Play', 'POST', params, true)
+      end
+
+      def stop_play_audio
+        perform_action_apiresponse('Play', 'DELETE')
       end
     end
 
@@ -394,6 +446,8 @@ module Plivo
         options[:enter_sound_method] = 'GET' unless options.key?(:enter_sound_method)
         options[:exit_sound] = 'beep:2' unless options.key?(:exit_sound)
         options[:exit_sound_method] = 'GET' unless options.key?(:exit_sound_method)
+        options[:start_recording_audio_method] = 'GET' unless options.key?(:start_recording_audio_method)
+        options[:stop_recording_audio_method] = 'GET' unless options.key?(:stop_recording_audio_method)
         valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
         valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
         mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
@@ -403,7 +457,8 @@ module Plivo
                                                                           options[:wait_music_method],options[:agent_hold_music_url],options[:agent_hold_music_method],options[:customer_hold_music_url],options[:customer_hold_music_method],
                                                                           options[:recording_callback_url],options[:recording_callback_method],options[:status_callback_url],options[:status_callback_method],options[:on_exit_action_url], options[:on_exit_action_method],
                                                                           options[:record],options[:record_file_format],options[:status_callback_events],options[:stay_alone], options[:coach_mode],options[:mute],options[:hold],options[:start_mpc_on_enter],options[:end_mpc_on_exit],
-                                                                          options[:relay_dtmf_inputs],options[:enter_sound],options[:enter_sound_method],options[:exit_sound],options[:exit_sound_method])
+                                                                          options[:relay_dtmf_inputs],options[:enter_sound],options[:enter_sound_method],options[:exit_sound],options[:exit_sound_method], options[:start_recording_audio], options[:start_recording_audio_method],
+                                                                                                            options[:stop_recording_audio], options[:stop_recording_audio_method])
       end
 
       def start(options = {})
@@ -548,6 +603,30 @@ module Plivo
         valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
         mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
         MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: options[:member_id]).get_participant
+      end
+
+      def start_play_audio(options = {})
+        valid_param?(:options, options, Hash, false)
+        if not options[:member_id]
+          raise_invalid_request("Member Id is mandatory")
+        end
+        valid_param?(:member_id, options[:member_id], [String, Integer], true)
+        valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
+        valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
+        mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
+        MultiPartyCallMember.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: options[:member_id]).start_play_audio(options[:url])
+      end
+
+      def stop_play_audio(options = {})
+        valid_param?(:options, options, Hash, false)
+        if not options[:member_id]
+          raise_invalid_request("Member Id is mandatory")
+        end
+        valid_param?(:member_id, options[:member_id], [String, Integer], true)
+        valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
+        valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
+        mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
+        MultiPartyCallMember.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: options[:member_id]).stop_play_audio
       end
     end
   end
