@@ -1,7 +1,7 @@
 # Change Log
 
 ## [4.22.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.22.0) (2021-11-11)
-**Features - Voice: Multiparty calls**
+**Features - Voice: Multiparty call**
 - The [Add Multiparty Call API](https://www.plivo.com/docs/voice/api/multiparty-call/participants#add-a-participant) allows for greater functionality by accepting options like `start recording audio`, `stop recording audio`, and their HTTP methods.
 - [Multiparty Calls](https://www.plivo.com/docs/voice/api/multiparty-call/) now has new APIs to `stop` and `play` audio.
 
