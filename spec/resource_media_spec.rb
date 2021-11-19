@@ -30,6 +30,19 @@ describe 'Media test' do
                            offset: 4
                          })
       end
+
+      def to_json(media)
+        {
+            api_id: media.api_id,
+            content_type: media.content_type,
+            file_name: media.file_name,
+            size: media.size,
+            media_id: media.media_id,
+            upload_time: media.upload_time,
+            url: media.url,
+        }.to_json
+      end
+
       it 'fetches details of a media' do
         contents = File.read(Dir.pwd + '/spec/mocks/mediaGetResponse.json')
         mock(200, JSON.parse(contents))
