@@ -16,5 +16,6 @@ describe "Lookup test" do
                      method: "GET",
                      data: nil)
     expect(response.phone_number).to eql("+14154305555")
+    puts response
   end
 end

@@ -10,7 +10,7 @@ describe 'Powerpack test' do
           meta: list_object[:meta],
           objects: objects_json
         }.to_json
-      end
+    end
 
       it 'lists all powerpack' do
         contents = File.read(Dir.pwd + '/spec/mocks/powerpackListResponse.json')
@@ -30,6 +30,21 @@ describe 'Powerpack test' do
                            offset: 4
                          })
       end
+
+      def to_json(media)
+        {
+            api_id: media.api_id,
+            application_id: media.application_id,
+            application_type: media.application_type,
+            created_on: media.created_on,
+            local_connect: media.local_connect,
+            name: media.name,
+            number_pool: media.number_pool,
+            sticky_sender: media.sticky_sender,
+            uuid: media.uuid,
+        }.to_json
+      end
+
       it 'fetches details of a powerpack' do
         contents = File.read(Dir.pwd + '/spec/mocks/powerpackResponse.json')
         mock(200, JSON.parse(contents))
@@ -104,7 +119,7 @@ describe 'Powerpack test' do
                        .get(
                          '86bbb125-97bb-4d72-89fd-81d5c515b015'
                        )
-        response = powerpack.find_numbers('14845733594')
+        response = powerpack.find_number('14845733594')
         # response = powerpack.numberpool.numbers.find('14845733594')
         expect(JSON.parse(to_json(response)))
           .to eql(JSON.parse(contents))
@@ -122,7 +137,7 @@ describe 'Powerpack test' do
                        .get(
                          '86bbb125-97bb-4d72-89fd-81d5c515b015'
                        )
-        response = powerpack.add_numbers('14845733594')
+        response = powerpack.add_number('14845733594')
         # response = powerpack.numberpool.numbers.add('14845733594')
         expect(JSON.parse(to_json(response)))
           .to eql(JSON.parse(contents))
@@ -189,11 +204,8 @@ describe 'Powerpack test' do
       it 'remove shortcode' do
         contents = File.read(Dir.pwd + '/spec/mocks/powerpackDelete.json')
         mock(200, JSON.parse(contents))
-        powerpack = @api.powerpacks
-                       .get(
-                         '86bbb125-97bb-4d72-89fd-81d5c515b015'
-                       )
-        response = powerpack.remove_tollfree('444444')
+        powerpack = @api.powerpacks.get("86bbb125-97bb-4d72-89fd-81d5c515b015")
+        response = powerpack.remove_shortcode('444444')
         expect(JSON.parse(to_json(response)))
           .to eql(JSON.parse(contents))
         compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Shortcode/444444/'\
