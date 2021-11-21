@@ -234,7 +234,7 @@ describe 'Powerpack test' do
         # response = powerpack.numberpool.tollfree.add('15799140348')
         expect(JSON.parse(tf_to_json_list(response)))
           .to eql(JSON.parse(contents))
-        compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/NumerPool/'\
+        compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/NumberPool/'\
                          '659c7f88-c819-46e2-8af4-2d8a84249099/Tollfree/',
                          method: 'GET',
                          data: nil)
