@@ -23,9 +23,9 @@ jobs:
           ruby-version: ${{ matrix.ruby-version }}
       - name: Dependencies Installation
         run: |
-          rm Gemfile.lock
           bundle install --without development
       - name: Run Tests
         run: |
           ruby --version
           bundle exec rake
+          rm Gemfile.lock
