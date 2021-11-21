@@ -28,3 +28,4 @@ jobs:
         run: |
           ruby --version
           bundle exec rake
+          rm Gemfile.lock
