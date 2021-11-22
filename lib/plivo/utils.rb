@@ -227,7 +227,7 @@ module Plivo
         uri += "?"
       end
       if parsed_uri.query.to_s.length > 0
-        parsed_uri_query = URI.decode(parsed_uri.query)
+        parsed_uri_query = URI.decode_www_form_component(parsed_uri.query)
         if method == "GET"
           queryParamMap = getMapFromQueryString?(parsed_uri_query)
           params.keys.sort.each { |key|

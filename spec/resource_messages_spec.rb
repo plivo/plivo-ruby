@@ -26,7 +26,26 @@ describe 'Messages test' do
       api_id: message.api_id
     }.to_json
   end
+  def to_json_media(media){
+          content_type: media['content_type'],
+          media_id: media['media_id'],
+          size: media['size'],
+          message_uuid: media['message_uuid'],
+          media_url: media['media_url']
+  }.reject { |_, v| v.nil? }.to_json
+  end
 
+  def media_to_json_list(list_object)
+    objects_json = list_object['objects'].map do |object|
+      obj = JSON.parse(to_json_media(object))
+      obj.delete('api_id')
+      obj
+    end
+    {
+      api_id: list_object['api_id'],
+      objects: objects_json
+    }.to_json
+  end
   def to_json_list(list_object)
     objects_json = list_object[:objects].map do |object|
       obj = JSON.parse(to_json(object))
@@ -59,23 +78,13 @@ describe 'Messages test' do
   it 'lists all mms media' do
     contents = File.read(Dir.pwd + '/spec/mocks/mmsmediaListResponse.json')
     mock(200, JSON.parse(contents))
-    response = to_json_list(@api.messages
+    response =media_to_json_list(@api.messages
                    .get(
                      'f734eeec-e59f-11e9-89dc-0242ac110003'
                    ).listMedia())
 
-    contents = JSON.parse(contents)
-    objects = contents['objects'].map do |obj|
-      obj.delete('api_id')
-      obj
-    end
-    contents['objects'] = objects
-
     expect(JSON.parse(response))
-      .to eql(contents)
-    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Message/f734eeec-e59f-11e9-89dc-0242ac110003/Media/',
-                     method: 'GET',
-                     data: {})
+      .to eql(JSON.parse(contents))
   end
 
   it 'lists all messages' do
