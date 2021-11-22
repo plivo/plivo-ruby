@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-         ruby-version: [ 'head', '2.4', '2.3', '2.2' ,'2.1', '2.0' ]
+         ruby-version: [ '2.4', '2.5', '2.6' ,'2.7', '3.0' ]
 
     steps:
       - name: Checkout
