@@ -1,7 +1,7 @@
 # plivo-ruby
 
 [![UnitTest](https://github.com/plivo/plivo-ruby/actions/workflows/unitTests.yml/badge.svg?branch=ns-ut-fix)](https://github.com/plivo/plivo-ruby/actions/workflows/unitTests.yml)
-[![Gem Version](https://img.shields.io/gem/v/plivo-ruby.svg)](https://rubygems.org/gems/plivo/)
+[![Gem Version](https://badge.fury.io/rb/plivo.svg)](https://badge.fury.io/rb/plivo)
 
 The Plivo Ruby SDK makes it simpler to integrate communications into your Ruby applications using the Plivo REST API. Using the SDK, you will be able to make voice calls, send SMS and generate Plivo XML to control your call flows.
 

@@ -29,3 +29,27 @@ jobs:
           ruby --version
           bundle exec rake
           rm Gemfile.lock
+
+    coverage:
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          ruby-version: [2.7]
+      steps:  
+        - uses: actions/checkout@v2
+        - name: Set up Ruby ${{ matrix.ruby-version }}
+          uses: ruby/setup-ruby@v1
+          with:
+            ruby-version: ${{ matrix.ruby-version }}
+        - name: Dependencies Installation
+          run: |
+            bundle install --without development
+        - name: Run Tests
+          run: |
+            ruby --version
+            bundle exec rake
+            rm Gemfile.lock
+        - name: Upload coverage to Codecov
+          uses: codecov/codecov-action@v1
+          with:
+            flags: unittests
