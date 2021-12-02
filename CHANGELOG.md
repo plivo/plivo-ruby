@@ -1,9 +1,8 @@
 # Change Log
 
 ## [4.23.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.23.0) (2021-12-02)
-**Features - SMS:10DLC API**
-- Brand and Campaign APIs
-- 
+**Features - Messaging: 10 DLC**
+- 10DLC API's for brand and campaign support.
 
 ## [4.22.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.22.0) (2021-11-11)
 **Features - Voice: Multiparty call**
