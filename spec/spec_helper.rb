@@ -22,7 +22,7 @@ RSpec.configure do |config|
     end
 
     @phlo_client = Plivo::Phlo.new('MAXXXXXXXXXXXXXXXXXX', 'MjEyOWU5MGVlM2NjZDY1ZTNmZTU2NjZhZGNjMTc5')
-    def @phlo_client.send_request(uri, method, data = nil, timeout=nil, use_multipart_conn = false)
+    def @phlo_client.send_request(uri, method, data = nil, timeout=nil, use_multipart_conn = false, options = nil)
       $request = {
           uri: uri,
           method: method,

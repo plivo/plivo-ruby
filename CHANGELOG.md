@@ -1,8 +1,15 @@
 # Change Log
-## [4.22.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.22.0) (2021-12-02)
+
+## [4.23.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.23.0) (2021-12-02)
 **Features - SMS:10DLC API**
 - Brand and Campaign APIs
 - 
+
+## [4.22.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.22.0) (2021-11-11)
+**Features - Voice: Multiparty call**
+- The [Add Multiparty Call API](https://www.plivo.com/docs/voice/api/multiparty-call/participants#add-a-participant) allows for greater functionality by accepting options like `start recording audio`, `stop recording audio`, and their HTTP methods.
+- [Multiparty Calls](https://www.plivo.com/docs/voice/api/multiparty-call/) now has new APIs to `stop` and `play` audio.
+
 ## [4.21.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.21.0) (2021-10-11)
 **Features - Messaging**
 - This version includes advancements to the Messaging Interface that deals with the [Send SMS/MMS](https://www.plivo.com/docs/sms/api/message#send-a-message) interface, Creating a standard structure for `request/input` arguments to make implementation easier and incorporating support for the older interface.
