@@ -14,5 +14,6 @@
   "to_number": "919999999999",
   "total_amount": "0.00000",
   "total_rate": "0.03570",
-  "stir_verification": "Verified"
+  "stir_verification": "Verified",
+  "stir_attestation": "A"
 }

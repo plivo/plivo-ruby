@@ -231,7 +231,8 @@ module Plivo
           request_uuid: @request_uuid,
           direction: @direction,
           caller_name: @caller_name,
-          stir_verification: @stir_verification
+          stir_verification: @stir_verification,
+          stir_attestation: @stir_attestation
         }
         call_details = call_details.select {|k, v| !v.nil? }
         call_details.to_s
