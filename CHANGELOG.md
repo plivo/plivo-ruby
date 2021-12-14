@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.24.0](https://github.com/plivo/plivo-ruby/tree/v4.24.0) (2021-12-14)
+**Features - Voice**
+- Routing SDK traffic through Akamai endpoints for all the [Voice APIs](https://www.plivo.com/docs/voice/api/overview/)
+
 ## [4.23.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.23.0) (2021-12-02)
 **Features - Messaging: 10 DLC**
 - 10DLC API's for brand and campaign support.
