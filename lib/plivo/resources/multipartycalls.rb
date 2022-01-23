@@ -295,8 +295,8 @@ module Plivo
 
         params = {}
         params[:file_format] = file_format.downcase unless file_format.nil?
-        params[:status_callback_url] = status_callback_url unless status_callback_url.nil?
-        params[:status_callback_method] = status_callback_method.upcase unless status_callback_method.nil?
+        params[:recording_callback_url] = recording_callback_url unless recording_callback_url.nil?
+        params[:recording_callback_method] = recording_callback_method.upcase unless recording_callback_method.nil?
 
         perform_action_apiresponse('Record', 'POST', params, true)
       end
