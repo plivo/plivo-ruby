@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.25.0](https://github.com/plivo/plivo-ruby/tree/v4.25.0) (2022-01-31)
+**Bugfix - Recording**
+- Fix for Start Recording API response issue
+
 ## [4.24.0](https://github.com/plivo/plivo-ruby/tree/v4.24.0) (2021-12-14)
 **Features - Voice**
 - Routing SDK traffic through Akamai endpoints for all the [Voice APIs](https://www.plivo.com/docs/voice/api/overview/)
