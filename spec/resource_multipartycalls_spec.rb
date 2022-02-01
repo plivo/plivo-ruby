@@ -114,13 +114,13 @@ describe 'MultiPartyCalls test' do
     contents = File.read(Dir.pwd + '/spec/mocks/multiPartyCallsStartRecordingResponse.json')
     mock(202, JSON.parse(contents))
     expect(JSON.parse(to_json_MPC_start_record(@api.multipartycalls.start_recording({friendly_name: 'Voice', file_format: 'wav',
-                                                                                     status_callback_url: 'https://plivo.com/status',
-                                                                                     status_callback_method: 'POST'})))).to eql(JSON.parse(contents))
+                                                                                     recording_callback_url: 'https://plivo.com/status',
+                                                                                     recording_callback_method: 'POST'})))).to eql(JSON.parse(contents))
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/MultiPartyCall/name_Voice/Record/',
                      method: 'POST',
                      data: {'file_format': 'wav',
-                            'status_callback_url': 'https://plivo.com/status',
-                            'status_callback_method': 'POST'
+                            'recording_callback_url': 'https://plivo.com/status',
+                            'recording_callback_method': 'POST'
                      })
   end
 
@@ -191,13 +191,13 @@ describe 'MultiPartyCalls test' do
     contents = File.read(Dir.pwd + '/spec/mocks/multiPartyCallsStartParticipantRecordingResponse.json')
     mock(200, JSON.parse(contents))
     expect(JSON.parse(to_json_MPC_start_record(@api.multipartycalls.start_participant_recording({member_id: 10, friendly_name: 'Voice', file_format: 'wav',
-                                                                                     status_callback_url: 'https://plivo.com/status',
-                                                                                     status_callback_method: 'POST'})))).to eql(JSON.parse(contents))
+                                                                                                 recording_callback_url: 'https://plivo.com/status',
+                                                                                                 recording_callback_method: 'POST'})))).to eql(JSON.parse(contents))
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/MultiPartyCall/name_Voice/Participant/10/Record/',
                      method: 'POST',
                      data: {'file_format': 'wav',
-                            'status_callback_url': 'https://plivo.com/status',
-                            'status_callback_method': 'POST'
+                            'recording_callback_url': 'https://plivo.com/status',
+                            'recording_callback_method': 'POST'
                      })
   end
 
