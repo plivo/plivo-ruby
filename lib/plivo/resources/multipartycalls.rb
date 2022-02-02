@@ -191,15 +191,15 @@ module Plivo
         perform_action_apiresponse(nil, 'DELETE', nil, true)
       end
 
-      def start_recording(file_format = 'mp3', status_callback_url = nil, status_callback_method='POST')
+      def start_recording(file_format = 'mp3', recording_callback_url = nil, recording_callback_method='POST')
         valid_param?(:file_format, file_format, String, false , %w[mp3 wav])
-        valid_url?(:status_callback_url, status_callback_url, false) unless status_callback_url.nil?
-        valid_param?(:status_callback_method, status_callback_method.upcase,String, false, %w[GET POST])
+        valid_url?(:recording_callback_url, recording_callback_url, false) unless recording_callback_url.nil?
+        valid_param?(:recording_callback_method, recording_callback_method.upcase,String, false, %w[GET POST])
 
         params = {}
         params[:file_format] = file_format.downcase unless file_format.nil?
-        params[:status_callback_url] = status_callback_url unless status_callback_url.nil?
-        params[:status_callback_method] = status_callback_method.upcase unless status_callback_method.nil?
+        params[:recording_callback_url] = recording_callback_url unless recording_callback_url.nil?
+        params[:recording_callback_method] = recording_callback_method.upcase unless recording_callback_method.nil?
 
         perform_action_apiresponse('Record', 'POST', params, true)
       end
@@ -216,9 +216,9 @@ module Plivo
         perform_action_apiresponse('Record/Resume', 'POST')
       end
 
-      def start_participant_recording(member_id, file_format='mp3', status_callback_url=nil, status_callback_method='POST')
+      def start_participant_recording(member_id, file_format='mp3', recording_callback_url=nil, recording_callback_method='POST')
         valid_param?(:member_id, member_id, [String, Integer], true)
-        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], member_id: member_id).start_participant_recording(file_format, status_callback_url, status_callback_method)
+        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], member_id: member_id).start_participant_recording(file_format, recording_callback_url, recording_callback_method)
       end
 
       def stop_participant_recording(member_id)
@@ -288,15 +288,15 @@ module Plivo
         configure_secondary_resource_uri
       end
 
-      def start_participant_recording(file_format = 'mp3', status_callback_url = nil, status_callback_method='POST')
+      def start_participant_recording(file_format = 'mp3', recording_callback_url = nil, recording_callback_method='POST')
         valid_param?(:file_format, file_format, String, false , %w[mp3 wav])
-        valid_url?(:status_callback_url, status_callback_url, false) unless status_callback_url.nil?
-        valid_param?(:status_callback_method, status_callback_method.upcase,String, false, %w[GET POST])
+        valid_url?(:recording_callback_url, recording_callback_url, false) unless recording_callback_url.nil?
+        valid_param?(:recording_callback_method, recording_callback_method.upcase,String, false, %w[GET POST])
 
         params = {}
         params[:file_format] = file_format.downcase unless file_format.nil?
-        params[:status_callback_url] = status_callback_url unless status_callback_url.nil?
-        params[:status_callback_method] = status_callback_method.upcase unless status_callback_method.nil?
+        params[:recording_callback_url] = recording_callback_url unless recording_callback_url.nil?
+        params[:recording_callback_method] = recording_callback_method.upcase unless recording_callback_method.nil?
 
         perform_action_apiresponse('Record', 'POST', params, true)
       end
@@ -480,11 +480,11 @@ module Plivo
       def start_recording(options = {})
         valid_param?(:options, options, Hash, false)
         options[:file_format] = 'mp3' unless options.key?(:file_format)
-        options[:status_callback_method] = 'POST' unless options.key?(:status_callback_method)
+        options[:recording_callback_method] = 'POST' unless options.key?(:recording_callback_method)
         valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
         valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
         mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
-        MultiPartyCall.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).start_recording(options[:file_format], options[:status_callback_url], options[:status_callback_method])
+        MultiPartyCall.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).start_recording(options[:file_format], options[:recording_callback_url], options[:recording_callback_method])
       end
 
       def stop_recording(options = {})
@@ -517,12 +517,12 @@ module Plivo
           raise_invalid_request("Member Id is mandatory")
         end
         options[:file_format] = 'mp3' unless options.key?(:file_format)
-        options[:status_callback_method] = 'POST' unless options.key?(:status_callback_method)
+        options[:recording_callback_method] = 'POST' unless options.key?(:recording_callback_method)
         valid_param?(:member_id, options[:member_id], [String, Integer], true)
         valid_param?(:uuid, options[:uuid], String, false) unless options[:uuid].nil?
         valid_param?(:friendly_name, options[:friendly_name], String, false) unless options[:friendly_name].nil?
         mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
-        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: options[:member_id]).start_participant_recording(options[:file_format], options[:status_callback_url], options[:status_callback_method])
+        MultiPartyCallParticipant.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0], member_id: options[:member_id]).start_participant_recording(options[:file_format], options[:recording_callback_url], options[:recording_callback_method])
       end
 
       def stop_participant_recording(options = {})

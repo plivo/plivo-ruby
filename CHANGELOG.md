@@ -1,8 +1,12 @@
 # Change Log
 
-## [4.25.0](https://github.com/plivo/plivo-ruby/tree/v4.25.0) (2022-01-31)
+## [4.26.0](https://github.com/plivo/plivo-ruby/tree/v4.25.0) (2022-01-31)
 **Bugfix - Recording**
 - Fix for Start Recording API response issue
+
+## [4.25.0](https://github.com/plivo/plivo-ruby/tree/v4.25.0) (2022-01-27)
+**Features - MPCStartCallRecording**
+- parameter name change from statusCallback to recordingCallback
 
 ## [4.24.0](https://github.com/plivo/plivo-ruby/tree/v4.24.0) (2021-12-14)
 **Features - Voice**
