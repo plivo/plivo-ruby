@@ -492,7 +492,11 @@ module Plivo
       # @option options [String] :callback_method - The method which is used to invoke the callback_url URL. Defaults to POST.
       def record(call_uuid, options = nil)
         valid_param?(:call_uuid, call_uuid, [String, Symbol], true)
-        Call.new(@_client, resource_id: call_uuid).record(options)
+        response = Call.new(@_client, resource_id: call_uuid).record(options)
+        return Base::Response.new(Hash["api_id" => response.api_id,
+                                       "recording_id" => response.recording_id,
+                                       "message" => response.message,
+                                       "url" => response.url])
       end
 
       # @param [String] call_uuid
