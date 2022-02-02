@@ -1,6 +1,6 @@
 # Change Log
 
-## [4.26.0](https://github.com/plivo/plivo-ruby/tree/v4.25.0) (2022-01-31)
+## [4.26.0](https://github.com/plivo/plivo-ruby/tree/v4.26.0) (2022-01-31)
 **Bugfix - Recording**
 - Fix for Start Recording API response issue
 
