@@ -7,7 +7,7 @@ require 'plivo'
 include Plivo
 include Plivo::Exceptions
 
-api = RestClient.new("MAZTE2MZKXYZEZNJUZZJ","NzczOTEwY2NjNjg3ODYzZmJjODc4ZjgzYTkwNjBj")
+api = RestClient.new("","")
 
 begin
   response = api.calls.create(
