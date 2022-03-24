@@ -9,9 +9,7 @@ module Plivo
                              statusCallbackEvents statusCallbackUrl statusCallbackMethod
                              stayAlone coachMode mute hold startMpcOnEnter endMpcOnExit
                              enterSound enterSoundMethod exitSound exitSoundMethod
-                             onExitActionUrl onExitActionMethod relayDTMFInputs
-                             startRecordingAudio startRecordingAudioMethod
-                             stopRecordingAudio stopRecordingAudioMethod]
+                             onExitActionUrl onExitActionMethod relayDTMFInputs]
 
       VALID_ROLE_VALUES = %w[agent supervisor customer]
       VALID_METHOD_VALUES = %w[GET POST]
@@ -180,27 +178,7 @@ module Plivo
         if attributes[:customerHoldMusicUrl] && !valid_url?(:customerHoldMusicUrl, attributes[:customerHoldMusicUrl], false)
           raise PlivoXMLError, "invalid attribute value #{attributes[:customerHoldMusicUrl]} for customerHoldMusicUrl"
         end
-
-        if attributes[:startRecordingAudio] && !valid_url?(:startRecordingAudio, attributes[:startRecordingAudio], false)
-          raise PlivoXMLError, "invalid attribute value #{attributes[:startRecordingAudio]} for startRecordingAudio"
-        end
-
-        if attributes[:stopRecordingAudio] && !valid_url?(:stopRecordingAudio, attributes[:stopRecordingAudio], false)
-          raise PlivoXMLError, "invalid attribute value #{attributes[:stopRecordingAudio]} for stopRecordingAudio"
-        end
-
-        if attributes[:startRecordingAudioMethod] && !VALID_METHOD_VALUES.include?(attributes[:startRecordingAudioMethod].upcase)
-          raise PlivoXMLError, "invalid attribute value #{attributes[:startRecordingAudioMethod]} for startRecordingAudioMethod"
-        elsif !attributes[:startRecordingAudioMethod]
-          attributes[:startRecordingAudioMethod] = 'GET'
-        end
-
-        if attributes[:stopRecordingAudioMethod] && !VALID_METHOD_VALUES.include?(attributes[:stopRecordingAudioMethod].upcase)
-          raise PlivoXMLError, "invalid attribute value #{attributes[:stopRecordingAudioMethod]} for stopRecordingAudioMethod"
-        elsif !attributes[:stopRecordingAudioMethod]
-          attributes[:stopRecordingAudioMethod] = 'GET'
-        end
-
+        
         raise PlivoXMLError, 'No MPC name set for the MPC' unless body
         super(body, attributes)
       end

@@ -85,9 +85,7 @@ describe 'MultiPartyCalls test' do
                          'call_uuid': '1234-5678-4321-0987',
                          'role': 'Agent',
                          'caller_name': nil,
-                         'delay_dial': 0,
-                         'start_recording_audio_method': 'GET',
-                         'stop_recording_audio_method': 'GET'
+                         'delay_dial': 0
                      })
   end
 
