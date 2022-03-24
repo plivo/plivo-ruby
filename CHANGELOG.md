@@ -1,7 +1,7 @@
 # Change Log
-## [4.25.2](https://github.com/plivo/plivo-ruby/tree/v4.25.2) (2022-03-03)
+## [4.26.0](https://github.com/plivo/plivo-ruby/tree/v4.26.0) (2022-24-03)
 **Feature - DialElement**
-- confirmTimeout parameter added
+- `confirmTimeout` parameter added to [The Dial element](https://www.plivo.com/docs/voice/xml/dial/)
 
 ## [4.25.1](https://github.com/plivo/plivo-ruby/tree/v4.25.1) (2022-02-02)
 **Bugfix - Recording**
