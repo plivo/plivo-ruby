@@ -43,6 +43,8 @@ module Plivo
       # @param [Hash] options
       # @option options [String] :subaccount auth_id of the subaccount. Lists only those recordings of the main accounts which are tied to the specified subaccount.
       # @option options [String] :call_uuid Used to filter recordings for a specific call.
+      # @option options [String] :from_number Used to filter recordings for a specific from_number.
+      # @option options [String] :to_number Used to filter recordings for a specific to_number.
       # @option options [String] :add_time Used to filter out recordings according to the time they were added.The add_time filter is a comparative filter that can be used in the following four forms:
       #                                    - add_time\__gt: gt stands for greater than. The format expected is YYYY-MM-DD HH:MM[:ss[.uuuuuu]]. Eg:- To get all recordings that started after 2012-03-21 11:47, use add_time\__gt=2012-03-21 11:47
       #                                    - add_time\__gte: gte stands for greater than or equal. The format expected is YYYY-MM-DD HH:MM[:ss[.uuuuuu]]. Eg:- To get all recordings that started after or exactly at 2012-03-21 11:47[:30], use add_time\__gte=2012-03-21 11:47[:30]
@@ -59,6 +61,7 @@ module Plivo
         params_expected = %i[
           call_uuid add_time__gt add_time__gte
           add_time__lt add_time__lte
+          from_number to_number
         ]
 
         params_expected.each do |param|

@@ -1,4 +1,9 @@
 # Change Log
+
+## [4.26.1](https://github.com/plivo/plivo-ruby/tree/v4.26.1) (2022-04-18)
+**Feature - List all recordings**
+- `from_number` and `to_number` added to filter param [List all recordings](https://www.plivo.com/docs/voice/api/recording#list-all-recordings)
+
 ## [4.26.0](https://github.com/plivo/plivo-ruby/tree/v4.26.0) (2022-03-24)
 **Feature - DialElement**
 - `confirmTimeout` parameter added to [The Dial element](https://www.plivo.com/docs/voice/xml/dial/)
