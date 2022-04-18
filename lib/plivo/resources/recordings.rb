@@ -26,7 +26,9 @@ module Plivo
           recording_start_ms: @recording_start_ms,
           recording_type: @recording_type,
           recording_url: @recording_url,
-          resource_uri: @resource_uri
+          resource_uri: @resource_uri,
+          from_number: @from_number,
+          to_number: @to_number
         }.to_s
       end
     end
