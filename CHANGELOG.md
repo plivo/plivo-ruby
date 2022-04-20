@@ -3,6 +3,7 @@
 ## [4.26.1](https://github.com/plivo/plivo-ruby/tree/v4.26.1) (2022-04-18)
 **Feature - List all recordings**
 - `from_number` and `to_number` added to filter param [List all recordings](https://www.plivo.com/docs/voice/api/recording#list-all-recordings)
+- `record_min_member_count` param added to [Add a participant to a multiparty call using API](https://www.plivo.com/docs/voice/api/multiparty-call/participants#add-a-participant)
 
 ## [4.26.0](https://github.com/plivo/plivo-ruby/tree/v4.26.0) (2022-03-24)
 **Feature - DialElement**

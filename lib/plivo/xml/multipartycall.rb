@@ -11,7 +11,7 @@ module Plivo
                              enterSound enterSoundMethod exitSound exitSoundMethod
                              onExitActionUrl onExitActionMethod relayDTMFInputs
                              startRecordingAudio startRecordingAudioMethod
-                             stopRecordingAudio stopRecordingAudioMethod]
+                             stopRecordingAudio stopRecordingAudioMethod recordMinMemberCount]
 
       VALID_ROLE_VALUES = %w[agent supervisor customer]
       VALID_METHOD_VALUES = %w[GET POST]
@@ -35,6 +35,12 @@ module Plivo
           raise PlivoXMLError, "invalid attribute value #{attributes[:maxParticipants]} for maxParticipants"
         elsif !attributes[:maxParticipants]
           attributes[:maxParticipants] = 10
+        end
+
+        if attributes[:recordMinMemberCount] && (attributes[:recordMinMemberCount]<1 || attributes[:recordMinMemberCount]>2)
+          raise PlivoXMLError, "invalid attribute value #{attributes[:recordMinMemberCount]} for recordMinMemberCount"
+        elsif !attributes[:recordMinMemberCount]
+          attributes[:recordMinMemberCount] = 10
         end
 
         if attributes[:waitMusicMethod] && !VALID_METHOD_VALUES.include?(attributes[:waitMusicMethod].upcase)
