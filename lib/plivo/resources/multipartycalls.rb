@@ -457,12 +457,12 @@ module Plivo
         mpc_id = make_mpc_id(options[:uuid], options[:friendly_name])
 
         MultiPartyCall.new(@_client, resource_id: mpc_id[1], multi_party_prefix: mpc_id[0]).add_participant(options[:role],options[:from],options[:to],options[:call_uuid],options[:caller_name],options[:call_status_callback_url],options[:call_status_callback_method],options[:sip_headers],options[:confirm_key],
-                                                                          options[:confirm_key_sound_url],options[:confirm_key_sound_method],options[:dial_music],options[:ring_timeout],options[:delay_dial],options[:max_duration], options[:max_participants],options[:wait_music_url],
+                                                                          options[:confirm_key_sound_url],options[:confirm_key_sound_method],options[:dial_music],options[:ring_timeout],options[:delay_dial],options[:max_duration], options[:max_participants],options[:record_min_member_count],options[:wait_music_url],
                                                                           options[:wait_music_method],options[:agent_hold_music_url],options[:agent_hold_music_method],options[:customer_hold_music_url],options[:customer_hold_music_method],
                                                                           options[:recording_callback_url],options[:recording_callback_method],options[:status_callback_url],options[:status_callback_method],options[:on_exit_action_url], options[:on_exit_action_method],
                                                                           options[:record],options[:record_file_format],options[:status_callback_events],options[:stay_alone], options[:coach_mode],options[:mute],options[:hold],options[:start_mpc_on_enter],options[:end_mpc_on_exit],
                                                                           options[:relay_dtmf_inputs],options[:enter_sound],options[:enter_sound_method],options[:exit_sound],options[:exit_sound_method], options[:start_recording_audio], options[:start_recording_audio_method],
-                                                                                                            options[:stop_recording_audio], options[:stop_recording_audio_method],options[:record_min_member_count])
+                                                                                                            options[:stop_recording_audio], options[:stop_recording_audio_method])
       end
 
       def start(options = {})
