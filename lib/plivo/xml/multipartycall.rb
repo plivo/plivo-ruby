@@ -40,7 +40,7 @@ module Plivo
         if attributes[:recordMinMemberCount] && (attributes[:recordMinMemberCount]<1 || attributes[:recordMinMemberCount]>2)
           raise PlivoXMLError, "invalid attribute value #{attributes[:recordMinMemberCount]} for recordMinMemberCount"
         elsif !attributes[:recordMinMemberCount]
-          attributes[:recordMinMemberCount] = 10
+          attributes[:recordMinMemberCount] = 1
         end
 
         if attributes[:waitMusicMethod] && !VALID_METHOD_VALUES.include?(attributes[:waitMusicMethod].upcase)
