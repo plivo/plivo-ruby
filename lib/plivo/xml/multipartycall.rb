@@ -2,7 +2,7 @@ module Plivo
   module XML
     class MultiPartyCall < Element
       @nestables = []
-      @valid_attributes = %w[role maxDuration maxParticipants waitMusicUrl
+      @valid_attributes = %w[role maxDuration maxParticipants recordMinMemberCount waitMusicUrl
                              waitMusicMethod agentHoldMusicUrl agentHoldMusicMethod
                              customerHoldMusicUrl customerHoldMusicMethod record
                              recordFileFormat recordingCallbackUrl recordingCallbackMethod
@@ -35,6 +35,12 @@ module Plivo
           raise PlivoXMLError, "invalid attribute value #{attributes[:maxParticipants]} for maxParticipants"
         elsif !attributes[:maxParticipants]
           attributes[:maxParticipants] = 10
+        end
+
+        if attributes[:recordMinMemberCount] && (attributes[:recordMinMemberCount]<1 || attributes[:recordMinMemberCount]>2)
+          raise PlivoXMLError, "invalid attribute value #{attributes[:recordMinMemberCount]} for recordMinMemberCount"
+        elsif !attributes[:recordMinMemberCount]
+          attributes[:recordMinMemberCount] = 10
         end
 
         if attributes[:waitMusicMethod] && !VALID_METHOD_VALUES.include?(attributes[:waitMusicMethod].upcase)

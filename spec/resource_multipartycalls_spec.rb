@@ -77,6 +77,7 @@ describe 'MultiPartyCalls test' do
                          'agent_hold_music_method': 'GET',
                          'wait_music_method': 'GET',
                          'max_participants': 10,
+                         'record_min_member_count': 1,
                          'max_duration': 14400,
                          'ring_timeout': 45,
                          'dial_music': 'Real',
