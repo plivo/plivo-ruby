@@ -290,5 +290,33 @@ module Plivo
       generated_signature = compute_signatureV3?(new_url, auth_token, nonce)
       return signature.split(",").include? generated_signature
     end
+
+    def get_unit_count_encoding(text)
+      unit = 1
+      mx_unsplit_len = 160
+      mx_part_len = 153
+      count = text.size
+      if text.force_encoding("UTF-8").ascii_only?
+        encoding_type = "GSM"
+      else
+        encoding_type = "UNICODE"
+        mx_unsplit_len = 70
+        mx_part_len = 67
+      end
+      if count <= mx_unsplit_len
+        return unit, count, encoding_type
+      end
+    
+      while text.size > 0
+        if text.size > mx_part_len
+          text = text[0..mx_part_len]
+          unit += 1
+        else
+          text = ''
+        end
+      end
+      return unit, count, encoding_type
+    end
+
   end
 end
