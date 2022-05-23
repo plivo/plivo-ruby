@@ -306,14 +306,15 @@ module Plivo
       if count <= mx_unsplit_len
         return unit, count, encoding_type
       end
-    
+      charcount = text.size
       while text.size > 0
         if text.size > mx_part_len
-          text = text[0..mx_part_len]
+          text = text[mx_part_len..charcount]
           unit += 1
         else
           text = ''
         end
+        charcount = text.size
       end
       return unit, count, encoding_type
     end
