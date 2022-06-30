@@ -275,14 +275,14 @@ module Plivo
       # @option options [String] :parent_call_uuid - The call_uuid of the first leg in an ongoing conference call. It is recommended to use this parameter in scenarios where a member who is already present in the conference intends to add new members by initiating outbound API calls. This minimizes the delay in adding a new memeber to the conference.
       # @option options [Boolean] :error_parent_not_found - if set to true and the parent_call_uuid cannot be found, the API request would return an error. If set to false, the outbound call API request will be executed even if the parent_call_uuid is not found. Defaults to false.
       # @return [Call] Call
-      def create(from, to, answer_url, options = nil) 
+      def create(from, to, answer_url, options = nil)
         valid_param?(:from, from, [String, Symbol, Integer], true)
         valid_param?(:to, to, Array, true)
         to.each do |to_num|
           valid_param?(:to_num, to_num, [Integer, String, Symbol], true)
         end
         valid_param?(:answer_url, answer_url, [String, Symbol], true)
-      
+
 
         params = {
           from: from,
@@ -345,36 +345,52 @@ module Plivo
         return perform_list if options.nil?
         valid_param?(:options, options, Hash, true)
 
-        params = {}
-        params_expected = %i[
-          subaccount bill_duration bill_duration__gt bill_duration__gte
-          bill_duration__lt bill_duration__lte end_time end_time__gt
-          end_time__gte end_time__lt end_time__lte parent_call_uuid hangup_source
-        ]
-        params_expected.each do |param|
-          if options.key?(param) &&
-             valid_param?(param, options[param], [String, Symbol], true)
-            params[param] = options[param]
-          end
-        end
-
-        if options.key?(:call_direction) &&
-           valid_param?(:call_direction, options[:call_direction],
-                        [String, Symbol], true, %w[inbound outbound])
-          params[:call_direction] = options[:call_direction]
-        end
-
-        %i[offset limit hangup_cause_code].each do |param|
-          if options.key?(param) && valid_param?(param, options[param], [Integer, Integer], true)
-            params[param] = options[param]
-          end
-        end
-
         raise_invalid_request("Offset can't be negative") if options.key?(:offset) && options[:offset] < 0
 
         if options.key?(:limit) && (options[:limit] > 20 || options[:limit] <= 0)
           raise_invalid_request('The maximum number of results that can be '\
           "fetched is 20. limit can't be more than 20 or less than 1")
+        end
+
+        # initial list of possible params
+        params = %i[
+          bill_duration
+          bill_duration__gt
+          bill_duration__gte
+          bill_duration__lt
+          bill_duration__lte
+          call_direction
+          end_time
+          end_time__gt
+          end_time__gte
+          end_time__lt
+          end_time__lte
+          from_number
+          hangup_cause_code
+          hangup_source
+          limit
+          offset
+          parent_call_uuid
+          subaccount
+          to_number
+          stir_verification
+        ].reduce({}) do |result_hash, param|
+          if options.key?(param)
+            if param == :call_direction
+              if valid_param?(:call_direction, options[:call_direction],
+                  [String, Symbol], true, %w[inbound outbound])
+                result_hash[:call_direction] = options[:call_direction]
+              end
+            elsif %i[offset limit hangup_cause_code].include?(param)
+              if valid_param?(param, options[param], [Integer, Integer], true)
+                result_hash[param] = options[param]
+              end
+            elsif valid_param?(param, options[param], [String, Symbol], true)
+              result_hash[param] = options[param]
+            end
+          end
+
+          result_hash
         end
 
         perform_list(params)
