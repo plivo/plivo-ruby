@@ -373,6 +373,7 @@ module Plivo
           parent_call_uuid
           subaccount
           to_number
+          stir_verification
         ].reduce({}) do |result_hash, param|
           if options.key?(param)
             if param == :call_direction

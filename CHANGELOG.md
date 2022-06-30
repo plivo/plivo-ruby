@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.27.1](https://github.com/plivo/plivo-ruby/tree/v4.27.1) (2022-06-30)
+- `from_number`, `to_number` and `stir_verification` added to filter param [Retrieve all calls] (https://www.plivo.com/docs/voice/api/call#retrieve-all-calls)
+
 ## [4.27.0](https://github.com/plivo/plivo-ruby/tree/v4.27.0) (2022-05-05)
 **Feature - List all recordings**
 - `from_number` and `to_number` added to filter param [List all recordings](https://www.plivo.com/docs/voice/api/recording#list-all-recordings)
