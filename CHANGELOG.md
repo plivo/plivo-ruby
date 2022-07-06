@@ -1,5 +1,29 @@
 # Change Log
 
+## [4.27.1](https://github.com/plivo/plivo-ruby/tree/v4.27.1) (2022-06-30)
+- `from_number`, `to_number` and `stir_verification` added to filter param [Retrieve all calls] (https://www.plivo.com/docs/voice/api/call#retrieve-all-calls)
+
+## [4.27.0](https://github.com/plivo/plivo-ruby/tree/v4.27.0) (2022-05-05)
+**Feature - List all recordings**
+- `from_number` and `to_number` added to filter param [List all recordings](https://www.plivo.com/docs/voice/api/recording#list-all-recordings)
+- `record_min_member_count` param added to [Add a participant to a multiparty call using API](https://www.plivo.com/docs/voice/api/multiparty-call/participants#add-a-participant)
+
+## [4.26.0](https://github.com/plivo/plivo-ruby/tree/v4.26.0) (2022-03-24)
+**Feature - DialElement**
+- `confirmTimeout` parameter added to [The Dial element](https://www.plivo.com/docs/voice/xml/dial/)
+
+## [4.25.1](https://github.com/plivo/plivo-ruby/tree/v4.25.1) (2022-02-02)
+**Bugfix - Recording**
+- Fix for Start Recording API response issue
+
+## [4.25.0](https://github.com/plivo/plivo-ruby/tree/v4.25.0) (2022-01-27)
+**Features - MPCStartCallRecording**
+- parameter name change from statusCallback to recordingCallback
+
+## [4.24.0](https://github.com/plivo/plivo-ruby/tree/v4.24.0) (2021-12-14)
+**Features - Voice**
+- Routing SDK traffic through Akamai endpoints for all the [Voice APIs](https://www.plivo.com/docs/voice/api/overview/)
+
 ## [4.23.0](https://github.com/plivo/plivo-ruby/releases/tag/v4.23.0) (2021-12-02)
 **Features - Messaging: 10 DLC**
 - 10DLC API's for brand and campaign support.

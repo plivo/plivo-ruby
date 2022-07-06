@@ -3,7 +3,7 @@ module Plivo
     class Dial < Element
       @nestables = %w[Number User]
       @valid_attributes = %w[action method timeout hangupOnStar
-                             timeLimit callerId callerName confirmSound
+                             timeLimit callerId callerName confirmSound confirmTimeout
                              dialMusic confirmKey redirect
                              callbackUrl callbackMethod digitsMatch digitsMatchBLeg
                              sipHeaders]
