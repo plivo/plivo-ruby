@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.28.0](https://github.com/plivo/plivo-go/tree/v4.28.0) (2022-07-11)
+**Feature - STIR Attestation**
+- Add stir attestation param as part of Get CDR and Get live call APIs Response
+
 ## [4.27.1](https://github.com/plivo/plivo-ruby/tree/v4.27.1) (2022-06-30)
 - `from_number`, `to_number` and `stir_verification` added to filter param [Retrieve all calls] (https://www.plivo.com/docs/voice/api/call#retrieve-all-calls)
 

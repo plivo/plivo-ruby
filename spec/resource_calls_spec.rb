@@ -18,7 +18,8 @@ describe 'Calls test' do
       to_number: call.to_number,
       total_amount: call.total_amount,
       total_rate: call.total_rate,
-      stir_verification: call.stir_verification
+      stir_verification: call.stir_verification,
+      stir_attestation:call.stir_attestation
     }.to_json
   end
 
@@ -33,7 +34,8 @@ describe 'Calls test' do
       call_uuid: call.call_uuid,
       request_uuid: call.request_uuid,
       session_start: call.session_start,
-      stir_verification: call.stir_verification
+      stir_verification: call.stir_verification,
+      stir_attestation: call.stir_attestation
     }.to_json
   end
 
