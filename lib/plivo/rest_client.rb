@@ -7,7 +7,7 @@ module Plivo
 
     # Resources
     attr_reader :messages, :account, :subaccounts, :recordings
-    attr_reader :pricings, :numbers, :calls, :conferences
+    attr_reader :pricings, :numbers, :calls, :token ,:conferences
     attr_reader :phone_numbers, :applications, :endpoints, :multipartycalls
     attr_reader :addresses, :identities
     attr_reader :call_feedback
@@ -49,6 +49,7 @@ module Plivo
       @phone_numbers = Resources::PhoneNumberInterface.new(self)
       @conferences = Resources::ConferenceInterface.new(self)
       @calls = Resources::CallInterface.new(self)
+      @token = Resources::TokenInterface.new(self)
       @endpoints = Resources::EndpointInterface.new(self)
       @applications = Resources::ApplicationInterface.new(self)
       @addresses = Resources::AddressInterface.new(self)
