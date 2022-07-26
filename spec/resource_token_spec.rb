@@ -16,8 +16,8 @@ describe 'Token test' do
                                            sub: 'kowshik',
                                            nbf: '1658646749',
                                            exp: '1658696749',
-                                           incoming_allowed: false ,
-                                           outgoing_allowed: false,
+                                           incoming_allow: false ,
+                                           outgoing_allow: false,
                                            app: 'default'
                                          ))))
       .to eql(JSON.parse(contents))
@@ -28,8 +28,12 @@ describe 'Token test' do
                        sub: 'kowshik',
                        nbf: '1658646749',
                        exp: '1658696749',
-                       incoming_allowed: false ,
-                       outgoing_allowed: false,
+                       "per": {
+                         "voice": {
+                           "incoming_allow": '',
+                           "outgoing_allow": ''
+                         }
+                       },
                        app: 'default'
                      })
   end
@@ -42,8 +46,12 @@ describe 'Token test' do
                                sub: 'kowshik',
                                nbf: '1658646749',
                                exp: '1658696749',
-                               incoming_allowed: false ,
-                               outgoing_allowed: false,
+                               "per": {
+                                 "voice": {
+                                   "incoming_allow": '',
+                                   "outgoing_allow": ''
+                                 }
+                               },
                                app: 'default'
                            ))
 
@@ -58,8 +66,12 @@ describe 'Token test' do
                        sub: 'kowshik',
                        nbf: '1658646749',
                        exp: '1658696749',
-                       incoming_allowed: false ,
-                       outgoing_allowed: false,
+                       "per": {
+                         "voice": {
+                           "incoming_allow": '',
+                           "outgoing_allow": ''
+                         }
+                       },
                        app: 'default'
                      })
   end

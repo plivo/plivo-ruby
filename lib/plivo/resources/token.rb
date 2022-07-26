@@ -26,32 +26,40 @@ module Plivo
         @_is_voice_request = true
       end
 
-      def create(iss, options = nil)
-        # def create(iss, sub = nil, nbf = nil, exp = nil, incoming_allowed = nil, outgoing_allowed = nil, app = nil, options = nil)
-        #   valid_param?(:iss, iss, [String, Symbol], true)
-        #   valid_param?(:sub, sub, [String, Symbol], false)
-        #   valid_param?(:nbf, nbf, [Integer,String], false)
-        #   valid_param?(:exp, exp, [Integer,String], false)
-        #   valid_param?(:incoming_allowed, incoming_allowed, [TrueClass, FalseClass],
-        #                false, [true, false])
-        #   valid_param?(:outgoing_allowed, outgoing_allowed,  [TrueClass, FalseClass],
-        #                false, [true, false])
-        # valid_param?(:app, app, [String, Symbol], false)
+
+      def create(iss ,sub = nil ,nbf = nil ,exp = nil ,incoming_allow = nil ,outgoing_allow = nil ,app = nil , options = nil)
+          valid_param?(:iss, iss, [String, Symbol], true)
+          valid_param?(:sub, sub, [String, Symbol], false)
+          valid_param?(:nbf, nbf, [Integer,String], false)
+          valid_param?(:exp, exp, [Integer,String], false)
+          valid_param?(:incoming_allow, incoming_allow, [TrueClass, FalseClass],
+                       false, [true, false])
+          valid_param?(:outgoing_allow, outgoing_allow,  [TrueClass, FalseClass],
+                       false, [true, false])
+          valid_param?(:app, app, [String, Symbol], false)
 
 
-        params = {
-          iss: iss,
-          # sub: sub,
-          # nbf: nbf,
-          # exp: exp,
-          # incoming_allowed: incoming_allowed,
-          # outgoing_allowed: outgoing_allowed
-          # app: app
-        }
 
-        return perform_create(params, false) if options.nil?
+          if incoming_allow == true && sub.nil?
+            raise Plivo::Exceptions::ValidationError, "sub is required when incoming_allow is true"
+          elsif iss.nil?
+            raise Plivo::Exceptions::ValidationError, "iss is required"
+          else
+            params = {}
+            params[:iss] = iss if iss
+            params[:sub] = sub if sub
+            params[:nbf] = nbf if nbf
+            params[:exp] = exp if exp
+            params[:per] = {}
+            params[:per][:voice] = {}
+            params[:per][:voice][:incoming_allow] = incoming_allow if incoming_allow
+            params[:per][:voice][:outgoing_allow] = outgoing_allow if outgoing_allow
+            params[:app] = app if app
 
-        perform_create(params.merge(options), false)
+            return perform_create(params, false) if options.nil?
+
+            perform_create(params.merge(options), false)
+            end
       end
     end
   end
