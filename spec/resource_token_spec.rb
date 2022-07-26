@@ -13,6 +13,7 @@ describe 'Token test' do
     mock(200, JSON.parse(contents))
     response = to_json(@api.token
                            .create(
+                             params = {
                                iss: 'MAXXXXXXXXXXXXXXXXXX',
                                sub: 'kowshik',
                                nbf: '1658646749',
@@ -24,7 +25,7 @@ describe 'Token test' do
                                  }
                                },
                                app: 'default'
-                           ))
+                             }))
 
     contents = JSON.parse(contents)
 
