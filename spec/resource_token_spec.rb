@@ -34,17 +34,23 @@ describe 'Token test' do
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/JWT/Token/',
                      method: 'POST',
                      data: {
-                       iss: 'MAXXXXXXXXXXXXXXXXXX',
-                       sub: 'kowshik',
-                       nbf: '1658646749',
-                       exp: '1658696749',
-                       per: {
-                         voice: {
-                           incoming_allow: '',
-                           outgoing_allow: ''
-                         }
+                       :iss=>{
+                         :iss=>"MAXXXXXXXXXXXXXXXXXX",
+                         :sub=>"kowshik",
+                         :nbf=>"1658646749",
+                         :exp=>"1658696749",
+                         :per=>{
+                           :voice=>{
+                             :incoming_allow=>"true",
+                             :outgoing_allow=>"true"
+                           }
+                         },
+                         :app=>"default"
                        },
-                       app: 'default'
-                     })
+                       :per=>{
+                         :voice=>{}
+                       }
+                     }
   end
 end
+
