@@ -8,19 +8,6 @@ describe 'Token test' do
     }.reject { |_, v| v.nil? }.to_json
   end
 
-  # def to_json_update(token)
-  #   {
-  #     api_id: token.api_id,
-  #     message: token.message
-  #   }.reject { |_, v| v.nil? }.to_json
-  # end
-  #
-  # def to_json_create(token)
-  #   {
-  #     api_id: token.api_id,
-  #
-  #   }.reject { |_, v| v.nil? }.to_json
-  # end
   it 'create token' do
     contents = File.read(Dir.pwd + '/spec/mocks/tokenCreateResponse.json')
     mock(200, JSON.parse(contents))
@@ -30,10 +17,10 @@ describe 'Token test' do
                                sub: 'kowshik',
                                nbf: '1658646749',
                                exp: '1658696749',
-                               "per": {
-                                 "voice": {
-                                   "incoming_allow": 'true',
-                                   "outgoing_allow": 'true'
+                               per: {
+                                 voice: {
+                                   incoming_allow: 'true',
+                                   outgoing_allow: 'true'
                                  }
                                },
                                app: 'default'
@@ -50,10 +37,10 @@ describe 'Token test' do
                        sub: 'kowshik',
                        nbf: '1658646749',
                        exp: '1658696749',
-                       "per": {
-                         "voice": {
-                           "incoming_allow": '',
-                           "outgoing_allow": ''
+                       per: {
+                         voice: {
+                           incoming_allow: '',
+                           outgoing_allow: ''
                          }
                        },
                        app: 'default'
