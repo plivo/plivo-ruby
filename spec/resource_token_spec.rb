@@ -43,6 +43,6 @@ describe 'Token test' do
                          }
                        },
                        app: 'default'
-                     })
+                     }, :per=>{:voice=>{}})
   end
 end
