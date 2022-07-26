@@ -1,12 +1,24 @@
 require 'rspec'
 
 describe 'Token test' do
-  def to_json(obj)
-    puts obj
+  def to_json(token)
     {
-      api_id: obj.api_id,
-      message: obj.message
-    }.to_json
+      api_id: token.api_id,
+    }.reject { |_, v| v.nil? }.to_json
+  end
+
+  def to_json_update(token)
+    {
+      api_id: token.api_id,
+      message: token.message
+    }.reject { |_, v| v.nil? }.to_json
+  end
+
+  def to_json_create(token)
+    {
+      api_id: token.api_id,
+      message: token.message
+    }.reject { |_, v| v.nil? }.to_json
   end
   it 'create token' do
     contents = File.read(Dir.pwd + '/spec/mocks/tokenCreateResponse.json')
@@ -44,6 +56,6 @@ describe 'Token test' do
                          }
                        },
                        app: 'default'
-                     }.to_json)
+                     })
   end
 end
