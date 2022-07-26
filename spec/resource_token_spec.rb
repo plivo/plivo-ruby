@@ -7,40 +7,6 @@ describe 'Token test' do
       message: token.message
     }.to_json
   end
-  it 'creates a token' do
-    contents = File.read(Dir.pwd + '/spec/mocks/tokenCreateResponse.json')
-    mock(201, JSON.parse(contents))
-    expect(JSON.parse(to_json_create(@api.token
-                                         .create(
-                                           iss: 'MAXXXXXXXXXXXXXXXXXX',
-                                           sub: 'kowshik',
-                                           nbf: '1658646749',
-                                           exp: '1658696749',
-                                           "per": {
-                                           "voice": {
-                                             "incoming_allow": '',
-                                             "outgoing_allow": ''
-                                           }
-                                         },
-                                           app: 'default'
-                                         ))))
-      .to eql(JSON.parse(contents))
-    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Call/',
-                     method: 'POST',
-                     data: {
-                       iss: 'MAXXXXXXXXXXXXXXXXXX',
-                       sub: 'kowshik',
-                       nbf: '1658646749',
-                       exp: '1658696749',
-                       "per": {
-                         "voice": {
-                           "incoming_allow": '',
-                           "outgoing_allow": ''
-                         }
-                       },
-                       app: 'default'
-                     })
-  end
   it 'create token' do
     contents = File.read(Dir.pwd + '/spec/mocks/tokenCreateResponse.json')
     mock(200, JSON.parse(contents))
@@ -52,8 +18,8 @@ describe 'Token test' do
                                exp: '1658696749',
                                "per": {
                                  "voice": {
-                                   "incoming_allow": '',
-                                   "outgoing_allow": ''
+                                   "incoming_allow": 'true',
+                                   "outgoing_allow": 'true'
                                  }
                                },
                                app: 'default'
