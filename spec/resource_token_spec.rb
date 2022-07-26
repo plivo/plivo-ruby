@@ -4,22 +4,23 @@ describe 'Token test' do
   def to_json(token)
     {
       api_id: token.api_id,
-    }.reject { |_, v| v.nil? }.to_json
-  end
-
-  def to_json_update(token)
-    {
-      api_id: token.api_id,
       message: token.message
     }.reject { |_, v| v.nil? }.to_json
   end
 
-  def to_json_create(token)
-    {
-      api_id: token.api_id,
-      message: token.message
-    }.reject { |_, v| v.nil? }.to_json
-  end
+  # def to_json_update(token)
+  #   {
+  #     api_id: token.api_id,
+  #     message: token.message
+  #   }.reject { |_, v| v.nil? }.to_json
+  # end
+  #
+  # def to_json_create(token)
+  #   {
+  #     api_id: token.api_id,
+  #
+  #   }.reject { |_, v| v.nil? }.to_json
+  # end
   it 'create token' do
     contents = File.read(Dir.pwd + '/spec/mocks/tokenCreateResponse.json')
     mock(200, JSON.parse(contents))
