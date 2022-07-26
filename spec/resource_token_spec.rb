@@ -50,7 +50,7 @@ describe 'Token test' do
                        :per=>{
                          :voice=>{}
                        }
-                     }
+                     })
   end
 end
 
