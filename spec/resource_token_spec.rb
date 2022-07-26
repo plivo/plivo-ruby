@@ -16,8 +16,12 @@ describe 'Token test' do
                                            sub: 'kowshik',
                                            nbf: '1658646749',
                                            exp: '1658696749',
-                                           incoming_allow: false ,
-                                           outgoing_allow: false,
+                                           "per": {
+                                           "voice": {
+                                             "incoming_allow": '',
+                                             "outgoing_allow": ''
+                                           }
+                                         },
                                            app: 'default'
                                          ))))
       .to eql(JSON.parse(contents))
