@@ -29,7 +29,7 @@ describe 'Token test' do
 
     expect(JSON.parse(response))
       .to eql(contents)
-    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/JWT/Token/',
+    compare_requests(to_json(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/JWT/Token/',
                      method: 'POST',
                      data: {
                        iss: 'MAXXXXXXXXXXXXXXXXXX',
@@ -43,6 +43,6 @@ describe 'Token test' do
                          }
                        },
                        app: 'default'
-                     }, :per=>{:voice=>{}})
+                     }))
   end
 end
