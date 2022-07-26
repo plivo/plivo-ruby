@@ -1,10 +1,11 @@
 require 'rspec'
 
 describe 'Token test' do
-  def to_json(token)
+  def to_json(obj)
+    puts obj
     {
-      api_id: token.api_id,
-      message: token.message
+      api_id: obj.api_id,
+      message: obj.message
     }.to_json
   end
   it 'create token' do
@@ -31,7 +32,7 @@ describe 'Token test' do
       .to eql(contents)
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/JWT/Token/',
                      method: 'POST',
-                     data: to_json({
+                     data: {
                        iss: 'MAXXXXXXXXXXXXXXXXXX',
                        sub: 'kowshik',
                        nbf: '1658646749',
@@ -43,6 +44,6 @@ describe 'Token test' do
                          }
                        },
                        app: 'default'
-                     }))
+                     }.to_json)
   end
 end
