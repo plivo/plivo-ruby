@@ -28,7 +28,7 @@ module Plivo
 
 
       def create(iss ,sub = nil ,nbf = nil ,exp = nil ,incoming_allow = nil ,outgoing_allow = nil ,app = nil , options = nil)
-          valid_param?(:iss, iss, [String, Symbol], true)
+          valid_param?(:iss, iss, [String, Symbol, Hash], true)
           valid_param?(:sub, sub, [String, Symbol], false)
           valid_param?(:nbf, nbf, [Integer,String], false)
           valid_param?(:exp, exp, [Integer,String], false)
