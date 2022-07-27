@@ -14,7 +14,7 @@ module Plivo
     attr_reader :powerpacks
     attr_reader :powerpacks, :media
     attr_reader :lookup
-    attr_reader :brand, :campaign
+    attr_reader :brand, :campaign, :profile
     attr_reader :end_users
     attr_reader :compliance_document_types, :compliance_documents, :compliance_requirements, :compliance_applications
 
@@ -42,6 +42,7 @@ module Plivo
       @media = Resources::MediaInterface.new(self)
       @brand = Resources::BrandInterface.new(self)
       @campaign = Resources::CampaignInterface.new(self)
+      @profile = Resources::ProfileInterface.new(self)
       @subaccounts = Resources::SubaccountInterface.new(self)
       @recordings = Resources::RecordingInterface.new(self)
       @pricings = Resources::PricingInterface.new(self)

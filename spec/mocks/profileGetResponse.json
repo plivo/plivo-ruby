@@ -1,0 +1,34 @@
+{
+    "api_id": "a92bd46e-0724-11ed-ab02-0242ac110004",
+    "profile": {
+        "address": {
+            "city": "Band",
+            "country": "US",
+            "postal_code": "10001",
+            "state": "NY",
+            "street": "123"
+        },
+        "alt_business_id_type": "NONE",
+        "authorized_contact": {
+            "email": "vishnu@plivo.com",
+            "first_name": "Hello",
+            "last_name": "Test",
+            "phone": "13192054286",
+            "seniority": "admin",
+            "title": "bro"
+        },
+        "company_name": "ABC Inc",
+        "customer_type": "DIRECT",
+        "ein": "111111111",
+        "ein_issuing_country": "US",
+        "entity_type": "GOVERNMENT",
+        "primary_profile": "0b8a783c-9906-4c84-8ace-cb88413a1da6",
+        "profile_alias": "vishnu105",
+        "profile_type": "SECONDARY",
+        "profile_uuid": "201faedc-7df9-4840-9ab1-3997ce3f7cf4",
+        "stock_exchange": "NASDAQ",
+        "stock_symbol": "ABC",
+        "vertical": "PROFESSIONAL",
+        "website": "google.com"
+    }
+}
