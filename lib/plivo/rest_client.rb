@@ -8,7 +8,7 @@ module Plivo
     # Resources
     attr_reader :messages, :account, :subaccounts, :recordings
 
-    attr_reader :pricings, :numbers, :calls, :tokens,:conferences
+    attr_reader :pricings, :numbers, :calls, :conferences
     attr_reader :token
     attr_reader :phone_numbers, :applications, :endpoints, :multipartycalls
     attr_reader :addresses, :identities
