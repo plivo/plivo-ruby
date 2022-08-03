@@ -27,39 +27,36 @@ module Plivo
       end
 
 
-      def create(iss ,sub = nil ,nbf = nil ,exp = nil ,incoming_allow = nil ,outgoing_allow = nil ,app = nil , options = nil)
-          valid_param?(:iss, iss, [String, Symbol, Hash], true)
-          valid_param?(:sub, sub, [String, Symbol], false)
-          valid_param?(:nbf, nbf, [Integer,String], false)
-          valid_param?(:exp, exp, [Integer,String], false)
-          valid_param?(:incoming_allow, incoming_allow, [TrueClass, FalseClass],
-                       false, [true, false])
-          valid_param?(:outgoing_allow, outgoing_allow,  [TrueClass, FalseClass],
-                       false, [true, false])
-          valid_param?(:app, app, [String, Symbol], false)
+      def create(iss , options )
+        valid_param?(:iss, iss, [String, Symbol, Hash], true)
 
+        valid_param?(:options, options, [Hash], false)
+        params = {}
+        params[:iss] = iss
+        params[:per] = {}
+        params[:per][:voice] = {}
 
+        if options.key?("sub") && valid_param?("sub", options["sub"], [String, Symbol], false )
+          params[:sub] = options["sub"]
+        end
+        if options.key("nbf") && valid_param?("nbf", options["nbf"], [Integer, Symbol], false )
+          params[:nbf] = options["nbf"]
+        end
+        if options.key("exp") && valid_param?("exp", options["exp"], [Integer, Symbol], false )
+          params[:exp] = options["exp"]
+        end
+        if options.key?("incoming_allow") && valid_param?("incoming_allow", options["incoming_allow"], [TrueClass, FalseClass, String,Symbol], false)
+          params[:per][:voice][:incoming_allow] = options["incoming_allow"]
+        end
+        if options.key?("outgoing_allow") && valid_param?("outgoing_allow", options["outgoing_allow"], [TrueClass, FalseClass, String, Symbol], false)
+          params[:per][:voice][:outgoing_allow] = options["outgoing_allow"]
+        end
+        if options.key?("app") && valid_param?("app", options["app"], [String, Symbol], false)
+          params[:app] = options["app"]
+        end
+          return perform_create(params, false) if options.nil?
 
-          if incoming_allow == true && sub.nil?
-            raise Plivo::Exceptions::ValidationError, "sub is required when incoming_allow is true"
-          elsif iss.nil?
-            raise Plivo::Exceptions::ValidationError, "iss is required"
-          else
-            params = {}
-            params[:iss] = iss if iss
-            params[:sub] = sub if sub
-            params[:nbf] = nbf if nbf
-            params[:exp] = exp if exp
-            params[:per] = {}
-            params[:per][:voice] = {}
-            params[:per][:voice][:incoming_allow] = incoming_allow if incoming_allow
-            params[:per][:voice][:outgoing_allow] = outgoing_allow if outgoing_allow
-            params[:app] = app if app
-
-            return perform_create(params, false) if options.nil?
-
-            perform_create(params.merge(options), false)
-            end
+          perform_create(params.merge(options), false)
       end
     end
   end
