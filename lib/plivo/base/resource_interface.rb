@@ -46,12 +46,6 @@ module Plivo
         @_resource_type.new(@_client, resource_json: response_json)
       end
 
-      def perform_delete(identifier, params = nil)
-        valid_param?(:identifier, identifier, [String, Symbol], true)
-        response_json = @_client.send_request(@_resource_uri + identifier.to_s + '/', 'DELETE', params, nil, false, is_voice_request: @_is_voice_request)
-        @_resource_type.new(@_client, resource_json: response_json)
-      end
-
       def perform_get_without_identifier(params)
         valid_param?(:params, params, Hash, true)
         response_json = @_client.send_request(@_resource_uri, 'GET', params, nil, false, is_voice_request: @_is_voice_request)
