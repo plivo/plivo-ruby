@@ -14,7 +14,7 @@ describe 'Token test' do
     response = to_json(@api.token
                            .create(
                              params = {
-                               iss: 'MAXXXXXXXXXXXXXXXXXX',
+                               iss: 'MAXXXXXXXXXXXXXXXXXX'
                              }))
 
     contents = JSON.parse(contents)
