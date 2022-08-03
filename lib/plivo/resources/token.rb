@@ -27,14 +27,16 @@ module Plivo
       end
 
 
-      def create(iss , options )
+      def create(iss , options = nil)
         valid_param?(:iss, iss, [String, Symbol, Hash], true)
-
-        valid_param?(:options, options, [Hash], false)
         params = {}
         params[:iss] = iss
         params[:per] = {}
         params[:per][:voice] = {}
+        return perform_create(params, false) if options.nil?
+        # return perform_action('Record', 'POST', nil, true) if options.nil?
+        valid_param?(:options, options, [Hash], false)
+
 
         if options.key?("sub") && valid_param?("sub", options["sub"], [String, Symbol], false )
           params[:sub] = options["sub"]
@@ -54,7 +56,7 @@ module Plivo
         if options.key?("app") && valid_param?("app", options["app"], [String, Symbol], false)
           params[:app] = options["app"]
         end
-          return perform_create(params, false) if options.nil?
+
 
           perform_create(params.merge(options), false)
       end
