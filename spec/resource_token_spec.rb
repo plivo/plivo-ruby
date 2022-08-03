@@ -15,16 +15,6 @@ describe 'Token test' do
                            .create(
                              params = {
                                iss: 'MAXXXXXXXXXXXXXXXXXX',
-                               sub: 'kowshik',
-                               nbf: '1658646749',
-                               exp: '1658696749',
-                               per: {
-                                 voice: {
-                                   incoming_allow: 'true',
-                                   outgoing_allow: 'true'
-                                 }
-                               },
-                               app: 'default'
                              }))
 
     contents = JSON.parse(contents)
@@ -35,20 +25,7 @@ describe 'Token test' do
                      method: 'POST',
                      data: {
                        :iss=>{
-                         :iss=>"MAXXXXXXXXXXXXXXXXXX",
-                         :sub=>"kowshik",
-                         :nbf=>"1658646749",
-                         :exp=>"1658696749",
-                         :per=>{
-                           :voice=>{
-                             :incoming_allow=>"true",
-                             :outgoing_allow=>"true"
-                           }
-                         },
-                         :app=>"default"
-                       },
-                       :per=>{
-                         :voice=>{}
+                         :iss=>"MAXXXXXXXXXXXXXXXXXX"
                        }
                      })
   end
