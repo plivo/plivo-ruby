@@ -27,7 +27,7 @@ describe 'Token test' do
                        :iss=>{
                          :iss=>"MAXXXXXXXXXXXXXXXXXX"
                        }
-                     })
+                     }, :per=>{:voice=>{}})
   end
 end
 
