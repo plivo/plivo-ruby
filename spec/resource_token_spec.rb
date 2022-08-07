@@ -24,7 +24,7 @@ describe 'Token test' do
                      method: 'POST',
                      data: {
                          :iss=>"MAXXXXXXXXXXXXXXXXXX"
-                     })
+                     } ,:per=>{:voice=>{}})
   end
 end
 
