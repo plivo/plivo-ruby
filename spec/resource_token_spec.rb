@@ -24,9 +24,7 @@ describe 'Token test' do
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/JWT/Token/',
                      method: 'POST',
                      data: {
-                       :iss=>{
                          :iss=>"MAXXXXXXXXXXXXXXXXXX"
-                       }
                      })
   end
 end
