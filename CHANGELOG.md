@@ -1,8 +1,8 @@
 # Change Log
 
-## [4.28.1](https://github.com/plivo/plivo-go/tree/v4.28.1) (2022-08-01)
+## [4.29.0](https://github.com/plivo/plivo-go/tree/v4.29.0) (2022-08-01)
 **Feature - Token Creation**
-- Added token creation
+- Added JWT token creation API
 
 ## [4.28.0](https://github.com/plivo/plivo-go/tree/v4.28.0) (2022-07-11)
 **Feature - STIR Attestation**
