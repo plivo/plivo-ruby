@@ -15,7 +15,7 @@ describe 'Token test' do
                            .create(
                              params = {
                                iss: 'MAXXXXXXXXXXXXXXXXXX'
-                             }, :per=>{:voice=>{}}))
+                             }))
 
     contents = JSON.parse(contents)
 
@@ -27,7 +27,7 @@ describe 'Token test' do
                        :iss=>{
                          :iss=>"MAXXXXXXXXXXXXXXXXXX"
                        }
-                     }, :per=>{:voice=>{}})
+                     })
   end
 end
 
