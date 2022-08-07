@@ -13,9 +13,8 @@ describe 'Token test' do
     mock(200, JSON.parse(contents))
     response = to_json(@api.token
                            .create(
-                             params = {
-                               iss: 'MAXXXXXXXXXXXXXXXXXX'
-                             }))
+                             'MAXXXXXXXXXXXXXXXXXX',
+                            ))
 
     contents = JSON.parse(contents)
 
