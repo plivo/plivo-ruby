@@ -29,8 +29,7 @@ module Plivo
         valid_param?(:iss, iss, [String, Symbol, Hash], true)
         params = {}
         params[:iss] = iss
-        params[:per] = {}
-        params[:per][:voice] = {}
+
         return perform_create(params, false) if options.nil?
         # return perform_action('Record', 'POST', nil, true) if options.nil?
         valid_param?(:options, options, [Hash], false)
@@ -45,11 +44,15 @@ module Plivo
         if options.key("exp") && valid_param?("exp", options["exp"], [Integer, Symbol], false )
           params[:exp] = options["exp"]
         end
-        if options.key?("incoming_allow") && valid_param?("incoming_allow", options["incoming_allow"], [TrueClass, FalseClass, String,Symbol], false)
-          params[:per][:voice][:incoming_allow] = options["incoming_allow"]
-        end
-        if options.key?("outgoing_allow") && valid_param?("outgoing_allow", options["outgoing_allow"], [TrueClass, FalseClass, String, Symbol], false)
-          params[:per][:voice][:outgoing_allow] = options["outgoing_allow"]
+        if options.key?("incoming_allow") || options.key?("outgoing_allow")
+          params[:per] = {}
+          params[:per][:voice] = {}
+          if options.key?("incoming_allow") && valid_param?("incoming_allow", options["incoming_allow"], [TrueClass, FalseClass, String,Symbol], false)
+            params[:per][:voice][:incoming_allow] = options["incoming_allow"]
+          end
+          if options.key?("outgoing_allow") && valid_param?("outgoing_allow", options["outgoing_allow"], [TrueClass, FalseClass, String, Symbol], false)
+            params[:per][:voice][:outgoing_allow] = options["outgoing_allow"]
+          end
         end
         if options.key?("app") && valid_param?("app", options["app"], [String, Symbol], false)
           params[:app] = options["app"]
