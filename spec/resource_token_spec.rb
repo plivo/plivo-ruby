@@ -21,7 +21,7 @@ describe 'Token test' do
     expect(JSON.parse(to_json_create(@api.token
                                          .create('MAXXXXXXXXXXXXXXXXXX'))))
       .to eql(JSON.parse(contents).reject { |_, v| v.nil? })
-    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/token/',
+    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/JWT/Token/',
                      method: 'POST',
                      data: {
                         iss:'MAXXXXXXXXXXXXXXXXXX',
