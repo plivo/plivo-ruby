@@ -1,14 +1,16 @@
 require 'rspec'
 
 describe 'Token test' do
-  # def to_json(token)
-  #   {
-  #
-  #   }.reject { |_, v| v.nil? }.to_json
-  # end
-  def to_json_create(token)
+  def to_json(token)
     {
       iss:token.iss
+    }.reject { |_, v| v.nil? }.to_json
+  end
+  def to_json_create(token)
+    {
+      api_id: token.api_id,
+      token: token.token
+
     }.reject { |_, v| v.nil? }.to_json
   end
   
