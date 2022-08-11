@@ -5,7 +5,6 @@ module Plivo
     class Token < Base::Resource
       def initialize(client, options = nil)
         @_name = 'JWT/Token'
-        @_identifier_string = 'tokens_id'
         super
         @_is_voice_request = true
       end
@@ -21,7 +20,6 @@ module Plivo
       def initialize(client, resource_list_json = nil)
         @_name = 'JWT/Token'
         @_resource_type = Token
-        @_identifier_string = 'token_id'
         super
         @_is_voice_request = true
       end
@@ -56,7 +54,6 @@ module Plivo
         if options.key?("app") && valid_param?("app", options["app"], [String, Symbol], false)
           params[:app] = options["app"]
         end
-
 
           perform_create(params.merge(options), false)
       end
