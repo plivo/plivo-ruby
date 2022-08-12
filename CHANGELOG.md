@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.29.0](https://github.com/plivo/plivo-go/tree/v4.29.0) (2022-08-01)
+**Feature - Token Creation**
+- `JWT Token Creation API` added functionality to create a new JWT token.
+
 ## [4.28.0](https://github.com/plivo/plivo-go/tree/v4.28.0) (2022-07-11)
 **Feature - STIR Attestation**
 - Add stir attestation param as part of Get CDR and Get live call APIs Response
