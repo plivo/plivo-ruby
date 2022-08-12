@@ -2,7 +2,7 @@
 
 ## [4.29.0](https://github.com/plivo/plivo-go/tree/v4.29.0) (2022-08-01)
 **Feature - Token Creation**
-- Added JWT token creation API
+- `JWT Token Creation API` added functionality to create a new JWT token.
 
 ## [4.28.0](https://github.com/plivo/plivo-go/tree/v4.28.0) (2022-07-11)
 **Feature - STIR Attestation**
