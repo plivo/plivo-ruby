@@ -38,16 +38,25 @@ module Plivo
         # @param [Hash] options
         # @option options [String] :brand
         # @option options [Status] :usecase
+        # @option options [Status] :limit
+        # @option options [Status] :offset
         # @return [Hash]
       def list(options=nil)
         return perform_list_without_object if options.nil?
   
         params = {}
-        %i[usecase brand].each do |param|
+        %i[usecase brand limit offset].each do |param|
           if options.key?(param) && valid_param?(param, options[param],
                                                    [String], true)
             params[param] = options[param]
           end
+        end
+        if options.key?(:limit) && (options[:limit] > 20 || options[:limit] <= 0)
+          raise_invalid_request('The maximum number of results that can be '\
+          "fetched is 20. limit can't be more than 20 or less than 1")
+        end
+        if options.key?(:offset) && options[:offset] < 0
+          raise_invalid_request("Offset can't be negative")
         end  
         perform_list_without_object(params)
       end
@@ -76,7 +85,7 @@ module Plivo
           raise_invalid_request("campaign_id must be provided")
         end
         action = options[:campaign_id] + '/Number'
-        perform_action(action, 'POST', options, true)            
+        perform_action_with_identifier(action, 'POST', options)            
       end
       ##
       #get campaign numbers
@@ -97,21 +106,21 @@ module Plivo
           raise_invalid_request("Offset can't be negative")
         end
         action = campaign_id + '/Number'
-        perform_action(action, 'GET', params, true)
+        perform_action_with_identifier(action, 'GET', params)
       end
       ##
       #get campaign number
       #
       def get_number(campaign_id, number)
         action = campaign_id + '/Number/' + number
-        perform_action(action, 'GET', nil, true)
+        perform_action_with_identifier(action, 'GET', nil)
       end
       ##
       #unlink campaign number
       #
       def number_unlink(campaign_id, number)
         action = campaign_id + '/Number/' + number
-        perform_action(action, 'DELETE', nil, true)
+        perform_action_with_identifier(action, 'DELETE', nil)
       end
     end
   end

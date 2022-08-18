@@ -173,4 +173,60 @@ describe 'Profile test' do
                             }
                          })
         end
+        it 'update profile' do
+          contents = File.read(Dir.pwd + '/spec/mocks/profileUpdateResponse.json')
+          mock(200, JSON.parse(contents))
+          response = to_json(@api.profile
+                                      .update('09322f43-fe16-4525-b8e4-4229c867795d', 
+                                          params ={
+                                              entity_type: "PRIVATE",
+                                              company_name: "plivo",
+                                              website: "www.example123.com",
+                                              vertical: "REAL_ESTATE",
+                                              address: {
+                                                  "street": "1234",
+                                                  "city": "New York",
+                                                  "state": "Califernia",
+                                                  "postal_code": "10001",
+                                                  "country": "US"
+                                              },
+                                              authorized_contact: {
+                                                  "first_name": "john",
+                                                  "last_name": "con",
+                                                  "phone": "1876865565",
+                                                  "email": "xyz123@plivo.com",
+                                                  "title": "ugigwc",
+                                                  "seniority": "admin"
+                                              }
+                                          }
+                                      ))
+      
+          contents = JSON.parse(contents)
+      
+          expect(JSON.parse(response))
+            .to eql(contents)
+          compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Profile/09322f43-fe16-4525-b8e4-4229c867795d/',
+                           method: 'POST',
+                           data: {
+                            entity_type: "PRIVATE",
+                            company_name: "plivo",
+                            website: "www.example123.com",
+                            vertical: "REAL_ESTATE",
+                            address: {
+                                "street": "1234",
+                                "city": "New York",
+                                "state": "Califernia",
+                                "postal_code": "10001",
+                                "country": "US"
+                            },
+                            authorized_contact: {
+                                "first_name": "john",
+                                "last_name": "con",
+                                "phone": "1876865565",
+                                "email": "xyz123@plivo.com",
+                                "title": "ugigwc",
+                                "seniority": "admin"
+                            }
+                           })
+          end
 end

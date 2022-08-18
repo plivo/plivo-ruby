@@ -98,6 +98,14 @@ module Plivo
         self
       end
 
+      def perform_action_with_identifier(identifier = nil, method = 'GET', params = nil)
+        resource_path = identifier ? @_resource_uri + identifier + '/' : @_resource_uri
+        Response.new(
+          @_client.send_request(resource_path, method, params, nil, false, is_voice_request: @_is_voice_request),
+          @_identifier_string
+        )
+      end
+
       def perform_list_without_object(params = nil)
         response_json = @_client.send_request(@_resource_uri, 'GET', params, nil, false, is_voice_request: @_is_voice_request)
         parse_and_set(response_json)
