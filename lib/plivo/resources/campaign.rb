@@ -47,7 +47,7 @@ module Plivo
         params = {}
         %i[usecase brand limit offset].each do |param|
           if options.key?(param) && valid_param?(param, options[param],
-                                                   [String], true)
+                                                   [String, Integer], true)
             params[param] = options[param]
           end
         end

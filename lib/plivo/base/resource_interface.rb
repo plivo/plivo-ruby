@@ -54,7 +54,7 @@ module Plivo
 
       def perform_create(params, use_multipart_conn=false)
         Response.new(
-          @_client.send_request(@_resource_uri, 'POST', params, nil, use_multipart_conn, is_voice_request: @_is_voice_request),
+          @_client.send_request(@_resource_uri, 'POST', params, 10, use_multipart_conn, is_voice_request: @_is_voice_request),
           @_identifier_string
         )
       end

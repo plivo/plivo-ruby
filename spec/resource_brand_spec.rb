@@ -64,7 +64,7 @@ describe 'Brand test' do
         contents = File.read(Dir.pwd + '/spec/mocks/brandListResponse.json')
         mock(200, JSON.parse(contents))
         response = to_json_list(@api.brand
-                                    .list())
+                                    .list({status: "COMPLETED", limit:2, offset:0}))
 
         contents = JSON.parse(contents)
 
@@ -72,7 +72,7 @@ describe 'Brand test' do
           .to eql(contents)
         compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/10dlc/Brand/',
                          method: 'GET',
-                         data: nil)
+                         data: {status: "COMPLETED", limit:2, offset:0})
     end
     it 'create brand' do
         contents = File.read(Dir.pwd + '/spec/mocks/brandCreateResponse.json')
