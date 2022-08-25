@@ -118,7 +118,7 @@ module Plivo
       ##
       #unlink campaign number
       #
-      def number_unlink(campaign_id, number)
+      def number_unlink(campaign_id, number, options = nil)
         action = campaign_id + '/Number/' + number
         perform_action_with_identifier(action, 'DELETE', nil)
       end
