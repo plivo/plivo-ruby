@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.30.0](https://github.com/plivo/plivo-go/tree/v4.30.0) (2022-08-26)
+**Feature - 10DLC APIs**
+- Added new 10DLC APIs
+
 ## [4.29.0](https://github.com/plivo/plivo-go/tree/v4.29.0) (2022-08-01)
 **Feature - Token Creation**
 - `JWT Token Creation API` added functionality to create a new JWT token.
