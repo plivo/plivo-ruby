@@ -1,0 +1,68 @@
+{
+    "api_id": "24725a58-0725-11ed-ab02-0242ac110004",
+    "profiles": [
+        {
+            "address": {
+                "city": "New York",
+                "country": "US",
+                "postal_code": "10001",
+                "state": "NY",
+                "street": "123"
+            },
+            "alt_business_id": "ABC",
+            "alt_business_id_type": "DUNS",
+            "authorized_contact": {
+                "email": "vishnu@plivo.com",
+                "first_name": "vishnu",
+                "last_name": "Doe",
+                "phone": "919742763781",
+                "seniority": "admin",
+                "title": "Doe"
+            },
+            "company_name": "ABC Inc.12345",
+            "customer_type": "RESELLER",
+            "ein": "122321231",
+            "ein_issuing_country": "US",
+            "entity_type": "PUBLIC",
+            "primary_profile": "0b8a783c-9906-4c84-8ace-cb88413a1da6",
+            "profile_alias": "vishnu4032",
+            "profile_type": "SECONDARY",
+            "profile_uuid": "e38000f9-4c05-4303-8dd1-b32a2d18fefb",
+            "stock_exchange": "NYSE",
+            "stock_symbol": "TESLA",
+            "vertical": "ENTERTAINMENT",
+            "website": "hibye.com"
+        },
+        {
+            "address": {
+                "city": "New York",
+                "country": "US",
+                "postal_code": "10001",
+                "state": "NY",
+                "street": "123"
+            },
+            "alt_business_id": "ABC",
+            "alt_business_id_type": "DUNS",
+            "authorized_contact": {
+                "email": "vishnu@plivo.com",
+                "first_name": "vishnu",
+                "last_name": "Doe",
+                "seniority": "admin",
+                "title": "Doe"
+            },
+            "company_name": "ABC Inc.12345",
+            "customer_type": "RESELLER",
+            "ein": "122321231",
+            "ein_issuing_country": "US",
+            "entity_type": "PUBLIC",
+            "primary_profile": "0b8a783c-9906-4c84-8ace-cb88413a1da6",
+            "profile_alias": "vishnu4034",
+            "profile_type": "SECONDARY",
+            "profile_uuid": "a18c75b8-bca3-4691-8745-73e46fc25b3e",
+            "stock_exchange": "NYSE",
+            "stock_symbol": "TESLA",
+            "vertical": "ENTERTAINMENT",
+            "website": "hibye.com"
+        }
+    ]
+}

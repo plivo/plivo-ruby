@@ -54,7 +54,7 @@ module Plivo
 
       def perform_create(params, use_multipart_conn=false)
         Response.new(
-          @_client.send_request(@_resource_uri, 'POST', params, nil, use_multipart_conn, is_voice_request: @_is_voice_request),
+          @_client.send_request(@_resource_uri, 'POST', params, 10, use_multipart_conn, is_voice_request: @_is_voice_request),
           @_identifier_string
         )
       end
@@ -96,6 +96,14 @@ module Plivo
         parse ? parse_and_set(response) : self
         method == 'POST' ? parse_and_set(params) : self
         self
+      end
+
+      def perform_action_with_identifier(identifier = nil, method = 'GET', params = nil)
+        resource_path = identifier ? @_resource_uri + identifier + '/' : @_resource_uri
+        Response.new(
+          @_client.send_request(resource_path, method, params, nil, false, is_voice_request: @_is_voice_request),
+          @_identifier_string
+        )
       end
 
       def perform_list_without_object(params = nil)

@@ -1,14 +1,17 @@
 {
-    "api_id": "71aa47e0-3750-11ec-8e4c-0242ac110002",
+    "api_id": "2ba626e0-08da-11ed-9bfc-0242ac110004",
     "brand": {
-        "brand_id": "BRPXS6E",
-        "company_name": "ABC Inc.",
-        "ein": "111111111",
+        "address": {
+            "city": "",
+            "country": "",
+            "postal_code": "",
+            "state": "",
+            "street": ""
+        },
+        "authorized_contact": {},
+        "brand_id": "BPL3KN9",
+        "brand_type": "STARTER",
         "ein_issuing_country": "US",
-        "email": "johndoe@abc.com",
-        "entity_type": "PRIVATE_PROFIT",
-        "registration_status": "COMPLETED",
-        "vertical": "RETAIL",
-        "website": "http://www.abcmobile.com"
+        "registration_status": "COMPLETED"
     }
 }

@@ -10,15 +10,22 @@ describe 'Brand test' do
     end
     def to_json_brand(obj)
      {
+     address: obj['address'],
+     authorized_contact: obj['authorized_contact'],
      brand_id: obj['brand_id'],
-     company_name: obj['company_name'],
-     ein:obj['ein'],
-     ein_issuing_country: obj['ein_issuing_country'],
-     email: obj['email'],
-     entity_type: obj['entity_type'],
+     brand_type: obj['brand_type'],
+     ein_issuing_country:obj['ein_issuing_country'],
      registration_status: obj['registration_status'],
+     brand_alias: obj['brand_alias'],
+     profile_uuid: obj['profile_uuid'],
      vertical: obj['vertical'],
-     website: obj['website']
+     vetting_score: obj['vetting_score'],
+     vetting_status: obj['vetting_status'],
+     entity_type: obj['entity_type'],
+     ein: obj['ein'],
+     website: obj['website'],
+     company_name: obj['company_name']
+
      }.reject { |_, v| v.nil? }.to_json
     end
     def to_json_list(list_object)
@@ -31,17 +38,25 @@ describe 'Brand test' do
             brands: objects_json
           }.to_json
     end
+    def to_json_create(obj)
+      puts obj
+      {
+        api_id: obj.api_id,
+        brand_id: obj.brand_id,
+        message: obj.message
+      }.reject { |_, v| v.nil? }.to_json
+  end
     it 'get brand' do
         contents = File.read(Dir.pwd + '/spec/mocks/brandGetResponse.json')
         mock(200, JSON.parse(contents))
         response = @api.brand
                        .get(
-                         'BRPXS6E'
+                         'BPL3KN9'
                        )
         expect(JSON.parse(to_json(response)))
           .to eql(JSON.parse(contents))
         compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/10dlc/Brand/'\
-                         'BRPXS6E/',
+                         'BPL3KN9/',
                          method: 'GET',
                          data: nil)
     end
@@ -49,7 +64,7 @@ describe 'Brand test' do
         contents = File.read(Dir.pwd + '/spec/mocks/brandListResponse.json')
         mock(200, JSON.parse(contents))
         response = to_json_list(@api.brand
-                                    .list())
+                                    .list({status: "COMPLETED", limit:2, offset:0}))
 
         contents = JSON.parse(contents)
 
@@ -57,35 +72,39 @@ describe 'Brand test' do
           .to eql(contents)
         compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/10dlc/Brand/',
                          method: 'GET',
-                         data: nil)
+                         data: {status: "COMPLETED", limit:2, offset:0})
     end
     it 'create brand' do
         contents = File.read(Dir.pwd + '/spec/mocks/brandCreateResponse.json')
         mock(200, JSON.parse(contents))
-        response = to_json(@api.brand
+        response = to_json_create(@api.brand
                                     .create(
-                                        params ={alt_business_id_type: "GIIN",
-                                        alt_business_id: "111",
-                                        brand_id: "B9UGPAG",
-                                        city: "New York",
-                                        company_name: "ABC Inc.",
-                                        country: "US",
-                                        ein: "111111111",
-                                        ein_issuing_country: "US",
-                                        email: "johndoe@abc.com",
-                                        entity_type: "SOLE_PROPRIETOR",
-                                        first_name: "John",
-                                        last_name: "Doe",
-                                        phone: "+11234567890",
-                                        postal_code: "10001",
-                                        registration_status: "PENDING",
-                                        state: "NY",
-                                        stock_exchange: "NASDAQ",
-                                        stock_symbol: "ABC",
-                                        street: "123",
-                                        vertical: "RETAIL",
-                                        website: "http://www.abcmobile.com",
-                                        referenceId: 11}
+                                        params ={
+                                          brand_alias: "brand name sample",
+                                          brand_type: "STARTER",
+                                          profile_uuid: "201faedc-7df9-4840-9ab1-3997ce3f7cf4",
+                                          secondary_vetting: false,
+                                          url: "http://example.come/test",
+                                          method: "POST",
+                                          subaccount_id: "1234544",
+                                          emailRecipients: "mrm",
+                                          campaignName: "plivo",
+                                          campaignUseCase: "MIXED",
+                                          campaignSubUseCases: ["2FA"],
+                                          campaignDescription: "MIXED campaign",
+                                          sampleMessage1: "sample1",
+                                          sampleMessage2: "sample2",
+                                          embeddedLink: false,
+                                          embeddedPhone: false,
+                                          numberPool: false,
+                                          ageGated: false,
+                                          directLending: false,
+                                          subscriberOptin: false,
+                                          subscriberOptout: false,
+                                          subscriberHelp: false,
+                                          affiliateMarketing: false,
+                                          resellerID: "87868787788"
+                                        }
                                     ))
     
         contents = JSON.parse(contents)
@@ -95,28 +114,30 @@ describe 'Brand test' do
         compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/10dlc/Brand/',
                          method: 'POST',
                          data: {
-                            alt_business_id_type: "GIIN",
-                            alt_business_id: "111",
-                            brand_id: "B9UGPAG",
-                            city: "New York",
-                            company_name: "ABC Inc.",
-                            country: "US",
-                            ein: "111111111",
-                            ein_issuing_country: "US",
-                            email: "johndoe@abc.com",
-                            entity_type: "SOLE_PROPRIETOR",
-                            first_name: "John",
-                            last_name: "Doe",
-                            phone: "+11234567890",
-                            postal_code: "10001",
-                            registration_status: "PENDING",
-                            state: "NY",
-                            stock_exchange: "NASDAQ",
-                            stock_symbol: "ABC",
-                            street: "123",
-                            vertical: "RETAIL",
-                            website: "http://www.abcmobile.com",
-                            referenceId: 11
+                          brand_alias: "brand name sample",
+                          brand_type: "STARTER",
+                          profile_uuid: "201faedc-7df9-4840-9ab1-3997ce3f7cf4",
+                          secondary_vetting: false,
+                          url: "http://example.come/test",
+                          method: "POST",
+                          subaccount_id: "1234544",
+                          emailRecipients: "mrm",
+                          campaignName: "plivo",
+                          campaignUseCase: "MIXED",
+                          campaignSubUseCases: ["2FA"],
+                          campaignDescription: "MIXED campaign",
+                          sampleMessage1: "sample1",
+                          sampleMessage2: "sample2",
+                          embeddedLink: false,
+                          embeddedPhone: false,
+                          numberPool: false,
+                          ageGated: false,
+                          directLending: false,
+                          subscriberOptin: false,
+                          subscriberOptout: false,
+                          subscriberHelp: false,
+                          affiliateMarketing: false,
+                          resellerID: "87868787788"
                          })
     end
 end
