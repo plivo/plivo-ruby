@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.31.0](https://github.com/plivo/plivo-go/tree/v4.31.0) (2022-09-29)
+**Feature - Audio Streaming**
+- Added functionality to start, stop and fetch audio streams
+
 ## [4.30.0](https://github.com/plivo/plivo-go/tree/v4.30.0) (2022-08-26)
 **Feature - 10DLC APIs**
 - Added new 10DLC APIs
