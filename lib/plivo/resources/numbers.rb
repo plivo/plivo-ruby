@@ -33,7 +33,10 @@ module Plivo
           sms_enabled: @sms_enabled,
           sms_rate: @sms_rate,
           voice_enabled: @voice_enabled,
-          voice_rate: @voice_rate
+          voice_rate: @voice_rate,
+          tendlc_campaign_id: @tendlc_campaign_id,
+          tendlc_registration_status: @tendlc_registration_status,
+          toll_free_sms_verification: @toll_free_sms_verification
         }.to_s
       end
     end
@@ -176,7 +179,10 @@ module Plivo
           sms_rate: @sms_rate,
           sub_account: @sub_account,
           voice_enabled: @voice_enabled,
-          voice_rate: @voice_rate
+          voice_rate: @voice_rate,
+          tendlc_campaign_id: @tendlc_campaign_id,
+          tendlc_registration_status: @tendlc_registration_status,
+          toll_free_sms_verification: @toll_free_sms_verification
         }.to_s
       end
     end
@@ -205,6 +211,15 @@ module Plivo
       #                                    - sms - Returns a list of numbers that provide only 'sms' services.
       # @option options [Int] :limit Used to display the number of results per page. The maximum number of results that can be fetched is 20.
       # @option options [Int] :offset Denotes the number of value items by which the results should be offset. Eg:- If the result contains a 1000 values and limit is set to 10 and offset is set to 705, then values 706 through 715 are displayed in the results. This parameter is also used for pagination of the results.
+      # @option options [String] :tendlc_campaign_id The 10DLC campaign that the number is currently linked with. You can filter US/CA local numbers linked to a specific campaign.
+      # @option options [String] :tendlc_registration_status Indicates the 10DLC registration status of a US/CA local number. The following values are valid:
+      #                                     - unregistered - Returns a list of numbers that are not linked to any campaign
+      #                                     - processing - Returns a list of numbers that are currently in the process of being linked to respective campaigns.
+      #                                     - completed - Returns a list of numbers that are successfully linked to respective campaigns.
+      # @option options [String] :toll_free_sms_verification Indicates the toll-free SMS verification status of SMS-enabled US/CA toll-free number. The following values are valid:
+      #                                     - unverified - Returns a list of SMS-enabled US/CA toll-free numbers that are not verified.
+      #                                     - pending_verification - Returns a list of SMS-enabled US/CA toll-free numbers that are pending verification
+      #                                     - verified - Returns a list of SMS-enabled US/CA toll-free numbers that are verified for enhanced outbound SMS limits.
       def list(options = nil)
         return perform_list if options.nil?
 
@@ -212,7 +227,7 @@ module Plivo
 
         params = {}
 
-        %i[number_startswith subaccount alias].each do |param|
+        %i[number_startswith subaccount alias tendlc_campaign_id tendlc_registration_status toll_free_sms_verification].each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [String, Symbol], true)
             params[param] = options[param]
