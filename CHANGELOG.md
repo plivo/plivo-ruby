@@ -1,23 +1,23 @@
 # Change Log
 
-## [4.30.2](https://github.com/plivo/plivo-go/tree/v4.30.2) (2022-09-28)
+## [4.30.2](https://github.com/plivo/plivo-ruby/tree/v4.30.2) (2022-09-28)
 **10DLC: Campaign request**
 - Added more attributes to create campaign request
 
-## [4.30.1](https://github.com/plivo/plivo-go/tree/v4.30.1) (2022-09-20)
+## [4.30.1](https://github.com/plivo/plivo-ruby/tree/v4.30.1) (2022-09-20)
 **stability - faraday upgrade**
 - faraday version upgrade
 
 
-## [4.30.0](https://github.com/plivo/plivo-go/tree/v4.30.0) (2022-08-26)
+## [4.30.0](https://github.com/plivo/plivo-ruby/tree/v4.30.0) (2022-08-26)
 **Feature - 10DLC APIs**
 - Added new 10DLC APIs
 
-## [4.29.0](https://github.com/plivo/plivo-go/tree/v4.29.0) (2022-08-01)
+## [4.29.0](https://github.com/plivo/plivo-ruby/tree/v4.29.0) (2022-08-01)
 **Feature - Token Creation**
 - `JWT Token Creation API` added functionality to create a new JWT token.
 
-## [4.28.0](https://github.com/plivo/plivo-go/tree/v4.28.0) (2022-07-11)
+## [4.28.0](https://github.com/plivo/plivo-ruby/tree/v4.28.0) (2022-07-11)
 **Feature - STIR Attestation**
 - Add stir attestation param as part of Get CDR and Get live call APIs Response
 
