@@ -74,6 +74,15 @@ module Plivo
         if not options[:usecase]
           raise_invalid_request("usecase must be provided")
         end
+        if not options[:message_flow]
+          raise_invalid_request("message_flow must be provided")
+        end
+        if not options[:help_message]
+          raise_invalid_request("help_message must be provided")
+        end
+        if not options[:optout_message]
+          raise_invalid_request("optout_message must be provided")
+        end
         perform_create(options)
       end
       ##
