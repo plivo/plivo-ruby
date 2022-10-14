@@ -17,6 +17,7 @@ describe 'Numbers test' do
       sms_rate: number.sms_rate,
       sub_account: number.sub_account,
       voice_enabled: number.voice_enabled,
+      voice_rate: number.voice_rate,
       tendlc_campaign_id: number.tendlc_campaign_id,
       tendlc_registration_status: number.tendlc_registration_status,
       toll_free_sms_verification: number.toll_free_sms_verification
