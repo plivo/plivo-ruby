@@ -13,5 +13,8 @@
   "sms_rate": "0.00000",
   "sub_account": null,
   "voice_enabled": true,
-  "voice_rate": "0.00850"
+  "voice_rate": "0.00850",
+  "tendlc_campaign_id": "ACB1234",
+  "tendlc_registration_status": "COMPLETED",
+  "toll_free_sms_verification": "verified"
 }
