@@ -3,7 +3,7 @@ module Plivo
       include Plivo::Utils
       class BrandUsecase < Base::Resource
         def initialize(client, options = nil)
-          @_name = '10dlc/Brand/usecases'
+          @_name = '10dlc/Brand'
           @_identifier_string = 'brand_id'
           super
         end
@@ -19,7 +19,7 @@ module Plivo
     
       class BrandUsecaseInterface < Base::ResourceInterface
         def initialize(client, resource_list_json = nil)
-          @_name = '10dlc/Brand/usecases'
+          @_name = '10dlc/Brand'
           @_resource_type = BrandUsecase
           @_identifier_string = 'brand_id'
           super
@@ -28,10 +28,10 @@ module Plivo
           ##
           # Get BrandUsecase
           # @param [String] brand_id
-          # @return [Brand] BrandUsecase
         def get(brand_id)
           valid_param?(:brand_id, brand_id, [String, Symbol], true)
-          perform_get(brand_id)
+          identifier = brand_id + '/usecases'
+          perform_action_with_identifier(identifier, 'GET', nil)
         end
     
       end
