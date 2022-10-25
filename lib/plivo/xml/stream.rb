@@ -11,16 +11,7 @@ module Plivo
 
       def initialize(body, attributes = {})
         if attributes && attributes[:extraHeaders]
-          input = attributes[:extraHeaders]
-          headers = Hash.new
-          input.each do |keys, value|
-            if keys.to_s.end_with?("X-PH")
-              headers[keys.to_s] = value
-            else
-              headers[keys.to_s + "X-PH"] = value
-            end
-          end
-          headersString = headers.to_json
+          headersString = :extraHeaders.to_json
           puts headersString
           attributes[:extraHeaders] = headersString
         end
