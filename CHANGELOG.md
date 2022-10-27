@@ -1,23 +1,31 @@
 # Change Log
 
-
-## [4.31.0](https://github.com/plivo/plivo-go/tree/v4.31.0) (2022-09-29)
+## [4.32.0](https://github.com/plivo/plivo-go/tree/v4.32.0) (2022-10-27)
 **Feature - Audio Streaming**
 - Added functionality to start, stop and fetch audio streams
+- 
+## [4.31.0](https://github.com/plivo/plivo-ruby/tree/v4.31.0) (2022-10-14)
+**Adding new attributes to Account PhoneNumber object**
+-Added 3 new keys to AccountPhoneNumber object:`tendlc_registration_status`, `tendlc_campaign_id` and `toll_free_sms_verification` (https://www.plivo.com/docs/numbers/api/account-phone-number#the-accountphonenumber-object)
+-Added 3 new filters to AccountPhoneNumber - list all my numbers API:`tendlc_registration_status`, `tendlc_campaign_id` and `toll_free_sms_verification` (https://www.plivo.com/docs/numbers/api/account-phone-number#list-all-my-numbers)
 
-## [4.30.1](https://github.com/plivo/plivo-go/tree/v4.30.1) (2022-09-20)
+## [4.30.2](https://github.com/plivo/plivo-ruby/tree/v4.30.2) (2022-09-28)
+**10DLC: Campaign request**
+- Added more attributes to create campaign request
+
+## [4.30.1](https://github.com/plivo/plivo-ruby/tree/v4.30.1) (2022-09-20)
 **stability - faraday upgrade**
 - faraday version upgrade
 
-## [4.30.0](https://github.com/plivo/plivo-go/tree/v4.30.0) (2022-08-26)
+## [4.30.0](https://github.com/plivo/plivo-ruby/tree/v4.30.0) (2022-08-26)
 **Feature - 10DLC APIs**
 - Added new 10DLC APIs
 
-## [4.29.0](https://github.com/plivo/plivo-go/tree/v4.29.0) (2022-08-01)
+## [4.29.0](https://github.com/plivo/plivo-ruby/tree/v4.29.0) (2022-08-01)
 **Feature - Token Creation**
 - `JWT Token Creation API` added functionality to create a new JWT token.
 
-## [4.28.0](https://github.com/plivo/plivo-go/tree/v4.28.0) (2022-07-11)
+## [4.28.0](https://github.com/plivo/plivo-ruby/tree/v4.28.0) (2022-07-11)
 **Feature - STIR Attestation**
 - Add stir attestation param as part of Get CDR and Get live call APIs Response
 

@@ -115,7 +115,7 @@ describe 'Campaign test' do
                                     "CUSTOMER_CARE",
                                     "2FA"
                                 ],
-                                description: "sample description text",
+                                description: "sample description text should be 40 character",
                                 embedded_link: false,
                                 embedded_phone: false,
                                 age_gated: false,
@@ -123,8 +123,8 @@ describe 'Campaign test' do
                                 subscriber_optin: true,
                                 subscriber_optout: true,
                                 subscriber_help: true,
-                                sample1: "test 1",
-                                sample2: "test 2",
+                                sample1: "sample message 1 should be 20 minimum character",
+                                sample2: "sample message 2 should be 20 minimum character",
                                 sample3: "test 3",
                                 sample4: "test 4",
                                 sample5: "test 5",
@@ -132,7 +132,10 @@ describe 'Campaign test' do
                                 method: "POST",
                                 subaccount_id: "109878667",
                                 affiliate_marketing: false,
-                                reseller_id: "98766"
+                                reseller_id: "98766",
+                                message_flow: "message_flow should be minimum 40 character",
+                                help_message: "hel_message should be minimum 20 character",
+                                optout_message: "optoutmessage should be mandatory"
                                 }
                                     ))
     
@@ -151,7 +154,7 @@ describe 'Campaign test' do
                                     "CUSTOMER_CARE",
                                     "2FA"
                                 ],
-                                description: "sample description text",
+                                description: "sample description text should be 40 character",
                                 embedded_link: false,
                                 embedded_phone: false,
                                 age_gated: false,
@@ -159,8 +162,8 @@ describe 'Campaign test' do
                                 subscriber_optin: true,
                                 subscriber_optout: true,
                                 subscriber_help: true,
-                                sample1: "test 1",
-                                sample2: "test 2",
+                                sample1: "sample message 1 should be 20 minimum character",
+                                sample2: "sample message 2 should be 20 minimum character",
                                 sample3: "test 3",
                                 sample4: "test 4",
                                 sample5: "test 5",
@@ -168,7 +171,10 @@ describe 'Campaign test' do
                                 method: "POST",
                                 subaccount_id: "109878667",
                                 affiliate_marketing: false,
-                                reseller_id: "98766"
+                                reseller_id: "98766",
+                                message_flow: "message_flow should be minimum 40 character",
+                                help_message: "hel_message should be minimum 20 character",
+                                optout_message: "optoutmessage should be mandatory"
                          })
     end
     it 'number_link campaign' do
