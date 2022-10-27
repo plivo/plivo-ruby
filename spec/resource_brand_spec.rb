@@ -45,7 +45,13 @@ describe 'Brand test' do
         brand_id: obj.brand_id,
         message: obj.message
       }.reject { |_, v| v.nil? }.to_json
-  end
+    end
+    def to_json_brand_usecase(obj)
+      {
+      brand_id: obj['brand_id'],
+      use_cases: obj['usecases']
+      }.reject { |_, v| v.nil? }.to_json
+    end
     it 'get brand' do
         contents = File.read(Dir.pwd + '/spec/mocks/brandGetResponse.json')
         mock(200, JSON.parse(contents))
@@ -106,9 +112,9 @@ describe 'Brand test' do
                                           resellerID: "87868787788"
                                         }
                                     ))
-    
+
         contents = JSON.parse(contents)
-    
+
         expect(JSON.parse(response))
           .to eql(contents)
         compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/10dlc/Brand/',
@@ -139,5 +145,19 @@ describe 'Brand test' do
                           affiliateMarketing: false,
                           resellerID: "87868787788"
                          })
+    end
+    it 'get brand usecase' do
+        contents = File.read(Dir.pwd + '/spec/mocks/brandGetUsecasesResponse.json')
+        mock(200, JSON.parse(contents))
+        response = @api.brand
+                       .get_usecases(
+                         'BPL3KN9'
+                       )
+        expect(JSON.parse(to_json_brand_usecase(response)))
+          .to eql(JSON.parse(contents))
+        compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/10dlc/Brand/'\
+                         'BPL3KN9/usecases/',
+                         method: 'GET',
+                         data: nil)
     end
 end

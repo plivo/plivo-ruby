@@ -42,7 +42,6 @@ module Plivo
       @powerpacks = Resources::PowerpackInterface.new(self)
       @media = Resources::MediaInterface.new(self)
       @brand = Resources::BrandInterface.new(self)
-      @brand_usecases = Resources::BrandUsecaseInterface.new(self)
       @campaign = Resources::CampaignInterface.new(self)
       @profile = Resources::ProfileInterface.new(self)
       @subaccounts = Resources::SubaccountInterface.new(self)
