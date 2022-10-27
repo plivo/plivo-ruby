@@ -15,7 +15,7 @@ module Plivo
     attr_reader :powerpacks
     attr_reader :powerpacks, :media
     attr_reader :lookup
-    attr_reader :brand, :campaign, :profile, :brand_usecases
+    attr_reader :brand, :campaign, :profile
     attr_reader :end_users
     attr_reader :compliance_document_types, :compliance_documents, :compliance_requirements, :compliance_applications
 

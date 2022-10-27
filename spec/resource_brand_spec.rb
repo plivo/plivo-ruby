@@ -47,9 +47,10 @@ describe 'Brand test' do
       }.reject { |_, v| v.nil? }.to_json
     end
     def to_json_brand_usecase(obj)
+      puts obj
       {
-      brand_id: obj['brand_id'],
-      use_cases: obj['usecases']
+      brand_id: obj.brand_id,
+      use_cases: obj.usecases
       }.reject { |_, v| v.nil? }.to_json
     end
     it 'get brand' do
