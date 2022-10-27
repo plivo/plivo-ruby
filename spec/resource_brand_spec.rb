@@ -50,7 +50,7 @@ describe 'Brand test' do
       puts obj
       {
       brand_id: obj.brand_id,
-      use_cases: obj.usecases
+      use_cases: obj.use_cases
       }.reject { |_, v| v.nil? }.to_json
     end
     it 'get brand' do
