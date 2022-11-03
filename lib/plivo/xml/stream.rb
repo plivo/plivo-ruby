@@ -11,7 +11,7 @@ module Plivo
 
       def initialize(body, attributes = {})
         if attributes && attributes[:extraHeaders]
-          headersString = :extraHeaders.to_json
+          headersString = attributes[:extraHeaders].to_json
           puts headersString
           attributes[:extraHeaders] = headersString
         end
