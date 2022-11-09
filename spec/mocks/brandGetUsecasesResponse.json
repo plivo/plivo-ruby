@@ -1,0 +1,11 @@
+{
+    "api_id": "dbc70630-3296-11ed-9b52-0242ac110004",
+    "use_cases": [
+      {
+        "name": "Starter",
+        "code": "STARTER",
+        "details": "Low cost campaign type designed for individuals and small businesses"
+      }
+    ],
+    "brand_id": "BPL3KN9"
+  }
