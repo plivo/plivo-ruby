@@ -246,7 +246,7 @@ module Plivo
         end
 
         if options.key?(:extra_headers) &&
-          valid_param?(:extra_headers, options[:extra_headers], [Hash], false)
+          valid_param?(:extra_headers, options[:extra_headers], [String], false)
           params[:extra_headers] = options[:extra_headers]
         end
         perform_action('Stream', 'POST', params, true)

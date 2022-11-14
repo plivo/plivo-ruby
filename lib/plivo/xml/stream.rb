@@ -10,11 +10,6 @@ module Plivo
       SUPPORTED_CALLBACKMETHOD=%w(GET POST)
 
       def initialize(body, attributes = {})
-        if attributes && attributes[:extraHeaders]
-          headersString = attributes[:extraHeaders].to_json
-          puts headersString
-          attributes[:extraHeaders] = headersString
-        end
         if attributes[:bidirectional] && !SUPPORTED_BIDIRECTIONAL.include?(attributes[:bidirectional])
           raise PlivoXMLError, "<Stream> bidirectional #{attributes[:bidirectional]} is not valid."
         end
