@@ -76,6 +76,15 @@ module Plivo
         end
         perform_create(options)
       end
+
+        ##
+        # Get BrandUsecase
+        # @param [String] brand_id
+      def get_usecases(brand_id)
+        valid_param?(:brand_id, brand_id, [String, Symbol], true)
+        identifier = brand_id + '/usecases'
+        perform_action_with_identifier(identifier, 'GET', nil)
+      end
     end
   end
 end
