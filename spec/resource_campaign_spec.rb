@@ -77,7 +77,7 @@ describe 'Campaign test' do
     puts obj
     {
       api_id: obj.api_id,
-      brand_id: obj.brand_id,
+      campaign_id: obj.campaign_id,
       message: obj.message
     }.reject { |_, v| v.nil? }.to_json
   end
