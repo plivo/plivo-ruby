@@ -131,6 +131,13 @@ module Plivo
         action = campaign_id + '/Number/' + number
         perform_action_with_identifier(action, 'DELETE', nil)
       end
+        ##
+        # Delete Campaign
+        # @param [String] campaign_id
+        def delete(campaign_id)
+          valid_param?(:campaign_id, campaign_id, [String, Symbol], true)
+          perform_delete(campaign_id)
+        end
     end
   end
 end

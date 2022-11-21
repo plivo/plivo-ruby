@@ -54,6 +54,14 @@ describe 'Brand test' do
         use_cases: obj.use_cases
       }.reject { |_, v| v.nil? }.to_json
     end
+    def to_json_delete(obj)
+      puts obj
+      {
+        api_id: obj.api_id,
+        brand_id: obj.brand_id,
+        message: obj.message
+      }.reject { |_, v| v.nil? }.to_json
+    end
     it 'get brand' do
         contents = File.read(Dir.pwd + '/spec/mocks/brandGetResponse.json')
         mock(200, JSON.parse(contents))
@@ -162,4 +170,19 @@ describe 'Brand test' do
                          method: 'GET',
                          data: nil)
     end
+    it 'delete brand' do
+      contents = File.read(Dir.pwd + '/spec/mocks/brandDeleteResponse.json')
+      mock(200, JSON.parse(contents))
+      response = @api.brand
+                     .delete(
+                       'BPL3KN9'
+                     )
+      expect(JSON.parse(to_json_delete(response)))
+        .to eql(JSON.parse(contents))
+      compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/10dlc/Brand/'\
+                       'BPL3KN9/',
+                       method: 'Delete',
+                       data: nil)
+    end
+    
 end
