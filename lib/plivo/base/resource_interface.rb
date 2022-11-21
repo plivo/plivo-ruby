@@ -59,15 +59,10 @@ module Plivo
         )
       end
 
-      def perform_delete(params=nil)
-        unless @id
-          raise_invalid_request("Cannot delete a #{@_name} resource "\
-          'without an identifier')
-        end
-
-        Response.new(
-          @_client.send_request(@_resource_uri, 'DELETE', params, nil, false, is_voice_request: @_is_voice_request),
-          @_identifier_string)
+      def perform_delete(identifier, params = nil)
+        valid_param?(:identifier, identifier, [String, Symbol], true)
+        response_json = @_client.send_request(@_resource_uri + identifier.to_s + '/', 'DELETE', params, nil, false, is_voice_request: @_is_voice_request)
+        @_resource_type.new(@_client, resource_json: response_json)
       end
 
       def perform_submit(identifier, params = nil)
