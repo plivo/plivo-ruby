@@ -181,7 +181,7 @@ describe 'Brand test' do
         .to eql(JSON.parse(contents))
       compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/10dlc/Brand/'\
                        'BPL3KN9/',
-                       method: 'Delete',
+                       method: 'DELETE',
                        data: nil)
     end
     
