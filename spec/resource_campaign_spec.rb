@@ -73,6 +73,14 @@ describe 'Campaign test' do
       usecase: obj.usecase
     }.reject { |_, v| v.nil? }.to_json
   end
+  def to_json_delete(obj)
+    puts obj
+    {
+      api_id: obj.api_id,
+      campaign_id: obj.campaign_id,
+      message: obj.message
+    }.reject { |_, v| v.nil? }.to_json
+  end
     it 'get campaign' do
         contents = File.read(Dir.pwd + '/spec/mocks/campaignGetResponse.json')
         mock(200, JSON.parse(contents))
@@ -252,5 +260,19 @@ describe 'Campaign test' do
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/10dlc/Campaign/CY5NVUA/Number/98765433245/',
                      method: 'DELETE',
                      data: nil)
+end
+it 'delete campaign' do
+  contents = File.read(Dir.pwd + '/spec/mocks/campaignDeleteResponse.json')
+  mock(200, JSON.parse(contents))
+  response = @api.campaign
+                 .delete(
+                   'CY5NVUA'
+                 )
+  expect(JSON.parse(to_json_delete(response)))
+    .to eql(JSON.parse(contents))
+  compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/10dlc/Campaign/'\
+                   'CY5NVUA/',
+                   method: 'DELETE',
+                   data: nil)
 end
 end

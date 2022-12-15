@@ -85,6 +85,14 @@ module Plivo
         identifier = brand_id + '/usecases'
         perform_action_with_identifier(identifier, 'GET', nil)
       end
+
+      ##
+        # Delete Brand
+        # @param [String] brand_id
+        def delete(brand_id)
+          valid_param?(:brand_id, brand_id, [String, Symbol], true)
+          perform_delete(brand_id)
+        end
     end
   end
 end

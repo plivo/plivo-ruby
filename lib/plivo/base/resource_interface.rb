@@ -59,6 +59,14 @@ module Plivo
         )
       end
 
+      def perform_delete(identifier, params = nil)
+        valid_param?(:identifier, identifier, [String, Symbol], true)
+        Response.new(
+          @_client.send_request(@_resource_uri + identifier.to_s + '/', 'DELETE', params, nil, false, is_voice_request: @_is_voice_request),
+          @_identifier_string
+        )
+      end
+
       def perform_submit(identifier, params = nil)
         valid_param?(:identifier, identifier, [String, Symbol], true)
         response_json = @_client.send_request(@_resource_uri + identifier.to_s + '/Submit/', 'POST', params, nil, false, is_voice_request: @_is_voice_request)

@@ -1,4 +1,8 @@
 # Change Log
+## [4.33.0](https://github.com/plivo/plivo-ruby/tree/v4.33.0) (2022-12-06)
+**10DLC: Delete Campaign and Brand API**
+- Added Delete campaign and brand API
+
 ## [4.32.0](https://github.com/plivo/plivo-ruby/tree/v4.32.0) (2022-11-03)
 **10DLC: Brand Usecase API**
 - Added Brand Usecase API
