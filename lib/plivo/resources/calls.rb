@@ -686,8 +686,8 @@ module Plivo
                                        "end_time" => response.end_time,
                                        "service_url" => response.service_url,
                                        "start_time" => response.start_time,
-                                       "status" => response.status,
-                                       "status_callback_url" => response.status_callback_url,
+                                       "status" => response.instance_variable_get(:@status),
+                                       "status_callback_url" => response.instance_variable_get(:@status_callback_url),
                                        "stream_id" => response.stream_id])
       end
     end
