@@ -681,22 +681,22 @@ module Plivo
       def get_stream(call_uuid, stream_id)
         valid_param?(:call_uuid, call_uuid, [String, Symbol], true )
         response = Call.new(@_client, resource_id: call_uuid).get_stream(stream_id)
-        return Base::Response.new(Hash["api_id" => response.api_id,
-                                       "audio_track" => response.audio_track,
-                                       "bidirectional" => response.bidirectional,
-                                       "bill_duration" => response.bill_duration,
-                                       "billed_amount" => response.billed_amount,
-                                       "call_uuid" => response.call_uuid,
-                                       "created_at" => response.created_at,
-                                       "end_time" => response.end_time,
-                                       "plivo_auth_id" => response.plivo_auth_id,
-                                       "resource_uri" => response.resource_uri,
-                                       "rounded_bill_duration" => response.rounded_bill_duration,
-                                       "service_url" => response.service_url,
-                                       "start_time" => response.start_time,
+        return Base::Response.new(Hash["api_id" => response.instance_variable_get(:@api_id),
+                                       "audio_track" => response.instance_variable_get(:@audio_track),
+                                       "bidirectional" => response.instance_variable_get(:@bidirectional),
+                                       "bill_duration" => response.instance_variable_get(:@bill_duration),
+                                       "billed_amount" => response.instance_variable_get(:@billed_amount),
+                                       "call_uuid" => response.instance_variable_get(:@call_uuid),
+                                       "created_at" => response.instance_variable_get(:@created_at),
+                                       "end_time" => response.instance_variable_get(:@end_time),
+                                       "plivo_auth_id" => response.instance_variable_get(:@plivo_auth_id),
+                                       "resource_uri" => response.instance_variable_get(:@resource_uri),
+                                       "rounded_bill_duration" => response.instance_variable_get(:@rounded_bill_duration),
+                                       "service_url" => response.instance_variable_get(:@service_url),
+                                       "start_time" => response.instance_variable_get(:@start_time),
                                        "status" => response.instance_variable_get(:@status),
                                        "status_callback_url" => response.instance_variable_get(:@status_callback_url),
-                                       "stream_id" => response.stream_id])
+                                       "stream_id" => response.instance_variable_get(:@stream_id)])
       end
     end
   end
