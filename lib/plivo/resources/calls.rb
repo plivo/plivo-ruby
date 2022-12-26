@@ -682,8 +682,16 @@ module Plivo
         valid_param?(:call_uuid, call_uuid, [String, Symbol], true )
         response = Call.new(@_client, resource_id: call_uuid).get_stream(stream_id)
         return Base::Response.new(Hash["api_id" => response.api_id,
+                                       "audio_track" => response.audio_track,
+                                       "bidirectional" => response.bidirectional,
+                                       "bill_duration" => response.bill_duration,
+                                       "billed_amount" => response.billed_amount,
                                        "call_uuid" => response.call_uuid,
+                                       "created_at" => response.created_at,
                                        "end_time" => response.end_time,
+                                       "plivo_auth_id" => response.plivo_auth_id,
+                                       "resource_uri" => response.resource_uri,
+                                       "rounded_bill_duration" => response.rounded_bill_duration,
                                        "service_url" => response.service_url,
                                        "start_time" => response.start_time,
                                        "status" => response.instance_variable_get(:@status),
