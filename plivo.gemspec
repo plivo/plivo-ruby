@@ -31,8 +31,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.0.0'
 
-  spec.add_dependency 'faraday', '~> 1.0'
-  spec.add_dependency 'faraday_middleware', '~> 1.0'
+  spec.add_dependency 'faraday', '~> 2.0'
   spec.add_dependency 'htmlentities'
   spec.add_dependency 'jwt'
 
