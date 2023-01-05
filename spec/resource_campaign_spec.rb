@@ -185,6 +185,28 @@ describe 'Campaign test' do
                                 optout_message: "optoutmessage should be mandatory"
                          })
     end
+
+    it 'update campaign' do
+      contents = File.read(Dir.pwd + '/spec/mocks/campaignUpdateResponse.json')
+      mock(200, JSON.parse(contents))
+      response = to_json(@api.campaign
+                                  .update("CXX",
+                                      params ={
+                                        sample1: "sample message 1 should be 20 minimum character",
+                                      }
+                                  )
+                                )
+  
+      contents = JSON.parse(contents)
+  
+      expect(JSON.parse(response))
+        .to eql(contents)
+      compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/10dlc/Campaign/CXX/',
+                       method: 'POST',
+                       data: {
+                              sample1: "sample message 1 should be 20 minimum character"
+                       })
+  end
     it 'number_link campaign' do
       contents = File.read(Dir.pwd + '/spec/mocks/campaignNumberLinkUnlinkResponse.json')
       mock(200, JSON.parse(contents))
