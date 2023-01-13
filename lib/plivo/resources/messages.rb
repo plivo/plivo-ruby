@@ -30,8 +30,7 @@ module Plivo
           total_amount: @total_amount,
           total_rate: @total_rate,
           powerpack_id: @powerpack_id,
-          units: @units,
-          message_expiry: @message_expiry
+          units: @units
         }.to_s
       end
     end
