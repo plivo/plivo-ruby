@@ -15,7 +15,8 @@ describe 'Messages test' do
       to_number: message.to_number,
       total_amount: message.total_amount,
       total_rate: message.total_rate,
-      units: message.units
+      units: message.units,
+      requester_ip: message.requester_ip
     }.to_json
   end
 
@@ -73,6 +74,7 @@ describe 'Messages test' do
                      method: 'GET',
                      data: nil)
     expect(response.id).to eql(response.message_uuid)
+    expect(response.requester_ip).to eql("192.168.1.1")
   end
 
   it 'lists all mms media' do
@@ -115,6 +117,8 @@ describe 'Messages test' do
                        message_direction: 'inbound',
                        message_state: 'delivered'
                      })
+    expect(JSON.parse(response)['objects'][0]['requester_ip']). to eql("192.168.1.1")
+    expect(JSON.parse(response)['objects'][19]['requester_ip']). to eql("192.168.1.20")
   end
 
   it 'sends a message' do

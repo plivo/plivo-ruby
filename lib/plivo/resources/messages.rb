@@ -30,7 +30,8 @@ module Plivo
           total_amount: @total_amount,
           total_rate: @total_rate,
           powerpack_id: @powerpack_id,
-          units: @units
+          units: @units,
+          requester_ip: @requester_ip
         }.to_s
       end
     end
