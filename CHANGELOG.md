@@ -1,4 +1,16 @@
 # Change Log
+## [4.35.0](https://github.com/plivo/plivo-ruby/tree/v4.35.0) (2022-01-18)
+**Adding new attribute - 'message_expiry' in Send Message API**
+- Added new attribute - message_expiry in Send Message API
+
+## [4.34.0](https://github.com/plivo/plivo-ruby/tree/v4.34.0) (2022-12-16)
+**10DLC: Update Campaign API**
+- Added Update Campaign API
+
+## [4.33.0](https://github.com/plivo/plivo-ruby/tree/v4.33.0) (2022-12-06)
+**10DLC: Delete Campaign and Brand API**
+- Added Delete campaign and brand API
+
 ## [4.32.0](https://github.com/plivo/plivo-ruby/tree/v4.32.0) (2022-11-03)
 **10DLC: Brand Usecase API**
 - Added Brand Usecase API
