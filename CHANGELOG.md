@@ -1,4 +1,8 @@
 # Change Log
+## [4.35.0](https://github.com/plivo/plivo-ruby/tree/v4.35.0) (2022-01-18)
+**Adding new attribute - 'message_expiry' in Send Message API**
+- Added new attribute - message_expiry in Send Message API
+
 ## [4.34.0](https://github.com/plivo/plivo-ruby/tree/v4.34.0) (2022-12-16)
 **10DLC: Update Campaign API**
 - Added Update Campaign API

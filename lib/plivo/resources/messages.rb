@@ -69,6 +69,7 @@ module Plivo
       # @option options [String] :method The method used to call the url. Defaults to POST.
       # @option options [String] :log If set to false, the content of this message will not be logged on the Plivo infrastructure and the dst value will be masked (e.g., 141XXXXX528). Default is set to true.
       # @option options [String] :trackable set to false
+      # @option options[Int]: message_expiry, int value
       # @option options[List]: media_urls Minimum one media url should be present in Media urls list to send mms. Maximum allowd 10 media urls inside the list (e.g, media_urls : ['https//example.com/test.jpg', 'https://example.com/abcd.gif'])
       # @option options[List]: media_ids Minimum one media ids should be present in Media ids list to send mms. Maximum allowd 10 media ids inside the list (e.g, media_ids : ['1fs211ba-355b-11ea-bbc9-02121c1190q7'])
       
@@ -122,6 +123,11 @@ module Plivo
           if value.key?(:log) &&
             valid_param?(:log, value[:log], [TrueClass, FalseClass], true)
               params[:log] = value[:log]
+          end
+
+          if value.key?(:message_expiry) &&
+            valid_param?(:message_expiry, value[:message_expiry], [Integer, Integer], true)
+              params[:message_expiry] = value[:message_expiry]
           end         
 
           if value.key?(:trackable) &&
@@ -217,6 +223,11 @@ module Plivo
           if options.key?(:media_ids) &&
             valid_param?(:media_ids, options[:media_ids], Array, true)
            params[:media_ids] = options[:media_ids]
+          end
+
+          if options.key?(:message_expiry) &&
+            valid_param?(:message_expiry, options[:message_expiry], [Integer, Integer], true)
+              params[:message_expiry] = options[:message_expiry]
           end
 
           if options.key?(:trackable) &&
