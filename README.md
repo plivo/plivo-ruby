@@ -9,7 +9,7 @@ The Plivo Ruby SDK makes it simpler to integrate communications into your Ruby a
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'plivo', '>= 4.35.0'
+gem 'plivo', '>= 4.36.0'
 ```
 
 And then execute:
@@ -173,3 +173,23 @@ More examples are available [here](https://github.com/plivo/plivo-examples-ruby)
 
 ## Reporting issues
 Report any feedback or problems with this version by [opening an issue on Github](https://github.com/plivo/plivo-ruby/issues).
+
+## Local Development
+> Note: Requires latest versions of Docker & Docker-Compose. If you're on MacOS, ensure Docker Desktop is running.
+1. Export the following environment variables in your host machine:
+```bash
+export PLIVO_AUTH_ID=<your_auth_id>
+export PLIVO_AUTH_TOKEN=<your_auth_token>
+export PLIVO_API_DEV_HOST=<plivoapi_dev_endpoint>
+export PLIVO_API_PROD_HOST=<plivoapi_public_endpoint>
+```
+2. Run `make build`. This will create a docker container in which the sdk will be setup and dependencies will be installed.
+> The entrypoint of the docker container will be the `setup_sdk.sh` script. The script will handle all the necessary changes required for local development.
+3. The above command will print the docker container id (and instructions to connect to it) to stdout.
+4. The testing code can be added to `<sdk_dir_path>/ruby-sdk-test/test.rb` in host  
+ (or `/usr/src/app/ruby-sdk-test/test.rb` in container)
+5. The sdk directory will be mounted as a volume in the container. So any changes in the sdk code will also be reflected inside the container.
+> To use the local code in the test file, import the sdk in test file using:   
+`require "/usr/src/app/lib/plivo.rb"`   
+6. To run unit tests, run `make test CONTAINER=<cont_id>` in host, where `<cont_id>` is the docker container id created in 2.   
+(The docker container should be running)
