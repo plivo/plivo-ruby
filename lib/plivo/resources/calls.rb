@@ -376,7 +376,6 @@ module Plivo
           subaccount
           to_number
           stir_verification
-          source_ip
         ].reduce({}) do |result_hash, param|
           if options.key?(param)
             if param == :call_direction
