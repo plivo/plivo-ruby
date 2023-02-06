@@ -232,7 +232,8 @@ module Plivo
           direction: @direction,
           caller_name: @caller_name,
           stir_verification: @stir_verification,
-          stir_attestation: @stir_attestation
+          stir_attestation: @stir_attestation,
+          source_ip: @source_ip
         }
         call_details = call_details.select {|k, v| !v.nil? }
         call_details.to_s
@@ -375,6 +376,7 @@ module Plivo
           subaccount
           to_number
           stir_verification
+          source_ip
         ].reduce({}) do |result_hash, param|
           if options.key?(param)
             if param == :call_direction
