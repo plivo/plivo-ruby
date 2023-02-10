@@ -86,6 +86,16 @@ module Plivo
         perform_create(options)
       end
       ##
+      # Update Camapign
+      def update(campaign_id, options=nil)
+        valid_param?(:options, options, Hash, true)
+        if not campaign_id
+          raise_invalid_request("campaign_id must be provided")
+        end
+        action = campaign_id
+        perform_action_with_identifier(action, 'POST', options)
+      end
+      ##
       # campaign number link
       #
       def number_link(options=nil)
@@ -131,6 +141,13 @@ module Plivo
         action = campaign_id + '/Number/' + number
         perform_action_with_identifier(action, 'DELETE', nil)
       end
+        ##
+        # Delete Campaign
+        # @param [String] campaign_id
+        def delete(campaign_id)
+          valid_param?(:campaign_id, campaign_id, [String, Symbol], true)
+          perform_delete(campaign_id)
+        end
     end
   end
 end

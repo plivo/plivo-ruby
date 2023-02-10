@@ -1,7 +1,25 @@
 # Change Log
-## [4.33.0](https://github.com/plivo/plivo-go/tree/v4.32.0) (2022-11-15)
+
+## [4.37.0](https://github.com/plivo/plivo-go/tree/v4.37.0) (2022-02-10)
 **Feature - Audio Streaming**
 - Added functionality to start, stop and fetch audio streams
+- Added functionality to create stream XML
+
+## [4.36.0](https://github.com/plivo/plivo-ruby/tree/v4.36.0) (2022-01-25)
+**Adding new attribute - 'requester_ip' in Get Message and List Mssage APIs**
+- Add `requester_ip` to the response for the [list all messages API](https://www.plivo.com/docs/sms/api/message/list-all-messages/) and the [get message details API](https://www.plivo.com/docs/sms/api/message#retrieve-a-message)
+
+## [4.35.0](https://github.com/plivo/plivo-ruby/tree/v4.35.0) (2022-01-18)
+**Adding new attribute - 'message_expiry' in Send Message API**
+- Added new attribute - message_expiry in Send Message API
+
+## [4.34.0](https://github.com/plivo/plivo-ruby/tree/v4.34.0) (2022-12-16)
+**10DLC: Update Campaign API**
+- Added Update Campaign API
+
+## [4.33.0](https://github.com/plivo/plivo-ruby/tree/v4.33.0) (2022-12-06)
+**10DLC: Delete Campaign and Brand API**
+- Added Delete campaign and brand API
 
 ## [4.32.0](https://github.com/plivo/plivo-ruby/tree/v4.32.0) (2022-11-03)
 **10DLC: Brand Usecase API**
