@@ -1,4 +1,8 @@
 # Change Log
+## [4.37.0](https://github.com/plivo/plivo-ruby/tree/v4.37.0) (2023-02-23)
+**Feature - Enhance MDR filtering capabilities **
+- Added new fields on MDR object response
+
 ## [4.34.0](https://github.com/plivo/plivo-ruby/tree/v4.34.0) (2022-12-16)
 **10DLC: Update Campaign API**
 - Added Update Campaign API
