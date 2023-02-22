@@ -1,4 +1,8 @@
 # Change Log
+## [4.38.0](https://github.com/plivo/plivo-ruby/tree/v4.38.0) (2023-03-03)
+**Adding new attribute - 'is_domestic' in Get Message and List Message APIs**
+- Add `is_domestic` to the response for the [list all messages API](https://www.plivo.com/docs/sms/api/message/list-all-messages/) and the [get message details API](https://www.plivo.com/docs/sms/api/message#retrieve-a-message)
+
 ## [4.37.1](https://github.com/plivo/plivo-ruby/tree/v4.37.1) (2023-02-23)
 **Bug fix on Messaging object **
 - 

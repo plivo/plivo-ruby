@@ -34,7 +34,8 @@ module Plivo
           tendlc_campaign_id: @tendlc_campaign_id,
           destination_country_iso2: @destination_country_iso2,
           tendlc_registration_status: @tendlc_registration_status,
-          requester_ip: @requester_ip
+          requester_ip: @requester_ip,
+          is_domestic: @is_domestic
         }.to_s
       end
     end
