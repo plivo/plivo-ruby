@@ -19,6 +19,8 @@ module Plivo
           api_id: @api_id,
           call_uuid: @call_uuid,
           conference_name: @conference_name,
+          cost: @cost,
+          days_of_storage: @days_of_storage,
           recording_duration_ms: @recording_duration_ms,
           recording_end_ms: @recording_end_ms,
           recording_format: @recording_format,
@@ -27,6 +29,7 @@ module Plivo
           recording_type: @recording_type,
           recording_url: @recording_url,
           resource_uri: @resource_uri,
+          rounded_duration: @rounded_duration,
           from_number: @from_number,
           to_number: @to_number,
           mpc_name: @mpc_name,
@@ -72,6 +75,7 @@ module Plivo
           add_time__lt add_time__lte
           from_number to_number conference_uuid
           conference_name mpc_name mpc_uuid
+          rounded_duration
         ]
 
         params_expected.each do |param|
