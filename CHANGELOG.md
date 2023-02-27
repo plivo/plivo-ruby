@@ -3,6 +3,16 @@
 **Feature - Enhance MDR filtering capabilities **
 - Added new fields on MDR object response
 
+
+## [4.36.0](https://github.com/plivo/plivo-ruby/tree/v4.36.0) (2022-01-25)
+**Adding new attribute - 'requester_ip' in Get Message and List Mssage APIs**
+- Add `requester_ip` to the response for the [list all messages API](https://www.plivo.com/docs/sms/api/message/list-all-messages/) and the [get message details API](https://www.plivo.com/docs/sms/api/message#retrieve-a-message)
+
+## [4.35.0](https://github.com/plivo/plivo-ruby/tree/v4.35.0) (2022-01-18)
+**Adding new attribute - 'message_expiry' in Send Message API**
+- Added new attribute - message_expiry in Send Message API
+
+
 ## [4.34.0](https://github.com/plivo/plivo-ruby/tree/v4.34.0) (2022-12-16)
 **10DLC: Update Campaign API**
 - Added Update Campaign API
