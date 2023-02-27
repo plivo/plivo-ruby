@@ -9,7 +9,7 @@ The Plivo Ruby SDK makes it simpler to integrate communications into your Ruby a
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'plivo', '>= 4.36.0'
+gem 'plivo', '>= 4.37.0'
 ```
 
 And then execute:
