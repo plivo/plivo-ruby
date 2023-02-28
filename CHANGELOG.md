@@ -1,4 +1,7 @@
 # Change Log
+## [4.37.1](https://github.com/plivo/plivo-ruby/tree/v4.37.1) (2023-02-23)
+**Bug fix on Messaging object **
+- 
 ## [4.37.0](https://github.com/plivo/plivo-ruby/tree/v4.37.0) (2023-02-23)
 **Feature - Enhance MDR filtering capabilities **
 - Added new fields on MDR object response
