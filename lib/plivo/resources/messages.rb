@@ -105,10 +105,17 @@ module Plivo
 
           params = {
             src: value[:src],
-            dst: value[:dst],
             text: value[:text],
             powerpack_uuid: value[:powerpack_uuid]
           }
+          if (value[:dst].is_a?(Array))
+            value[:dst].each do |dst_num|
+               valid_param?(:dst_num, dst_num, [Integer, String, Symbol], true)
+               params[:dst] = value[:dst].join('<')
+            end
+          else
+            params[:dst] = value[:dst]
+          end
 
           #Handling optional params in One HASH
           if value.key?(:type) && valid_param?(:type, value[:type],String, true, %w[sms mms])
