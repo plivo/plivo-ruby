@@ -1,4 +1,9 @@
 # Change Log
+## [4.39.1](https://github.com/plivo/plivo-ruby/tree/v4.39.1) (2023-04-04)
+**Feature - Recording API changes**
+- Added `monthly_recording_storage_amount`, `recording_storage_rate`, `rounded_recording_duration`, and `recording_storage_duration` parameters to the response for [get single recording API](https://www.plivo.com/docs/voice/api/recording#retrieve-a-recording) and [get all recordings API](https://www.plivo.com/docs/voice/api/recording#list-all-recordings)
+- Added `recording_storage_duration` parameter as a filter option for [get all recordings API](https://www.plivo.com/docs/voice/api/recording#list-all-recordings)
+
 ## [4.39.0](https://github.com/plivo/plivo-ruby/tree/v4.39.0) (2023-03-17)
 **Adding new attribute - 'created_at' in List Profiles, Get Profile, List Brands, Get Brand, List Campaigns and Get Campaign APIs**
 - dding new attribute - 'created_at' in List Profiles, Get Profile, List Brands, Get Brand, List Campaigns and Get Campaign APIs
