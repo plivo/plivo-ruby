@@ -1,5 +1,10 @@
 # Change Log
 
+## [4.43.0](https://github.com/plivo/plivo-ruby/tree/v4.43.0) (2023-05-26)
+**Feature - Recording API changes**
+- Added `monthly_recording_storage_amount`, `recording_storage_rate`, `rounded_recording_duration`, and `recording_storage_duration` parameters to the response for [get single recording API](https://www.plivo.com/docs/voice/api/recording#retrieve-a-recording) and [get all recordings API](https://www.plivo.com/docs/voice/api/recording#list-all-recordings)
+- Added `recording_storage_duration` parameter as a filter option for [get all recordings API](https://www.plivo.com/docs/voice/api/recording#list-all-recordings)
+
 ## [4.42.0](https://github.com/plivo/plivo-ruby/tree/v4.42.0) (2023-05-04)
 **Adding new attribute - 'renewalDate' in Get Number and List Number APIs**
 - Add New Param `renewalDate` to the response of the [list all numbers API], [list single number API]
@@ -32,12 +37,9 @@
 **Feature - Enhance MDR filtering capabilities **
 - Added new fields on MDR object response
 
-
-
 ## [4.37.0](https://github.com/plivo/plivo-ruby/tree/v4.37.0) (2023-02-06)
 **Feature - Added New Param 'source_ip' in GetCall and ListCalls**
 - Add `source_ip` to the response for the [retrieve a call details API](https://www.plivo.com/docs/voice/api/call#retrieve-a-call) and the [retreive all call details API](https://www.plivo.com/docs/voice/api/call#retrieve-all-calls)
-
 
 ## [4.36.0](https://github.com/plivo/plivo-ruby/tree/v4.36.0) (2022-01-25)
 **Adding new attribute - 'requester_ip' in Get Message and List Mssage APIs**
