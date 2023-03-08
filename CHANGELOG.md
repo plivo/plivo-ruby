@@ -1,4 +1,8 @@
 # Change Log
+## [4.38.2](https://github.com/plivo/plivo-java/tree/v4.38.2) (2023-03-08)
+- Added `cost`, `rounded_duration`, and `days_of_storage` parameters to the response for [get single recording API](https://www.plivo.com/docs/voice/api/recording#retrieve-a-recording) and [get all recordings API](https://www.plivo.com/docs/voice/api/recording#list-all-recordings)
+- Added `rounded_duration` parameter as a filter option for [get all recordings API](https://www.plivo.com/docs/voice/api/recording#list-all-recordings)
+
 ## [4.38.1](https://github.com/plivo/plivo-ruby/tree/v4.38.1) (2023-03-06)
 **Bug fix on create message**
 - Bulk send message fix
