@@ -32,14 +32,16 @@ if [ ! -f $testDir/test.rb ]; then
     cd -
 fi
 
-echo -e "\n\nSDK setup complete!"
-echo "To test your changes:"
-echo -e "\t1. Add your test code in <path_to_cloned_sdk>/$testDir/test.rb on host (or /usr/src/app/$testDir/test.rb in the container)"
-echo -e "\t\tNote: To use sdk in test file, import using $GREEN require \"/usr/src/app/lib/plivo.rb\"$NC"
-echo -e "\t2. Run a terminal in the container using: $GREEN docker exec -it $HOSTNAME /bin/bash$NC"
-echo -e "\t3. Navigate to the test directory: $GREEN cd /usr/src/app/$testDir$NC"
-echo -e "\t4. Run your test file: $GREEN ruby test.rb$NC"
-echo -e "\t5. For running unit tests, run on host: $GREEN make test CONTAINER=$HOSTNAME$NC"
-
+echo -e "\n\nSDK setup complete! You can test changes either on host or inside the docker container:"
+echo -e "\ta. To test your changes ON HOST:"
+echo -e "\t\t1. Add your test code in <path_to_cloned_sdk>/$testDir/test.rb"
+echo -e "\t\t2. Run your test file using: $GREEN make run CONTAINER=$HOSTNAME$NC"
+echo -e "\t\t3. Run unit tests using: $GREEN make test CONTAINER=$HOSTNAME$NC"
+echo
+echo -e "\tb. To test your changes INSIDE CONTAINER:"
+echo -e "\t\t1. Run a terminal in the container using: $GREEN docker exec -it $HOSTNAME /bin/bash$NC"
+echo -e "\t\t2. Add your test code in /usr/src/app/$testDir/test.rb"
+echo -e "\t\t3. Run your test file using: $GREEN make run$NC"
+echo -e "\t\t4. Run unit tests using: $GREEN make test$NC"
 # To keep the container running post setup
 /bin/bash
