@@ -31,7 +31,8 @@
             "stock_exchange": "NYSE",
             "stock_symbol": "TESLA",
             "vertical": "ENTERTAINMENT",
-            "website": "hibye.com"
+            "website": "hibye.com",
+            "created_at": "2023-01-16T06:22:35.195487Z"
         },
         {
             "address": {
@@ -62,7 +63,8 @@
             "stock_exchange": "NYSE",
             "stock_symbol": "TESLA",
             "vertical": "ENTERTAINMENT",
-            "website": "hibye.com"
+            "website": "hibye.com",
+            "created_at": "2023-01-16T06:22:35.195487Z"
         }
     ]
 }
