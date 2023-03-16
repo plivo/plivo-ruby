@@ -16,7 +16,8 @@ describe 'Campaign test' do
      reseller_id: obj['reseller_id'],
      usecase: obj['usecase'],
      registration_status: obj['registration_status'],
-     sub_usecase: obj['sub_usecase']
+     sub_usecase: obj['sub_usecase'],
+     created_at: obj['created_at']
      }.reject { |_, v| v.nil? }.to_json
     end
     def to_json_list(list_object)
