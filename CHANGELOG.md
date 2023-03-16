@@ -1,4 +1,8 @@
 # Change Log
+## [4.38.2](https://github.com/plivo/plivo-ruby/tree/v4.38.2) (2023-03-16)
+**Feature : Added new param in getCallDetail api**
+- From now on we can see CNAM(Caller_id name) details at CDR level.
+
 ## [4.38.1](https://github.com/plivo/plivo-ruby/tree/v4.38.1) (2023-03-06)
 **Bug fix on create message**
 - Bulk send message fix
