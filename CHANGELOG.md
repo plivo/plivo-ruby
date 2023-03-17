@@ -1,5 +1,5 @@
 # Change Log
-## [4.38.2](https://github.com/plivo/plivo-ruby/tree/v4.38.2) (2023-03-16)
+## [4.38.2](https://github.com/plivo/plivo-ruby/tree/v4.38.2) (2023-03-17)
 **Adding new attribute - 'created_at' in List Profiles, Get Profile, List Brands, Get Brand, List Campaigns and Get Campaign APIs**
 - dding new attribute - 'created_at' in List Profiles, Get Profile, List Brands, Get Brand, List Campaigns and Get Campaign APIs
 
