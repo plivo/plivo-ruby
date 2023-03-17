@@ -1,4 +1,8 @@
 # Change Log
+## [4.39.0](https://github.com/plivo/plivo-ruby/tree/v4.39.0) (2023-03-17)
+**Adding new attribute - 'created_at' in List Profiles, Get Profile, List Brands, Get Brand, List Campaigns and Get Campaign APIs**
+- dding new attribute - 'created_at' in List Profiles, Get Profile, List Brands, Get Brand, List Campaigns and Get Campaign APIs
+
 ## [4.38.1](https://github.com/plivo/plivo-ruby/tree/v4.38.1) (2023-03-06)
 **Bug fix on create message**
 - Bulk send message fix

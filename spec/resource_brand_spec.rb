@@ -24,7 +24,8 @@ describe 'Brand test' do
      entity_type: obj['entity_type'],
      ein: obj['ein'],
      website: obj['website'],
-     company_name: obj['company_name']
+     company_name: obj['company_name'],
+     created_at: obj['created_at']
 
      }.reject { |_, v| v.nil? }.to_json
     end
