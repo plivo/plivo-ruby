@@ -16,5 +16,5 @@
   "total_rate": "0.03570",
   "stir_verification": "Verified",
   "stir_attestation": "A",
-  "cnam_lookup_number_config": ""
+  "cnam_lookup": "disabled"
 }
