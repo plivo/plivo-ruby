@@ -7,17 +7,18 @@ describe 'Recordings test' do
       api_id: recording.api_id,
       call_uuid: recording.call_uuid,
       conference_name: recording.conference_name,
-      cost: recording.cost,
-      days_of_storage: recording.days_of_storage,
+      monthly_recording_storage_amount: recording.monthly_recording_storage_amount,
       recording_duration_ms: recording.recording_duration_ms,
       recording_end_ms: recording.recording_end_ms,
       recording_format: recording.recording_format,
       recording_id: recording.recording_id,
       recording_start_ms: recording.recording_start_ms,
+      recording_storage_duration: recording.recording_storage_duration,
+      recording_storage_rate: recording.recording_storage_rate,
       recording_type: recording.recording_type,
       recording_url: recording.recording_url,
       resource_uri: recording.resource_uri,
-      rounded_duration: recording.rounded_duration
+      rounded_recording_duration: recording.rounded_recording_duration
     }.to_json
   end
 
