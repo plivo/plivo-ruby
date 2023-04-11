@@ -1,8 +1,35 @@
 # Change Log
 
+
+## [4.40.0](https://github.com/plivo/plivo-ruby/tree/v4.37.0) (2023-04-11)
+**Feature - Added New Param 'source_ip' in GetCall and ListCalls**
+- Add `source_ip` to the response for the [retrieve a call details API](https://www.plivo.com/docs/voice/api/call#retrieve-a-call) and the [retreive all call details API](https://www.plivo.com/docs/voice/api/call#retrieve-all-calls)
+
+## [4.39.0](https://github.com/plivo/plivo-ruby/tree/v4.39.0) (2023-03-17)
+**Adding new attribute - 'created_at' in List Profiles, Get Profile, List Brands, Get Brand, List Campaigns and Get Campaign APIs**
+- dding new attribute - 'created_at' in List Profiles, Get Profile, List Brands, Get Brand, List Campaigns and Get Campaign APIs
+
+## [4.38.1](https://github.com/plivo/plivo-ruby/tree/v4.38.1) (2023-03-06)
+**Bug fix on create message**
+- Bulk send message fix
+
+## [4.38.0](https://github.com/plivo/plivo-ruby/tree/v4.38.0) (2023-03-03)
+**Adding new attribute - 'is_domestic' in Get Message and List Message APIs**
+- Add `is_domestic` to the response for the [list all messages API](https://www.plivo.com/docs/sms/api/message/list-all-messages/) and the [get message details API](https://www.plivo.com/docs/sms/api/message#retrieve-a-message)
+
+## [4.37.1](https://github.com/plivo/plivo-ruby/tree/v4.37.1) (2023-02-23)
+**Bug fix on Messaging object **
+- 
+## [4.37.0](https://github.com/plivo/plivo-ruby/tree/v4.37.0) (2023-02-23)
+**Feature - Enhance MDR filtering capabilities **
+- Added new fields on MDR object response
+
+
+
 ## [4.37.0](https://github.com/plivo/plivo-ruby/tree/v4.37.0) (2023-02-06)
 **Feature - Added New Param 'source_ip' in GetCall and ListCalls**
 - Add `source_ip` to the response for the [retrieve a call details API](https://www.plivo.com/docs/voice/api/call#retrieve-a-call) and the [retreive all call details API](https://www.plivo.com/docs/voice/api/call#retrieve-all-calls)
+
 
 ## [4.36.0](https://github.com/plivo/plivo-ruby/tree/v4.36.0) (2022-01-25)
 **Adding new attribute - 'requester_ip' in Get Message and List Mssage APIs**
@@ -11,6 +38,7 @@
 ## [4.35.0](https://github.com/plivo/plivo-ruby/tree/v4.35.0) (2022-01-18)
 **Adding new attribute - 'message_expiry' in Send Message API**
 - Added new attribute - message_expiry in Send Message API
+
 
 ## [4.34.0](https://github.com/plivo/plivo-ruby/tree/v4.34.0) (2022-12-16)
 **10DLC: Update Campaign API**
