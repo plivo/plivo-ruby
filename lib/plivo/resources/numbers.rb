@@ -182,7 +182,8 @@ module Plivo
           voice_rate: @voice_rate,
           tendlc_campaign_id: @tendlc_campaign_id,
           tendlc_registration_status: @tendlc_registration_status,
-          toll_free_sms_verification: @toll_free_sms_verification
+          toll_free_sms_verification: @toll_free_sms_verification,
+          renewal_date: @renewal_date
         }.to_s
       end
     end
@@ -220,6 +221,11 @@ module Plivo
       #                                     - unverified - Returns a list of SMS-enabled US/CA toll-free numbers that are not verified.
       #                                     - pending_verification - Returns a list of SMS-enabled US/CA toll-free numbers that are pending verification
       #                                     - verified - Returns a list of SMS-enabled US/CA toll-free numbers that are verified for enhanced outbound SMS limits.
+      # @option options [String] :renewal_date Returns phone numbers that will be renewed on the specified date. Format: YYYY-MM-DD
+      # @option options [String] :renewal_date__lt Returns phone numbers that will be renewed before the specified date. Format: YYYY-MM-DD
+      # @option options [String] :renewal_date__lte Returns phone numbers that will be renewed on or before the specified date. Format: YYYY-MM-DD
+      # @option options [String] :renewal_date__gt Returns phone numbers that will be renewed after the specified date. Format: YYYY-MM-DD
+      # @option options [String] :renewal_date__gte Returns phone numbers that will be renewed on or after the specified date. Format: YYYY-MM-DD
       def list(options = nil)
         return perform_list if options.nil?
 
@@ -227,7 +233,7 @@ module Plivo
 
         params = {}
 
-        %i[number_startswith subaccount alias tendlc_campaign_id tendlc_registration_status toll_free_sms_verification].each do |param|
+        %i[number_startswith subaccount alias tendlc_campaign_id tendlc_registration_status toll_free_sms_verification renewal_date renewal_date__lt renewal_date_lte renewal_date__gt renewal_date__gte].each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [String, Symbol], true)
             params[param] = options[param]
