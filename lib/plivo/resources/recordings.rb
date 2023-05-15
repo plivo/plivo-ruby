@@ -78,16 +78,17 @@ module Plivo
 
         params = {}
         params_expected = %i[
-          call_uuid add_time__gt add_time__gte
-          add_time__lt add_time__lte
+          call_uuid add_time add_time__gt
+          add_time__gte add_time__lt add_time__lte
           from_number to_number conference_uuid
           conference_name mpc_name mpc_uuid
+          recording_storage_duration
           recording_storage_duration__gt recording_storage_duration__gte
           recording_storage_duration__lt recording_storage_duration__lte
         ]
 
         params_expected.each do |param|
-          if options.key?(param) && valid_param?(param, options[param], [String, Symbol], true)
+          if options.key?(param) && valid_param?(param, options[param], [String, Symbol, Integer], true)
             params[param] = options[param]
           end
         end
