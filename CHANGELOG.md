@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.44.0](https://github.com/plivo/plivo-ruby/tree/v4.38.2) (2023-03-16)
+**Feature : Added new param in getCallDetail api**
+- From now on we can see CNAM(Caller_id name) details at CDR level.
+
 ## [4.43.0](https://github.com/plivo/plivo-ruby/tree/v4.43.0) (2023-05-29)
 **Feature - Recording API changes**
 - Added `monthly_recording_storage_amount`, `recording_storage_rate`, `rounded_recording_duration`, and `recording_storage_duration` parameters to the response for [get single recording API](https://www.plivo.com/docs/voice/api/recording#retrieve-a-recording) and [get all recordings API](https://www.plivo.com/docs/voice/api/recording#list-all-recordings)

@@ -26,7 +26,8 @@
       "total_rate": "0.00850",
       "stir_verification": "Not Verified",
       "stir_attestation": "",
-      "source_ip": ""
+      "source_ip": "",
+      "cnam_lookup": "disabled"
     },
     {
       "answer_time": "2015-07-26 16:45:02+05:30",
@@ -46,7 +47,8 @@
       "total_rate": "0.00850",
       "stir_verification": "Not Applicable",
       "stir_attestation": "",
-      "source_ip": ""
+      "source_ip": "",
+      "cnam_lookup": "disabled"
     }
   ]
 }
