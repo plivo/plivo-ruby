@@ -27,7 +27,8 @@ describe 'Profile test' do
         alt_business_id_type: obj['alt_business_id_type'],
         alt_business_id: obj['alt_business_id'],
         address: obj['address'],
-        authorized_contact: obj['authorized_contact']
+        authorized_contact: obj['authorized_contact'],
+        created_at: obj['created_at']
      }.reject { |_, v| v.nil? }.to_json
     end
     def to_json_list(list_object)

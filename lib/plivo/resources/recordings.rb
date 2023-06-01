@@ -19,6 +19,8 @@ module Plivo
           api_id: @api_id,
           call_uuid: @call_uuid,
           conference_name: @conference_name,
+          monthly_recording_storage_amount: @monthly_recording_storage_amount,
+          recording_storage_duration: @recording_storage_duration,
           recording_duration_ms: @recording_duration_ms,
           recording_end_ms: @recording_end_ms,
           recording_format: @recording_format,
@@ -27,6 +29,8 @@ module Plivo
           recording_type: @recording_type,
           recording_url: @recording_url,
           resource_uri: @resource_uri,
+          rounded_recording_duration: @rounded_recording_duration,
+          recording_storage_rate: @recording_storage_rate,
           from_number: @from_number,
           to_number: @to_number,
           mpc_name: @mpc_name,
@@ -60,6 +64,13 @@ module Plivo
       #                                    - add_time\__lt: lt stands for lesser than. The format expected is YYYY-MM-DD HH:MM[:ss[.uuuuuu]]. Eg:- To get all recordings that started before 2012-03-21 11:47, use add_time\__lt=2012-03-21 11:47
       #                                    - add_time\__gte: lte stands for lesser than or equal. The format expected is YYYY-MM-DD HH:MM[:ss[.uuuuuu]]. Eg:- To get all recordings that started before or exactly at 2012-03-21 11:47[:30], use add_time\__lte=2012-03-21 11:47[:30]
       #                                    - Note: The above filters can be combined to get recordings that started in a particular time range.
+      # @option options [Int] :recording_storage_duration - Used to filter out recordings according to the number of days they have been stored in the DB.The recording_storage_duration filter can be used in the following five forms:
+      #                                    - recording_storage_duration: Takes an integer input and returns the recordings which are as old as that value.
+      #                                    - recording_storage_duration\__gt: gt stands for greater than. The format expected is an integer value. Eg:- To get all recordings that are older than 100 days, use recording_storage_duration\__gt=100
+      #                                    - recording_storage_duration\__gte: gte stands for greater than or equal. The format expected is an integer value. Eg:- To get all recordings that are older than or equal to 100 days old, use recording_storage_duration\__gte=100
+      #                                    - recording_storage_duration\__lt: lt stands for lesser than. The format expected is an integer value. Eg:- To get all recordings that are newer than 100 days, use recording_storage_duration\__lt=100
+      #                                    - recording_storage_duration\__lte: lte stands for lesser than or equal. The format expected is an integer value. Eg:- To get all recordings that are newer than or equal to 100 days old, use recording_storage_duration\__lte=100
+      #                                    - Note: The above filters can be combined to get recordings that started in a particular time range.
       # @option options [Int] :limit Used to display the number of results per page. The maximum number of results that can be fetched is 20.
       # @option options [Int] :offset Denotes the number of value items by which the results should be offset. Eg:- If the result contains a 1000 values and limit is set to 10 and offset is set to 705, then values 706 through 715 are displayed in the results. This parameter is also used for pagination of the results.
       def list(options = nil)
@@ -72,10 +83,13 @@ module Plivo
           add_time__lt add_time__lte
           from_number to_number conference_uuid
           conference_name mpc_name mpc_uuid
+          recording_storage_duration
+          recording_storage_duration__gt recording_storage_duration__gte
+          recording_storage_duration__lt recording_storage_duration__lte
         ]
 
         params_expected.each do |param|
-          if options.key?(param) && valid_param?(param, options[param], [String, Symbol], true)
+          if options.key?(param) && valid_param?(param, options[param], [String, Symbol, Integer], true)
             params[param] = options[param]
           end
         end

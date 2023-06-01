@@ -1,7 +1,30 @@
 # Change Log
-## [4.38.2](https://github.com/plivo/plivo-ruby/tree/v4.38.2) (2023-03-16)
+
+## [4.44.0](https://github.com/plivo/plivo-ruby/tree/v4.38.2) (2023-03-16)
 **Feature : Added new param in getCallDetail api**
 - From now on we can see CNAM(Caller_id name) details at CDR level.
+
+## [4.43.0](https://github.com/plivo/plivo-ruby/tree/v4.43.0) (2023-05-29)
+**Feature - Recording API changes**
+- Added `monthly_recording_storage_amount`, `recording_storage_rate`, `rounded_recording_duration`, and `recording_storage_duration` parameters to the response for [get single recording API](https://www.plivo.com/docs/voice/api/recording#retrieve-a-recording) and [get all recordings API](https://www.plivo.com/docs/voice/api/recording#list-all-recordings)
+- Added `recording_storage_duration` parameter as a filter option for [get all recordings API](https://www.plivo.com/docs/voice/api/recording#list-all-recordings)
+
+## [4.42.0](https://github.com/plivo/plivo-ruby/tree/v4.42.0) (2023-05-04)
+**Adding new attribute - 'renewalDate' in Get Number and List Number APIs**
+- Add New Param `renewalDate` to the response of the [list all numbers API], [list single number API]
+- Add 3 new filters to AccountPhoneNumber - list all my numbers API:`renewal_date`, `renewal_date__gt`, `renewal_date__gte`,`renewal_date__lt` and `renewal_date__lte` (https://www.plivo.com/docs/numbers/api/account-phone-number#list-all-my-numbers)
+
+## [4.41.0](https://github.com/plivo/plivo-ruby/tree/v4.41.0) (2023-04-25)
+**Adding new attribute - 'replaced_sender' in Get Message and List Message APIs**
+- Add `replaced_sender` to the response for the [list all messages API](https://www.plivo.com/docs/sms/api/message/list-all-messages/) and the [get message details API](https://www.plivo.com/docs/sms/api/message#retrieve-a-message)
+
+## [4.40.0](https://github.com/plivo/plivo-ruby/tree/v4.37.0) (2023-04-11)
+**Feature - Added New Param 'source_ip' in GetCall and ListCalls**
+- Add `source_ip` to the response for the [retrieve a call details API](https://www.plivo.com/docs/voice/api/call#retrieve-a-call) and the [retreive all call details API](https://www.plivo.com/docs/voice/api/call#retrieve-all-calls)
+
+## [4.39.0](https://github.com/plivo/plivo-ruby/tree/v4.39.0) (2023-03-17)
+**Adding new attribute - 'created_at' in List Profiles, Get Profile, List Brands, Get Brand, List Campaigns and Get Campaign APIs**
+- dding new attribute - 'created_at' in List Profiles, Get Profile, List Brands, Get Brand, List Campaigns and Get Campaign APIs
 
 ## [4.38.1](https://github.com/plivo/plivo-ruby/tree/v4.38.1) (2023-03-06)
 **Bug fix on create message**
@@ -18,6 +41,9 @@
 **Feature - Enhance MDR filtering capabilities **
 - Added new fields on MDR object response
 
+## [4.37.0](https://github.com/plivo/plivo-ruby/tree/v4.37.0) (2023-02-06)
+**Feature - Added New Param 'source_ip' in GetCall and ListCalls**
+- Add `source_ip` to the response for the [retrieve a call details API](https://www.plivo.com/docs/voice/api/call#retrieve-a-call) and the [retreive all call details API](https://www.plivo.com/docs/voice/api/call#retrieve-all-calls)
 
 ## [4.36.0](https://github.com/plivo/plivo-ruby/tree/v4.36.0) (2022-01-25)
 **Adding new attribute - 'requester_ip' in Get Message and List Mssage APIs**
