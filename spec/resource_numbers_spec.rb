@@ -21,7 +21,8 @@ describe 'Numbers test' do
       tendlc_campaign_id: number.tendlc_campaign_id,
       tendlc_registration_status: number.tendlc_registration_status,
       toll_free_sms_verification: number.toll_free_sms_verification,
-      renewal_date: number.renewal_date
+      renewal_date: number.renewal_date,
+      cnam_lookup: number.cnam_lookup
     }.to_json
   end
 

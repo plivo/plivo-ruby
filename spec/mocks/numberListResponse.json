@@ -26,7 +26,8 @@
       "tendlc_campaign_id": "ACB1234",
       "tendlc_registration_status": "COMPLETED",
       "toll_free_sms_verification": null,
-      "renewal_date": "2023-05-10"
+      "renewal_date": "2023-05-10",
+      "cnam_lookup": "enabled"
     },
     {
       "added_on": "2013-01-01",
@@ -46,7 +47,8 @@
       "tendlc_campaign_id": "ACB1234",
       "tendlc_registration_status": "COMPLETED",
       "toll_free_sms_verification": null,
-      "renewal_date": "2023-05-10"
+      "renewal_date": "2023-05-10",
+      "cnam_lookup": "enabled"
     },
     {
       "added_on": "2013-03-25",
@@ -66,7 +68,8 @@
       "tendlc_campaign_id": null,
       "tendlc_registration_status": null,
       "toll_free_sms_verification": "verified",
-      "renewal_date": "2023-05-10"
+      "renewal_date": "2023-05-10",
+      "cnam_lookup": "enabled"
     }
   ]
 }
