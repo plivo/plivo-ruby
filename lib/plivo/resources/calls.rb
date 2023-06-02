@@ -233,7 +233,8 @@ module Plivo
           caller_name: @caller_name,
           stir_verification: @stir_verification,
           stir_attestation: @stir_attestation,
-          source_ip: @source_ip
+          source_ip: @source_ip,
+          cnam_lookup: @cnam_lookup
         }
         call_details = call_details.select {|k, v| !v.nil? }
         call_details.to_s
