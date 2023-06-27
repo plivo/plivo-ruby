@@ -9,11 +9,14 @@ module Plivo
         super
       end
 
-      def buy(app_id = nil, verification_info = nil, cnam_lookup = nil)
+      def buy(app_id = nil, verification_info = nil, cnam_lookup = nil, cnam = nil, callback_url = nil, callback_method = nil)
         params = {}
         params[:app_id] = app_id unless app_id.nil?
         params[:verification_info] = verification_info unless verification_info.nil?
         params[:cnam_lookup] = cnam_lookup unless cnam_lookup.nil?
+        params[:cnam] = cnam unless cnam.nil?
+        params[:callback_url] = callback_url unless callback_url.nil?
+        params[:callback_method] = callback_method unless callback_method.nil?
         perform_action(nil, 'POST', params, true)
       end
 
@@ -119,10 +122,10 @@ module Plivo
         end
       end
 
-      def buy(number, app_id = nil, verification_info = nil, cnam_lookup = nil)
+      def buy(number, app_id = nil, verification_info = nil, cnam_lookup = nil, cnam = nil, callback_url = nil, callback_method = nil)
         valid_param?(:number, number, [Integer, String, Symbol], true)
         PhoneNumber.new(@_client,
-                        resource_id: number).buy(app_id, verification_info, cnam_lookup)
+                        resource_id: number).buy(app_id, verification_info, cnam_lookup, cnam, callback_url, callback_method)
       end
     end
 
@@ -143,7 +146,7 @@ module Plivo
           params[:subaccount] = options[:subaccount]
         end
 
-        %i[alias app_id cnam_lookup].each do |param|
+        %i[alias app_id cnam_lookup cnam callback_url callback_method].each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [String, Symbol], true)
             params[param] = options[param]
@@ -185,7 +188,8 @@ module Plivo
           tendlc_registration_status: @tendlc_registration_status,
           toll_free_sms_verification: @toll_free_sms_verification,
           renewal_date: @renewal_date,
-          cnam_lookup: @cnam_lookup
+          cnam_lookup: @cnam_lookup,
+          cnam: @cnam
         }.to_s
       end
     end
@@ -231,6 +235,7 @@ module Plivo
       # @option options [String] :cnam_lookup The Cnam Lookup Configuration associated with that number. The following values are valid:
       #                                     - enabled - Returns the list of numbers for which Cnam Lookup configuration is enabled
       #                                     - disabled - Returns the list of numbers for which Cnam Lookup configuration is disabled
+      # @option options [String] :cnam The Cnam Configuration associated with that number.
       def list(options = nil)
         return perform_list if options.nil?
 
@@ -238,7 +243,7 @@ module Plivo
 
         params = {}
 
-        %i[number_startswith subaccount alias tendlc_campaign_id tendlc_registration_status toll_free_sms_verification renewal_date renewal_date__lt renewal_date__lte renewal_date__gt renewal_date__gte cnam_lookup].each do |param|
+        %i[number_startswith subaccount alias tendlc_campaign_id tendlc_registration_status toll_free_sms_verification renewal_date renewal_date__lt renewal_date__lte renewal_date__gt renewal_date__gte cnam_lookup cnam].each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [String, Symbol], true)
             params[param] = options[param]
@@ -330,6 +335,9 @@ module Plivo
       # @option options [String] :app_id The application id of the application that is to be linked.
       # @option options [String] :subaccount The auth_id of the subaccount to which this number should be added. This can only be performed by a main account holder.
       # @option options [String] :cnam_lookup The Cnam Lookup configuration to enable/disable Cnam Lookup
+      # @option options [String] :cnam The Cnam configuration value.
+      # @option options [String] :callback_url The Cnam callback url configuration .
+      # @option options [String] :callback_method The Cnam callback method configuration.
       def update(number, options = nil)
         valid_param?(:number, number, [String, Symbol], true)
         Number.new(@_client,
