@@ -1,6 +1,5 @@
 require 'json'
 require 'faraday'
-require 'faraday_middleware'
 
 module Plivo
   module Resources
@@ -21,7 +20,7 @@ module Plivo
       end
 
       def create(call_uuid, rating, issues = [], notes = "")
-        
+
         valid_param?(:call_uuid, call_uuid, String, true)
         valid_param?(:rating, rating, [Integer, Float], true)
 
@@ -32,7 +31,7 @@ module Plivo
         if rating < 1 or rating > 5
           raise_invalid_request("Rating has to be a float between 1 - 5")
         end
-        
+
         params = {
           rating: rating,
         }
