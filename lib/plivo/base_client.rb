@@ -33,7 +33,7 @@ module Plivo
           raise Exceptions::PlivoRESTError, "Resource at #{response[:url]} "\
           'couldn\'t be deleted'
         end
-      elsif !([200, 201, 202, 204, 207].include? response[:status])
+      elsif !([200, 201, 202, 204, 207, 206].include? response[:status])
         raise Exceptions::PlivoRESTError, "Received #{response[:status]} for #{method}"
       end
       @@voice_retry_count = 0

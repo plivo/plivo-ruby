@@ -16,7 +16,8 @@ describe 'Messages test' do
       total_amount: message.total_amount,
       total_rate: message.total_rate,
       units: message.units,
-      requester_ip: message.requester_ip
+      requester_ip: message.requester_ip,
+      is_domestic: message.is_domestic
     }.to_json
   end
 

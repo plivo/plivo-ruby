@@ -16,5 +16,7 @@
   "voice_rate": "0.00850",
   "tendlc_campaign_id": "ACB1234",
   "tendlc_registration_status": "COMPLETED",
-  "toll_free_sms_verification": null
+  "toll_free_sms_verification": null,
+  "renewal_date": "2023-05-10",
+  "cnam_lookup": "enabled"
 }

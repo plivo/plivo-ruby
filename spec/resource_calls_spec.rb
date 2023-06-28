@@ -19,7 +19,9 @@ describe 'Calls test' do
       total_amount: call.total_amount,
       total_rate: call.total_rate,
       stir_verification: call.stir_verification,
-      stir_attestation:call.stir_attestation
+      stir_attestation:call.stir_attestation,
+      source_ip:call.source_ip,
+      cnam_lookup:call.cnam_lookup
     }.to_json
   end
 
