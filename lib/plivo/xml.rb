@@ -31,6 +31,7 @@ require_relative 'xml/w'
 require_relative 'xml/plivo_xml'
 require_relative 'xml/multipartycall'
 require_relative 'xml/cont'
+require_relative 'xml/stream'
 include Plivo::Exceptions
 
 module Plivo

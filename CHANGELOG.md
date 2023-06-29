@@ -1,5 +1,10 @@
 # Change Log
 
+## [4.46.0](https://github.com/plivo/plivo-go/tree/v4.46.0) (2023-06-28)
+**Feature - Audio Streaming**
+- Added functionality to start, stop and fetch audio streams
+- Added functionality to create stream XML
+
 ## [4.45.0](https://github.com/plivo/plivo-ruby/tree/v4.45.0) (2023-05-02)
 **Feature - CNAM Lookup**
 - Added New Param `cnam_lookup` in to the response of the [list all numbers API], [list single number API]
@@ -61,7 +66,6 @@
 **Adding new attribute - 'message_expiry' in Send Message API**
 - Added new attribute - message_expiry in Send Message API
 
-
 ## [4.34.0](https://github.com/plivo/plivo-ruby/tree/v4.34.0) (2022-12-16)
 **10DLC: Update Campaign API**
 - Added Update Campaign API
@@ -79,7 +83,6 @@
 -Added 3 new keys to AccountPhoneNumber object:`tendlc_registration_status`, `tendlc_campaign_id` and `toll_free_sms_verification` (https://www.plivo.com/docs/numbers/api/account-phone-number#the-accountphonenumber-object)
 -Added 3 new filters to AccountPhoneNumber - list all my numbers API:`tendlc_registration_status`, `tendlc_campaign_id` and `toll_free_sms_verification` (https://www.plivo.com/docs/numbers/api/account-phone-number#list-all-my-numbers)
 
-
 ## [4.30.2](https://github.com/plivo/plivo-ruby/tree/v4.30.2) (2022-09-28)
 **10DLC: Campaign request**
 - Added more attributes to create campaign request
@@ -87,7 +90,6 @@
 ## [4.30.1](https://github.com/plivo/plivo-ruby/tree/v4.30.1) (2022-09-20)
 **stability - faraday upgrade**
 - faraday version upgrade
-
 
 ## [4.30.0](https://github.com/plivo/plivo-ruby/tree/v4.30.0) (2022-08-26)
 **Feature - 10DLC APIs**

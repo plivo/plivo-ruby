@@ -203,6 +203,73 @@ module Plivo
         @_client.send_request(resource_path, 'DELETE', nil, nil, false , is_voice_request: @_is_voice_request)
       end
 
+      def start_stream(service_url, options = nil)
+        valid_param?(:service_url, service_url, [String, Symbol], true)
+        if options.nil?
+          return perform_action('Stream', 'POST', { service_url: service_url }, true)
+        end
+
+        valid_param?(:options, options, Hash, true)
+
+        params = { service_url: service_url }
+
+        if options.key?(:bidirectional) &&
+          valid_param?(:bidirectional, options[:bidirectional], [TrueClass, FalseClass], false )
+          params[:bidirectional] = options[:bidirectional]
+        end
+
+        if options.key?(:audio_track) &&
+          valid_param?(:audio_track, options[:audio_track],
+                       [String, Symbol], false, %w[inbound outbound both])
+          params[:audio_track] = options[:audio_track]
+        end
+
+        if options.key?(:stream_timeout) &&
+          valid_param?(:stream_timeout, options[:stream_timeout], Integer, false)
+          params[:stream_timeout] = options[:stream_timeout]
+        end
+
+        if options.key?(:status_callback_url) &&
+          valid_param?(:status_callback_url, options[:status_callback_url], [String, Symbol], false)
+          params[:status_callback_url] = options[:status_callback_url]
+        end
+
+        if options.key?(:status_callback_method) &&
+          valid_param?(:status_callback_method, options[:status_callback_method],
+                       [String, Symbol], false, %w[GET POST get post])
+          params[:status_callback_method] = options[:status_callback_method]
+        end
+
+        if options.key?(:content_type) &&
+          valid_param?(:content_type, options[:content_type], [String, Symbol, Integer], false)
+          params[:content_type] = options[:content_type]
+        end
+
+        if options.key?(:extra_headers) &&
+          valid_param?(:extra_headers, options[:extra_headers], [String], false)
+          params[:extra_headers] = options[:extra_headers]
+        end
+        perform_action('Stream', 'POST', params, true)
+      end
+
+      def stop_all_streams
+        perform_action('Stream', 'DELETE', nil, false)
+      end
+
+      def stop_stream(stream_id)
+        valid_param?(:stream_id, stream_id, [String, Symbol, Integer], true)
+        perform_action('Stream/' + stream_id, 'DELETE', nil, false)
+      end
+
+      def get_all_streams
+        perform_action('Stream', 'GET', nil, true )
+      end
+
+      def get_stream(stream_id)
+        valid_param?(:stream_id, stream_id, [String, Symbol, Integer], true)
+        perform_action('Stream/' + stream_id, 'GET', nil, true)
+      end
+
       def to_s
         call_details = {
           answer_time: @answer_time,
@@ -576,6 +643,62 @@ module Plivo
       def cancel_request(call_uuid)
         valid_param?(:call_uuid, call_uuid, [String, Symbol], true)
         Call.new(@_client, resource_id: call_uuid).cancel_request
+      end
+
+      # @param [String] service_url
+      # @param [Hash] options
+      # @option options [Boolean] :bidirectional
+      # @option options [String] :audio_track
+      # @option options [Int] :stream_timeout
+      # @option options [String] :status_callback_url
+      # @option options [String] :status_callback_method
+      # @option options [String] :content_type
+      # @option options [String] :extra_headers
+      def start_stream(call_uuid, service_url, options = {})
+        valid_param?(:call_uuid, call_uuid, [String, Symbol], true)
+        response = Call.new(@_client, resource_id: call_uuid).start_stream(service_url, options)
+        return Base::Response.new(Hash["api_id" => response.api_id,
+                                       "stream_id" => response.stream_id,
+                                       "message" => response.message])
+      end
+
+      def stop_all_streams(call_uuid)
+        valid_param?(:call_uuid, call_uuid, [String, Symbol], true )
+        Call.new(@_client, resource_id: call_uuid).stop_all_streams
+      end
+
+      def stop_stream(call_uuid, stream_id)
+        valid_param?(:call_uuid, call_uuid, [String, Symbol], true )
+        Call.new(@_client, resource_id: call_uuid).stop_stream(stream_id)
+      end
+
+      def get_all_streams(call_uuid)
+        valid_param?(:call_uuid, call_uuid, [String, Symbol], true )
+        response = Call.new(@_client, resource_id: call_uuid).get_all_streams
+        return Base::Response.new(Hash["api_id" => response.api_id,
+                                       "meta" => response.meta,
+                                       "objects" => response.objects])
+      end
+
+      def get_stream(call_uuid, stream_id)
+        valid_param?(:call_uuid, call_uuid, [String, Symbol], true )
+        response = Call.new(@_client, resource_id: call_uuid).get_stream(stream_id)
+        return Base::Response.new(Hash["api_id" => response.instance_variable_get(:@api_id),
+                                       "audio_track" => response.instance_variable_get(:@audio_track),
+                                       "bidirectional" => response.instance_variable_get(:@bidirectional),
+                                       "bill_duration" => response.instance_variable_get(:@bill_duration),
+                                       "billed_amount" => response.instance_variable_get(:@billed_amount),
+                                       "call_uuid" => response.instance_variable_get(:@call_uuid),
+                                       "created_at" => response.instance_variable_get(:@created_at),
+                                       "end_time" => response.instance_variable_get(:@end_time),
+                                       "plivo_auth_id" => response.instance_variable_get(:@plivo_auth_id),
+                                       "resource_uri" => response.instance_variable_get(:@resource_uri),
+                                       "rounded_bill_duration" => response.instance_variable_get(:@rounded_bill_duration),
+                                       "service_url" => response.instance_variable_get(:@service_url),
+                                       "start_time" => response.instance_variable_get(:@start_time),
+                                       "status" => response.instance_variable_get(:@status),
+                                       "status_callback_url" => response.instance_variable_get(:@status_callback_url),
+                                       "stream_id" => response.instance_variable_get(:@stream_id)])
       end
     end
   end

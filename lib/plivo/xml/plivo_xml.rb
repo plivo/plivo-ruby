@@ -8,11 +8,11 @@ module Plivo
       end
 
       def to_xml
-        '<?xml version="1.0" encoding="utf-8" ?>' + @response.to_xml
+        '<?xml version="1.0" encoding="utf-8" ?>' + @response.to_xml.gsub("&quot;", "\"")
       end
 
       def to_s
-        '<?xml version="1.0" encoding="utf-8" ?>' + @response.to_s
+        '<?xml version="1.0" encoding="utf-8" ?>' + @response.to_s.gsub("&quot;", "\"")
       end
     end
   end

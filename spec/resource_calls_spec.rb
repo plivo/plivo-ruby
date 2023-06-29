@@ -329,4 +329,20 @@ describe 'Calls test' do
                      method: 'DELETE',
                      data: nil)
   end
+
+  it 'start stream' do
+    id = 'MAXXXXXXXXXXXXXXXXXX'
+    contents = File.read(Dir.pwd + '/spec/mocks/streamStartCreateResponse.json')
+    response = File.read(Dir.pwd + '/spec/mocks/streamStartCreateResponses.json')
+    mock(202, JSON.parse(contents))
+    expect(JSON.parse(to_json_update(@api.calls
+                                         .start_stream(id,
+                                                'wss://mystream.ngrok.io/audiostream'))))
+      .to eql(JSON.parse(response))
+    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Call/' + id + '/Stream/',
+                     method: 'POST',
+                     data: {
+                       service_url: 'wss://mystream.ngrok.io/audiostream'
+                     })
+  end
 end
