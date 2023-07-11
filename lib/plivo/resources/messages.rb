@@ -36,7 +36,10 @@ module Plivo
           tendlc_registration_status: @tendlc_registration_status,
           requester_ip: @requester_ip,
           is_domestic: @is_domestic,
-          replaced_sender: @replaced_sender
+          replaced_sender: @replaced_sender,
+          dlt_entity_id: @dlt_entity_id,
+          dlt_template_id: @dlt_template_id,
+          dlt_template_category: @dlt_template_category
         }.to_s
       end
     end
@@ -78,6 +81,9 @@ module Plivo
       # @option options[Int]: message_expiry, int value
       # @option options[List]: media_urls Minimum one media url should be present in Media urls list to send mms. Maximum allowd 10 media urls inside the list (e.g, media_urls : ['https//example.com/test.jpg', 'https://example.com/abcd.gif'])
       # @option options[List]: media_ids Minimum one media ids should be present in Media ids list to send mms. Maximum allowd 10 media ids inside the list (e.g, media_ids : ['1fs211ba-355b-11ea-bbc9-02121c1190q7'])
+      # @option options [String] :dlt_entity_id This is the DLT entity id passed in the message request.
+      # @option options [String] :dlt_template_id This is the DLT template id passed in the message request. 
+      # @option options [String] :dlt_template_category This is the DLT template category passed in the message request.
       
       def create(src = nil, dst = nil, text = nil, options = nil, powerpack_uuid = nil)
         #All params in One HASH
@@ -156,6 +162,21 @@ module Plivo
           if value.key?(:media_ids) &&
             valid_param?(:media_ids, value[:media_ids], Array, true)
            params[:media_ids] = value[:media_ids]
+          end
+
+          if value.key?(:dlt_entity_id) &&
+            valid_param?(:dlt_entity_id, value[:dlt_entity_id], String, true)
+           params[:dlt_entity_id] = value[:dlt_entity_id]
+          end
+
+          if value.key?(:dlt_template_id) &&
+            valid_param?(:dlt_template_id, value[:dlt_template_id], String, true)
+           params[:dlt_template_id] = value[:dlt_template_id]
+          end
+
+          if value.key?(:dlt_template_category) &&
+            valid_param?(:dlt_template_category, value[:dlt_template_category], String, true)
+           params[:dlt_template_category] = value[:dlt_template_category]
           end
 
         #legacy code compatibility
@@ -246,6 +267,21 @@ module Plivo
           if options.key?(:trackable) &&
             valid_param?(:trackable, options[:trackable], [TrueClass, FalseClass], true)
            params[:trackable] = options[:trackable]
+          end
+
+          if options.key?(:dlt_entity_id) &&
+            valid_param?(:dlt_entity_id, options[:dlt_entity_id], String, true)
+           params[:dlt_entity_id] = options[:dlt_entity_id]
+          end
+
+          if options.key?(:dlt_template_id) &&
+            valid_param?(:dlt_template_id, options[:dlt_template_id], String, true)
+           params[:dlt_template_id] = options[:dlt_template_id]
+          end
+
+          if options.key?(:dlt_template_category) &&
+            valid_param?(:dlt_template_category, options[:dlt_template_category], String, true)
+           params[:dlt_template_category] = options[:dlt_template_category]
           end
         end
         perform_create(params)

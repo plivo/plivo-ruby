@@ -17,7 +17,10 @@ describe 'Messages test' do
       total_rate: message.total_rate,
       units: message.units,
       requester_ip: message.requester_ip,
-      is_domestic: message.is_domestic
+      is_domestic: message.is_domestic,
+      dlt_entity_id: message.dlt_entity_id,
+      dlt_template_id: message.dlt_template_id,
+      dlt_template_category: message.dlt_template_category
     }.to_json
   end
 
@@ -76,6 +79,9 @@ describe 'Messages test' do
                      data: nil)
     expect(response.id).to eql(response.message_uuid)
     expect(response.requester_ip).to eql("192.168.1.1")
+    expect(response.dlt_entity_id).to eql("1234")
+    expect(response.dlt_template_id).to eql("5678")
+    expect(response.dlt_template_category).to eql("service_implicit")
   end
 
   it 'lists all mms media' do
@@ -120,6 +126,14 @@ describe 'Messages test' do
                      })
     expect(JSON.parse(response)['objects'][0]['requester_ip']). to eql("192.168.1.1")
     expect(JSON.parse(response)['objects'][19]['requester_ip']). to eql("192.168.1.20")
+
+    expect(JSON.parse(response)['objects'][0]["dlt_entity_id"]).to eql("1245")
+    expect(JSON.parse(response)['objects'][0]["dlt_template_id"]).to eql("9585")
+    expect(JSON.parse(response)['objects'][0]["dlt_template_category"]).to eql("promotional")
+
+    expect(JSON.parse(response)['objects'][19]["dlt_entity_id"]).to eql("")
+    expect(JSON.parse(response)['objects'][19]["dlt_template_id"]).to eql("")
+    expect(JSON.parse(response)['objects'][19]["dlt_template_category"]).to eql("")
   end
 
   it 'sends a message' do

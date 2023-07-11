@@ -13,5 +13,8 @@
   "total_rate": "0.00250",
   "units": 1,
   "requester_ip": "192.168.1.1",
-  "is_domestic": false
+  "is_domestic": false,
+  "dlt_entity_id": "1234",
+  "dlt_template_id": "5678",
+  "dlt_template_category": "service_implicit"
 }
