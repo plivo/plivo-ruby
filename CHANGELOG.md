@@ -1,6 +1,11 @@
 # Change Log
 
-## [4.46.0](https://github.com/plivo/plivo-go/tree/v4.46.0) (2023-06-28)
+## [4.47.0](https://github.com/plivo/plivo-ruby/tree/v4.47.0) (2023-08-03)
+**Feature - DLT parameters**
+- Added new params `DLTEntityID`, `DLTTemplateID`, `DLTTemplateCategory` to the [send message API](https://www.plivo.com/docs/sms/api/message/send-a-message/)
+- Added new params `DLTEntityID`, `DLTTemplateID`, `DLTTemplateCategory` to the response for the [list all messages API](https://www.plivo.com/docs/sms/api/message/list-all-messages/) and the [get message details API](https://www.plivo.com/docs/sms/api/message#retrieve-a-message)
+
+## [4.46.0](https://github.com/plivo/plivo-ruby/tree/v4.46.0) (2023-06-28)
 **Feature - Audio Streaming**
 - Added functionality to start, stop and fetch audio streams
 - Added functionality to create stream XML
