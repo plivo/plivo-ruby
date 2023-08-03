@@ -33,6 +33,9 @@ module Plivo
           units: @units,
           tendlc_campaign_id: @tendlc_campaign_id,
           destination_country_iso2: @destination_country_iso2,
+          destination_network: @destination_network,
+          carrier_fees_rate: @carrier_fees_rate,
+          carrier_fees: @carrier_fees,
           tendlc_registration_status: @tendlc_registration_status,
           requester_ip: @requester_ip,
           is_domestic: @is_domestic,
@@ -314,7 +317,8 @@ module Plivo
         params = {}
         params_expected = %i[
           subaccount message_time message_time__gt message_time__gte
-          message_time__lt message_time__lte error_code powerpack_id tendlc_campaign_id tendlc_registration_status destination_country_iso2
+          message_time__lt message_time__lte error_code powerpack_id tendlc_campaign_id tendlc_registration_status 
+          destination_country_iso2 destination_network carrier_fees_rate carrier_fees
         ]
         params_expected.each do |param|
           if options.key?(param) &&
