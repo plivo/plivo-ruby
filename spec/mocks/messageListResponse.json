@@ -24,7 +24,10 @@
       "is_domestic": false,
       "dlt_entity_id": "1245",
       "dlt_template_id": "9585",
-      "dlt_template_category": "promotional"
+      "dlt_template_category": "promotional",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     },
     {
       "error_code": null,
@@ -43,7 +46,10 @@
       "is_domestic": false,
       "dlt_entity_id": "",
       "dlt_template_id": "",
-      "dlt_template_category": ""
+      "dlt_template_category": "",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     },
     {
       "error_code": null,
@@ -62,7 +68,10 @@
       "is_domestic": false,
       "dlt_entity_id": "",
       "dlt_template_id": "",
-      "dlt_template_category": ""
+      "dlt_template_category": "",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     },
     {
       "error_code": null,
@@ -81,7 +90,10 @@
       "is_domestic": false,
       "dlt_entity_id": "",
       "dlt_template_id": "",
-      "dlt_template_category": ""
+      "dlt_template_category": "",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     },
     {
       "error_code": null,
@@ -100,7 +112,10 @@
       "is_domestic": false,
       "dlt_entity_id": "",
       "dlt_template_id": "",
-      "dlt_template_category": ""
+      "dlt_template_category": "",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     },
     {
       "error_code": null,
@@ -119,7 +134,10 @@
       "is_domestic": false,
       "dlt_entity_id": "",
       "dlt_template_id": "",
-      "dlt_template_category": ""
+      "dlt_template_category": "",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     },
     {
       "error_code": null,
@@ -138,7 +156,10 @@
       "is_domestic": false,
       "dlt_entity_id": "",
       "dlt_template_id": "",
-      "dlt_template_category": ""
+      "dlt_template_category": "",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     },
     {
       "error_code": null,
@@ -157,7 +178,10 @@
       "is_domestic": false,
       "dlt_entity_id": "",
       "dlt_template_id": "",
-      "dlt_template_category": ""
+      "dlt_template_category": "",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     },
     {
       "error_code": "000",
@@ -176,7 +200,10 @@
       "is_domestic": false,
       "dlt_entity_id": "",
       "dlt_template_id": "",
-      "dlt_template_category": ""
+      "dlt_template_category": "",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     },
     {
       "error_code": null,
@@ -195,7 +222,10 @@
       "is_domestic": false,
       "dlt_entity_id": "",
       "dlt_template_id": "",
-      "dlt_template_category": ""
+      "dlt_template_category": "",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     },
     {
       "error_code": "000",
@@ -214,7 +244,10 @@
       "is_domestic": false,
       "dlt_entity_id": "",
       "dlt_template_id": "",
-      "dlt_template_category": ""
+      "dlt_template_category": "",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     },
     {
       "error_code": null,
@@ -233,7 +266,10 @@
       "is_domestic": false,
       "dlt_entity_id": "",
       "dlt_template_id": "",
-      "dlt_template_category": ""
+      "dlt_template_category": "",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     },
     {
       "error_code": "000",
@@ -252,7 +288,10 @@
       "is_domestic": false,
       "dlt_entity_id": "",
       "dlt_template_id": "",
-      "dlt_template_category": ""
+      "dlt_template_category": "",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     },
     {
       "error_code": null,
@@ -271,7 +310,10 @@
       "is_domestic": false,
       "dlt_entity_id": "",
       "dlt_template_id": "",
-      "dlt_template_category": ""
+      "dlt_template_category": "",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     },
     {
       "error_code": "000",
@@ -290,7 +332,10 @@
       "is_domestic": false,
       "dlt_entity_id": "",
       "dlt_template_id": "",
-      "dlt_template_category": ""
+      "dlt_template_category": "",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     },
     {
       "error_code": null,
@@ -309,7 +354,10 @@
       "is_domestic": false,
       "dlt_entity_id": "",
       "dlt_template_id": "",
-      "dlt_template_category": ""
+      "dlt_template_category": "",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     },
     {
       "error_code": "000",
@@ -328,7 +376,10 @@
       "is_domestic": false,
       "dlt_entity_id": "",
       "dlt_template_id": "",
-      "dlt_template_category": ""
+      "dlt_template_category": "",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     },
     {
       "error_code": "000",
@@ -347,7 +398,10 @@
       "is_domestic": false,
       "dlt_entity_id": "",
       "dlt_template_id": "",
-      "dlt_template_category": ""
+      "dlt_template_category": "",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     },
     {
       "error_code": "000",
@@ -366,7 +420,10 @@
       "is_domestic": false,
       "dlt_entity_id": "",
       "dlt_template_id": "",
-      "dlt_template_category": ""
+      "dlt_template_category": "",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     },
     {
       "error_code": "000",
@@ -385,7 +442,10 @@
       "is_domestic": false,
       "dlt_entity_id": "",
       "dlt_template_id": "",
-      "dlt_template_category": ""
+      "dlt_template_category": "",
+      "destination_network": "Verizon",
+      "carrier_fees_rate": "0.420",
+      "carrier_fees": "0.001"
     }
   ]
 }

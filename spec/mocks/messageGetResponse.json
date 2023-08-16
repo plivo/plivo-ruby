@@ -16,5 +16,8 @@
   "is_domestic": false,
   "dlt_entity_id": "1234",
   "dlt_template_id": "5678",
-  "dlt_template_category": "service_implicit"
+  "dlt_template_category": "service_implicit",
+  "destination_network": "Verizon",
+  "carrier_fees_rate": "0.420",
+  "carrier_fees": "0.001"
 }

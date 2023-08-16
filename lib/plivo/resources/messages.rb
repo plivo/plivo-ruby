@@ -39,7 +39,10 @@ module Plivo
           replaced_sender: @replaced_sender,
           dlt_entity_id: @dlt_entity_id,
           dlt_template_id: @dlt_template_id,
-          dlt_template_category: @dlt_template_category
+          dlt_template_category: @dlt_template_category,
+          destination_network: @destination_network,
+          carrier_fees_rate: @carrier_fees_rate,
+          carrier_fees: @carrier_fees
         }.to_s
       end
     end
