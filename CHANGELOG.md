@@ -1,5 +1,12 @@
 # Change Log
 
+## [4.48.0](https://github.com/plivo/plivo-ruby/tree/v4.48.0) (2023-08-31)
+**Feature - Verify Service**
+- Create Session 
+- Validate Session
+- Get Session
+- List Session
+
 ## [4.47.0](https://github.com/plivo/plivo-ruby/tree/v4.47.0) (2023-08-03)
 **Feature - DLT parameters**
 - Added new params `DLTEntityID`, `DLTTemplateID`, `DLTTemplateCategory` to the [send message API](https://www.plivo.com/docs/sms/api/message/send-a-message/)
