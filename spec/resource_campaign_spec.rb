@@ -295,7 +295,7 @@ it 'import campaign' do
 
   expect(JSON.parse(response))
     .to eql(contents)
-  compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/10dlc/Campaign/C1QGYD1/Import/',
+  compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/10dlc/Campaign/Import/',
                    method: 'POST',
                    data: {
                           campaign_id: "C1QGYD1",
