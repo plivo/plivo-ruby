@@ -288,8 +288,7 @@ it 'import campaign' do
   contents = File.read(Dir.pwd + '/spec/mocks/campaignImportResponse.json')
   mock(200, JSON.parse(contents))
   response = to_json(@api.campaign
-                              .import("C1QGYD1", "plivo campaign"
-                              )
+                              .import(options = {campaign_id:"C1QGYD1", campaign_alias:"plivo campaign"})
                             )
 
   contents = JSON.parse(contents)
