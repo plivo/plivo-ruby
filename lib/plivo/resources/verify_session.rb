@@ -42,39 +42,20 @@ module Plivo
             end
 
             def create(app_uuid = nil, recipient = nil,channel = nil,url = nil, method = nil)
-                value = app_uuid
-                if(value.is_a?(Hash))
-                    valid_param?(:app_uuid, value[:app_uuid], [String, Symbol], false)
-                    valid_param?(:recipient, value[:recipient], [Integer, String, Symbol], true)
-                    valid_param?(:channel, value[:channel], [String, Symbol], false)
-                    valid_param?(:url, value[:url], [String], false)
-                    valid_param?(:method, value[:method], String, false, %w[POST GET])
+                valid_param?(:app_uuid, app_uuid, [String, Symbol], false)
+                valid_param?(:recipient, recipient, [Integer, String, Symbol], true)
+                valid_param?(:channel, channel, [String, Symbol], false)
+                valid_param?(:url, url, [String], false)
+                valid_param?(:method, method, String, false, %w[POST GET])
 
-                    params = {
-                        app_uuid: value[:app_uuid],
-                        recipient: value[:recipient],
-                        channel: value[:channel],
-                        url: value[:url],
-                        method: value[:method]
-                    }
-
-                else
-                    valid_param?(:app_uuid, app_uuid, [String, Symbol], false)
-                    valid_param?(:recipient, recipient, [Integer, String, Symbol], true)
-                    valid_param?(:channel, channel, [String, Symbol], false)
-                    valid_param?(:url, url, [String], false)
-                    valid_param?(:method, method, String, false, %w[POST GET])
-
-                    params = {
-                        app_uuid: app_uuid,
-                        recipient: recipient,
-                        channel: channel,
-                        url: url,
-                        method: method
-                    }
-                    
-                end    
-                perform_create(params)    
+                params = {
+                    app_uuid: app_uuid,
+                    recipient: recipient,
+                    channel: channel,
+                    url: url,
+                    method: method
+                }
+                perform_create(params)
             end   
             
             def list(options = nil)
@@ -112,24 +93,13 @@ module Plivo
             end
             
             def validate(session_uuid = nil, otp = nil)
-                value = session_uuid
-                id = ""
-                if(value.is_a?(Hash))
-                    valid_param?(:session_uuid, value[:session_uuid], [String, Symbol], true)
-                    valid_param?(:otp, value[:otp], [String], true)  
-                    id = value[:session_uuid]
-                    params = {
-                        otp: value[:otp]
-                    }
-                else
-                    valid_param?(:session_uuid, session_uuid, [String, Symbol], true)
-                    valid_param?(:otp, otp, [String], true)  
-                    id = session_uuid
-                    params = {
-                        otp: otp
-                    }
-                end  
-                perform_create_with_id(id,params)      
+                valid_param?(:session_uuid, session_uuid, [String, Symbol], true)
+                valid_param?(:otp, otp, [String], true)
+                id = session_uuid
+                params = {
+                    otp: otp
+                }
+                perform_action_with_identifier(id, 'POST', params)
             end    
         end    
     end    

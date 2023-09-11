@@ -101,8 +101,8 @@ describe 'Sessions test' do
         contents = File.read(Dir.pwd + '/spec/mocks/sessionSendResponse.json')
         mock(201, JSON.parse(contents))
         expect(JSON.parse(to_json_create(@api.verify_session
-                                            .create(
-                                            recipient: '1234567890'
+                                            .create(nil,
+                                            '1234567890',nil,nil,nil
                                             ))))
         .to eql(JSON.parse(contents))
         compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Verify/Session/',
@@ -121,8 +121,8 @@ describe 'Sessions test' do
         mock(201, JSON.parse(contents))
         expect(JSON.parse(to_json_create(@api.verify_session
                                             .validate(
-                                            session_uuid: '12345-6789-0000',
-                                            otp: '123456'
+                                           '12345-6789-0000',
+                                            '123456'
                                             ))))
         .to eql(JSON.parse(contents))
         compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Verify/Session/12345-6789-0000/',

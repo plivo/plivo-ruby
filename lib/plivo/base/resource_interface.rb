@@ -59,13 +59,6 @@ module Plivo
         )
       end
 
-      def perform_create_with_id(id, params, use_multipart_conn=false)
-          Response.new(
-            @_client.send_request(@_resource_uri + id + '/', 'POST', params, 10, use_multipart_conn, is_voice_request: @_is_voice_request),
-            @_identifier_string
-          )
-      end
-
       def perform_delete(identifier, params = nil)
         valid_param?(:identifier, identifier, [String, Symbol], true)
         Response.new(
