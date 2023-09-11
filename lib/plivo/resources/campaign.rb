@@ -38,6 +38,7 @@ module Plivo
         # @param [Hash] options
         # @option options [String] :brand
         # @option options [Status] :usecase
+        # @option options [String] :campaign_source
         # @option options [Status] :limit
         # @option options [Status] :offset
         # @return [Hash]
@@ -45,7 +46,7 @@ module Plivo
         return perform_list_without_object if options.nil?
   
         params = {}
-        %i[usecase brand limit offset].each do |param|
+        %i[usecase brand campaign_source limit offset].each do |param|
           if options.key?(param) && valid_param?(param, options[param],
                                                    [String, Integer], true)
             params[param] = options[param]
@@ -96,6 +97,19 @@ module Plivo
         perform_action_with_identifier(action, 'POST', options)
       end
       ##
+
+      #import campaign
+      def import(options=nil)
+        valid_param?(:options, options, Hash, true)
+        if not options[:campaign_id]
+          raise_invalid_request("campaign_id must be provided")
+        end
+        if not options[:campaign_alias]
+          raise_invalid_request("campaign_alias must be provided")
+        end
+        action = '/Import'
+        perform_action_with_identifier(action, 'POST', options)   
+      end
       # campaign number link
       #
       def number_link(options=nil)
