@@ -107,7 +107,7 @@ module Plivo
         if not options[:campaign_alias]
           raise_invalid_request("campaign_alias must be provided")
         end
-        action = '/Import'
+        action = 'Import'
         perform_action_with_identifier(action, 'POST', options)   
       end
       # campaign number link
