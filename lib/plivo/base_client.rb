@@ -1,6 +1,5 @@
 require 'json'
 require 'faraday'
-require 'faraday_middleware'
 
 require_relative 'exceptions'
 require_relative 'utils'
@@ -137,7 +136,7 @@ module Plivo
         # DANGER: Basic auth should always come after headers, else
         # The headers will replace the basic_auth
 
-        faraday.request(:basic_auth, auth_id, auth_token)
+        faraday.request(:authorization, :basic_auth, auth_id, auth_token)
 
         faraday.proxy=@proxy_hash if @proxy_hash
         faraday.response :json, content_type: /\bjson$/
@@ -150,7 +149,7 @@ module Plivo
         # DANGER: Basic auth should always come after headers, else
         # The headers will replace the basic_auth
 
-        faraday.request(:basic_auth, auth_id, auth_token)
+        faraday.request(:authorization, :basic_auth, auth_id, auth_token)
 
         faraday.proxy=@proxy_hash if @proxy_hash
         faraday.response :json, content_type: /\bjson$/
@@ -163,7 +162,7 @@ module Plivo
         # DANGER: Basic auth should always come after headers, else
         # The headers will replace the basic_auth
 
-        faraday.request(:basic_auth, auth_id, auth_token)
+        faraday.request(:authorization, :basic_auth, auth_id, auth_token)
 
         faraday.proxy=@proxy_hash if @proxy_hash
         faraday.response :json, content_type: /\bjson$/
@@ -176,7 +175,7 @@ module Plivo
         # DANGER: Basic auth should always come after headers, else
         # The headers will replace the basic_auth
 
-        faraday.request(:basic_auth, auth_id, auth_token)
+        faraday.request(:authorization, :basic_auth, auth_id, auth_token)
 
         faraday.proxy=@proxy_hash if @proxy_hash
         faraday.response :json, content_type: /\bjson$/
@@ -189,7 +188,7 @@ module Plivo
         # DANGER: Basic auth should always come after headers, else
         # The headers will replace the basic_auth
 
-        faraday.request(:basic_auth, auth_id, auth_token)
+        faraday.request(:authorization, :basic_auth, auth_id, auth_token)
 
         faraday.proxy=@proxy_hash if @proxy_hash
         faraday.response :json, content_type: /\bjson$/
@@ -202,7 +201,7 @@ module Plivo
         # DANGER: Basic auth should always come after headers, else
         # The headers will replace the basic_auth
 
-        faraday.request(:basic_auth, auth_id, auth_token)
+        faraday.request(:authorization, :basic_auth, auth_id, auth_token)
 
         faraday.proxy=@proxy_hash if @proxy_hash
         faraday.response :json, content_type: /\bjson$/
@@ -255,7 +254,7 @@ module Plivo
 
           faraday.request :multipart
           faraday.request :url_encoded
-          faraday.request(:basic_auth, auth_id, auth_token)
+          faraday.request(:authorization, :basic_auth, auth_id, auth_token)
 
           faraday.proxy=@proxy_hash if @proxy_hash
           faraday.response :json, content_type: /\bjson$/
