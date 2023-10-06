@@ -19,5 +19,8 @@
   "dlt_template_category": "service_implicit",
   "destination_network": "Verizon",
   "carrier_fees_rate": "0.420",
-  "carrier_fees": "0.001"
+  "carrier_fees": "0.001",
+  "conversation_id": "",
+  "conversation_origin": "",
+  "conversation_expiration_timestamp": ""
 }

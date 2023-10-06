@@ -42,7 +42,10 @@ module Plivo
           dlt_template_category: @dlt_template_category,
           destination_network: @destination_network,
           carrier_fees_rate: @carrier_fees_rate,
-          carrier_fees: @carrier_fees
+          carrier_fees: @carrier_fees,
+          conversation_id: @conversation_id,
+          conversation_origin: @conversation_origin,
+          conversation_expiration_timestamp: @conversation_expiration_timestamp
         }.to_s
       end
     end
@@ -64,7 +67,7 @@ module Plivo
       # @param [Array] dst
       # @param [String] text
       # @param [Hash] options
-      # @option options [String] :type The type of message. Should be `sms` or `mms`. Defaults to `sms`.
+      # @option options [String] :type The type of message. Should be `sms` or `mms` or `whatsapp`. Defaults to `sms`.
       # @option options [String] :url The URL to which with the status of the message is sent. The following parameters are sent to the URL:
       #                               - To - Phone number of the recipient
       #                               - From - Phone number of the sender
@@ -87,13 +90,14 @@ module Plivo
       # @option options [String] :dlt_entity_id This is the DLT entity id passed in the message request.
       # @option options [String] :dlt_template_id This is the DLT template id passed in the message request. 
       # @option options [String] :dlt_template_category This is the DLT template category passed in the message request.
+      # @option options [Hash] :template This is the template used in the whatsapp message request. It can handle both JSON and String.
       
       def create(src = nil, dst = nil, text = nil, options = nil, powerpack_uuid = nil)
         #All params in One HASH
         value = src
         if(value.is_a?(Hash))
           valid_param?(:src, value[:src], [Integer, String, Symbol], false)
-          valid_param?(:text, value[:text], [String, Symbol], true)
+          valid_param?(:text, value[:text], [String, Symbol], false)
           valid_param?(:dst, value[:dst], [String, Array], true)
           valid_param?(:powerpack_uuid, value[:powerpack_uuid], [String, Symbol], false)
 
@@ -128,7 +132,7 @@ module Plivo
           end
 
           #Handling optional params in One HASH
-          if value.key?(:type) && valid_param?(:type, value[:type],String, true, %w[sms mms])
+          if value.key?(:type) && valid_param?(:type, value[:type],String, true, %w[sms mms whatsapp])
             params[:type] = value[:type]
           end
 
@@ -182,10 +186,48 @@ module Plivo
            params[:dlt_template_category] = value[:dlt_template_category]
           end
 
+          # handling whatsapp cases
+          if value.is_a?(Hash) && !value[:template].nil?
+            if value.key?(:template)
+              if value[:template].is_a?(String)
+                begin
+                  json_template = JSON.parse(value[:template])
+                  params[:template] = json_template
+                rescue JSON::ParserError => e
+                  raise InvalidRequestError, 'Failed to parse template as JSON'
+                end
+              elsif value[:template].is_a?(Hash)
+                params[:template] = value[:template]
+              else
+                raise InvalidRequestError, 'Invalid template format'
+              end
+            end
+          end
+          
+          if params.is_a?(Hash) && !params[:template].nil?
+            if !value.key?(:type).nil? && (value[:type] != "whatsapp")
+              raise InvalidRequestError, 'type parameter must be whatsapp'
+            end
+          end
+          
+          if params.is_a?(Hash) && !params[:template].nil?
+            template = params[:template]
+            if !template.is_a?(Hash) && (!template.key?('name') || template['name'].empty?)
+              raise InvalidRequestError, 'template name must not be null or empty'
+            end
+          end
+          
+          if params.is_a?(Hash) && !params[:template].nil?
+            template = params[:template]
+            if !template.is_a?(Hash) && (!template.key?('language') || template['language'].empty?)
+              raise InvalidRequestError, 'template language must not be null or empty'
+            end
+          end          
+
         #legacy code compatibility
         else
           valid_param?(:src, src, [Integer, String, Symbol], false)
-          valid_param?(:text, text, [String, Symbol], true)
+          valid_param?(:text, text, [String, Symbol], false)
           valid_param?(:dst, dst, [String, Array], true)
           valid_param?(:powerpack_uuid, powerpack_uuid, [String, Symbol], false)
           dst.each do |dst_num|
@@ -223,7 +265,7 @@ module Plivo
           valid_param?(:options, options, Hash, true)
 
           if options.key?(:type) &&
-             valid_param?(:type, options[:type], String, true, %w[sms mms])
+             valid_param?(:type, options[:type], String, true, %w[sms mms whatsapp])
             params[:type] = options[:type]
           end
 
@@ -286,6 +328,45 @@ module Plivo
             valid_param?(:dlt_template_category, options[:dlt_template_category], String, true)
            params[:dlt_template_category] = options[:dlt_template_category]
           end
+
+          # handling whatsapp cases
+          if value.is_a?(Hash) && !value[:template].nil?
+            if value.key?(:template)
+              if value[:template].is_a?(String)
+                begin
+                  json_template = JSON.parse(value[:template])
+                  params[:template] = json_template
+                rescue JSON::ParserError => e
+                  raise InvalidRequestError, 'Failed to parse template as JSON'
+                end
+              elsif value[:template].is_a?(Hash)
+                params[:template] = value[:template]
+              else
+                raise InvalidRequestError, 'Invalid template format'
+              end
+            end
+          end
+          
+          if value.is_a?(Hash) && !value[:template].nil?
+            if !value.key?(:type).nil? && (value[:type] != "whatsapp")
+              raise InvalidRequestError, 'type parameter must be whatsapp'
+            end
+          end
+          
+          if value.is_a?(Hash) && !value[:template].nil?
+            template = value[:template]
+            if !template.is_a?(Hash) && (!template.key?('name') || template['name'].empty?)
+              raise InvalidRequestError, 'template name must not be null or empty'
+            end
+          end
+          
+          if value.is_a?(Hash) && !value[:template].nil?
+            template = value[:template]
+            if !template.is_a?(Hash) && (!template.key?('language') || template['language'].empty?)
+              raise InvalidRequestError, 'template language must not be null or empty'
+            end
+          end      
+
         end
         perform_create(params)
       end
@@ -293,6 +374,7 @@ module Plivo
       # @param [Hash] options
       # @option options [String] :subaccount The id of the subaccount, if message details of the subaccount is needed.
       # @option options [String] :message_direction Filter the results by message direction. The valid inputs are inbound and outbound.
+      # @option options [String] :message_type Filter the results by message type. The valid inputs are sms mms and whatsapp.
       # @option options [String] :message_time Filter out messages according to the time of completion. The filter can be used in the following five forms:
       #                                        - message_time: The format expected is YYYY-MM-DD HH:MM[:ss[.uuuuuu]]. Eg:- To get all messages that were sent/received at 2012-03-21 11:47[:30], use message_time=2012-03-21 11:47[:30]
       #                                        - message_time\__gt: gt stands for greater than. The format expected is YYYY-MM-DD HH:MM[:ss[.uuuuuu]]. Eg:- To get all messages that were sent/received after 2012-03-21 11:47, use message_time\__gt=2012-03-21 11:47
@@ -310,6 +392,8 @@ module Plivo
       # @option options [string]:  tendlc_campaign_id - exact tendlc campaign id search
       # @option options [string]:destination_country_iso2 - valid 2 character country_iso2
       # @option options [string] : tendlc_registration_status - registered or unregistered enum allowed
+      # @option options [string] : conversation_id - The id of the conversation for whatsapp messages
+      # @option options [string] : conversartion_origin - The type of the conversation for whatsapp messages
       def list(options = nil)
         return perform_list if options.nil?
         valid_param?(:options, options, Hash, true)
@@ -318,6 +402,7 @@ module Plivo
         params_expected = %i[
           subaccount message_time message_time__gt message_time__gte
           message_time__lt message_time__lte error_code powerpack_id tendlc_campaign_id tendlc_registration_status destination_country_iso2
+          message_type conversation_id conversartion_origin
         ]
         params_expected.each do |param|
           if options.key?(param) &&
@@ -341,9 +426,21 @@ module Plivo
 
         if options.key?(:message_state) &&
            valid_param?(:message_state, options[:message_state],
-                        [String, Symbol], true, %w[queued sent failed delivered
+                        [String, Symbol], true, %w[queued sent failed delivered read
                                                    undelivered rejected])
           params[:message_state] = options[:message_state]
+        end
+
+        if options.key?(:message_type) &&
+          valid_param?(:message_type, options[:message_type],
+                       [String, Symbol], true, %w[sms mms whatsapp])
+         params[:message_type] = options[:message_type]
+        end
+
+       if options.key?(:conversation_origin) &&
+          valid_param?(:conversation_origin, options[:conversation_origin],
+                     [String, Symbol], true, %w[service utility marketing authentication])
+         params[:conversation_origin] = options[:conversation_origin]
         end
 
         if options.key?(:limit) &&
