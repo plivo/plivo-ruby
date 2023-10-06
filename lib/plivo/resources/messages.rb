@@ -198,28 +198,24 @@ module Plivo
                 end
               elsif value[:template].is_a?(Hash)
                 params[:template] = value[:template]
+              elsif value[:template].is_a?(Plivo::Template)
+                params[:template] = value[:template].to_hash
               else
                 raise InvalidRequestError, 'Invalid template format'
               end
             end
           end
-          
-          if params.is_a?(Hash) && !params[:template].nil?
-            if !value.key?(:type).nil? && (value[:type] != "whatsapp")
-              raise InvalidRequestError, 'type parameter must be whatsapp'
-            end
-          end
-          
+                    
           if params.is_a?(Hash) && !params[:template].nil?
             template = params[:template]
-            if !template.is_a?(Hash) && (!template.key?('name') || template['name'].empty?)
+            if template.is_a?(Hash) && (!template.key?('name') || template['name'].empty?)
               raise InvalidRequestError, 'template name must not be null or empty'
             end
           end
           
           if params.is_a?(Hash) && !params[:template].nil?
             template = params[:template]
-            if !template.is_a?(Hash) && (!template.key?('language') || template['language'].empty?)
+            if template.is_a?(Hash) && (!template.key?('language') || template['language'].empty?)
               raise InvalidRequestError, 'template language must not be null or empty'
             end
           end          
@@ -341,6 +337,8 @@ module Plivo
                 end
               elsif value[:template].is_a?(Hash)
                 params[:template] = value[:template]
+              elsif value[:template].is_a?(Plivo::Template)
+                params[:template] = value[:template].to_hash
               else
                 raise InvalidRequestError, 'Invalid template format'
               end
@@ -348,21 +346,15 @@ module Plivo
           end
           
           if value.is_a?(Hash) && !value[:template].nil?
-            if !value.key?(:type).nil? && (value[:type] != "whatsapp")
-              raise InvalidRequestError, 'type parameter must be whatsapp'
-            end
-          end
-          
-          if value.is_a?(Hash) && !value[:template].nil?
             template = value[:template]
-            if !template.is_a?(Hash) && (!template.key?('name') || template['name'].empty?)
+            if template.is_a?(Hash) && (!template.key?('name') || template['name'].empty?)
               raise InvalidRequestError, 'template name must not be null or empty'
             end
           end
           
           if value.is_a?(Hash) && !value[:template].nil?
             template = value[:template]
-            if !template.is_a?(Hash) && (!template.key?('language') || template['language'].empty?)
+            if template.is_a?(Hash) && (!template.key?('language') || template['language'].empty?)
               raise InvalidRequestError, 'template language must not be null or empty'
             end
           end      
