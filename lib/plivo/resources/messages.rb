@@ -186,6 +186,10 @@ module Plivo
            params[:dlt_template_category] = value[:dlt_template_category]
           end
 
+          if value.key?(:template) && value.key?(:type) && value[:type] != 'whatsapp'
+              raise InvalidRequestError, 'template parameter is only applicable when type is whatsapp'
+            end
+
           # handling whatsapp cases
           if value.is_a?(Hash) && !value[:template].nil?
             if value.key?(:template)
@@ -194,28 +198,28 @@ module Plivo
                   json_template = JSON.parse(value[:template])
                   params[:template] = json_template
                 rescue JSON::ParserError => e
-                  raise InvalidRequestError, 'Failed to parse template as JSON'
+                  raise InvalidRequestError, 'failed to parse template as JSON'
                 end
               elsif value[:template].is_a?(Hash)
                 params[:template] = value[:template]
               elsif value[:template].is_a?(Plivo::Template)
                 params[:template] = value[:template].to_hash
               else
-                raise InvalidRequestError, 'Invalid template format'
+                raise InvalidRequestError, 'invalid template format'
               end
             end
           end
                     
           if params.is_a?(Hash) && !params[:template].nil?
             template = params[:template]
-            if template.is_a?(Hash) && (!template.key?('name') || template['name'].empty?)
+            if template.is_a?(Hash) && (!template.key?(:name) || template[:name].empty?)
               raise InvalidRequestError, 'template name must not be null or empty'
             end
           end
           
           if params.is_a?(Hash) && !params[:template].nil?
             template = params[:template]
-            if template.is_a?(Hash) && (!template.key?('language') || template['language'].empty?)
+            if template.is_a?(Hash) && (!template.key?(:language) || template[:language].empty?)
               raise InvalidRequestError, 'template language must not be null or empty'
             end
           end          
@@ -325,6 +329,10 @@ module Plivo
            params[:dlt_template_category] = options[:dlt_template_category]
           end
 
+          if value.key?(:template) && value.key?(:type) && value[:type] != 'whatsapp'
+            raise InvalidRequestError, 'template parameter is only applicable when type is whatsapp'
+          end
+
           # handling whatsapp cases
           if value.is_a?(Hash) && !value[:template].nil?
             if value.key?(:template)
@@ -333,28 +341,28 @@ module Plivo
                   json_template = JSON.parse(value[:template])
                   params[:template] = json_template
                 rescue JSON::ParserError => e
-                  raise InvalidRequestError, 'Failed to parse template as JSON'
+                  raise InvalidRequestError, 'failed to parse template as JSON'
                 end
               elsif value[:template].is_a?(Hash)
                 params[:template] = value[:template]
               elsif value[:template].is_a?(Plivo::Template)
                 params[:template] = value[:template].to_hash
               else
-                raise InvalidRequestError, 'Invalid template format'
+                raise InvalidRequestError, 'invalid template format'
               end
             end
           end
           
           if value.is_a?(Hash) && !value[:template].nil?
             template = value[:template]
-            if template.is_a?(Hash) && (!template.key?('name') || template['name'].empty?)
+            if template.is_a?(Hash) && (!template.key?(:name) || template[:name].empty?)
               raise InvalidRequestError, 'template name must not be null or empty'
             end
           end
           
           if value.is_a?(Hash) && !value[:template].nil?
             template = value[:template]
-            if template.is_a?(Hash) && (!template.key?('language') || template['language'].empty?)
+            if template.is_a?(Hash) && (!template.key?(:language) || template[:language].empty?)
               raise InvalidRequestError, 'template language must not be null or empty'
             end
           end      
