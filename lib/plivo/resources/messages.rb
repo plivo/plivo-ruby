@@ -186,11 +186,11 @@ module Plivo
            params[:dlt_template_category] = value[:dlt_template_category]
           end
 
+          # handling whatsapp cases
           if value.key?(:template) && value.key?(:type) && value[:type] != 'whatsapp'
               raise InvalidRequestError, 'template parameter is only applicable when type is whatsapp'
             end
 
-          # handling whatsapp cases
           if value.is_a?(Hash) && !value[:template].nil?
             if value.key?(:template)
               if value[:template].is_a?(String)
@@ -209,20 +209,16 @@ module Plivo
               end
             end
           end
-                    
-          if params.is_a?(Hash) && !params[:template].nil?
-            template = params[:template]
-            if template.is_a?(Hash) && (!template.key?(:name) || template[:name].empty?)
-              raise InvalidRequestError, 'template name must not be null or empty'
+          
+          if !params[:template].nil? && value[:template].is_a?(String)
+            if params.dig(:template, "name").to_s.empty? || params.dig(:template, "language").to_s.empty?
+              raise InvalidRequestError, 'template name and language must not be null or empty'
+            end
+          else
+            if !params[:template].nil? && params.dig(:template, :name).to_s.empty? || params.dig(:template, :language).to_s.empty?
+              raise InvalidRequestError, 'template name and language must not be null or empty'
             end
           end
-          
-          if params.is_a?(Hash) && !params[:template].nil?
-            template = params[:template]
-            if template.is_a?(Hash) && (!template.key?(:language) || template[:language].empty?)
-              raise InvalidRequestError, 'template language must not be null or empty'
-            end
-          end          
 
         #legacy code compatibility
         else
@@ -329,11 +325,11 @@ module Plivo
            params[:dlt_template_category] = options[:dlt_template_category]
           end
 
+          # handling whatsapp cases
           if value.key?(:template) && value.key?(:type) && value[:type] != 'whatsapp'
             raise InvalidRequestError, 'template parameter is only applicable when type is whatsapp'
           end
 
-          # handling whatsapp cases
           if value.is_a?(Hash) && !value[:template].nil?
             if value.key?(:template)
               if value[:template].is_a?(String)
@@ -352,20 +348,16 @@ module Plivo
               end
             end
           end
-          
-          if value.is_a?(Hash) && !value[:template].nil?
-            template = value[:template]
-            if template.is_a?(Hash) && (!template.key?(:name) || template[:name].empty?)
-              raise InvalidRequestError, 'template name must not be null or empty'
+
+          if !params[:template].nil? && value[:template].is_a?(String)
+            if params.dig(:template, "name").to_s.empty? || params.dig(:template, "language").to_s.empty?
+              raise InvalidRequestError, 'template name and language must not be null or empty'
             end
-          end
-          
-          if value.is_a?(Hash) && !value[:template].nil?
-            template = value[:template]
-            if template.is_a?(Hash) && (!template.key?(:language) || template[:language].empty?)
-              raise InvalidRequestError, 'template language must not be null or empty'
+          else
+            if !params[:template].nil? && params.dig(:template, :name).to_s.empty? || params.dig(:template, :language).to_s.empty?
+              raise InvalidRequestError, 'template name and language must not be null or empty'
             end
-          end      
+          end   
 
         end
         perform_create(params)
