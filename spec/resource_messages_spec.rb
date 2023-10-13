@@ -23,7 +23,10 @@ describe 'Messages test' do
       dlt_template_category: message.dlt_template_category,
       destination_network: message.destination_network,
       carrier_fees_rate: message.carrier_fees_rate,
-      carrier_fees: message.carrier_fees
+      carrier_fees: message.carrier_fees,
+      conversation_id: message.conversation_id,
+      conversation_origin: message.conversation_origin,
+      conversation_expiration_timestamp: message.conversation_expiration_timestamp
     }.to_json
   end
 
@@ -86,6 +89,9 @@ describe 'Messages test' do
     expect(response.dlt_template_id).to eql("5678")
     expect(response.destination_network).to eql("Verizon")
     expect(response.dlt_template_category).to eql("service_implicit")
+    expect(response.conversation_id).to eql("")
+    expect(response.conversation_origin).to eql("")
+    expect(response.conversation_expiration_timestamp).to eql("")
   end
 
   it 'lists all mms media' do
@@ -138,6 +144,14 @@ describe 'Messages test' do
     expect(JSON.parse(response)['objects'][19]["dlt_entity_id"]).to eql("")
     expect(JSON.parse(response)['objects'][19]["dlt_template_id"]).to eql("")
     expect(JSON.parse(response)['objects'][19]["dlt_template_category"]).to eql("")
+
+    expect(JSON.parse(response)['objects'][1]["conversation_id"]).to eql("123")
+    expect(JSON.parse(response)['objects'][1]["conversation_origin"]).to eql("service")
+    expect(JSON.parse(response)['objects'][1]["conversation_expiration_timestamp"]).to eql("2023-08-03 23:02:00+05:30")
+
+    expect(JSON.parse(response)['objects'][19]["conversation_id"]).to eql("")
+    expect(JSON.parse(response)['objects'][19]["conversation_origin"]).to eql("")
+    expect(JSON.parse(response)['objects'][19]["conversation_expiration_timestamp"]).to eql("")
   end
 
   it 'sends a message' do

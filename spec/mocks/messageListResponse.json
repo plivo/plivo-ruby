@@ -27,7 +27,10 @@
       "dlt_template_category": "promotional",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "",
+      "conversation_origin": "",
+      "conversation_expiration_timestamp": ""
     },
     {
       "error_code": null,
@@ -35,7 +38,7 @@
       "message_direction": "outbound",
       "message_state": "sent",
       "message_time": "2017-05-22 21:34:40+05:30",
-      "message_type": "sms",
+      "message_type": "whatsapp",
       "message_uuid": "39062592-3ce1-44a0-a66e-ea65f064bf9e",
       "resource_uri": "/v1/Account/MAXXXXXXXXXXXXXXXXXX/Message/39062592-3ce1-44a0-a66e-ea65f064bf9e/",
       "to_number": "911231231231",
@@ -49,7 +52,10 @@
       "dlt_template_category": "",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "123",
+      "conversation_origin": "service",
+      "conversation_expiration_timestamp": "2023-08-03 23:02:00+05:30"
     },
     {
       "error_code": null,
@@ -71,7 +77,10 @@
       "dlt_template_category": "",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "",
+      "conversation_origin": "",
+      "conversation_expiration_timestamp": ""
     },
     {
       "error_code": null,
@@ -93,7 +102,10 @@
       "dlt_template_category": "",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "",
+      "conversation_origin": "",
+      "conversation_expiration_timestamp": ""
     },
     {
       "error_code": null,
@@ -115,7 +127,10 @@
       "dlt_template_category": "",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "",
+      "conversation_origin": "",
+      "conversation_expiration_timestamp": ""
     },
     {
       "error_code": null,
@@ -137,7 +152,10 @@
       "dlt_template_category": "",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "",
+      "conversation_origin": "",
+      "conversation_expiration_timestamp": ""
     },
     {
       "error_code": null,
@@ -159,7 +177,10 @@
       "dlt_template_category": "",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "",
+      "conversation_origin": "",
+      "conversation_expiration_timestamp": ""
     },
     {
       "error_code": null,
@@ -181,7 +202,10 @@
       "dlt_template_category": "",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "",
+      "conversation_origin": "",
+      "conversation_expiration_timestamp": ""
     },
     {
       "error_code": "000",
@@ -203,7 +227,10 @@
       "dlt_template_category": "",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "",
+      "conversation_origin": "",
+      "conversation_expiration_timestamp": ""
     },
     {
       "error_code": null,
@@ -225,7 +252,10 @@
       "dlt_template_category": "",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "",
+      "conversation_origin": "",
+      "conversation_expiration_timestamp": ""
     },
     {
       "error_code": "000",
@@ -247,7 +277,10 @@
       "dlt_template_category": "",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "",
+      "conversation_origin": "",
+      "conversation_expiration_timestamp": ""
     },
     {
       "error_code": null,
@@ -269,7 +302,10 @@
       "dlt_template_category": "",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "",
+      "conversation_origin": "",
+      "conversation_expiration_timestamp": ""
     },
     {
       "error_code": "000",
@@ -291,7 +327,10 @@
       "dlt_template_category": "",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "",
+      "conversation_origin": "",
+      "conversation_expiration_timestamp": ""
     },
     {
       "error_code": null,
@@ -313,7 +352,10 @@
       "dlt_template_category": "",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "",
+      "conversation_origin": "",
+      "conversation_expiration_timestamp": ""
     },
     {
       "error_code": "000",
@@ -335,7 +377,10 @@
       "dlt_template_category": "",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "",
+      "conversation_origin": "",
+      "conversation_expiration_timestamp": ""
     },
     {
       "error_code": null,
@@ -357,7 +402,10 @@
       "dlt_template_category": "",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "",
+      "conversation_origin": "",
+      "conversation_expiration_timestamp": ""
     },
     {
       "error_code": "000",
@@ -379,7 +427,10 @@
       "dlt_template_category": "",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "",
+      "conversation_origin": "",
+      "conversation_expiration_timestamp": ""
     },
     {
       "error_code": "000",
@@ -401,7 +452,10 @@
       "dlt_template_category": "",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "",
+      "conversation_origin": "",
+      "conversation_expiration_timestamp": ""
     },
     {
       "error_code": "000",
@@ -423,7 +477,10 @@
       "dlt_template_category": "",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "",
+      "conversation_origin": "",
+      "conversation_expiration_timestamp": ""
     },
     {
       "error_code": "000",
@@ -445,7 +502,10 @@
       "dlt_template_category": "",
       "destination_network": "Verizon",
       "carrier_fees_rate": "0.420",
-      "carrier_fees": "0.001"
+      "carrier_fees": "0.001",
+      "conversation_id": "",
+      "conversation_origin": "",
+      "conversation_expiration_timestamp": ""
     }
   ]
 }
