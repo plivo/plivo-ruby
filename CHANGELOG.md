@@ -1,4 +1,10 @@
 # Change Log
+
+## [4.50.0](https://github.com/plivo/plivo-ruby/tree/v4.50.0) (2023-10-13)
+**Feature - WhatsApp message support**
+- Added new params `template` and new message_type `whatsapp` to [send message API](https://www.plivo.com/docs/sms/api/message#send-a-message)
+- Added  new  `message_state` (`read`), `message_type`(`whatsapp`), `conversation_id`, `conversation_origin`, `conversation_expiration_timestamp` in [list all messages API](https://www.plivo.com/docs/sms/api/message#list-all-messages) and [get message details API](https://www.plivo.com/docs/sms/api/message#retrieve-a-message) response
+
 ## [4.49.0](https://github.com/plivo/plivo-ruby/tree/v4.49.0) (2023-09-13)
 **Removing the faraday_middleware dependency and upgrade to farady latest version
 

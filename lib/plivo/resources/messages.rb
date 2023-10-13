@@ -187,7 +187,7 @@ module Plivo
           end
 
           # handling whatsapp cases
-          if value.key?(:template) && value.key?(:type) && value[:type] != 'whatsapp'
+          if value.key?(:template) && value.key?(:type) && (value[:type] != "whatsapp")
               raise InvalidRequestError, 'template parameter is only applicable when type is whatsapp'
             end
 
@@ -215,7 +215,7 @@ module Plivo
               raise InvalidRequestError, 'template name and language must not be null or empty'
             end
           else
-            if !params[:template].nil? && params.dig(:template, :name).to_s.empty? || params.dig(:template, :language).to_s.empty?
+            if !params[:template].nil? && (params.dig(:template, :name).to_s.empty? || params.dig(:template, :language).to_s.empty?)
               raise InvalidRequestError, 'template name and language must not be null or empty'
             end
           end
@@ -326,35 +326,35 @@ module Plivo
           end
 
           # handling whatsapp cases
-          if value.key?(:template) && value.key?(:type) && value[:type] != 'whatsapp'
+          if options.key?(:template) && options.key?(:type) && (options[:type] != "whatsapp")
             raise InvalidRequestError, 'template parameter is only applicable when type is whatsapp'
           end
 
-          if value.is_a?(Hash) && !value[:template].nil?
-            if value.key?(:template)
-              if value[:template].is_a?(String)
+          if options.is_a?(Hash) && !options[:template].nil?
+            if options.key?(:template)
+              if options[:template].is_a?(String)
                 begin
-                  json_template = JSON.parse(value[:template])
+                  json_template = JSON.parse(options[:template])
                   params[:template] = json_template
                 rescue JSON::ParserError => e
                   raise InvalidRequestError, 'failed to parse template as JSON'
                 end
-              elsif value[:template].is_a?(Hash)
-                params[:template] = value[:template]
-              elsif value[:template].is_a?(Plivo::Template)
-                params[:template] = value[:template].to_hash
+              elsif options[:template].is_a?(Hash)
+                params[:template] = options[:template]
+              elsif options[:template].is_a?(Plivo::Template)
+                params[:template] = options[:template].to_hash
               else
                 raise InvalidRequestError, 'invalid template format'
               end
             end
           end
 
-          if !params[:template].nil? && value[:template].is_a?(String)
-            if params.dig(:template, "name").to_s.empty? || params.dig(:template, "language").to_s.empty?
+          if !options[:template].nil? && options[:template].is_a?(String)
+            if options.dig(:template, "name").to_s.empty? || options.dig(:template, "language").to_s.empty?
               raise InvalidRequestError, 'template name and language must not be null or empty'
             end
           else
-            if !params[:template].nil? && params.dig(:template, :name).to_s.empty? || params.dig(:template, :language).to_s.empty?
+            if !options[:template].nil? && (options.dig(:template, :name).to_s.empty? || options.dig(:template, :language).to_s.empty?)
               raise InvalidRequestError, 'template name and language must not be null or empty'
             end
           end   
@@ -427,12 +427,6 @@ module Plivo
           valid_param?(:message_type, options[:message_type],
                        [String, Symbol], true, %w[sms mms whatsapp])
          params[:message_type] = options[:message_type]
-        end
-
-       if options.key?(:conversation_origin) &&
-          valid_param?(:conversation_origin, options[:conversation_origin],
-                     [String, Symbol], true, %w[service utility marketing authentication])
-         params[:conversation_origin] = options[:conversation_origin]
         end
 
         if options.key?(:limit) &&
