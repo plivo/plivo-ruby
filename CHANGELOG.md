@@ -1,5 +1,10 @@
 # Change Log
 
+## [4.51.0](https://github.com/plivo/plivo-ruby/tree/v4.51.0) (2023-10-16)
+**Introducing campaign_source & import partner camapign API**
+- New field campaign_source introduced
+- Import partner campaign API added
+
 ## [4.50.0](https://github.com/plivo/plivo-ruby/tree/v4.50.0) (2023-10-13)
 **Feature - WhatsApp message support**
 - Added new params `template` and new message_type `whatsapp` to [send message API](https://www.plivo.com/docs/sms/api/message#send-a-message)
