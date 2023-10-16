@@ -1,6 +1,5 @@
 require 'json'
 require 'faraday'
-require 'faraday_middleware'
 
 module Plivo
   module Resources
