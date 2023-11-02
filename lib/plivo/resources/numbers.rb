@@ -37,7 +37,9 @@ module Plivo
           voice_rate: @voice_rate,
           tendlc_campaign_id: @tendlc_campaign_id,
           tendlc_registration_status: @tendlc_registration_status,
-          toll_free_sms_verification: @toll_free_sms_verification
+          toll_free_sms_verification: @toll_free_sms_verification,
+          toll_free_sms_verification_id: @toll_free_sms_verification_id,
+          toll_free_sms_verification_order_status: @toll_free_sms_verification_order_status
         }.to_s
       end
     end
@@ -185,7 +187,9 @@ module Plivo
           tendlc_registration_status: @tendlc_registration_status,
           toll_free_sms_verification: @toll_free_sms_verification,
           renewal_date: @renewal_date,
-          cnam_lookup: @cnam_lookup
+          cnam_lookup: @cnam_lookup,
+          toll_free_sms_verification_id: @toll_free_sms_verification_id,
+          toll_free_sms_verification_order_status: @toll_free_sms_verification_order_status
         }.to_s
       end
     end
@@ -231,6 +235,8 @@ module Plivo
       # @option options [String] :cnam_lookup The Cnam Lookup Configuration associated with that number. The following values are valid:
       #                                     - enabled - Returns the list of numbers for which Cnam Lookup configuration is enabled
       #                                     - disabled - Returns the list of numbers for which Cnam Lookup configuration is disabled
+      # @option options [String] :toll_free_sms_verification_id The id of tollfree verification that the number is currently linked with.
+      # @option options [String] :toll_free_sms_verification_order_status Indicates the tollfree verification status of a number.
       def list(options = nil)
         return perform_list if options.nil?
 

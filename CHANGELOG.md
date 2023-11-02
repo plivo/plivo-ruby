@@ -1,5 +1,13 @@
 # Change Log
 
+## [4.52.0](https://github.com/plivo/plivo-php/tree/v4.52.0) (2023-10-31)
+**Feature - TollFree Verification API Support**
+- API support for Create, Update, Get, Delete and List Tollfree Verification.
+- Added New Param `toll_free_sms_verification_id` and `toll_free_sms_verification_order_status `in to the response of the [list all numbers API], [list single number API]
+- Added `toll_free_sms_verification_order_status` filter to AccountPhoneNumber - list all my numbers API.
+
+
+
 ## [4.51.0](https://github.com/plivo/plivo-ruby/tree/v4.51.0) (2023-10-16)
 **Introducing campaign_source & import partner camapign API**
 - New field campaign_source introduced

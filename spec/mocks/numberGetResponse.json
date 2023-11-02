@@ -18,5 +18,7 @@
   "tendlc_registration_status": "COMPLETED",
   "toll_free_sms_verification": null,
   "renewal_date": "2023-05-10",
-  "cnam_lookup": "enabled"
+  "cnam_lookup": "enabled",
+  "toll_free_sms_verification_id": null,
+  "toll_free_sms_verification_order_status": null
 }
