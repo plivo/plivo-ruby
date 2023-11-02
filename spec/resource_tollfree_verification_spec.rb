@@ -3,21 +3,21 @@ require 'rspec'
 describe 'TollfreeVerifications test' do
   def to_json(tfverificationobj)
     {
-      created: tfverificationobjcreated,
+      created: tfverificationobj.created,
       number: tfverificationobj.number,
-      lastModified: tfverificationobj.last_modified,
-      callbackMethod: tfverificationobj.callback_method,
-      callbackUrl: tfverificationobj.callback_url,
-      extraData: tfverificationobj.extra_data,
-      additionalInformation: tfverificationobj.additional_information,
-      messageSample: tfverificationobj.message_sample,
-      optinImageUrl: tfverificationobj.optin_image_url,
-      optinType: tfverificationobj.optin_type,
-      profileUuid: tfverificationobj.profile_uuid,
-      errorMessage: tfverificationobj.error_message,
+      last_modified: tfverificationobj.last_modified,
+      callback_method: tfverificationobj.callback_method,
+      callback_url: tfverificationobj.callback_url,
+      extra_data: tfverificationobj.extra_data,
+      additional_information: tfverificationobj.additional_information,
+      message_sample: tfverificationobj.message_sample,
+      optin_image_url: tfverificationobj.optin_image_url,
+      optin_type: tfverificationobj.optin_type,
+      profile_uuid: tfverificationobj.profile_uuid,
+      error_message: tfverificationobj.error_message,
       status: tfverificationobj.status,
       usecase: tfverificationobj.usecase,
-      usecaseSummary: tfverificationobj.usecase_summary,
+      usecase_summary: tfverificationobj.usecase_summary,
       uuid: tfverificationobj.uuid,
       volume: tfverificationobj.volume,
     }.to_json
@@ -52,7 +52,7 @@ describe 'TollfreeVerifications test' do
   end
 
   it 'fetches details of  tollfree verification' do
-      contents = File.read(Dir.pwd + '/spec/mocks/tollfreeVerificationGetResponse.json')
+      contents = File.read(Dir.pwd + '/spec/mocks/tollfreeverificationGetResponse.json')
       mock(200, JSON.parse(contents))
       expect(JSON.parse(to_json(@api.tollfree_verifications.get('SAXXXXXXXXXXXXXXXXXX'))))
         .to eql(JSON.parse(contents))
@@ -70,4 +70,5 @@ describe 'TollfreeVerifications test' do
       compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/TollfreeVerification/' + id + '/',
                        method: 'DELETE',
                        data: nil)
-    end
+  end
+end
