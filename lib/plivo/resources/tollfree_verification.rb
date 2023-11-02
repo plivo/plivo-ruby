@@ -67,7 +67,7 @@ module Plivo
       # @param [String] uuid
       # return [TollfreeVerification]
       def get(uuid)
-        valid_param?(:uuid, tollfree_verification_id, [String, Symbol], true)
+        valid_param?(:uuid, uuid, [String, Symbol], true)
         perform_get(uuid)
       end
 
@@ -168,7 +168,7 @@ module Plivo
       ##
       # Delete an TollfreeVerification.
       # @param [String] uuid
-      def delete(tollfree_verification_id)
+      def delete(uuid)
         valid_param?(:uuid, uuid, [String, Symbol], true)
         TollfreeVerification.new(@_client,
                         resource_id: uuid).delete
