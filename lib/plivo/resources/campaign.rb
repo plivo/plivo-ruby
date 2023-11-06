@@ -39,6 +39,7 @@ module Plivo
         # @option options [String] :brand_id
         # @option options [Status] :usecase
         # @option options [String] :campaign_source
+        # @option options [String] :registration_status
         # @option options [Status] :limit
         # @option options [Status] :offset
         # @return [Hash]
@@ -46,7 +47,7 @@ module Plivo
         return perform_list_without_object if options.nil?
   
         params = {}
-        %i[usecase brand_id campaign_source limit offset].each do |param|
+        %i[usecase brand_id campaign_source limit offset registration_status].each do |param|
           if options.key?(param) && valid_param?(param, options[param],
                                                    [String, Integer], true)
             params[param] = options[param]

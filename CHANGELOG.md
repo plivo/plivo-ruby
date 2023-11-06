@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.52.0](https://github.com/plivo/plivo-ruby/tree/v4.52.0) (2023-11-10)
+**Feature - Added New Param 'registration_status' for Campaign List**
+- Added new query param "registration_status" for campaign list
+
 ## [4.51.0](https://github.com/plivo/plivo-ruby/tree/v4.51.0) (2023-10-16)
 **Introducing campaign_source & import partner camapign API**
 - New field campaign_source introduced
