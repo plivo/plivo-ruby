@@ -82,7 +82,7 @@ module Plivo
         valid_param?(:options, options, Hash, true)
 
         params = {}
-        params_expected = %i[ profile_uuid number status created_lt created_gt usecase ]
+        params_expected = %i[ profile_uuid number status created_lt created_gt usecase created_lte created_gte ]
         params_expected.each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [String, Symbol], true)
