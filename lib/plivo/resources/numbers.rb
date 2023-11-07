@@ -244,7 +244,7 @@ module Plivo
 
         params = {}
 
-        %i[number_startswith subaccount alias tendlc_campaign_id tendlc_registration_status toll_free_sms_verification renewal_date renewal_date__lt renewal_date__lte renewal_date__gt renewal_date__gte cnam_lookup].each do |param|
+        %i[number_startswith subaccount alias tendlc_campaign_id tendlc_registration_status toll_free_sms_verification renewal_date renewal_date__lt renewal_date__lte renewal_date__gt renewal_date__gte cnam_lookup toll_free_sms_verification_order_status].each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [String, Symbol], true)
             params[param] = options[param]
