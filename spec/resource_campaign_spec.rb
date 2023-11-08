@@ -284,6 +284,24 @@ describe 'Campaign test' do
                      method: 'DELETE',
                      data: nil)
 end
+it 'import campaign' do
+  contents = File.read(Dir.pwd + '/spec/mocks/campaignImportResponse.json')
+  mock(200, JSON.parse(contents))
+  response = to_json_create(@api.campaign
+                              .import(options = {campaign_id:"C1QGYD1", campaign_alias:"plivo campaign"})
+                            )
+
+  contents = JSON.parse(contents)
+
+  expect(JSON.parse(response))
+    .to eql(contents)
+  compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/10dlc/Campaign/Import/',
+                   method: 'POST',
+                   data: {
+                          campaign_id: "C1QGYD1",
+                          campaign_alias: "plivo campaign"
+                   })
+end
 it 'delete campaign' do
   contents = File.read(Dir.pwd + '/spec/mocks/campaignDeleteResponse.json')
   mock(200, JSON.parse(contents))

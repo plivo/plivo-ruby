@@ -23,6 +23,7 @@ require_relative 'resources/lookup'
 require_relative 'resources/regulatory_compliance'
 require_relative 'resources/multipartycalls'
 require_relative 'resources/verify_session'
+require_relative 'resources/tollfree_verification'
 
 module Plivo
   module Resources

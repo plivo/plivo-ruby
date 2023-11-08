@@ -1,11 +1,36 @@
 # Change Log
 
-## [4.48.0](https://github.com/plivo/plivo-ruby/tree/v4.48.0) (2023-08-31)
+
+## [4.53.0](https://github.com/plivo/plivo-ruby/tree/v4.53.0) (2023-11-08)
 **Feature - Verify Service**
 - Create Session 
 - Validate Session
 - Get Session
 - List Session
+
+## [4.52.0](https://github.com/plivo/plivo-ruby/tree/v4.52.0) (2023-11-08)
+**[BETA] Feature - TollFree Verification API Support**
+- API support for Create, Update, Get, Delete, and List Tollfree Verification.
+- Added New Param `toll_free_sms_verification_id` and `toll_free_sms_verification_order_status` in to the response of the [list all numbers API], [list single number API]
+- Added `toll_free_sms_verification_order_status` filter to AccountPhoneNumber - list all my numbers API.
+
+## [4.51.0](https://github.com/plivo/plivo-ruby/tree/v4.51.0) (2023-10-16)
+**Introducing campaign_source & import partner camapign API**
+- New field campaign_source introduced
+- Import partner campaign API added
+
+## [4.50.0](https://github.com/plivo/plivo-ruby/tree/v4.50.0) (2023-10-13)
+**Feature - WhatsApp message support**
+- Added new params `template` and new message_type `whatsapp` to [send message API](https://www.plivo.com/docs/sms/api/message#send-a-message)
+- Added  new  `message_state` (`read`), `message_type`(`whatsapp`), `conversation_id`, `conversation_origin`, `conversation_expiration_timestamp` in [list all messages API](https://www.plivo.com/docs/sms/api/message#list-all-messages) and [get message details API](https://www.plivo.com/docs/sms/api/message#retrieve-a-message) response
+
+## [4.49.0](https://github.com/plivo/plivo-ruby/tree/v4.49.0) (2023-09-13)
+**Removing the faraday_middleware dependency and upgrade to farady latest version
+
+## [4.48.0](https://github.com/plivo/plivo-ruby/tree/v4.48.0) (2023-08-25)
+**Feature - Added New Param 'carrier_fees', 'carrier_fees_rate', 'destination_network' in Get Message and List Message APIs**
+- Added new params on message get and list response
+>>>>>>> master
 
 ## [4.47.0](https://github.com/plivo/plivo-ruby/tree/v4.47.0) (2023-08-03)
 **Feature - DLT parameters**
