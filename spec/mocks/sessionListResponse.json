@@ -1,0 +1,44 @@
+{
+    "api_id": "0a80fbe1-e2d6-46fd-abf5-885fba1a22fd",
+    "meta": {
+        "limit": 1,
+        "offset": 0,
+        "next": "/v1/Account/MAODZKMDFJMJU3MTEYNG/Verify/Session/?limit=1&offset=1",
+        "previous": null
+    },
+    "sessions": [
+        {
+            "session_uuid": "2879cb3a-3742-4c41-adb6-2d0de6297652",
+            "app_uuid": "f34e00c4-fdca-4675-bfad-6096553ef33f",
+            "alias": "default_verify_app",
+            "recipient": "1234567890",
+            "channel": "sms",
+            "status": "expired",
+            "count": 1,
+            "requestor_ip": "223.236.171.206",
+            "destination_country_iso2": "IN",
+            "destination_network": "Jio",
+            "attempt_details": [
+                {
+                    "channel": "sms",
+                    "attempt_uuid": "29e48f18-42e1-4ad2-b28d-ed93a4fbd3a1",
+                    "status": "failed",
+                    "time": "2023-08-25T13:00:45.281324+05:30"
+                }
+            ],
+            "charges": {
+                "total_charge": "0.00000",
+                "validation_charge": "0.0000",
+                "attempt_charges": [
+                    {
+                        "attempt_uuid": "29e48f18-42e1-4ad2-b28d-ed93a4fbd3a1",
+                        "channel": "sms",
+                        "charge": "0.00000"
+                    }
+                ]
+            },
+            "created_at": "2023-08-25T13:00:45.266046+05:30",
+            "updated_at": "2023-08-25T13:00:45.281324+05:30"
+        }
+    ]
+}

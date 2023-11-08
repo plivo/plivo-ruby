@@ -97,7 +97,7 @@ module Plivo
           objects: @_resource_list
         }
       end
-      
+
       def perform_action(action = nil, method = 'GET', params = nil, parse = false)
         resource_path = action ? @_resource_uri + action + '/' : @_resource_uri
         response = @_client.send_request(resource_path, method, params, nil, false, is_voice_request: @_is_voice_request)
