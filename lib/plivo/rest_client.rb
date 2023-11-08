@@ -18,6 +18,7 @@ module Plivo
     attr_reader :brand, :campaign, :profile
     attr_reader :end_users
     attr_reader :compliance_document_types, :compliance_documents, :compliance_requirements, :compliance_applications
+    attr_reader :tollfree_verifications
 
     def initialize(auth_id = nil, auth_token = nil, proxy_options = nil, timeout = 5)
       configure_base_uri
@@ -64,6 +65,7 @@ module Plivo
       @compliance_documents = Resources::ComplianceDocumentsInterface.new(self)
       @compliance_requirements = Resources::ComplianceRequirementsInterface.new(self)
       @compliance_applications = Resources::ComplianceApplicationsInterface.new(self)
+      @tollfree_verifications = Resources::TollfreeVerificationsInterface.new(self)
     end
   end
 end
