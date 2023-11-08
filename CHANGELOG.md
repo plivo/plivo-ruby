@@ -30,7 +30,7 @@
 ## [4.48.0](https://github.com/plivo/plivo-ruby/tree/v4.48.0) (2023-08-25)
 **Feature - Added New Param 'carrier_fees', 'carrier_fees_rate', 'destination_network' in Get Message and List Message APIs**
 - Added new params on message get and list response
->>>>>>> master
+
 
 ## [4.47.0](https://github.com/plivo/plivo-ruby/tree/v4.47.0) (2023-08-03)
 **Feature - DLT parameters**
