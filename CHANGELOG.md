@@ -1,8 +1,22 @@
 # Change Log
 
-## [4.52.0](https://github.com/plivo/plivo-ruby/tree/v4.52.0) (2023-11-10)
+## [4.54.0](https://github.com/plivo/plivo-ruby/tree/v4.54.0) (2023-11-10)
 **Feature - Added New Param 'registration_status' for Campaign List**
 - Added new query param "registration_status" for campaign list
+
+## [4.53.0](https://github.com/plivo/plivo-ruby/tree/v4.53.0) (2023-11-08)
+**Feature - Verify Service**
+-Added Support for Verify Service Public API'S 
+-Create Session API(POST): To create a verify session (2FA). Allowed params recipient, method, channel, callback_url, app_uuid
+-Get Session API(GET): To retrieve a particular session
+-List Sessions : To retrieve all the sessions
+-Validate Session : To validate OTP for a particular session
+
+## [4.52.0](https://github.com/plivo/plivo-ruby/tree/v4.52.0) (2023-11-08)
+**[BETA] Feature - TollFree Verification API Support**
+- API support for Create, Update, Get, Delete, and List Tollfree Verification.
+- Added New Param `toll_free_sms_verification_id` and `toll_free_sms_verification_order_status` in to the response of the [list all numbers API], [list single number API]
+- Added `toll_free_sms_verification_order_status` filter to AccountPhoneNumber - list all my numbers API.
 
 ## [4.51.0](https://github.com/plivo/plivo-ruby/tree/v4.51.0) (2023-10-16)
 **Introducing campaign_source & import partner camapign API**
@@ -20,6 +34,7 @@
 ## [4.48.0](https://github.com/plivo/plivo-ruby/tree/v4.48.0) (2023-08-25)
 **Feature - Added New Param 'carrier_fees', 'carrier_fees_rate', 'destination_network' in Get Message and List Message APIs**
 - Added new params on message get and list response
+
 
 ## [4.47.0](https://github.com/plivo/plivo-ruby/tree/v4.47.0) (2023-08-03)
 **Feature - DLT parameters**
