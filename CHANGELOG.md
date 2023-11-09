@@ -1,11 +1,11 @@
 # Change Log
 
 
-## [4.53.0](https://github.com/plivo/plivo-ruby/tree/v4.53.0) (2023-11-08)
+## [4.53.1](https://github.com/plivo/plivo-ruby/tree/v4.53.1) (2023-11-09)
 **Feature - Verify Service**
--Added Support for Verify Service Public API'S 
--Create Session API(POST): To create a verify session (2FA). Allowed params recipient, method, channel, callback_url, app_uuid
--Get Session API(GET): To retrieve a particular session
+-Added Support for Verify Service Public API
+-Create Session API : To create a verify session. Allowed params recipient, method, channel, callback_url, app_uuid
+-Get Session API: To retrieve a particular session
 -List Sessions : To retrieve all the sessions
 -Validate Session : To validate OTP for a particular session
 
