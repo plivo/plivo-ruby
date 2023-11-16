@@ -4,17 +4,28 @@ module Plivo
     class Verify < Base::Resource
       def initialize(client, options = nil)
         @_name = 'Verify'
-        @_identifier_string = 'verification_uuid'
+        @_identifier_string = 'api_id'
         super
       end
+      def to_s
+        {
+          api_id: @api_id,
+          alias: @alias,
+          country: @country,
+          created_at: @created_at,
+          modified_at: @modified_at,
+          phone_number: @phone_number,
+          subaccount: @subaccount,
+          verification_uuid: @verification_uuid
+        }.to_s
+      end
     end
-
 
       class VerifyCallerIdInterface < Base::ResourceInterface
         def initialize(client, resource_list_json = nil)
           @_name = 'VerifiedCallerId'
           @_resource_type = Verify
-          @_identifier_string = 'verification_uuid'
+          @_identifier_string = 'api_id'
           super
         end
 
@@ -52,7 +63,8 @@ module Plivo
           perform_action_with_identifier(phone_number, 'POST', params)
         end
 
-        def get(phone_number)
+        def get(phone_number = nil)
+          valid_param?(:phone_number, phone_number, [String], true)
           perform_get(phone_number)
         end
 
@@ -85,7 +97,7 @@ module Plivo
 
           raise_invalid_request("Offset can't be negative") if options.key?(:offset) && options[:offset] < 0
 
-          perform_list_without_object(params)
+          perform_list(params)
         end
 
         def delete(phone_number)
