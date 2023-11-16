@@ -69,22 +69,22 @@ module Plivo
         end
 
         def list(options = nil)
-          return perform_list if options.nil?
-          valid_param?(:options, options, Hash, true)
+          return perform_list_without_object if options.nil?
+          valid_param?(:options, options, Hash, false)
 
           params = {}
           params_expected = %i[subaccount country alias]
 
           params_expected.each do |param|
             if options.key?(param) &&
-              valid_param?(param, options[param], [String, Symbol], true)
+              valid_param?(param, options[param], [String, Symbol], false)
               params[param] = options[param]
             end
           end
 
           %i[offset limit].each do |param|
             if options.key?(param) &&
-              valid_param?(param, options[param], [Integer, Integer], true)
+              valid_param?(param, options[param], [Integer, Integer], false)
               params[param] = options[param]
             end
           end
@@ -97,7 +97,7 @@ module Plivo
 
           raise_invalid_request("Offset can't be negative") if options.key?(:offset) && options[:offset] < 0
 
-          perform_list(params)
+          perform_list_without_object(params)
         end
 
         def delete(phone_number)
