@@ -24,6 +24,7 @@ require_relative 'resources/regulatory_compliance'
 require_relative 'resources/multipartycalls'
 require_relative 'resources/verify_session'
 require_relative 'resources/tollfree_verification'
+require_relative 'resources/verify_caller_id'
 
 module Plivo
   module Resources

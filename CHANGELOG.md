@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.54.0](https://github.com/plivo/plivo-ruby/tree/v4.54.0) (2023-11-17)
+**Feature - Verify Caller Id API support**
+- API support for verifying, updating, getting and deleting caller IDs.
 
 ## [4.53.1](https://github.com/plivo/plivo-ruby/tree/v4.53.1) (2023-11-09)
 **Feature - Verify Service**
