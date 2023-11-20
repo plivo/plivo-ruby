@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.54.0](https://github.com/plivo/plivo-ruby/tree/v4.51.0) (2023-11-20)
+**Introducing error detail inside response for LIST and GET Campaign APIs**
+- New field error_reason and error_detail introduced
 
 ## [4.53.1](https://github.com/plivo/plivo-ruby/tree/v4.53.1) (2023-11-09)
 **Feature - Verify Service**
