@@ -29,15 +29,17 @@ module Plivo
           super
         end
 
-        def initiate(phone_number = nil, channel = nil, alias_ = nil)
+        def initiate(phone_number = nil, channel = nil, alias_ = nil, subaccount = nil)
           valid_param?(:phone_number, phone_number, [String], true)
           valid_param?(:channel, channel, [String], false)
           valid_param?(:alias, alias_, [String], false)
+          valid_param?(:subaccount, subaccount, [String], false)
 
           params = {
             phone_number: phone_number,
             channel: channel,
-            alias: alias_
+            alias: alias_,
+            subaccount: subaccount
           }
           perform_create(params)
         end
