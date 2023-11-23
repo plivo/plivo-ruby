@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.55.0](https://github.com/plivo/plivo-ruby/tree/v4.55.0) (2023-11-20)
+**Feature - Added New Param 'registration_status' for Campaign List**
+- Added new query param "registration_status" for campaign list
+
 ## [4.54.0](https://github.com/plivo/plivo-ruby/tree/v4.54.0) (2023-11-17)
 **Feature - Verify Caller Id API support**
 - API support for verifying, updating, getting and deleting caller IDs.
