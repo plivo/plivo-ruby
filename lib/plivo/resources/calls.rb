@@ -170,6 +170,12 @@ module Plivo
           params[:legs] = options[:legs]
         end
 
+        if options.key?(:type) &&
+          valid_param?(:type, options[:type],
+                       [String, Symbol], true, %w[text ssml])
+         params[:type] = options[:type]
+       end
+
         %i[loop mix].each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [TrueClass, FalseClass], true)
