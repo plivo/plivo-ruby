@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.55.1](https://github.com/plivo/plivo-ruby/tree/v4.55.1) (2024-01-08)
+**Feature - Added New Param 'type' for Speak Api**
+- Added new param "type" for speak api
+
 ## [4.55.0](https://github.com/plivo/plivo-ruby/tree/v4.55.0) (2023-11-20)
 **Feature - Added New Param 'registration_status' for Campaign List**
 - Added new query param "registration_status" for campaign list
