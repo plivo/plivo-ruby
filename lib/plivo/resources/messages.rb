@@ -45,7 +45,8 @@ module Plivo
           carrier_fees: @carrier_fees,
           conversation_id: @conversation_id,
           conversation_origin: @conversation_origin,
-          conversation_expiration_timestamp: @conversation_expiration_timestamp
+          conversation_expiration_timestamp: @conversation_expiration_timestamp,
+          log: @log
         }.to_s
       end
     end
@@ -147,7 +148,7 @@ module Plivo
           end         
           
           if value.key?(:log) &&
-            valid_param?(:log, value[:log], [TrueClass, FalseClass], true)
+            valid_param?(:log, value[:log], String, true)
               params[:log] = value[:log]
           end
 
@@ -286,7 +287,7 @@ module Plivo
           end
 
           if options.key?(:log) &&
-             valid_param?(:log, options[:log], [TrueClass, FalseClass], true)
+             valid_param?(:log, options[:log], String, true)
             params[:log] = options[:log]
           end
 
