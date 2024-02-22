@@ -147,9 +147,15 @@ module Plivo
              end
           end         
           
-          if value.key?(:log) &&
-            valid_param?(:log, value[:log], String, true)
-              params[:log] = value[:log]
+          if value.key?(:log)
+            log = value[:log]
+            if log.is_a?(TrueClass) || log.is_a?(FalseClass)  # Check if log is boolean
+              params[:log] = log.to_s  # Convert boolean to string
+            elsif log.is_a?(String)  # Check if log is string
+              params[:log] = log
+            else
+              raise ArgumentError, "Invalid type for log parameter. Expected boolean or string."
+            end
           end
 
           if value.key?(:message_expiry) &&
@@ -286,9 +292,15 @@ module Plivo
            params[:media_ids] = options[:media_ids]
           end
 
-          if options.key?(:log) &&
-             valid_param?(:log, options[:log], String, true)
-            params[:log] = options[:log]
+          if options.key?(:log)
+            log = options[:log]
+            if log.is_a?(TrueClass) || log.is_a?(FalseClass)  # Check if log is boolean
+              params[:log] = log.to_s  # Convert boolean to string
+            elsif log.is_a?(String)  # Check if log is string
+              params[:log] = log
+            else
+              raise ArgumentError, "Invalid type for log parameter. Expected boolean or string."
+            end
           end
 
           if options.key?(:media_urls) &&
