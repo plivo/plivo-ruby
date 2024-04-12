@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.56.0](https://github.com/plivo/plivo-java/tree/v4.56.0) (2023-04-12)
+**Feature - Support for dynamic payload in whatsapp templates**
+- Added new params `payload` in templates to support dynamic payload in templates
+
 ## [4.55.2](https://github.com/plivo/plivo-ruby/tree/v4.55.2) (2024-02-28)
 **Feature - Log Redaction Enhancement**
 -  Added log attribute in GET and List MDR response
