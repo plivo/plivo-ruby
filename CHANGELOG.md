@@ -1,6 +1,6 @@
 # Change Log
 
-## [4.56.0](https://github.com/plivo/plivo-java/tree/v4.56.0) (2023-04-12)
+## [4.56.0](https://github.com/plivo/plivo-ruby/tree/v4.56.0) (2023-04-12)
 **Feature - Support for dynamic payload in whatsapp templates**
 - Added new params `payload` in templates to support dynamic payload in templates
 
