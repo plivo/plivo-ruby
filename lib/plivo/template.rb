@@ -41,12 +41,13 @@ module Plivo
     end
   
     class Parameter
-      attr_accessor :type, :text, :media, :currency, :date_time
+      attr_accessor :type, :text, :media, :payload, :currency, :date_time
   
-      def initialize(type: nil, text: nil, media: nil, currency: nil, date_time: nil)
+      def initialize(type: nil, text: nil, media: nil, payload: nil, currency: nil, date_time: nil)
         @type = type
         @text = text
         @media = media
+        @payload = payload
         @currency = currency
         @date_time = date_time
       end
@@ -56,6 +57,7 @@ module Plivo
           type: @type,
           text: @text,
           media: @media,
+          payload: @payload,
           currency: @currency&.to_hash,
           date_time: @date_time&.to_hash
         }.reject { |_, v| v.nil? }
