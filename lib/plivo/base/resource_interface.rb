@@ -46,6 +46,14 @@ module Plivo
         @_resource_type.new(@_client, resource_json: response_json)
       end
 
+      def perform_get_with_response(identifier, params = nil)
+        valid_param?(:identifier, identifier, [String, Symbol], true)
+        response_json = @_client.send_request(@_resource_uri + identifier.to_s + '/', 'GET', params, nil, false, is_voice_request: @_is_voice_request)
+        resource_json = response_json["response"]
+        # Pass the parsed JSON to initialize the resource object
+        @_resource_type.new(@_client, resource_json: resource_json)
+      end
+
       def perform_get_without_identifier(params)
         valid_param?(:params, params, Hash, true)
         response_json = @_client.send_request(@_resource_uri, 'GET', params, nil, false, is_voice_request: @_is_voice_request)

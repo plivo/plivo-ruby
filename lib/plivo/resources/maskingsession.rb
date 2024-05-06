@@ -88,7 +88,7 @@ module Plivo
       # @param [String] session_uuid
       def get(session_uuid)
         valid_param?(:session_uuid, session_uuid, [String, Symbol], true)
-        perform_get_without_identifier(session_uuid)
+        perform_get_with_response(session_uuid)
       end
 
       def create(first_party, second_party, session_expiry=nil, call_time_limit=nil, record=nil, record_file_format=nil,
