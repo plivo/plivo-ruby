@@ -45,7 +45,7 @@ module Plivo
                     created_time: @created_time,
                     modified_time: @modified_time,
                     expiry_time: @expiry_time,
-                    duration: @duration
+                    duration: @duration,
                     amount: @amount,
                     call_time_limit: @call_time_limit,
                     ring_timeout: @ring_timeout,

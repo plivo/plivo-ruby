@@ -9,7 +9,7 @@ module Plivo
     attr_reader :messages, :account, :subaccounts, :recordings
     attr_reader :pricings, :numbers, :calls, :conferences
     attr_reader :token
-    attr_reader :phone_numbers, :applications, :endpoints, :multipartycalls
+    attr_reader :phone_numbers, :applications, :endpoints, :multipartycalls, :maskingsession
     attr_reader :addresses, :identities
     attr_reader :call_feedback
     attr_reader :powerpacks
@@ -56,6 +56,7 @@ module Plivo
       @calls = Resources::CallInterface.new(self)
       @token = Resources::TokenInterface.new(self)
       @endpoints = Resources::EndpointInterface.new(self)
+      @maskingsession = Resources::MaskingSessionInterface.new(self)
       @applications = Resources::ApplicationInterface.new(self)
       @addresses = Resources::AddressInterface.new(self)
       @identities = Resources::IdentityInterface.new(self)
