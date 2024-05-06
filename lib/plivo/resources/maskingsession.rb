@@ -3,7 +3,7 @@ module Plivo
     include Plivo::Utils
     class MaskingSession < Base::Resource
       def initialize(client, options = nil)
-        @_name = 'MaskingSession'
+        @_name = 'Session'
         @_identifier_string = 'session_uuid'
         super
         @_is_voice_request = true
@@ -78,7 +78,7 @@ module Plivo
     # @!method list
     class MaskingSessionInterface < Base::ResourceInterface
       def initialize(client, resource_list_json = nil)
-        @_name = 'MaskingSession'
+        @_name = 'Session'
         @_resource_type = MaskingSession
         @_identifier_string = 'session_uuid'
         super
