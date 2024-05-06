@@ -131,9 +131,53 @@ module Plivo
         perform_create(params)
       end
 
-      def list
-        perform_list
+      def list(options = nil)
+        return perform_list_with_response if options.nil?
+        valid_param?(:options, options, Hash, true)
+
+        raise_invalid_request("Offset can't be negative") if options.key?(:offset) && options[:offset] < 0
+
+        if options.key?(:limit) && (options[:limit] > 20 || options[:limit] <= 0)
+          raise_invalid_request('The maximum number of results that can be '\
+                                  "fetched is 20. limit can't be more than 20 or less than 1")
+        end
+
+        # initial list of possible params
+        params = %i[
+          first_party
+          second_party
+          virtual_number
+          status
+          created_time
+          created_time__lt
+          created_time__gt
+          created_time__lte
+          created_time__gte
+          expiry_time
+          expiry_time__lt
+          expiry_time__gt
+          expiry_time__lte
+          expiry_time__gte
+          duration
+          duration__lt
+          duration__gt
+          duration__lte
+          duration__gte
+          limit
+          offset
+          subaccount
+        ].reduce({}) do |result_hash, param|
+          if options.key?(param)
+            if valid_param?(param, options[param], [String, Symbol], true)
+              result_hash[param] = options[param]
+            end
+          end
+          result_hash
+        end
+
+        perform_list_with_response(params)
       end
+
       def each
         maskingsession_list = list
         maskingsession_list[:objects].each { |maskingsession| yield maskingsession }
