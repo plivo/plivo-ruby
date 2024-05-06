@@ -108,11 +108,11 @@ module Plivo
 
       def perform_list_with_response(params = nil)
         response_json = @_client.send_request(@_resource_uri, 'GET', params, nil, false, is_voice_request: @_is_voice_request)
-        parse_and_set(response_json["response"])
+        # parse_and_set(response_json)
         {
-          api_id: @api_id,
-          meta: @_meta,
-          objects: @_resource_list
+          api_id: response_json["api_id"],
+          meta: response_json["response"]["meta"],
+          objects: parse_and_set_list(response_json["response"]["objects"])
         }
       end
 
