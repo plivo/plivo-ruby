@@ -9,7 +9,7 @@ module Plivo
     attr_reader :messages, :account, :subaccounts, :recordings
     attr_reader :pricings, :numbers, :calls, :conferences
     attr_reader :token
-    attr_reader :phone_numbers, :applications, :endpoints, :multipartycalls, :maskingsession
+    attr_reader :phone_numbers, :applications, :endpoints, :multipartycalls
     attr_reader :addresses, :identities
     attr_reader :call_feedback
     attr_reader :powerpacks
@@ -21,6 +21,7 @@ module Plivo
     attr_reader :verify_session
     attr_reader :tollfree_verifications
     attr_reader :verify_caller_id
+    attr_reader :maskingsession
 
     def initialize(auth_id = nil, auth_token = nil, proxy_options = nil, timeout = 5)
       configure_base_uri
