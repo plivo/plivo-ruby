@@ -92,6 +92,7 @@ module Plivo
       # @option options [String] :dlt_template_id This is the DLT template id passed in the message request. 
       # @option options [String] :dlt_template_category This is the DLT template category passed in the message request.
       # @option options [Hash] :template This is the template used in the whatsapp message request. It can handle both JSON and String.
+      # @option options [Hash] :interactive This is the interactive parameter used in the whatsapp message request. It can handle both JSON and String.
       
       def create(src = nil, dst = nil, text = nil, options = nil, powerpack_uuid = nil)
         #All params in One HASH
@@ -226,6 +227,29 @@ module Plivo
               raise InvalidRequestError, 'template name and language must not be null or empty'
             end
           end
+
+          if value.key?(:template) && value.key?(:type) && (value[:type] != "whatsapp")
+            raise InvalidRequestError, 'template parameter is only applicable when type is whatsapp'
+          end
+
+        if value.is_a?(Hash) && !value[:interactive].nil?
+          if value.key?(:interactive)
+            if value[:interactive].is_a?(String)
+              begin
+                json_interactive = JSON.parse(value[:interactive])
+                params[:interactive] = json_interactive
+              rescue JSON::ParserError => e
+                raise InvalidRequestError, 'failed to parse interactive as JSON'
+              end
+            elsif value[:interactive].is_a?(Hash)
+              params[:interactive] = value[:interactive]
+            elsif value[:interactive].is_a?(Plivo::Interactive)
+              params[:interactive] = value[:interactive].to_hash
+            else
+              raise InvalidRequestError, 'invalid interactive format'
+            end
+          end
+        end
 
         #legacy code compatibility
         else
@@ -371,6 +395,25 @@ module Plivo
               raise InvalidRequestError, 'template name and language must not be null or empty'
             end
           end   
+
+          if options.is_a?(Hash) && !options[:interactive].nil?
+            if options.key?(:interactive)
+              if options[:interactive].is_a?(String)
+                begin
+                  json_interactive = JSON.parse(options[:interactive])
+                  params[:interactive] = json_interactive
+                rescue JSON::ParserError => e
+                  raise InvalidRequestError, 'failed to parse interactive as JSON'
+                end
+              elsif options[:interactive].is_a?(Hash)
+                params[:interactive] = options[:interactive]
+              elsif options[:interactive].is_a?(Plivo::Interactive)
+                params[:interactive] = options[:interactive].to_hash
+              else
+                raise InvalidRequestError, 'invalid interactive format'
+              end
+            end
+          end
 
         end
         perform_create(params)
