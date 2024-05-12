@@ -1,6 +1,7 @@
 require_relative "resources"
 require_relative "base_client"
 require_relative "base"
+require_relative "location"
 module Plivo
     class Template
       attr_accessor :name, :language, :components
@@ -41,15 +42,16 @@ module Plivo
     end
   
     class Parameter
-      attr_accessor :type, :text, :media, :payload, :currency, :date_time
+      attr_accessor :type, :text, :media, :payload, :currency, :date_time, :location
   
-      def initialize(type: nil, text: nil, media: nil, payload: nil, currency: nil, date_time: nil)
+      def initialize(type: nil, text: nil, media: nil, payload: nil, currency: nil, date_time: nil, location: nil)
         @type = type
         @text = text
         @media = media
         @payload = payload
         @currency = currency
         @date_time = date_time
+        @location = location
       end
   
       def to_hash
@@ -59,7 +61,8 @@ module Plivo
           media: @media,
           payload: @payload,
           currency: @currency&.to_hash,
-          date_time: @date_time&.to_hash
+          date_time: @date_time&.to_hash,
+          location: @location&.to_hash
         }.reject { |_, v| v.nil? }
       end
     end

@@ -9,7 +9,7 @@ The Plivo Ruby SDK makes it simpler to integrate communications into your Ruby a
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'plivo', '>= 4.57.0'
+gem 'plivo', '>= 4.58.0'
 ```
 
 And then execute:
@@ -166,6 +166,69 @@ begin
   rescue PlivoRESTError => e
     puts 'Exception: ' + e.message
   end
+```
+
+
+## WhatsApp Messaging
+Plivo's WhatsApp API allows you to send different types of messages over WhatsApp, including templated messages, free form messages and interactive messages. Below are some examples on how to use the Plivo Go SDK to send these types of messages.
+
+### Templated Messages
+Templated messages are a crucial to your WhatsApp messaging experience, as businesses can only initiate WhatsApp conversation with their customers using templated messages.
+
+WhatsApp templates support 4 components:  `header` ,  `body`,  `footer`  and `button`. At the point of sending messages, the template object you see in the code acts as a way to pass the dynamic values within these components.  `header`  can accomodate `text` or `media` (images, video, documents) content.  `body`  can accomodate text content.  `button`  can support dynamic values in a `url` button or to specify a developer-defined payload which will be returned when the WhatsApp user clicks on the `quick_reply` button. `footer`  cannot have any dynamic variables.
+
+Example:
+```ruby
+```
+
+### Free Form Messages
+Non-templated or Free Form WhatsApp messages can be sent as a reply to a user-initiated conversation (Service conversation) or if there is an existing ongoing conversation created previously by sending a templated WhatsApp message.
+
+#### Free Form Text Message
+Example:
+```ruby
+```
+
+#### Free Form Media Message
+Example:
+```ruby
+```
+
+### Interactive Messages
+This guide shows how to send non-templated interactive messages to recipients using Plivo’s APIs.
+
+#### Quick Reply Buttons
+Quick reply buttons allow customers to quickly respond to your message with predefined options.
+
+Example:
+```ruby
+```
+
+#### Interactive Lists
+Interactive lists allow you to present customers with a list of options.
+
+Example:
+```ruby
+```
+
+#### Interactive CTA URLs
+CTA URL messages allow you to send links and call-to-action buttons.
+
+Example:
+```ruby
+```
+
+### Location Messages
+This guide shows how to send templated and non-templated location messages to recipients using Plivo’s APIs.
+
+#### Templated Location Messages
+Example:
+```ruby
+```
+
+#### Non-Templated Location Messages
+Example:
+```ruby
 ```
 
 ### More examples
