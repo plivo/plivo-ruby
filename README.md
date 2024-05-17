@@ -244,8 +244,7 @@ response = api.messages.create(
 )
 puts response
 ```
-[!NOTE]
-It is also possible to create and manage objects directly within the SDK for whatsapp, providing a structured approach to message creation.
+> Note: It is also possible to create and manage objects directly within the SDK for whatsapp, providing a structured approach to message creation.
 
 ### Free Form Messages
 Non-templated or Free Form WhatsApp messages can be sent as a reply to a user-initiated conversation (Service conversation) or if there is an existing ongoing conversation created previously by sending a templated WhatsApp message.
