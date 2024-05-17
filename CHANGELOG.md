@@ -1,5 +1,10 @@
 # Change Log
 
+## [4.58.0](https://github.com/plivo/plivo-ruby/tree/v4.58.0) (2023-05-17)
+**Feature - Adding support for location whatsapp messages**
+- Added new param `location` to [send message API](https://www.plivo.com/docs/sms/api/message#send-a-message) to support location `whatsapp` messages
+- Added new param `location` in templates to support location based templated messages
+
 ## [4.57.0](https://github.com/plivo/plivo-ruby/tree/v4.57.0) (2023-05-07)
 **Feature - Adding support for interactive whatsapp messages**
 - Added new param `interactive` to [send message API](https://www.plivo.com/docs/sms/api/message#send-a-message) to support interactive `whatsapp` messages
