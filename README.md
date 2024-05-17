@@ -177,9 +177,75 @@ Templated messages are a crucial to your WhatsApp messaging experience, as busin
 
 WhatsApp templates support 4 components:  `header` ,  `body`,  `footer`  and `button`. At the point of sending messages, the template object you see in the code acts as a way to pass the dynamic values within these components.  `header`  can accomodate `text` or `media` (images, video, documents) content.  `body`  can accomodate text content.  `button`  can support dynamic values in a `url` button or to specify a developer-defined payload which will be returned when the WhatsApp user clicks on the `quick_reply` button. `footer`  cannot have any dynamic variables.
 
-Example:
+Example 1:
 ```ruby
+require "plivo"
+include Plivo
+
+api = RestClient.new("<auth_id>","<auth_token>")
+
+template={ 
+            "name": "template_name",
+            "language": "en_US",
+            "components": [
+                {
+                    "type": "header",
+                    "parameters": [
+                        {
+                            "type": "media",
+                            "media": "https://xyz.com/s3/img.jpg"
+                        }
+                    ]
+                },
+                {
+                    "type": "body",
+                    "parameters": [
+                        {
+                            "type": "text",
+                            "text": "WA-Text"
+                        }
+                    ]
+                }
+            ]
+          }
+
+response = api.messages.create(
+        src: "+14156667778",
+        dst:"+14156667777",
+        type:"whatsapp",
+        template:template,
+        url: "https://<yourdomain>.com/whatsapp_status/",
+)
+puts response
 ```
+
+Example 2:
+```ruby
+require "plivo"
+require "plivo/template"
+include Plivo
+
+api = RestClient.new("<auth_id>","<auth_token>")
+
+header_media_param = Parameter.new(type: "media", media: "https://xyz.com/s3/img.jpg")
+body_text_params = [ Parameter.new(type: "text", text: "WA-Text") ]
+​
+header_component = Component.new(type: "header", parameters: [header_media_param])
+body_component = Component.new(type: "body", parameters: body_text_params)
+​
+template = Template.new(name: "template_name", language: "en_US", components: [header_component, body_component])
+​
+response = api.messages.create(
+    src: "+14156667778",
+    dst:"+14156667777",
+    type:"whatsapp",
+    template:template,
+    url: "https://<yourdomain>.com/whatsapp_status/",
+)
+puts response
+```
+[!NOTE]
+It is also possible to create and manage objects directly within the SDK for whatsapp, providing a structured approach to message creation.
 
 ### Free Form Messages
 Non-templated or Free Form WhatsApp messages can be sent as a reply to a user-initiated conversation (Service conversation) or if there is an existing ongoing conversation created previously by sending a templated WhatsApp message.
@@ -187,11 +253,36 @@ Non-templated or Free Form WhatsApp messages can be sent as a reply to a user-in
 #### Free Form Text Message
 Example:
 ```ruby
+require "plivo"
+include Plivo
+
+api = RestClient.new("<auth_id>","<auth_token>")
+response = api.messages.create(
+        src: "+14156667778",
+        dst:"+14156667777",
+        type:"whatsapp",
+        text:"Hello, this is sample text",
+        url: "https://<yourdomain>.com/whatsapp_status/",
+)
+puts response
 ```
 
 #### Free Form Media Message
 Example:
 ```ruby
+require "plivo"
+include Plivo
+
+api = RestClient.new("<auth_id>","<auth_token>")
+response = api.messages.create(
+        src: "+14156667778",
+        dst:"+14156667777",
+        type:"whatsapp",
+        text:"Hello, this is sample text",
+        media_urls:["https://sample-videos.com/img/Sample-png-image-1mb.png"],
+        url: "https://<yourdomain>.com/wa_status/",
+)
+puts response
 ```
 
 ### Interactive Messages
@@ -202,6 +293,46 @@ Quick reply buttons allow customers to quickly respond to your message with pred
 
 Example:
 ```ruby
+require "rubygems"
+require "/usr/src/app/lib/plivo.rb"
+include Plivo
+
+api = RestClient.new("<auth_id>","<auth_token>")
+
+interactive= {
+        "type": "button",
+        "header": {
+            "type": "media",
+            "media": "https://xyz.com/s3/img.jpg"
+        },
+        "body": {
+            "text": "Make your selection"
+        },
+        "action": {
+            "buttons": [
+                {
+                    "title": "Click here",
+                    "id": "bt1"
+                },
+                {
+                    "title": "Know More",
+                    "id": "bt2"
+                },
+                {
+                    "title": "Request Callback",
+                    "id": "bt3"
+                }
+            ]
+        }
+    }
+
+response = api.messages.create(
+        src: "+14156667778",
+        dst:"+14156667777",
+        type:"whatsapp",
+        interactive:interactive
+)
+puts response
 ```
 
 #### Interactive Lists
@@ -209,6 +340,70 @@ Interactive lists allow you to present customers with a list of options.
 
 Example:
 ```ruby
+require "rubygems"
+require "/usr/src/app/lib/plivo.rb"
+include Plivo
+
+api = RestClient.new("<auth_id>","<auth_token>")
+
+interactive= {
+        "type": "list",
+        "header": {
+            "type": "text",
+            "text": "Welcome to Plivo"
+        },
+        "body": {
+            "text": "You can review the list of rewards we offer"
+        },
+        "footer": {
+            "text": "Yours Truly"
+        },
+        "action": {
+            "buttons": [{
+                "title": "Click here"
+            }],
+            "sections": [
+                {
+                    "title": "SECTION_1_TITLE",
+                    "rows": [
+                        {
+                            "id": "SECTION_1_ROW_1_ID",
+                            "title": "SECTION_1_ROW_1_TITLE",
+                            "description": "SECTION_1_ROW_1_DESCRIPTION"
+                        },
+                        {
+                            "id": "SECTION_1_ROW_2_ID",
+                            "title": "SECTION_1_ROW_2_TITLE",
+                            "description": "SECTION_1_ROW_2_DESCRIPTION"
+                        }
+                    ]
+                },
+                {
+                    "title": "SECTION_2_TITLE",
+                    "rows": [
+                        {
+                            "id": "SECTION_2_ROW_1_ID",
+                            "title": "SECTION_2_ROW_1_TITLE",
+                            "description": "SECTION_2_ROW_1_DESCRIPTION"
+                        },
+                        {
+                            "id": "SECTION_2_ROW_2_ID",
+                            "title": "SECTION_2_ROW_2_TITLE",
+                            "description": "SECTION_2_ROW_2_DESCRIPTION"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+
+response = api.messages.create(
+        src: "+14156667778",
+        dst:"+14156667777",
+        type:"whatsapp",
+        interactive:interactive
+)
+puts response
 ```
 
 #### Interactive CTA URLs
@@ -216,6 +411,41 @@ CTA URL messages allow you to send links and call-to-action buttons.
 
 Example:
 ```ruby
+require "rubygems"
+require "/usr/src/app/lib/plivo.rb"
+include Plivo
+
+api = RestClient.new("<auth_id>","<auth_token>")
+
+interactive= {
+        "type": "cta_url",
+        "header": {
+            "type": "media",
+            "media": "https://xyz.com/s3/img.jpg"
+        },
+        "body": {
+            "text": "Know More"
+        },
+        "footer": {
+            "text": "Plivo"
+        },
+        "action": {
+            "buttons": [
+                {
+                    "title": "Click here",
+                    "cta_url": "https:plivo.com"
+                }
+            ]
+        }
+    }
+
+response = api.messages.create(
+        src: "+14156667778",
+        dst:"+14156667777",
+        type:"whatsapp",
+        interactive:interactive
+)
+puts response
 ```
 
 ### Location Messages
@@ -224,11 +454,67 @@ This guide shows how to send templated and non-templated location messages to re
 #### Templated Location Messages
 Example:
 ```ruby
+require "rubygems"
+require "/usr/src/app/lib/plivo.rb"
+require "/usr/src/app/lib/plivo/template.rb"
+include Plivo
+
+api = RestClient.new("<auth_id>","<auth_token>")
+
+template= {
+        "name": "plivo_order_pickup",
+        "language": "en_US",
+        "components": [
+            {
+                "type": "header",
+                "parameters": [
+                    {
+                        "type": "location",
+                        "location": {
+                            "longitude": "122.148981",
+                            "latitude": "37.483307",
+                            "name": "Pablo Morales",
+                            "address": "1 Hacker Way, Menlo Park, CA 94025"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+
+response = api.messages.create(
+        src: "+14156667778",
+        dst:"+14156667777",
+        type:"whatsapp",
+        template:template
+)
+puts response
 ```
 
 #### Non-Templated Location Messages
 Example:
 ```ruby
+require "rubygems"
+require "/usr/src/app/lib/plivo.rb"
+require "/usr/src/app/lib/plivo/location.rb"
+include Plivo
+
+api = RestClient.new("<auth_id>","<auth_token>")
+
+location= {
+        "longitude": "122.148981",
+        "latitude": "37.483307",
+        "name": "Pablo Morales",
+        "address": "1 Hacker Way, Menlo Park, CA 94025"
+    }
+
+response = api.messages.create(
+        src: "+14156667778",
+        dst:"+14156667777",
+        type:"whatsapp",
+        location:location
+)
+puts response
 ```
 
 ### More examples
