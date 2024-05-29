@@ -72,69 +72,6 @@ describe 'MaskingSession test' do
     }.to_json
   end
 
-  # it 'creates a masking_session' do
-  #   contents = File.read(Dir.pwd + '/spec/mocks/maskingSessionCreateResponse.json')
-  #   mock(201, JSON.parse(contents))
-  #   expect(JSON.parse(to_json_create(@api.maskingsession
-  #                                        .create('test_name',
-  #                                                'pass',
-  #                                                'nananana'))))
-  #     .to eql(JSON.parse(contents).reject { |_, v| v.nil? })
-  #   compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Masking/Session',
-  #                    method: 'POST',
-  #                    data: {
-  #                      first_party: '917708772011',
-  #                      second_party: '918220568648'
-  #                    })
-  # end
-  #
-  # it 'fetches details of a session uuid' do
-  #   contents = File.read(Dir.pwd + '/spec/mocks/maskingSessionGetResponse.json')
-  #   mock(200, JSON.parse(contents))
-  #   expect(JSON.parse(to_json(@api.maskingsession.get('SAXXXXXXXXXXXXXXXXXX'))))
-  #     .to eql(JSON.parse(contents).reject { |_, v| v.nil? })
-  #   compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Masking/Session/'\
-  #     'SAXXXXXXXXXXXXXXXXXX/',
-  #                    method: 'GET',
-  #                    data: nil)
-  # end
-  #
-  # it 'lists all session_uuids' do
-  #   contents = File.read(Dir.pwd + '/spec/mocks/maskingSessionListResponse.json')
-  #   mock(200, JSON.parse(contents))
-  #   response = to_json_list(@api.maskingsession.list)
-  #
-  #   contents = JSON.parse(contents)
-  #   objects = contents['objects'].map do |obj|
-  #     obj.delete('api_id')
-  #     obj.reject { |_, v| v.nil? }
-  #   end
-  #   contents['objects'] = objects
-  #
-  #   expect(JSON.parse(response).reject { |_, v| v.nil? })
-  #     .to eql(contents)
-  #   compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Masking/Session',
-  #                    method: 'GET',
-  #                    data: nil)
-  # end
-  #
-  # it 'updates the session_uuid' do
-  #   id = 'SAXXXXXXXXXXXXXXXXXX'
-  #   contents = File.read(Dir.pwd + '/spec/mocks/maskingSessionUpdateResponse.json')
-  #   mock(202, JSON.parse(contents))
-  #   expect(JSON.parse(to_json_update(@api.maskingsession
-  #                                        .update(id,
-  #                                                first_party_play_url: 'test pass',
-  #                                                second_party_play_url: 'alias'))))
-  #     .to eql(JSON.parse(contents).reject { |_, v| v.nil? })
-  #   compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Masking/Session' + id + '/',
-  #                    method: 'POST',
-  #                    data: {
-  #                      first_party_play_url: 'test pass',
-  #                      second_party_play_url: 'alias'
-  #                    })
-  # end
-
   it 'deletes the session_uuid' do
     id = 'SAXXXXXXXXXXXXXXXXXX'
     contents = '{}'
