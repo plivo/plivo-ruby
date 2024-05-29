@@ -91,43 +91,41 @@ module Plivo
         perform_get_with_response(session_uuid)
       end
 
-      def create(first_party, second_party, session_expiry=nil, call_time_limit=nil, record=nil, record_file_format=nil,
-                 recording_callback_url=nil, initiate_call_to_first_party=nil, callback_url=nil, callback_method=nil, ring_timeout=nil,
-                 first_party_play_url=nil, second_party_play_url=nil, recording_callback_method=nil, is_pin_authentication_required=nil,
-                 generate_pin=nil, generate_pin_length=nil, first_party_pin=nil, second_party_pin=nil, pin_prompt_play=nil, pin_retry=nil,
-                 pin_retry_wait=nil, incorrect_pin_play=nil, unknown_caller_play=nil, subaccount=nil, geomatch=nil)
+      def create(first_party:, second_party:, session_expiry: nil, call_time_limit: nil, record: nil, record_file_format: nil,
+                 recording_callback_url: nil, initiate_call_to_first_party: nil, callback_url: nil, callback_method: nil, ring_timeout: nil,
+                 first_party_play_url: nil, second_party_play_url: nil, recording_callback_method: nil, is_pin_authentication_required: nil,
+                 generate_pin: nil, generate_pin_length: nil, first_party_pin: nil, second_party_pin: nil, pin_prompt_play: nil, pin_retry: nil,
+                 pin_retry_wait: nil, incorrect_pin_play: nil, unknown_caller_play: nil, subaccount: nil, geomatch: nil)
         valid_param?(:first_party, first_party, [String, Symbol], true)
         valid_param?(:second_party, second_party, [String, Symbol], true)
 
         params = {
           first_party: first_party,
           second_party: second_party,
+          session_expiry: session_expiry,
+          call_time_limit: call_time_limit,
+          record: record,
+          record_file_format: record_file_format,
+          recording_callback_url: recording_callback_url,
+          initiate_call_to_first_party: initiate_call_to_first_party,
+          callback_url: callback_url,
+          callback_method: callback_method,
+          ring_timeout: ring_timeout,
+          first_party_play_url: first_party_play_url,
+          second_party_play_url: second_party_play_url,
+          recording_callback_method: recording_callback_method,
+          is_pin_authentication_required: is_pin_authentication_required,
+          generate_pin_length: generate_pin_length,
+          first_party_pin: first_party_pin,
+          second_party_pin: second_party_pin,
+          pin_prompt_play: pin_prompt_play,
+          pin_retry: pin_retry,
+          pin_retry_wait: pin_retry_wait,
+          incorrect_pin_play: incorrect_pin_play,
+          unknown_caller_play: unknown_caller_play,
+          subaccount: subaccount,
+          geomatch: geomatch
         }
-
-        params[:session_expiry] = session_expiry unless session_expiry.nil?
-        params[:call_time_limit] = call_time_limit unless call_time_limit.nil?
-        params[:record] = record unless record.nil?
-        params[:record_file_format] = record_file_format unless record_file_format.nil?
-        params[:recording_callback_url] = recording_callback_url unless recording_callback_url.nil?
-        params[:initiate_call_to_first_party] = initiate_call_to_first_party unless initiate_call_to_first_party.nil?
-        params[:callback_url] = callback_url unless callback_url.nil?
-        params[:callback_method] = callback_method unless callback_method.nil?
-        params[:ring_timeout] = ring_timeout unless ring_timeout.nil?
-        params[:first_party_play_url] = first_party_play_url unless first_party_play_url.nil?
-        params[:second_party_play_url] = second_party_play_url unless second_party_play_url.nil?
-        params[:recording_callback_method] = recording_callback_method unless recording_callback_method.nil?
-        params[:is_pin_authentication_required] = is_pin_authentication_required unless is_pin_authentication_required.nil?
-        params[:generate_pin_length] = generate_pin_length unless generate_pin_length.nil?
-        params[:first_party_pin] = first_party_pin unless first_party_pin.nil?
-        params[:second_party_pin] = second_party_pin unless second_party_pin.nil?
-        params[:pin_prompt_play] = pin_prompt_play unless pin_prompt_play.nil?
-        params[:pin_retry] = pin_retry unless pin_retry.nil?
-        params[:pin_retry_wait] = pin_retry_wait unless pin_retry_wait.nil?
-        params[:incorrect_pin_play] = incorrect_pin_play unless incorrect_pin_play.nil?
-        params[:unknown_caller_play] = unknown_caller_play unless unknown_caller_play.nil?
-        params[:subaccount] = subaccount unless subaccount.nil?
-        params[:geomatch] = geomatch unless geomatch.nil?
-
         perform_create(params)
       end
 
