@@ -93,6 +93,7 @@ module Plivo
       # @option options [String] :dlt_template_category This is the DLT template category passed in the message request.
       # @option options [Hash] :template This is the template used in the whatsapp message request. It can handle both JSON and String.
       # @option options [Hash] :interactive This is the interactive parameter used in the whatsapp message request. It can handle both JSON and String.
+      # @option options [Hash] :location This is the location parameter used in the whatsapp message request. It can handle both JSON and String.
       
       def create(src = nil, dst = nil, text = nil, options = nil, powerpack_uuid = nil)
         #All params in One HASH
@@ -247,6 +248,25 @@ module Plivo
               params[:interactive] = value[:interactive].to_hash
             else
               raise InvalidRequestError, 'invalid interactive format'
+            end
+          end
+        end
+
+        if value.is_a?(Hash) && !value[:location].nil?
+          if value.key?(:location)
+            if value[:location].is_a?(String)
+              begin
+                json_location = JSON.parse(value[:location])
+                params[:location] = json_location
+              rescue JSON::ParserError => e
+                raise InvalidRequestError, 'failed to parse location as JSON'
+              end
+            elsif value[:location].is_a?(Hash)
+              params[:location] = value[:location]
+            elsif value[:location].is_a?(Plivo::Location)
+              params[:location] = value[:location].to_hash
+            else
+              raise InvalidRequestError, 'invalid location format'
             end
           end
         end
@@ -411,6 +431,25 @@ module Plivo
                 params[:interactive] = options[:interactive].to_hash
               else
                 raise InvalidRequestError, 'invalid interactive format'
+              end
+            end
+          end
+
+          if options.is_a?(Hash) && !options[:location].nil?
+            if options.key?(:location)
+              if options[:location].is_a?(String)
+                begin
+                  json_location = JSON.parse(options[:location])
+                  params[:location] = json_location
+                rescue JSON::ParserError => e
+                  raise InvalidRequestError, 'failed to parse location as JSON'
+                end
+              elsif options[:location].is_a?(Hash)
+                params[:location] = options[:location]
+              elsif options[:location].is_a?(Plivo::Location)
+                params[:location] = options[:location].to_hash
+              else
+                raise InvalidRequestError, 'invalid location format'
               end
             end
           end
