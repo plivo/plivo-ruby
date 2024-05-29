@@ -140,7 +140,7 @@ describe 'MaskingSession test' do
     contents = '{}'
     mock(204, JSON.parse(contents).reject { |_, v| v.nil? })
     @api.maskingsession.delete(id)
-    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Masking/Session' + id + '/',
+    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Masking/Session/' + id + '/',
                      method: 'DELETE',
                      data: nil)
   end
