@@ -67,7 +67,12 @@ module Plivo
             self.class.send(:attr_reader, k)
           end
         end
+
+        if @_identifier_string && resource_json.key?(@_identifier_string)
+          @id = resource_json[@_identifier_string]
+        end
       end
+
 
       def perform_update(params, use_multipart_conn = false)
         unless @id
