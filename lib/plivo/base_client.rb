@@ -343,41 +343,41 @@ module Plivo
 
     def handle_response_exceptions(response)
       exception_mapping = {
-          400 => [
-              Exceptions::ValidationError,
-              'A parameter is missing or is invalid while accessing resource'
-          ],
-          401 => [
-              Exceptions::AuthenticationError,
-              'Failed to authenticate while accessing resource'
-          ],
-          404 => [
-              Exceptions::ResourceNotFoundError,
-              'Resource not found'
-          ],
-          405 => [
-              Exceptions::InvalidRequestError,
-              'HTTP method used is not allowed to access resource'
-          ],
-          409 => [
-            Exceptions::InvalidRequestError,
-            'Conflict'
-          ],
-          422 => [
-            Exceptions::InvalidRequestError,
-            'Unprocessable Entity'
-          ],
-          500 => [
-              Exceptions::PlivoServerError,
-              'A server error occurred while accessing resource'
-          ]
+        400 => [
+          Exceptions::ValidationError,
+          'A parameter is missing or is invalid while accessing resource'
+        ],
+        401 => [
+          Exceptions::AuthenticationError,
+          'Failed to authenticate while accessing resource'
+        ],
+        404 => [
+          Exceptions::ResourceNotFoundError,
+          'Resource not found'
+        ],
+        405 => [
+          Exceptions::InvalidRequestError,
+          'HTTP method used is not allowed to access resource'
+        ],
+        409 => [
+          Exceptions::InvalidRequestError,
+          'Conflict'
+        ],
+        422 => [
+          Exceptions::InvalidRequestError,
+          'Unprocessable Entity'
+        ],
+        500 => [
+          Exceptions::PlivoServerError,
+          'A server error occurred while accessing resource'
+        ]
       }
 
       response_json = response[:body]
-      return unless exception_mapping.key? response[:status]
+      return unless exception_mapping.key?(response[:status])
 
       exception_now = exception_mapping[response[:status]]
-      error_message = if (response_json.is_a? Hash) && (response_json.key? 'error')
+      error_message = if response_json.is_a?(Hash) && response_json.key?('error')
                         response_json['error']
                       else
                         exception_now[1] + " at: #{response[:url]}"
@@ -386,6 +386,10 @@ module Plivo
         error_message = error_message['error']
       end
 
+      # Add api_id to the error message if present
+      if response_json.is_a?(Hash) && response_json.key?('api_id')
+        error_message += " (api_id: #{response_json['api_id']})"
+      end
       raise exception_now[0], error_message.to_s
     end
   end
