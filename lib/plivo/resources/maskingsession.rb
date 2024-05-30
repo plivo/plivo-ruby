@@ -117,6 +117,8 @@ module Plivo
         valid_param?(:first_party, first_party, [String, Symbol], true)
         valid_param?(:second_party, second_party, [String, Symbol], true)
 
+
+
         params = {
           first_party: first_party,
           second_party: second_party,
@@ -133,6 +135,7 @@ module Plivo
           second_party_play_url: second_party_play_url,
           recording_callback_method: recording_callback_method,
           is_pin_authentication_required: is_pin_authentication_required,
+          generate_pin: generate_pin,
           generate_pin_length: generate_pin_length,
           first_party_pin: first_party_pin,
           second_party_pin: second_party_pin,
