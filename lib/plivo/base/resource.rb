@@ -89,7 +89,7 @@ module Plivo
         response_json = @_client.send_request(@_resource_uri, 'POST', params, nil, use_multipart_conn, is_voice_request: @_is_voice_request)
 
         parse_and_set(params)
-        parse_and_set_response(response_json)
+        parse_and_set_response(response_json).instance_variables.map { |var| [var, parser.instance_variable_get(var)] }.to_h
         self
       end
 
