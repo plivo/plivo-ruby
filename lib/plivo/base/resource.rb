@@ -51,16 +51,34 @@ module Plivo
         @id = resource_json[@_identifier_string]
       end
 
+      def parse_and_set_response(resource_json)
+        return unless resource_json
+
+        valid_param?(:resource_json, resource_json, Hash, true)
+
+        resource_json.each do |k, v|
+          if v.is_a?(Hash)
+            v.each do |nested_k, nested_v|
+              instance_variable_set("@#{nested_k}", nested_v)
+              self.class.send(:attr_reader, nested_k)
+            end
+          else
+            instance_variable_set("@#{k}", v)
+            self.class.send(:attr_reader, k)
+          end
+        end
+      end
+
       def perform_update(params, use_multipart_conn = false)
         unless @id
           raise_invalid_request("Cannot update a #{@_name} resource "\
-          'without an identifier')
+                                  'without an identifier')
         end
 
         response_json = @_client.send_request(@_resource_uri, 'POST', params, nil, use_multipart_conn, is_voice_request: @_is_voice_request)
 
         parse_and_set(params)
-        parse_and_set(response_json)
+        parse_and_set_response(response_json)
         self
       end
 
@@ -71,7 +89,7 @@ module Plivo
         method == 'POST' ? parse_and_set(params) : self
         self
       end
-      
+
       def perform_custome_action(action = nil, method = 'GET', params = nil, parse = false)
         resource_path = action ? @_resource_uri + action + '/' : @_resource_uri
         response = @_client.send_request(resource_path, method, params,nil,false,is_voice_request: @_is_voice_request)
@@ -101,7 +119,7 @@ module Plivo
       def perform_delete(params=nil)
         unless @id
           raise_invalid_request("Cannot delete a #{@_name} resource "\
-          'without an identifier')
+                                  'without an identifier')
         end
 
         Response.new(@_client.send_request(@_resource_uri, 'DELETE', params, nil, false, is_voice_request: @_is_voice_request),
