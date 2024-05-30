@@ -15,16 +15,37 @@ module Plivo
 
         params = {}
         params_expected = %i[session_expiry call_time_limit record record_file_format recording_callback_url
-                    callback_url callback_method ring_timeout first_party_play_url second_party_play_url recording_callback_method
-                    subaccount geomatch]
+                      callback_url callback_method ring_timeout first_party_play_url second_party_play_url recording_callback_method
+                      subaccount geomatch]
         params_expected.each do |param|
-          if options.key?(param) &&
-            valid_param?(param, options[param], [String, Symbol], true)
+          if options.key?(param) && valid_param?(param, options[param], [String, Symbol], true)
             params[param] = options[param]
           end
         end
 
-        perform_update(params).instance_variables.map { |var| [var, parser.instance_variable_get(var)] }.to_h
+        updated_session = perform_update(params)
+        session_data = updated_session.instance_variables.map do |var|
+          [var, updated_session.instance_variable_get(var)]
+        end.to_h
+
+        relevant_keys = %i[api_id message session]
+        filtered_session_data = session_data.select { |key, _| relevant_keys.include?(key) }
+
+        if filtered_session_data[:session]
+          session_instance = filtered_session_data[:session]
+          session_data = session_instance.instance_variables.map do |var|
+            [var, session_instance.instance_variable_get(var)]
+          end.to_h
+
+          # Extract relevant keys from session
+          session_relevant_keys = %i[first_party second_party virtual_number status initiate_call_to_first_party session_uuid callback_url callback_method created_time
+                               modified_time expiry_time duration amount call_time_limit ring_timeout first_party_play_url second_party_play_url record record_file_format recording_callback_url
+                               recording_callback_method interaction total_call_amount total_call_count total_call_billed_duration total_session_amount last_interaction_time unknown_caller_play
+                               is_pin_authentication_required generate_pin generate_pin_length first_party_pin second_party_pin pin_prompt_play pin_retry pin_retry_wait incorrect_pin_play]
+
+          filtered_session_data[:session] = session_data.select { |key, _| session_relevant_keys.include?(key) }
+        end
+        filtered_session_data
       end
 
       def delete
