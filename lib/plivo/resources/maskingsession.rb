@@ -33,8 +33,8 @@ module Plivo
 
         if filtered_session_data[:session]
           session_instance = filtered_session_data[:session]
-          session_data = session_instance.instance_variables.map do |var|
-            [var[1..-1].to_sym, session_instance.instance_variable_get(var)]
+          session_data = session_instance.map do |key, value|
+            [key.to_sym, value]
           end.to_h
 
           # Extract relevant keys from session
@@ -200,14 +200,12 @@ module Plivo
 
       def update(session_uuid, options = nil)
         valid_param?(:session_uuid, session_uuid, [String, Symbol], true)
-        MaskingSession.new(@_client,
-                           resource_id: session_uuid).update(options)
+        MaskingSession.new(@_client, resource_id: session_uuid).update(options)
       end
 
       def delete(session_uuid)
         valid_param?(:session_uuid, session_uuid, [String, Symbol], true)
-        MaskingSession.new(@_client,
-                           resource_id: session_uuid).delete
+        MaskingSession.new(@_client, resource_id: session_uuid).delete
       end
     end
   end
