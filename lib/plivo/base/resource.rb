@@ -89,6 +89,18 @@ module Plivo
         response_json = @_client.send_request(@_resource_uri, 'POST', params, nil, use_multipart_conn, is_voice_request: @_is_voice_request)
 
         parse_and_set(params)
+        parse_and_set(response_json)
+        self
+      end
+
+      def perform_masking_update(params, use_multipart_conn = false)
+        unless @id
+          raise_invalid_request("Cannot update a #{@_name} resource "\
+                                  'without an identifier')
+        end
+
+        response_json = @_client.send_request(@_resource_uri, 'POST', params, nil, use_multipart_conn, is_voice_request: @_is_voice_request)
+        parse_and_set(params)
         parse_and_set_response(response_json)
         self
       end

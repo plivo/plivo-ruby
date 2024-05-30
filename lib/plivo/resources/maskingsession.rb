@@ -23,7 +23,7 @@ module Plivo
           end
         end
 
-        updated_session = perform_update(params)
+        updated_session = perform_masking_update(params)
         session_data = updated_session.instance_variables.map do |var|
           [var[1..-1].to_sym, updated_session.instance_variable_get(var)]
         end.to_h
