@@ -58,15 +58,23 @@ module Plivo
 
         resource_json.each do |k, v|
           if v.is_a?(Hash)
+            nested_object_name = k
+            instance_variable_set("@#{nested_object_name}", {})
             v.each do |nested_k, nested_v|
-              instance_variable_set("@#{nested_k}", nested_v)
-              self.class.send(:attr_reader, nested_k)
+              instance_variable_set("@#{nested_object_name}_#{nested_k}", nested_v)
+              self.class.send(:attr_reader, "#{nested_object_name}_#{nested_k}")
             end
           else
             instance_variable_set("@#{k}", v)
             self.class.send(:attr_reader, k)
           end
         end
+
+        if @_identifier_string && resource_json.key?(@_identifier_string)
+          @id = resource_json[@_identifier_string]
+        end
+      end
+
 
         if @_identifier_string && resource_json.key?(@_identifier_string)
           @id = resource_json[@_identifier_string]
