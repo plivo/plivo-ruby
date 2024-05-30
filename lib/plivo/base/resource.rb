@@ -51,34 +51,34 @@ module Plivo
         @id = resource_json[@_identifier_string]
       end
 
-      def parse_and_set_response(resource_json)
-        return unless resource_json
-
-        valid_param?(:resource_json, resource_json, Hash, true)
-
-        set_instance_variables(resource_json)
-
-        return unless @_identifier_string && resource_json.key?(@_identifier_string)
-        @id = resource_json[@_identifier_string]
-      end
-
-      def set_instance_variables(hash, prefix = nil)
+      def set_instance_variables(hash)
         hash.each do |k, v|
-          instance_var_name = prefix ? "@#{prefix}_#{k}" : "@#{k}"
+          instance_var_name = "@#{k}"
+
           if v.is_a?(Hash)
-            set_instance_variables(v, k)
+            instance_variable_set(instance_var_name, v)
+            self.class.send(:attr_reader, k.to_sym)
+            v.each do |nested_k, nested_v|
+              instance_var_name = "@#{nested_k}"
+              instance_variable_set(instance_var_name, nested_v)
+              self.class.send(:attr_reader, nested_k.to_sym)
+            end
           else
             instance_variable_set(instance_var_name, v)
-            self.class.send(:attr_reader, instance_var_name[1..].to_sym)
+            self.class.send(:attr_reader, k.to_sym)
           end
         end
       end
 
+      def parse_and_set_response(resource_json)
+        return unless resource_json.is_a?(Hash)
 
+        set_instance_variables(resource_json)
 
-
-
-
+        if @_identifier_string && resource_json.key?(@_identifier_string)
+          @id = resource_json[@_identifier_string]
+        end
+      end
 
       def perform_update(params, use_multipart_conn = false)
         unless @id
