@@ -25,7 +25,7 @@ module Plivo
 
         updated_session = perform_update(params)
         session_data = updated_session.instance_variables.map do |var|
-          [var, updated_session.instance_variable_get(var)]
+          [var[1..-1].to_sym, updated_session.instance_variable_get(var)]
         end.to_h
 
         relevant_keys = %i[api_id message session]
@@ -34,7 +34,7 @@ module Plivo
         if filtered_session_data[:session]
           session_instance = filtered_session_data[:session]
           session_data = session_instance.instance_variables.map do |var|
-            [var, session_instance.instance_variable_get(var)]
+            [var[1..-1].to_sym, session_instance.instance_variable_get(var)]
           end.to_h
 
           # Extract relevant keys from session
@@ -45,6 +45,7 @@ module Plivo
 
           filtered_session_data[:session] = session_data.select { |key, _| session_relevant_keys.include?(key) }
         end
+
         filtered_session_data
       end
 
@@ -94,9 +95,6 @@ module Plivo
       end
     end
 
-    # @!method get
-    # @!method create
-    # @!method list
     class MaskingSessionInterface < Base::ResourceInterface
       def initialize(client, resource_list_json = nil)
         @_name = 'Masking/Session'
@@ -106,7 +104,6 @@ module Plivo
         @_is_voice_request = true
       end
 
-      # @param [String] session_uuid
       def get(session_uuid)
         valid_param?(:session_uuid, session_uuid, [String, Symbol], true)
         perform_get_with_response(session_uuid)
@@ -161,7 +158,6 @@ module Plivo
                                   "fetched is 20. limit can't be more than 20 or less than 1")
         end
 
-        # initial list of possible params
         params = %i[
           first_party
           second_party
