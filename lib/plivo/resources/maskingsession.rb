@@ -18,7 +18,7 @@ module Plivo
                       callback_url callback_method ring_timeout first_party_play_url second_party_play_url recording_callback_method
                       subaccount geomatch]
         params_expected.each do |param|
-          if options.key?(param) && valid_param?(param, options[param], [String, Symbol], true)
+          if options.key?(param) && valid_param?(param, options[param], [String, Symbol, TrueClass, FalseClass], true)
             params[param] = options[param]
           end
         end
