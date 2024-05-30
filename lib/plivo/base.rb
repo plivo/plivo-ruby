@@ -4,11 +4,11 @@ require_relative 'base/response'
 
 module Plivo
   module Base
-    PLIVO_API_URL = 'https://domino-qa.voice.plivodev.com'.freeze
+    PLIVO_API_URL = 'https://api.plivo.com'.freeze
 
-    API_VOICE = 'https://domino-qa.voice.plivodev.com'.freeze
-    API_VOICE_FALLBACK_1 = 'https://domino-qa.voice.plivodev.com'.freeze
-    API_VOICE_FALLBACK_2 = 'https://domino-qa.voice.plivodev.com'.freeze
+    API_VOICE = 'https://api.plivo.com'.freeze
+    API_VOICE_FALLBACK_1 = 'https://api.plivo.com'.freeze
+    API_VOICE_FALLBACK_2 = 'https://api.plivo.com'.freeze
 
     CALLINSIGHTS_API_URL = 'https://stats.plivo.com'.freeze
     PHLO_API_URL = 'https://phlorunner.plivo.com'.freeze
