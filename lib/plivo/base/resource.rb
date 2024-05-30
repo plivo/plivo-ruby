@@ -56,24 +56,21 @@ module Plivo
 
         valid_param?(:resource_json, resource_json, Hash, true)
 
+        parsed_response = {}
+
         resource_json.each do |k, v|
           if v.is_a?(Hash)
-            nested_object_name = k
-            instance_variable_set("@#{nested_object_name}", {})
             v.each do |nested_k, nested_v|
-              instance_variable_set("@#{nested_object_name}_#{nested_k}", nested_v)
-              self.class.send(:attr_reader, "#{nested_object_name}_#{nested_k}")
+              parsed_response["#{k}_#{nested_k}".to_sym] = nested_v
             end
           else
-            instance_variable_set("@#{k}", v)
-            self.class.send(:attr_reader, k)
+            parsed_response[k.to_sym] = v
           end
         end
 
-        if @_identifier_string && resource_json.key?(@_identifier_string)
-          @id = resource_json[@_identifier_string]
-        end
+        parsed_response
       end
+
 
 
 
