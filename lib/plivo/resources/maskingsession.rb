@@ -24,7 +24,7 @@ module Plivo
           end
         end
 
-        perform_update(params)
+        perform_update(params).instance_variables.map { |var| [var, parser.instance_variable_get(var)] }.to_h
       end
 
       def delete
