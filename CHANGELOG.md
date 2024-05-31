@@ -1,8 +1,12 @@
 # Change Log
 
-## [4.58.1](https://github.com/plivo/plivo-ruby/tree/v4.58.1) (2023-05-28)
+## [4.59.1](https://github.com/plivo/plivo-ruby/tree/v4.59.1) (2023-05-31)
 **Feature - Adding filtering support for List Application API**
 - Added new filter param `app_name` in list application api
+
+## [4.59.0)](https://github.com/plivo/plivo-go/tree/v4.59.0) (2024-05-31)
+**Feature - SubAccount and GeoMatch**
+-  Added sub_account and geo_match support
 
 ## [4.58.0](https://github.com/plivo/plivo-ruby/tree/v4.58.0) (2023-05-17)
 **Feature - Adding support for location whatsapp messages**
