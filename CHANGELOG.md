@@ -1,6 +1,6 @@
 # Change Log
 
-## [4.59.0)](https://github.com/plivo/plivo-go/tree/v4.59.0) (2024-05-29)
+## [4.59.0)](https://github.com/plivo/plivo-go/tree/v4.59.0) (2024-05-31)
 **Feature - SubAccount and GeoMatch**
 -  Added sub_account and geo_match support
 
