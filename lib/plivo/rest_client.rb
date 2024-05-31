@@ -21,6 +21,7 @@ module Plivo
     attr_reader :verify_session
     attr_reader :tollfree_verifications
     attr_reader :verify_caller_id
+    attr_reader :maskingsession
 
     def initialize(auth_id = nil, auth_token = nil, proxy_options = nil, timeout = 5)
       configure_base_uri
@@ -56,6 +57,7 @@ module Plivo
       @calls = Resources::CallInterface.new(self)
       @token = Resources::TokenInterface.new(self)
       @endpoints = Resources::EndpointInterface.new(self)
+      @maskingsession = Resources::MaskingSessionInterface.new(self)
       @applications = Resources::ApplicationInterface.new(self)
       @addresses = Resources::AddressInterface.new(self)
       @identities = Resources::IdentityInterface.new(self)

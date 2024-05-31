@@ -1,13 +1,19 @@
 # Change Log
 
+## [4.59.0)](https://github.com/plivo/plivo-go/tree/v4.59.0) (2024-05-31)
+**Feature - SubAccount and GeoMatch**
+-  Added sub_account and geo_match support
+
 ## [4.58.0](https://github.com/plivo/plivo-ruby/tree/v4.58.0) (2023-05-17)
 **Feature - Adding support for location whatsapp messages**
 - Added new param `location` to [send message API](https://www.plivo.com/docs/sms/api/message#send-a-message) to support location `whatsapp` messages
 - Added new param `location` in templates to support location based templated messages
+- 
 
 ## [4.57.0](https://github.com/plivo/plivo-ruby/tree/v4.57.0) (2023-05-07)
 **Feature - Adding support for interactive whatsapp messages**
 - Added new param `interactive` to [send message API](https://www.plivo.com/docs/sms/api/message#send-a-message) to support interactive `whatsapp` messages
+
 
 ## [4.56.0](https://github.com/plivo/plivo-ruby/tree/v4.56.0) (2023-04-18)
 **Feature - Support for dynamic button components when sending a templated WhatsApp message**
