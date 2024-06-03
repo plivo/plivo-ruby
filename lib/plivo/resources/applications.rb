@@ -177,6 +177,7 @@ module Plivo
       # Lists all applications
       # @param [Hash] options
       # @option options [String] :subaccount
+      # @option options [String] :app_name
       # @option options [Int] :offset
       # @option options [Int] :limit
       # @return [Hash]
@@ -188,6 +189,11 @@ module Plivo
         if options.key?(:subaccount) &&
            valid_param?(:subaccount, options[:subaccount], [String, Symbol], true)
           params[:subaccount] = options[:subaccount]
+        end
+
+        if options.key?(:app_name) &&
+          valid_param?(:app_name, options[:app_name], [String, Symbol], true)
+          params[:app_name] = options[:app_name]
         end
 
         %i[offset limit].each do |param|
