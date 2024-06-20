@@ -41,19 +41,21 @@ module Plivo
                 perform_get(session_uuid)
             end
 
-            def create(app_uuid = nil, recipient = nil,channel = nil,url = nil, method = nil)
+            def create(app_uuid = nil, recipient = nil,channel = nil, url = nil, method = nil, locale=nil)
                 valid_param?(:app_uuid, app_uuid, [String, Symbol], false)
                 valid_param?(:recipient, recipient, [Integer, String, Symbol], true)
                 valid_param?(:channel, channel, [String, Symbol], false)
                 valid_param?(:url, url, [String], false)
                 valid_param?(:method, method, String, false, %w[POST GET])
+                valid_param?(:locale, locale, [String, Symbol], false)
 
                 params = {
                     app_uuid: app_uuid,
                     recipient: recipient,
                     channel: channel,
                     url: url,
-                    method: method
+                    method: method,
+                    locale: locale
                 }
                 perform_create(params)
             end   
