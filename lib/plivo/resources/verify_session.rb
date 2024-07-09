@@ -15,6 +15,7 @@ module Plivo
                   alias: @alias,
                   recipient: @recipient,
                   channel: @channel,
+                  locale: @locale,
                   status: @status,
                   count: @count,
                   requestor_ip: @requestor_ip,
