@@ -2,7 +2,8 @@
 
 ## [4.55.0](https://github.com/plivo/plivo-ruby/tree/v4.55.0) (2024-06-22)
 **Feature - Adding support for Locale param in Create, Get and List Session**
-- Added new request param `locale` in create, get and list Session API
+- Added new request param `locale` in create Session API
+- Added support for `locale` param in get and list Session response
 
 ## [4.54.0](https://github.com/plivo/plivo-ruby/tree/v4.54.0) (2023-11-17)
 **Feature - Verify Caller Id API support**
