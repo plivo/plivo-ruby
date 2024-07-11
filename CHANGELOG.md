@@ -1,5 +1,10 @@
 # Change Log
 
+## [4.60.0](https://github.com/plivo/plivo-ruby/tree/v4.60.0) (2024-07-11)
+**Feature - Adding support for Locale param in Create, Get and List Session**
+- Added new request param `locale` in create Session API
+- Added support for `locale` param in get and list Session response
+
 ## [4.59.1](https://github.com/plivo/plivo-ruby/tree/v4.59.1) (2023-05-31)
 **Feature - Adding filtering support for List Application API**
 - Added new filter param `app_name` in list application api
