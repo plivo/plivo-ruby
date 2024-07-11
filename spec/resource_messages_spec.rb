@@ -165,7 +165,7 @@ describe 'Messages test' do
                                            type: 'sms',
                                            url: 'http://url.com',
                                            method: 'POST',
-                                           log: true
+                                           log: "true"
                                          ))))
       .to eql(JSON.parse(contents))
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Message/',
@@ -178,7 +178,7 @@ describe 'Messages test' do
                        type: 'sms',
                        url: 'http://url.com',
                        method: 'POST',
-                       log: true
+                       log: "true"
                      })
   end
 
@@ -194,7 +194,7 @@ describe 'Messages test' do
                                            type: 'sms',
                                            url: 'http://url.com',
                                            method: 'POST',
-                                           log: true
+                                           log: "true"
                                          ))))
       .to eql(JSON.parse(contents))
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Message/',
@@ -207,7 +207,7 @@ describe 'Messages test' do
                        type: 'sms',
                        url: 'http://url.com',
                        method: 'POST',
-                       log: true
+                       log: "true"
                      })
   end
 
@@ -223,7 +223,7 @@ describe 'Messages test' do
             type: 'sms',
             url: 'http://url.com',
             method: 'POST',
-            log: true
+            log: "true"
           )
     end
       .to raise_error(

@@ -1,9 +1,43 @@
 # Change Log
 
-## [4.55.0](https://github.com/plivo/plivo-ruby/tree/v4.55.0) (2024-06-22)
+## [4.60.0](https://github.com/plivo/plivo-ruby/tree/v4.60.0) (2024-07-11)
 **Feature - Adding support for Locale param in Create, Get and List Session**
 - Added new request param `locale` in create Session API
 - Added support for `locale` param in get and list Session response
+
+## [4.59.1](https://github.com/plivo/plivo-ruby/tree/v4.59.1) (2023-05-31)
+**Feature - Adding filtering support for List Application API**
+- Added new filter param `app_name` in list application api
+
+## [4.59.0)](https://github.com/plivo/plivo-go/tree/v4.59.0) (2024-05-31)
+**Feature - SubAccount and GeoMatch**
+-  Added sub_account and geo_match support
+
+## [4.58.0](https://github.com/plivo/plivo-ruby/tree/v4.58.0) (2023-05-17)
+**Feature - Adding support for location whatsapp messages**
+- Added new param `location` to [send message API](https://www.plivo.com/docs/sms/api/message#send-a-message) to support location `whatsapp` messages
+- Added new param `location` in templates to support location based templated messages
+
+## [4.57.0](https://github.com/plivo/plivo-ruby/tree/v4.57.0) (2023-05-07)
+**Feature - Adding support for interactive whatsapp messages**
+- Added new param `interactive` to [send message API](https://www.plivo.com/docs/sms/api/message#send-a-message) to support interactive `whatsapp` messages
+
+## [4.56.0](https://github.com/plivo/plivo-ruby/tree/v4.56.0) (2023-04-18)
+**Feature - Support for dynamic button components when sending a templated WhatsApp message**
+- Added new param `payload` in templates to support dynamic payload in templates
+
+## [4.55.2](https://github.com/plivo/plivo-ruby/tree/v4.55.2) (2024-02-28)
+**Feature - Log Redaction Enhancement**
+-  Added log attribute in GET and List MDR response
+-  Change log field from bool to string in send SMS
+
+## [4.55.1](https://github.com/plivo/plivo-ruby/tree/v4.55.1) (2024-01-08)
+**Feature - Added New Param 'type' for Speak Api**
+- Added new param "type" for speak api
+
+## [4.55.0](https://github.com/plivo/plivo-ruby/tree/v4.55.0) (2023-11-20)
+**Feature - Added New Param 'registration_status' for Campaign List**
+- Added new query param "registration_status" for campaign list
 
 ## [4.54.0](https://github.com/plivo/plivo-ruby/tree/v4.54.0) (2023-11-17)
 **Feature - Verify Caller Id API support**

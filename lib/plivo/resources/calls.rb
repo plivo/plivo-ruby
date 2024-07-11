@@ -170,6 +170,12 @@ module Plivo
           params[:legs] = options[:legs]
         end
 
+        if options.key?(:type) &&
+          valid_param?(:type, options[:type],
+                       [String, Symbol], true, %w[text ssml])
+         params[:type] = options[:type]
+       end
+
         %i[loop mix].each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [TrueClass, FalseClass], true)
@@ -620,6 +626,7 @@ module Plivo
       # @option options [String] :legs - The leg on which the music will be played, can be aleg (i.e., A-leg is the first leg of the call or current call), bleg (i.e., B-leg is the second leg of the call),or both (i.e., both legs of the call).
       # @option options [Boolean] :loop - If set to true, the audio file will play indefinitely.
       # @option options [Boolean] :mix - If set to true, sounds are mixed with current audio flow.
+      # @option options [String] :type - Indicates the type of the text that needs to be spoken. The payload can either be plain text or SSML.
       def speak(call_uuid, text, options = nil)
         valid_param?(:call_uuid, call_uuid, [String, Symbol], true)
         Call.new(@_client, resource_id: call_uuid).speak(text, options)

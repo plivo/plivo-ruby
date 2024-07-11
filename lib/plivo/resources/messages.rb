@@ -45,7 +45,8 @@ module Plivo
           carrier_fees: @carrier_fees,
           conversation_id: @conversation_id,
           conversation_origin: @conversation_origin,
-          conversation_expiration_timestamp: @conversation_expiration_timestamp
+          conversation_expiration_timestamp: @conversation_expiration_timestamp,
+          log: @log
         }.to_s
       end
     end
@@ -91,6 +92,8 @@ module Plivo
       # @option options [String] :dlt_template_id This is the DLT template id passed in the message request. 
       # @option options [String] :dlt_template_category This is the DLT template category passed in the message request.
       # @option options [Hash] :template This is the template used in the whatsapp message request. It can handle both JSON and String.
+      # @option options [Hash] :interactive This is the interactive parameter used in the whatsapp message request. It can handle both JSON and String.
+      # @option options [Hash] :location This is the location parameter used in the whatsapp message request. It can handle both JSON and String.
       
       def create(src = nil, dst = nil, text = nil, options = nil, powerpack_uuid = nil)
         #All params in One HASH
@@ -146,9 +149,15 @@ module Plivo
              end
           end         
           
-          if value.key?(:log) &&
-            valid_param?(:log, value[:log], [TrueClass, FalseClass], true)
-              params[:log] = value[:log]
+          if value.key?(:log)
+            log = value[:log]
+            if log.is_a?(TrueClass) || log.is_a?(FalseClass)  # Check if log is boolean
+              params[:log] = log.to_s  # Convert boolean to string
+            elsif log.is_a?(String)  # Check if log is string
+              params[:log] = log
+            else
+              raise ArgumentError, "Invalid type for log parameter. Expected boolean or string."
+            end
           end
 
           if value.key?(:message_expiry) &&
@@ -220,6 +229,48 @@ module Plivo
             end
           end
 
+          if value.key?(:template) && value.key?(:type) && (value[:type] != "whatsapp")
+            raise InvalidRequestError, 'template parameter is only applicable when type is whatsapp'
+          end
+
+        if value.is_a?(Hash) && !value[:interactive].nil?
+          if value.key?(:interactive)
+            if value[:interactive].is_a?(String)
+              begin
+                json_interactive = JSON.parse(value[:interactive])
+                params[:interactive] = json_interactive
+              rescue JSON::ParserError => e
+                raise InvalidRequestError, 'failed to parse interactive as JSON'
+              end
+            elsif value[:interactive].is_a?(Hash)
+              params[:interactive] = value[:interactive]
+            elsif value[:interactive].is_a?(Plivo::Interactive)
+              params[:interactive] = value[:interactive].to_hash
+            else
+              raise InvalidRequestError, 'invalid interactive format'
+            end
+          end
+        end
+
+        if value.is_a?(Hash) && !value[:location].nil?
+          if value.key?(:location)
+            if value[:location].is_a?(String)
+              begin
+                json_location = JSON.parse(value[:location])
+                params[:location] = json_location
+              rescue JSON::ParserError => e
+                raise InvalidRequestError, 'failed to parse location as JSON'
+              end
+            elsif value[:location].is_a?(Hash)
+              params[:location] = value[:location]
+            elsif value[:location].is_a?(Plivo::Location)
+              params[:location] = value[:location].to_hash
+            else
+              raise InvalidRequestError, 'invalid location format'
+            end
+          end
+        end
+
         #legacy code compatibility
         else
           valid_param?(:src, src, [Integer, String, Symbol], false)
@@ -285,9 +336,15 @@ module Plivo
            params[:media_ids] = options[:media_ids]
           end
 
-          if options.key?(:log) &&
-             valid_param?(:log, options[:log], [TrueClass, FalseClass], true)
-            params[:log] = options[:log]
+          if options.key?(:log)
+            log = options[:log]
+            if log.is_a?(TrueClass) || log.is_a?(FalseClass)  # Check if log is boolean
+              params[:log] = log.to_s  # Convert boolean to string
+            elsif log.is_a?(String)  # Check if log is string
+              params[:log] = log
+            else
+              raise ArgumentError, "Invalid type for log parameter. Expected boolean or string."
+            end
           end
 
           if options.key?(:media_urls) &&
@@ -358,6 +415,44 @@ module Plivo
               raise InvalidRequestError, 'template name and language must not be null or empty'
             end
           end   
+
+          if options.is_a?(Hash) && !options[:interactive].nil?
+            if options.key?(:interactive)
+              if options[:interactive].is_a?(String)
+                begin
+                  json_interactive = JSON.parse(options[:interactive])
+                  params[:interactive] = json_interactive
+                rescue JSON::ParserError => e
+                  raise InvalidRequestError, 'failed to parse interactive as JSON'
+                end
+              elsif options[:interactive].is_a?(Hash)
+                params[:interactive] = options[:interactive]
+              elsif options[:interactive].is_a?(Plivo::Interactive)
+                params[:interactive] = options[:interactive].to_hash
+              else
+                raise InvalidRequestError, 'invalid interactive format'
+              end
+            end
+          end
+
+          if options.is_a?(Hash) && !options[:location].nil?
+            if options.key?(:location)
+              if options[:location].is_a?(String)
+                begin
+                  json_location = JSON.parse(options[:location])
+                  params[:location] = json_location
+                rescue JSON::ParserError => e
+                  raise InvalidRequestError, 'failed to parse location as JSON'
+                end
+              elsif options[:location].is_a?(Hash)
+                params[:location] = options[:location]
+              elsif options[:location].is_a?(Plivo::Location)
+                params[:location] = options[:location].to_hash
+              else
+                raise InvalidRequestError, 'invalid location format'
+              end
+            end
+          end
 
         end
         perform_create(params)
