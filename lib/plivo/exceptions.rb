@@ -46,5 +46,11 @@ module Plivo
     ##
     # This will be raised when there is an authentication error
     ResourceNotFoundError = Class.new(PlivoRESTError)
+
+    ##
+    # This will be raised when the API calls to the server reach their limit.
+    #
+    # Usually, the reason why this error is raised will be included.
+    TooManyRequestsError = Class.new(PlivoRESTError)
   end
 end
