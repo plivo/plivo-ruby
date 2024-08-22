@@ -46,7 +46,10 @@ module Plivo
           conversation_id: @conversation_id,
           conversation_origin: @conversation_origin,
           conversation_expiration_timestamp: @conversation_expiration_timestamp,
-          log: @log
+          log: @log,
+          message_sent_time: @message_sent_time,
+          message_updated_time: @message_updated_time,
+          error_message: @error_message
         }.to_s
       end
     end
