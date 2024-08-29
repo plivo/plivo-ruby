@@ -3,11 +3,12 @@ module Plivo
     class Stream < Element
       @nestables = []
       @valid_attributes = %w[bidirectional audioTrack streamTimeout statusCallbackUrl
-                             statusCallbackMethod contentType extraHeaders]
+                             statusCallbackMethod contentType extraHeaders keepCallAlive]
 
       SUPPORTED_BIDIRECTIONAL=%w(true false)
       SUPPORTED_AUDIOTRACK=%w(inbound outbound both)
       SUPPORTED_CALLBACKMETHOD=%w(GET POST)
+      SUPPORTED_KEEPCALLALIVE=%w(true false)
 
       def initialize(body, attributes = {})
         if attributes[:bidirectional] && !SUPPORTED_BIDIRECTIONAL.include?(attributes[:bidirectional])
@@ -18,6 +19,9 @@ module Plivo
         end
         if attributes[:statusCallbackMethod] && !SUPPORTED_CALLBACKMETHOD.include?(attributes[:statusCallbackMethod].upcase)
           raise PlivoXMLError, "<Stream> statusCallbackMethod #{attributes[:statusCallbackMethod]} is not valid."
+        end
+        if attributes[:keepCallAlive] && !SUPPORTED_KEEPCALLALIVE.include?(attributes[:keepCallAlive])
+          raise PlivoXMLError, "<Stream> keepCallAlive #{attributes[:keepCallAlive]} is not valid."
         end
         raise PlivoXMLError, 'No text set for Stream' unless body
         super(body, attributes)
