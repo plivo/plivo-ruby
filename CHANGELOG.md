@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.60.1](https://github.com/plivo/plivo-ruby/tree/v4.60.1) (2024-09-03)
+**Feature - Adding new element for Audio Stream XML **
+- Added `keepCallAlive` element in Audio Stream XML
+
 ## [4.60.0](https://github.com/plivo/plivo-ruby/tree/v4.60.0) (2024-07-11)
 **Feature - Adding support for Locale param in Create, Get and List Session**
 - Added new request param `locale` in create Session API
