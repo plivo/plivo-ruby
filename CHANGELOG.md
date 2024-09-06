@@ -1,8 +1,14 @@
 # Change Log
 
+## [4.60.2](https://github.com/plivo/plivo-ruby/tree/v4.60.2) (2024-09-06)
+**Feature - Adding support for brand_name and app_hash in Create,Get and List Session**
+- Added new request param `brand_name`, `code_length` and `app_hash` in create Session API
+- Added support for `brand_name`, `code_length` and `app_hash` param in get and list Session response
+
 ## [4.60.1](https://github.com/plivo/plivo-ruby/tree/v4.60.1) (2024-09-03)
 **Feature - Adding new element for Audio Stream XML **
 - Added `keepCallAlive` element in Audio Stream XML
+
 
 ## [4.60.0](https://github.com/plivo/plivo-ruby/tree/v4.60.0) (2024-07-11)
 **Feature - Adding support for Locale param in Create, Get and List Session**

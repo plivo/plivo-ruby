@@ -42,13 +42,16 @@ module Plivo
                 perform_get(session_uuid)
             end
 
-            def create(app_uuid = nil, recipient = nil,channel = nil, url = nil, method = nil, locale=nil)
+            def create(app_uuid = nil, recipient = nil,channel = nil, url = nil, method = nil, locale=nil, brand_name=nil, app_hash=nil, code_length=nil)
                 valid_param?(:app_uuid, app_uuid, [String, Symbol], false)
                 valid_param?(:recipient, recipient, [Integer, String, Symbol], true)
                 valid_param?(:channel, channel, [String, Symbol], false)
                 valid_param?(:url, url, [String], false)
                 valid_param?(:method, method, String, false, %w[POST GET])
                 valid_param?(:locale, locale, [String, Symbol], false)
+                valid_param?(:brand_name, brand_name, [String, Symbol], false)
+                valid_param?(:app_hash, app_hash, [String, Symbol], false)
+                valid_param?(:code_length, code_length,[Integer,Symbol], false)
 
                 params = {
                     app_uuid: app_uuid,
@@ -56,7 +59,10 @@ module Plivo
                     channel: channel,
                     url: url,
                     method: method,
-                    locale: locale
+                    locale: locale,
+                    brand_name: brand_name,
+                    app_hash: app_hash,
+                    code_length: code_length
                 }
                 perform_create(params)
             end   
@@ -67,7 +73,7 @@ module Plivo
                 params = {}
                 params_expected = %i[
                 subaccount status session_time__gt session_time__gte
-                session_time__lt session_time__lte session_time country alias app_uuid recipient
+                session_time__lt session_time__lte session_time country alias app_uuid recipient brand_name app_hash
                 ]
 
                 params_expected.each do |param|
