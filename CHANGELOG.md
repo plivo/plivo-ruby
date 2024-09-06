@@ -1,4 +1,7 @@
 # Change Log
+## [4.60.3](https://github.com/plivo/plivo-ruby/tree/v4.60.3) (2024-09-06)
+**Feature - Adding more attribute on mdr object**
+- Added `message_sent_time`, `message_updated_time` and `error-message` on get and list Message API
 
 ## [4.60.0](https://github.com/plivo/plivo-ruby/tree/v4.60.0) (2024-07-11)
 **Feature - Adding support for Locale param in Create, Get and List Session**
