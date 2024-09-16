@@ -14,7 +14,7 @@ module Plivo
         valid_param?(:options, options, Hash, true)
 
         params = {}
-        params_expected = %i[session_expiry call_time_limit record record_file_format recording_callback_url
+        params_expected = %i[first_party second_party session_expiry call_time_limit record record_file_format recording_callback_url
                       callback_url callback_method ring_timeout first_party_play_url second_party_play_url recording_callback_method
                       subaccount geomatch]
         params_expected.each do |param|
@@ -90,7 +90,10 @@ module Plivo
           pin_retry: @pin_retry,
           pin_retry_wait: @pin_retry_wait,
           incorrect_pin_play: @incorrect_pin_play,
-          unknown_caller_play: @unknown_caller_play
+          unknown_caller_play: @unknown_caller_play,
+          force_pin_authentication: @force_pin_authentication,
+          virtual_number_cooloff_period: @virtual_number_cooloff_period,
+          create_session_with_single_party: @create_session_with_single_party
         }.to_s
       end
     end
@@ -145,7 +148,9 @@ module Plivo
         params[:unknown_caller_play] = unknown_caller_play unless unknown_caller_play.nil?
         params[:subaccount] = subaccount unless subaccount.nil?
         params[:geomatch] = geomatch unless geomatch.nil?
-
+        params[:force_pin_authentication] = force_pin_authentication unless force_pin_authentication.nil?
+        params[:virtual_number_cooloff_period] = virtual_number_cooloff_period unless virtual_number_cooloff_period.nil?
+        params[:create_session_with_single_party] = create_session_with_single_party unless create_session_with_single_party.nil?
         perform_create(params)
       end
 
