@@ -112,7 +112,13 @@ describe 'Sessions test' do
                         recipient: '1234567890',
                         channel: nil,
                         url: nil,
-                        method: nil
+                        method: nil,
+                        locale:nil,
+                        brand_name:nil,
+                        app_hash:nil,
+                        code_length:nil,
+                        dtmf:nil,
+                        fraud_check:nil
                         })
     end
 
