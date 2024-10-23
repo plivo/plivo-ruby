@@ -1,5 +1,5 @@
 # Change Log
-## [4.61.2](https://github.com/plivo/plivo-ruby/tree/v4.61.2)(2024-10-16)
+## [4.61.2](https://github.com/plivo/plivo-ruby/tree/v4.61.2)(2024-10-23)
 **Feature - FraudCheck param in Create, Get and List Session**
 - Support for the `fraud_check` parameter in sms verify session request
 - Added support for `fraud_check` paramter in GET and LIST veriyf session
