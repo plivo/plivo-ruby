@@ -367,6 +367,10 @@ module Plivo
           Exceptions::InvalidRequestError,
           'Unprocessable Entity'
         ],
+        429 => [
+          Exceptions::TooManyRequestsError,
+          'Too many requests'
+        ],
         500 => [
           Exceptions::PlivoServerError,
           'A server error occurred while accessing resource'
