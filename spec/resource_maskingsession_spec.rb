@@ -38,7 +38,10 @@ describe 'MaskingSession test' do
       pin_retry: masking_session.pin_retry,
       pin_retry_wait: masking_session.pin_retry_wait,
       incorrect_pin_play: masking_session.incorrect_pin_play,
-      unknown_caller_play: masking_session.unknown_caller_play
+      unknown_caller_play: masking_session.unknown_caller_play,
+      force_pin_authentication: masking_session.force_pin_authentication,
+      virtual_number_cooloff_period: masking_session.virtual_number_cooloff_period,
+      create_session_with_single_party: masking_session.create_session_with_single_party,
     }.reject { |_, v| v.nil? }.to_json
   end
 

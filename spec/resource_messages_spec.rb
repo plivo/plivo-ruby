@@ -26,7 +26,10 @@ describe 'Messages test' do
       carrier_fees: message.carrier_fees,
       conversation_id: message.conversation_id,
       conversation_origin: message.conversation_origin,
-      conversation_expiration_timestamp: message.conversation_expiration_timestamp
+      conversation_expiration_timestamp: message.conversation_expiration_timestamp,
+      error_message: message.error_message,
+      message_sent_time: message.message_sent_time,
+      message_updated_time: message.message_updated_time
     }.to_json
   end
 
