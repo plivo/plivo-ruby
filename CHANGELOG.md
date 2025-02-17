@@ -1,4 +1,7 @@
 # Change Log
+## [4.61.3](https://github.com/plivo/plivo-ruby/tree/v4.61.3) (2025-02-18)
+**Feature - Throw GeoPermissionsError Exception on synchronous geo permissions error**
+
 ## [4.61.2](https://github.com/plivo/plivo-ruby/tree/v4.61.2)(2024-10-23)
 **Feature - FraudCheck param in Create, Get and List Session**
 - Support for the `fraud_check` parameter in sms verify session request

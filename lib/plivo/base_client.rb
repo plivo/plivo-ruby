@@ -13,6 +13,7 @@ module Plivo
     # Base stuff
     attr_reader :headers, :auth_credentials
     @@voice_retry_count = 0
+    GEO_PERMISSION_ENDPOINTS = ['/Message/', '/Session/', '/Call/'].freeze
     def initialize(auth_id = nil, auth_token = nil, proxy_options = nil, timeout=5)
       configure_credentials(auth_id, auth_token)
       configure_proxies(proxy_options)
@@ -26,7 +27,7 @@ module Plivo
     end
 
     def process_response(method, response)
-      handle_response_exceptions(response)
+      handle_response_exceptions(response, method)
       if method == 'DELETE'
         if !([200, 204].include? response[:status])
           raise Exceptions::PlivoRESTError, "Resource at #{response[:url]} "\
@@ -341,7 +342,7 @@ module Plivo
       response
     end
 
-    def handle_response_exceptions(response)
+    def handle_response_exceptions(response, method)
       exception_mapping = {
         400 => [
           Exceptions::ValidationError,
@@ -372,6 +373,13 @@ module Plivo
           'A server error occurred while accessing resource'
         ]
       }
+
+      if response[:status] == 403 && method == 'POST' && GEO_PERMISSION_ENDPOINTS.any? { |endpoint| response[:url].to_s.end_with?(endpoint) }
+        exception_mapping[403] = [
+          Exceptions::GeoPermissionsError,
+          'Geo-permission to the destination country is not enabled'
+        ]
+      end
 
       response_json = response[:body]
       return unless exception_mapping.key?(response[:status])
