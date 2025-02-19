@@ -46,5 +46,9 @@ module Plivo
     ##
     # This will be raised when there is an authentication error
     ResourceNotFoundError = Class.new(PlivoRESTError)
+
+    ##
+    # This will be raised when the destination country is not enabled for sms/voice
+    GeoPermissionsError = Class.new(PlivoRESTError)
   end
 end
