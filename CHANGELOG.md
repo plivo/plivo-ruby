@@ -1,4 +1,9 @@
 # Change Log
+
+## [4.61.4](https://github.com/plivo/plivo-ruby/tree/v4.61.4) (2025-02-25)
+**Feature - Supporting parameter_name in WhatsApp Template .**
+- Supporting `parameter_name` in WhatsApp Template .
+
 ## [4.61.3](https://github.com/plivo/plivo-ruby/tree/v4.61.3) (2025-02-18)
 **Feature - Throw GeoPermissionsError Exception on synchronous geo permissions error**
 

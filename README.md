@@ -9,7 +9,7 @@ The Plivo Ruby SDK makes it simpler to integrate communications into your Ruby a
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'plivo', '>= 4.61.3'
+gem 'plivo', '>= 4.61.4'
 ```
 
 And then execute:
@@ -245,6 +245,54 @@ response = api.messages.create(
 puts response
 ```
 > Note: It is also possible to create and manage objects directly within the SDK for whatsapp, providing a structured approach to message creation.
+
+
+### Templated WhatsApp Messages With Named Parameter
+This guide shows how to send templated WhatsApp messages with named parameters.
+
+Example:
+```ruby
+require "plivo"
+include Plivo
+
+api = RestClient.new("<auth_id>","<auth_token>")
+
+template={ 
+            "name": "template_name",
+            "language": "en_US",
+            "components": [
+                {
+                    "type": "header",
+                    "parameters": [
+                        {
+                            "type": "text",
+                            "parameter_name": "header_title",
+                            "text": "WA-header"
+                        }
+                    ]
+                },
+                {
+                    "type": "body",
+                    "parameters": [
+                        {
+                            "type": "text",
+                            "parameter_name": "user_name",
+                            "text": "Saurabh"
+                        }
+                    ]
+                }
+            ]
+          }
+
+response = api.messages.create(
+        src: "+14156667778",
+        dst:"+14156667777",
+        type:"whatsapp",
+        template:template,
+        url: "https://<yourdomain>.com/whatsapp_status/",
+)
+puts response
+```
 
 ### Free Form Messages
 Non-templated or Free Form WhatsApp messages can be sent as a reply to a user-initiated conversation (Service conversation) or if there is an existing ongoing conversation created previously by sending a templated WhatsApp message.
