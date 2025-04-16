@@ -7,7 +7,7 @@ module Plivo
                              startOnDialAnswer redirect fileFormat
                              callbackUrl callbackMethod
                              transcriptionType transcriptionUrl
-                             transcriptionMethod]
+                             transcriptionMethod recordChannelType]
 
       def initialize(attributes = {})
         super(nil, attributes)
