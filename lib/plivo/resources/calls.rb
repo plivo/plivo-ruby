@@ -99,6 +99,12 @@ module Plivo
           params[:transcription_type] = options[:transcription_type]
         end
 
+        if options.key?(:record_channel_type) &&
+           valid_param?(:record_channel_type, options[:record_channel_type],
+                        [String, Symbol], true)
+          params[:record_channel_type] = options[:record_channel_type]
+        end
+
         perform_action('Record', 'POST', params, true)
       end
 
