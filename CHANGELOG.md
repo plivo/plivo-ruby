@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.62.1](https://github.com/plivo/plivo-ruby/tree/v4.62.1) (2025-08-06)
+**Feature - Expanded Media Type Support for Media Upload**
+- Added support for additional media file formats: GIF, MP3, WAV, OGG, 3GPP, 3GPP2, VCARD, CSV, XLS, XLSX, and PLAIN text files
+
 ## [4.62.0](https://github.com/plivo/plivo-ruby/tree/v4.62.0) (2025-04-30)
 **Feature - New Param added for Start Recording API.**
 - Support `record_channel_type` in Start Recording API and `recordChannelType` in Record XML.
