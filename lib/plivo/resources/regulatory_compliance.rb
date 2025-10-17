@@ -453,6 +453,7 @@ module Plivo
           country_iso2: @country_iso2,
           number_type: @number_type,
           compliance_requirement_id: @compliance_requirement_id,
+          rejection_reason: @rejection_reason,
           documents: @documents,
         }.delete_if { |key, value| value.nil? }.to_s
       end
