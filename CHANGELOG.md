@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.62.2](https://github.com/plivo/plivo-ruby/tree/v4.62.2) (2025-10-17)
+**Feature - Regulatory Compliance: Add rejection_reason to Compliance Application**
+- Added `rejection_reason` field to Compliance Application response object.
+
 ## [4.62.1](https://github.com/plivo/plivo-ruby/tree/v4.62.1) (2025-08-06)
 **Feature - Expanded Media Type Support for Media Upload**
 - Added support for additional media file formats: GIF, MP3, WAV, OGG, 3GPP, 3GPP2, VCARD, CSV, XLS, XLSX, and PLAIN text files
