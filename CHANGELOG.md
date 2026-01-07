@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.62.3](https://github.com/plivo/plivo-ruby/tree/v4.62.3) (2026-01-08)
+**Bug Fix - Lookup valid param fix**
+- Fixed undefined method valid_param error in LookupBaseResource class by adding missing include Plivo::Utils module inclusion 
+  
 ## [4.62.2](https://github.com/plivo/plivo-ruby/tree/v4.62.2) (2025-10-17)
 **Feature - Regulatory Compliance: Add rejection_reason to Compliance Application**
 - Added `rejection_reason` field to Compliance Application response object.
