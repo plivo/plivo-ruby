@@ -3,6 +3,7 @@ module Plivo
     include Plivo::Utils
 
     class LookupBaseResource
+      include Plivo::Utils
       def initialize(fields = nil)
         valid_param?(:fields, fields, Hash, false)
         fields.each do |k, v|
