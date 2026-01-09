@@ -104,35 +104,35 @@ describe 'Profile test' do
         response = to_json_create(@api.profile
                                     .create(
                                         params ={
-                                            originator: "xxxxx", 
-                                            profile_alias: "yyyyy",
+                                            profile_alias: "Test Profile",
                                             customer_type: "DIRECT",
-                                            entity_type: "PRIVATE",
-                                            company_name: "plivo",
-                                            ein: "ghdwgdjwbdkjdw",
+                                            entity_type: "PUBLIC",
+                                            company_name: "Test Company Inc",
+                                            ein: "12-3456789",
                                             ein_issuing_country: "US",
-                                            stock_symbol: "jgasjdgja",
-                                            stock_exchange: "AMEX",
-                                            website: "www.example.com",
-                                            vertical: "REAL_ESTATE",
-                                            alt_business_id: "uyqgugdqw",
-                                            alt_business_id_type: "jhjadada",
-                                            plivo_subaccount: "123433566",
+                                            stock_symbol: "TEST",
+                                            stock_exchange: "NASDAQ",
+                                            website: "https://testcompany.com",
+                                            vertical: "TECHNOLOGY",
+                                            alt_business_id: "",
+                                            alt_business_id_type: "NONE",
+                                            plivo_subaccount: "",
                                             address: {
-                                                "street": "jhjhja",
-                                                "city": "New York",
-                                                "state": "Califernia",
-                                                "postal_code": "6575",
+                                                "street": "123 Main Street",
+                                                "city": "San Francisco",
+                                                "state": "CA",
+                                                "postal_code": "94105",
                                                 "country": "US"
                                             },
                                             authorized_contact: {
-                                                "first_name": "john",
-                                                "last_name": "con",
-                                                "phone": "1876865565",
-                                                "email": "xyz@plivo.com",
-                                                "title": "ugigwc",
-                                                "seniority": "jsgfjs"
-                                            }
+                                                "first_name": "John",
+                                                "last_name": "Doe",
+                                                "phone": "+14155551234",
+                                                "email": "test@example.com",
+                                                "title": "CEO",
+                                                "seniority": "C_LEVEL"
+                                            },
+                                            business_contact_email: "employee@company.com"
                                         }
                                     ))
     
@@ -143,35 +143,35 @@ describe 'Profile test' do
         compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Profile/',
                          method: 'POST',
                          data: {
-                            originator: "xxxxx", 
-                            profile_alias: "yyyyy",
+                            profile_alias: "Test Profile",
                             customer_type: "DIRECT",
-                            entity_type: "PRIVATE",
-                            company_name: "plivo",
-                            ein: "ghdwgdjwbdkjdw",
+                            entity_type: "PUBLIC",
+                            company_name: "Test Company Inc",
+                            ein: "12-3456789",
                             ein_issuing_country: "US",
-                            stock_symbol: "jgasjdgja",
-                            stock_exchange: "AMEX",
-                            website: "www.example.com",
-                            vertical: "REAL_ESTATE",
-                            alt_business_id: "uyqgugdqw",
-                            alt_business_id_type: "jhjadada",
-                            plivo_subaccount: "123433566",
+                            stock_symbol: "TEST",
+                            stock_exchange: "NASDAQ",
+                            website: "https://testcompany.com",
+                            vertical: "TECHNOLOGY",
+                            alt_business_id: "",
+                            alt_business_id_type: "NONE",
+                            plivo_subaccount: "",
                             address: {
-                                "street": "jhjhja",
-                                "city": "New York",
-                                "state": "Califernia",
-                                "postal_code": "6575",
+                                "street": "123 Main Street",
+                                "city": "San Francisco",
+                                "state": "CA",
+                                "postal_code": "94105",
                                 "country": "US"
                             },
                             authorized_contact: {
-                                "first_name": "john",
-                                "last_name": "con",
-                                "phone": "1876865565",
-                                "email": "xyz@plivo.com",
-                                "title": "ugigwc",
-                                "seniority": "jsgfjs"
-                            }
+                                "first_name": "John",
+                                "last_name": "Doe",
+                                "phone": "+14155551234",
+                                "email": "test@example.com",
+                                "title": "CEO",
+                                "seniority": "C_LEVEL"
+                            },
+                            business_contact_email: "employee@company.com"
                          })
         end
         it 'update profile' do

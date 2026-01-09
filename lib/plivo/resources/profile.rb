@@ -83,7 +83,7 @@ module Plivo
 
             ##
             # Update a Profile
-            # {'address': {}, 'authorized_contact': {}, 'entity_type':'', 'vertical': '', 'company_name': '', 'website':''} 
+            # {'address': {}, 'authorized_contact': {}, 'entity_type':'', 'vertical': '', 'company_name': '', 'website':'', 'business_contact_email':''} 
             def update(profile_uuid, options = nil)
               valid_param?(:options, options, Hash, true)
               perform_action_with_identifier(profile_uuid, "POST", options)
