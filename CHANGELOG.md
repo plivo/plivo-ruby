@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.62.4](https://github.com/plivo/plivo-ruby/tree/v4.62.4) (2026-01-13)
+**Feature - Profile API business_contact_email support**
+- Added `business_contact_email` parameter support to Profile `create` and `update` methods for PUBLIC entity types
+
 ## [4.62.3](https://github.com/plivo/plivo-ruby/tree/v4.62.3) (2026-01-08)
 **Bug Fix - Lookup valid param fix**
 - Fixed undefined method valid_param error in LookupBaseResource class by adding missing include Plivo::Utils module inclusion 
