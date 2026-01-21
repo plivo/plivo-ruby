@@ -9,11 +9,12 @@ module Plivo
         super
       end
 
-      def buy(app_id = nil, verification_info = nil, cnam_lookup = nil)
+      def buy(app_id = nil, verification_info = nil, cnam_lookup = nil, ha_enabled = nil)
         params = {}
         params[:app_id] = app_id unless app_id.nil?
         params[:verification_info] = verification_info unless verification_info.nil?
         params[:cnam_lookup] = cnam_lookup unless cnam_lookup.nil?
+        params[:ha_enabled] = ha_enabled unless ha_enabled.nil?
         perform_action(nil, 'POST', params, true)
       end
 
@@ -39,7 +40,8 @@ module Plivo
           tendlc_registration_status: @tendlc_registration_status,
           toll_free_sms_verification: @toll_free_sms_verification,
           toll_free_sms_verification_id: @toll_free_sms_verification_id,
-          toll_free_sms_verification_order_status: @toll_free_sms_verification_order_status
+          toll_free_sms_verification_order_status: @toll_free_sms_verification_order_status,
+          fallback_number: @fallback_number
         }.to_s
       end
     end
@@ -121,10 +123,10 @@ module Plivo
         end
       end
 
-      def buy(number, app_id = nil, verification_info = nil, cnam_lookup = nil)
+      def buy(number, app_id = nil, verification_info = nil, cnam_lookup = nil, ha_enabled = nil)
         valid_param?(:number, number, [Integer, String, Symbol], true)
         PhoneNumber.new(@_client,
-                        resource_id: number).buy(app_id, verification_info, cnam_lookup)
+                        resource_id: number).buy(app_id, verification_info, cnam_lookup, ha_enabled)
       end
     end
 
@@ -189,7 +191,8 @@ module Plivo
           renewal_date: @renewal_date,
           cnam_lookup: @cnam_lookup,
           toll_free_sms_verification_id: @toll_free_sms_verification_id,
-          toll_free_sms_verification_order_status: @toll_free_sms_verification_order_status
+          toll_free_sms_verification_order_status: @toll_free_sms_verification_order_status,
+          fallback_number: @fallback_number
         }.to_s
       end
     end
