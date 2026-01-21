@@ -52,6 +52,24 @@ module Plivo
           error_message: @error_message
         }.to_s
       end
+      def to_json
+        {
+          api_id: @api_id,
+          error_code: @error_code,
+          from_number: @from_number,
+          message_direction: @message_direction,
+          message_state: @message_state,
+          message_time: @message_time,
+          message_type: @message_type,
+          message_uuid: @message_uuid,
+          resource_uri: @resource_uri,
+          to_number: @to_number,
+          total_amount: @total_amount,
+          total_rate: @total_rate,
+          powerpack_id: @powerpack_id,
+          units: @units
+        }.to_json
+      end
     end
 
     class MessagesInterface < Base::ResourceInterface
