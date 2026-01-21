@@ -1,5 +1,10 @@
 # Change Log
 
+## [4.62.5](https://github.com/plivo/plivo-ruby/tree/v4.62.5) (2026-01-21)
+**Feature - HA Number support**
+- Added `ha_enable` optional parameter to PhoneNumber `buy` method
+- Added `fallback_number` field to PhoneNumber and Number response objects
+
 ## [4.62.4](https://github.com/plivo/plivo-ruby/tree/v4.62.4) (2026-01-13)
 **Feature - Profile API business_contact_email support**
 - Added `business_contact_email` parameter support to Profile `create` and `update` methods for PUBLIC entity types
