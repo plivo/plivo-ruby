@@ -9,12 +9,12 @@ module Plivo
         super
       end
 
-      def buy(app_id = nil, verification_info = nil, cnam_lookup = nil, ha_enabled = nil)
+      def buy(app_id = nil, verification_info = nil, cnam_lookup = nil, ha_enable = nil)
         params = {}
         params[:app_id] = app_id unless app_id.nil?
         params[:verification_info] = verification_info unless verification_info.nil?
         params[:cnam_lookup] = cnam_lookup unless cnam_lookup.nil?
-        params[:ha_enabled] = ha_enabled unless ha_enabled.nil?
+        params[:ha_enable] = ha_enable unless ha_enable.nil?
         perform_action(nil, 'POST', params, true)
       end
 
@@ -123,10 +123,10 @@ module Plivo
         end
       end
 
-      def buy(number, app_id = nil, verification_info = nil, cnam_lookup = nil, ha_enabled = nil)
+      def buy(number, app_id = nil, verification_info = nil, cnam_lookup = nil, ha_enable = nil)
         valid_param?(:number, number, [Integer, String, Symbol], true)
         PhoneNumber.new(@_client,
-                        resource_id: number).buy(app_id, verification_info, cnam_lookup, ha_enabled)
+                        resource_id: number).buy(app_id, verification_info, cnam_lookup, ha_enable)
       end
     end
 

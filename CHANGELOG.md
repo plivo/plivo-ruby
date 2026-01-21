@@ -2,7 +2,7 @@
 
 ## [4.62.5](https://github.com/plivo/plivo-ruby/tree/v4.62.5) (2026-01-21)
 **Feature - HA Number support**
-- Added `ha_enabled` optional parameter to PhoneNumber `buy` method
+- Added `ha_enable` optional parameter to PhoneNumber `buy` method
 - Added `fallback_number` field to PhoneNumber and Number response objects
 
 ## [4.62.4](https://github.com/plivo/plivo-ruby/tree/v4.62.4) (2026-01-13)
