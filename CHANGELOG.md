@@ -1,5 +1,13 @@
 # Change Log
 
+## [4.63.0](https://github.com/plivo/plivo-ruby/tree/v4.63.0) (2026-04-08)
+**Feature - PhoneNumber Compliance API support**
+- Added `phone_number_compliance_requirements` resource for discovering compliance requirements by country, number type, and user type
+- Added `phone_number_compliances` resource with full CRUD support (create, get, list, update, delete) for compliance applications
+- Added `phone_number_compliance_link` resource for bulk linking phone numbers to accepted compliance applications
+- Added PATCH HTTP method support to `base_client` for compliance application updates
+- Create and update operations support multipart file uploads for compliance documents
+
 ## [4.62.5](https://github.com/plivo/plivo-ruby/tree/v4.62.5) (2026-01-21)
 **Feature - HA Number support**
 - Added `ha_enable` optional parameter to PhoneNumber `buy` method
