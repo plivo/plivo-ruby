@@ -22,6 +22,7 @@ module Plivo
     attr_reader :tollfree_verifications
     attr_reader :verify_caller_id
     attr_reader :maskingsession
+    attr_reader :phone_number_compliance_requirements, :phone_number_compliances, :phone_number_compliance_link
 
     def initialize(auth_id = nil, auth_token = nil, proxy_options = nil, timeout = 5)
       configure_base_uri
@@ -69,6 +70,9 @@ module Plivo
       @compliance_documents = Resources::ComplianceDocumentsInterface.new(self)
       @compliance_requirements = Resources::ComplianceRequirementsInterface.new(self)
       @compliance_applications = Resources::ComplianceApplicationsInterface.new(self)
+      @phone_number_compliance_requirements = Resources::PhoneNumberComplianceRequirementsInterface.new(self)
+      @phone_number_compliances = Resources::PhoneNumberCompliancesInterface.new(self)
+      @phone_number_compliance_link = Resources::PhoneNumberComplianceLinkInterface.new(self)
       @verify_session = Resources::SessionInterface.new(self)
       @tollfree_verifications = Resources::TollfreeVerificationsInterface.new(self)
       @verify_caller_id = Resources::VerifyCallerIdInterface.new(self)

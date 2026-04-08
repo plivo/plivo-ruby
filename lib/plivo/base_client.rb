@@ -47,6 +47,7 @@ module Plivo
         response = case method
                    when 'GET' then send_get(resource_path, data, timeout, is_voice_request: options[:is_voice_request], voice_retry_count: @@voice_retry_count)
                    when 'POST' then send_post(resource_path, data, timeout, use_multipart_conn, is_voice_request: options[:is_voice_request], voice_retry_count: @@voice_retry_count)
+                   when 'PATCH' then send_patch(resource_path, data, timeout, use_multipart_conn, is_voice_request: options[:is_voice_request], voice_retry_count: @@voice_retry_count)
                    when 'DELETE' then send_delete(resource_path, data, timeout, is_voice_request: options[:is_voice_request], voice_retry_count: @@voice_retry_count)
                    else raise_invalid_request("#{method} not supported by Plivo, yet")
                    end
@@ -64,6 +65,7 @@ module Plivo
       elsif options[:is_lookup_request] == true
         response = case method
                    when 'GET' then send_get(resource_path, data, timeout, is_lookup_request: options[:is_lookup_request])
+                   when 'PATCH' then send_patch(resource_path, data, timeout, use_multipart_conn, is_lookup_request: options[:is_lookup_request])
                    else raise_invalid_request("#{method} not supported by Plivo, yet")
                    end
         process_response(method, response.to_hash)
@@ -71,6 +73,7 @@ module Plivo
         response = case method
                    when 'GET' then send_get(resource_path, data, timeout)
                    when 'POST' then send_post(resource_path, data, timeout, use_multipart_conn)
+                   when 'PATCH' then send_patch(resource_path, data, timeout, use_multipart_conn)
                    when 'DELETE' then send_delete(resource_path, data, timeout)
                    else raise_invalid_request("#{method} not supported by Plivo, yet")
                    end
@@ -306,6 +309,41 @@ module Plivo
             req.options.timeout = timeout if timeout
             req.body = JSON.generate(data) if data
           end
+        end
+      end
+      response
+    end
+
+    def send_patch(resource_path, data, timeout, use_multipart_conn, options = nil)
+      if use_multipart_conn
+        multipart_conn = Faraday.new(@base_uri) do |faraday|
+          faraday.headers = {
+              'User-Agent' => @headers['User-Agent'],
+              'Accept' => @headers['Accept']
+          }
+
+          # DANGER: Basic auth should always come after headers, else
+          # The headers will replace the basic_auth
+
+          faraday.request :multipart
+          faraday.request :url_encoded
+          faraday.headers['Authorization'] = "Basic #{Base64.strict_encode64("#{auth_id}:#{auth_token}")}"
+
+          faraday.proxy=@proxy_hash if @proxy_hash
+          faraday.response :json, content_type: /\bjson$/
+          faraday.adapter Faraday.default_adapter
+        end
+
+        response = multipart_conn.patch do |req|
+          req.url resource_path
+          req.options.timeout = timeout if timeout
+          req.body = data
+        end
+      else
+        response = @conn.patch do |req|
+          req.url resource_path
+          req.options.timeout = timeout if timeout
+          req.body = JSON.generate(data) if data
         end
       end
       response
