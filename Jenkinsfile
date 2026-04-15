@@ -3,5 +3,5 @@
 @Library('plivo_standard_libs@sdks') _
 
 sdksPipeline ([
-	buildContainer: 'plivo/jenkins-ci/plivo-rubysdk:ruby-fix'
+	buildContainer: 'plivo/jenkins-ci/plivo-rubysdk:master'
 ])
