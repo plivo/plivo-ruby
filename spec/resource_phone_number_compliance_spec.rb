@@ -169,17 +169,16 @@ describe 'PhoneNumber Compliance test' do
 
   it 'lists compliance applications' do
     contents = File.read(Dir.pwd + '/spec/mocks/phoneNumberComplianceListResponse.json')
-    mock(200, JSON.parse(contents))
-    response = to_json_list(@api.phone_number_compliances.list)
+    parsed = JSON.parse(contents)
+    mock(200, parsed)
+    response = @api.phone_number_compliances.list
 
-    contents = JSON.parse(contents)
-    objects = contents['objects'].map do |obj|
-      obj.reject { |_, v| v.nil? }
-    end
-    contents['objects'] = objects
-
-    expect(JSON.parse(response).reject { |_, v| v.nil? })
-      .to eql(contents)
+    # Verify the 'compliances' key was remapped to 'objects' for base class compatibility
+    expect(response[:objects].length).to eql(parsed['compliances'].length)
+    expect(response[:objects][0].compliance_id).to eql(parsed['compliances'][0]['compliance_id'])
+    expect(response[:objects][1].compliance_id).to eql(parsed['compliances'][1]['compliance_id'])
+    expect(response[:api_id]).to eql(parsed['api_id'])
+    expect(response[:meta]['total_count']).to eql(parsed['meta']['total_count'])
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/PhoneNumber/Compliance/',
                      method: 'GET',
                      data: nil)
@@ -187,8 +186,9 @@ describe 'PhoneNumber Compliance test' do
 
   it 'lists compliance applications with filters' do
     contents = File.read(Dir.pwd + '/spec/mocks/phoneNumberComplianceListResponse.json')
-    mock(200, JSON.parse(contents))
-    @api.phone_number_compliances.list(
+    parsed = JSON.parse(contents)
+    mock(200, parsed)
+    response = @api.phone_number_compliances.list(
       status: 'submitted',
       country_iso: 'IN',
       number_type: 'local',
@@ -196,6 +196,8 @@ describe 'PhoneNumber Compliance test' do
       limit: 5,
       offset: 0
     )
+    # Verify remapping works with filters too
+    expect(response[:objects].length).to eql(parsed['compliances'].length)
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/PhoneNumber/Compliance/',
                      method: 'GET',
                      data: {
@@ -218,7 +220,7 @@ describe 'PhoneNumber Compliance test' do
         'next' => nil,
         'previous' => nil
       },
-      'objects' => []
+      'compliances' => []
     }
     mock(200, contents)
     response = @api.phone_number_compliances.list
@@ -239,7 +241,7 @@ describe 'PhoneNumber Compliance test' do
         'next' => '/v1/Account/MAXXXXXXXXXXXXXXXXXX/PhoneNumber/Compliance/?limit=5&offset=15',
         'previous' => '/v1/Account/MAXXXXXXXXXXXXXXXXXX/PhoneNumber/Compliance/?limit=5&offset=5'
       },
-      'objects' => [
+      'compliances' => [
         { 'compliance_id' => 'comp_010', 'status' => 'approved' },
         { 'compliance_id' => 'comp_011', 'status' => 'pending' }
       ]
@@ -261,10 +263,14 @@ describe 'PhoneNumber Compliance test' do
 
   it 'fetches details of a compliance application' do
     contents = File.read(Dir.pwd + '/spec/mocks/phoneNumberComplianceGetResponse.json')
-    mock(200, JSON.parse(contents))
+    parsed = JSON.parse(contents)
+    mock(200, parsed)
     response = @api.phone_number_compliances.get('767bc62c-2332-4a34-959c-1f6416186254')
-    expect(JSON.parse(to_json_compliance(response)))
-      .to eql(JSON.parse(contents))
+    # Verify unwrapping: resource fields come from the nested 'compliance' key
+    expect(response.compliance_id).to eql(parsed['compliance']['compliance_id'])
+    expect(response.status).to eql(parsed['compliance']['status'])
+    expect(response.alias).to eql(parsed['compliance']['alias'])
+    expect(response.api_id).to eql(parsed['api_id'])
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/PhoneNumber/Compliance/' \
                      '767bc62c-2332-4a34-959c-1f6416186254/',
                      method: 'GET',
@@ -273,12 +279,15 @@ describe 'PhoneNumber Compliance test' do
 
   it 'fetches a compliance application with expand parameter' do
     contents = File.read(Dir.pwd + '/spec/mocks/phoneNumberComplianceGetResponse.json')
-    mock(200, JSON.parse(contents))
+    parsed = JSON.parse(contents)
+    mock(200, parsed)
     response = @api.phone_number_compliances.get(
       '767bc62c-2332-4a34-959c-1f6416186254',
       expand: 'end_user,documents,linked_numbers'
     )
-    expect(response.compliance_id).to eql('767bc62c-2332-4a34-959c-1f6416186254')
+    # Verify unwrapping: compliance_id comes from nested 'compliance' key
+    expect(response.compliance_id).to eql(parsed['compliance']['compliance_id'])
+    expect(response.country_iso).to eql(parsed['compliance']['country_iso'])
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/PhoneNumber/Compliance/' \
                      '767bc62c-2332-4a34-959c-1f6416186254/',
                      method: 'GET',
@@ -288,38 +297,42 @@ describe 'PhoneNumber Compliance test' do
   it 'fetches a compliance application with all optional fields' do
     contents = {
       'api_id' => 'test-id',
-      'compliance_id' => 'test-comp-id',
-      'alias' => 'test',
-      'status' => 'rejected',
-      'country_iso' => 'IN',
-      'number_type' => 'local',
-      'user_type' => 'business',
-      'rejection_reason' => 'Invalid documents',
-      'callback_url' => 'https://example.com',
-      'callback_method' => 'GET',
-      'created_at' => '2026-04-06T10:44:17Z',
-      'updated_at' => '2026-04-06T10:44:17Z',
-      'end_user' => {
-        'end_user_id' => 'eu-123',
-        'type' => 'business',
-        'name' => 'TestCorp'
-      },
-      'documents' => [
-        {
-          'document_id' => 'doc-123',
-          'document_type_id' => 'dt-123',
-          'document_name' => 'Registration Certificate'
-        }
-      ],
-      'linked_numbers' => [
-        { 'number' => '+911234567890', 'number_type' => 'local' }
-      ]
+      'compliance' => {
+        'compliance_id' => 'test-comp-id',
+        'alias' => 'test',
+        'status' => 'rejected',
+        'country_iso' => 'IN',
+        'number_type' => 'local',
+        'user_type' => 'business',
+        'rejection_reason' => 'Invalid documents',
+        'callback_url' => 'https://example.com',
+        'callback_method' => 'GET',
+        'created_at' => '2026-04-06T10:44:17Z',
+        'updated_at' => '2026-04-06T10:44:17Z',
+        'end_user' => {
+          'end_user_id' => 'eu-123',
+          'type' => 'business',
+          'name' => 'TestCorp'
+        },
+        'documents' => [
+          {
+            'document_id' => 'doc-123',
+            'document_type_id' => 'dt-123',
+            'document_name' => 'Registration Certificate'
+          }
+        ],
+        'linked_numbers' => [
+          { 'number' => '+911234567890', 'number_type' => 'local' }
+        ]
+      }
     }
     mock(200, contents)
     response = @api.phone_number_compliances.get(
       'test-comp-id',
       expand: 'end_user,documents,linked_numbers'
     )
+    # Verify unwrapping from nested 'compliance' key
+    expect(response.api_id).to eql('test-id')
     expect(response.status).to eql('rejected')
     expect(response.rejection_reason).to eql('Invalid documents')
     expect(response.end_user['end_user_id']).to eql('eu-123')
@@ -344,13 +357,20 @@ describe 'PhoneNumber Compliance test' do
 
   it 'updates a compliance application' do
     contents = File.read(Dir.pwd + '/spec/mocks/phoneNumberComplianceUpdateResponse.json')
-    mock(200, JSON.parse(contents))
+    parsed = JSON.parse(contents)
+    mock(200, parsed)
     data_hash = { alias: 'patched-alias-2084' }
     response = @api.phone_number_compliances.update(
       'f812efe4-a461-4f00-b6ae-bdfb40fcc343',
       data_hash
     )
-    expect(response.message).to eql('Compliance application updated and resubmitted for review.')
+    # Verify unwrapping: resource fields come from nested 'compliance' key
+    expect(response.compliance_id).to eql(parsed['compliance']['compliance_id'])
+    expect(response.alias).to eql(parsed['compliance']['alias'])
+    expect(response.status).to eql(parsed['compliance']['status'])
+    # Verify message is propagated from top-level response
+    expect(response.message).to eql(parsed['message'])
+    expect(response.api_id).to eql(parsed['api_id'])
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/PhoneNumber/Compliance/' \
                      'f812efe4-a461-4f00-b6ae-bdfb40fcc343/',
                      method: 'PATCH',
@@ -361,13 +381,18 @@ describe 'PhoneNumber Compliance test' do
     contents = {
       'api_id' => 'test-id',
       'message' => 'updated',
-      'compliance_id' => 'comp-xyz789',
-      'status' => 'pending'
+      'compliance' => {
+        'compliance_id' => 'comp-xyz789',
+        'status' => 'pending'
+      }
     }
     mock(200, contents)
     data_hash = { end_user: { name: 'New Name' } }
-    @api.phone_number_compliances.update('comp-xyz789', data_hash)
+    response = @api.phone_number_compliances.update('comp-xyz789', data_hash)
     expect($request[:method]).to eql('PATCH')
+    # Verify unwrapping works for inline mock too
+    expect(response.compliance_id).to eql('comp-xyz789')
+    expect(response.message).to eql('updated')
   end
 
   # ── Delete ──────────────────────────────────────────────────────────────────

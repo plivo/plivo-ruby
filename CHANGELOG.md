@@ -1,5 +1,11 @@
 # Change Log
 
+## [4.63.1](https://github.com/plivo/plivo-ruby/tree/v4.63.1) (2026-04-16)
+**Bug Fix - PhoneNumber Compliance API response mapping**
+- Fixed GET single compliance to unwrap `compliance` wrapper key from API response, making all fields directly accessible on the resource object
+- Fixed List response to remap `compliances` key to `objects` for base class compatibility, returning proper `PhoneNumberCompliance` resource instances
+- Fixed update() to unwrap `compliance` wrapper key from API response, returning the compliance object directly
+
 ## [4.63.0](https://github.com/plivo/plivo-ruby/tree/v4.63.0) (2026-04-08)
 **Feature - PhoneNumber Compliance API support**
 - Added `phone_number_compliance_requirements` resource for discovering compliance requirements by country, number type, and user type

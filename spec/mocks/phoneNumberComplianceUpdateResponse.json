@@ -1,14 +1,16 @@
 {
   "api_id": "ef28ebe6-31a5-11f1-bf86-d2d6f5435dea",
   "message": "Compliance application updated and resubmitted for review.",
-  "compliance_id": "f812efe4-a461-4f00-b6ae-bdfb40fcc343",
-  "alias": "patched-alias-2084",
-  "status": "submitted",
-  "country_iso": "IN",
-  "number_type": "local",
-  "user_type": "business",
-  "callback_url": "https://example.com/webhook",
-  "callback_method": "POST",
-  "created_at": "2026-04-06T08:09:08.798837Z",
-  "updated_at": "2026-04-06T10:46:57.784278Z"
+  "compliance": {
+    "compliance_id": "f812efe4-a461-4f00-b6ae-bdfb40fcc343",
+    "alias": "patched-alias-2084",
+    "status": "submitted",
+    "country_iso": "IN",
+    "number_type": "local",
+    "user_type": "business",
+    "callback_url": "https://example.com/webhook",
+    "callback_method": "POST",
+    "created_at": "2026-04-06T08:09:08.798837Z",
+    "updated_at": "2026-04-06T10:46:57.784278Z"
+  }
 }
