@@ -65,7 +65,16 @@ module Plivo
         end
 
         response_json = @_client.send_request(@_resource_uri, 'PATCH', params, nil, true, is_voice_request: false)
-        parse_and_set(response_json)
+
+        # Unwrap compliance wrapper if present (API returns {api_id, message, compliance: {...}})
+        if response_json.key?('compliance')
+          compliance_data = response_json['compliance']
+          compliance_data['api_id'] = response_json['api_id'] if response_json['api_id']
+          compliance_data['message'] = response_json['message'] if response_json['message']
+          parse_and_set(compliance_data)
+        else
+          parse_and_set(response_json)
+        end
         self
       end
 
