@@ -132,7 +132,8 @@ describe 'Profile test' do
                                                 "title": "CEO",
                                                 "seniority": "C_LEVEL"
                                             },
-                                            business_contact_email: "employee@company.com"
+                                            business_contact_email: "employee@company.com",
+                                            dba: "Test DBA"
                                         }
                                     ))
     
@@ -171,7 +172,8 @@ describe 'Profile test' do
                                 "title": "CEO",
                                 "seniority": "C_LEVEL"
                             },
-                            business_contact_email: "employee@company.com"
+                            business_contact_email: "employee@company.com",
+                            dba: "Test DBA"
                          })
         end
         it 'update profile' do
@@ -198,7 +200,8 @@ describe 'Profile test' do
                                                   "email": "xyz123@plivo.com",
                                                   "title": "ugigwc",
                                                   "seniority": "admin"
-                                              }
+                                              },
+                                              dba: "Updated DBA"
                                           }
                                       ))
       
@@ -227,7 +230,8 @@ describe 'Profile test' do
                                 "email": "xyz123@plivo.com",
                                 "title": "ugigwc",
                                 "seniority": "admin"
-                            }
+                            },
+                            dba: "Updated DBA"
                            })
           end
 end
