@@ -133,7 +133,7 @@ describe 'Profile test' do
                                                 "seniority": "C_LEVEL"
                                             },
                                             business_contact_email: "employee@company.com",
-                                            dba: "Test DBA"
+                                            doing_business_as: "Test DBA"
                                         }
                                     ))
     
@@ -173,7 +173,7 @@ describe 'Profile test' do
                                 "seniority": "C_LEVEL"
                             },
                             business_contact_email: "employee@company.com",
-                            dba: "Test DBA"
+                            doing_business_as: "Test DBA"
                          })
         end
         it 'update profile' do
@@ -201,7 +201,7 @@ describe 'Profile test' do
                                                   "title": "ugigwc",
                                                   "seniority": "admin"
                                               },
-                                              dba: "Updated DBA"
+                                              doing_business_as: "Updated DBA"
                                           }
                                       ))
       
@@ -231,7 +231,7 @@ describe 'Profile test' do
                                 "title": "ugigwc",
                                 "seniority": "admin"
                             },
-                            dba: "Updated DBA"
+                            doing_business_as: "Updated DBA"
                            })
           end
 end
