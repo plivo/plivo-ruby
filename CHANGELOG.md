@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.63.2](https://github.com/plivo/plivo-ruby/tree/v4.63.2) (2026-05-25)
+**Feature - Expose sub_account_name on Number resource**
+- Added `sub_account_name` to `Number#to_s` output, surfacing the subaccount's name alongside the existing `sub_account` (auth_id) on rented number listing and get APIs
+
 ## [4.63.1](https://github.com/plivo/plivo-ruby/tree/v4.63.1) (2026-04-16)
 **Bug Fix - PhoneNumber Compliance API response mapping**
 - Fixed GET single compliance to unwrap `compliance` wrapper key from API response, making all fields directly accessible on the resource object
