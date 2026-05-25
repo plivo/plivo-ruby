@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.64.0](https://github.com/plivo/plivo-ruby/tree/v4.64.0) (2026-05-25)
+**Feature - Profile API DBA field support**
+- Added Doing Business As (DBA) field support to Profile API
+
 ## [4.63.1](https://github.com/plivo/plivo-ruby/tree/v4.63.1) (2026-04-16)
 **Bug Fix - PhoneNumber Compliance API response mapping**
 - Fixed GET single compliance to unwrap `compliance` wrapper key from API response, making all fields directly accessible on the resource object
