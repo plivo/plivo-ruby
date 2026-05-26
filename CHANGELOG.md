@@ -1,6 +1,9 @@
 # Change Log
 
 ## [4.63.2](https://github.com/plivo/plivo-ruby/tree/v4.63.2) (2026-05-26)
+**Feature - Profile API DBA field support**
+- Added Doing Business As (DBA) field support to Profile API
+
 **Feature - Expose sub_account_name on Number resource**
 - Added `sub_account_name` to `Number#to_s` output, surfacing the subaccount's name alongside the existing `sub_account` (auth_id) on rented number listing and get APIs
 
