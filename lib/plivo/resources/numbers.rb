@@ -183,6 +183,7 @@ module Plivo
           sms_enabled: @sms_enabled,
           sms_rate: @sms_rate,
           sub_account: @sub_account,
+          sub_account_name: @sub_account_name,
           voice_enabled: @voice_enabled,
           voice_rate: @voice_rate,
           tendlc_campaign_id: @tendlc_campaign_id,

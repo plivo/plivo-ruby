@@ -16,6 +16,7 @@ describe 'Numbers test' do
       sms_enabled: number.sms_enabled,
       sms_rate: number.sms_rate,
       sub_account: number.sub_account,
+      sub_account_name: number.sub_account_name,
       voice_enabled: number.voice_enabled,
       voice_rate: number.voice_rate,
       tendlc_campaign_id: number.tendlc_campaign_id,
