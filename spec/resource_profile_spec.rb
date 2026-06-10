@@ -133,7 +133,8 @@ describe 'Profile test' do
                                                 "seniority": "C_LEVEL"
                                             },
                                             business_contact_email: "employee@company.com",
-                                            doing_business_as: "Test DBA"
+                                            doing_business_as: "Test DBA",
+                                            number_of_employees: "BETWEEN_1_AND_10"
                                         }
                                     ))
     
@@ -173,7 +174,8 @@ describe 'Profile test' do
                                 "seniority": "C_LEVEL"
                             },
                             business_contact_email: "employee@company.com",
-                            doing_business_as: "Test DBA"
+                            doing_business_as: "Test DBA",
+                            number_of_employees: "BETWEEN_1_AND_10"
                          })
         end
         it 'update profile' do
@@ -201,7 +203,8 @@ describe 'Profile test' do
                                                   "title": "ugigwc",
                                                   "seniority": "admin"
                                               },
-                                              doing_business_as: "Updated DBA"
+                                              doing_business_as: "Updated DBA",
+                                              number_of_employees: "BETWEEN_11_AND_50"
                                           }
                                       ))
       
@@ -231,7 +234,8 @@ describe 'Profile test' do
                                 "title": "ugigwc",
                                 "seniority": "admin"
                             },
-                            doing_business_as: "Updated DBA"
+                            doing_business_as: "Updated DBA",
+                            number_of_employees: "BETWEEN_11_AND_50"
                            })
           end
 end

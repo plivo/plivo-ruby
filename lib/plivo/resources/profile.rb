@@ -83,7 +83,8 @@ module Plivo
 
             ##
             # Update a Profile
-            # {'address': {}, 'authorized_contact': {}, 'entity_type':'', 'vertical': '', 'company_name': '', 'website':'', 'business_contact_email':'', 'doing_business_as':''}
+            # {'address': {}, 'authorized_contact': {}, 'entity_type':'', 'vertical': '', 'company_name': '', 'website':'', 'business_contact_email':'', 'doing_business_as':'', 'number_of_employees':''}
+            # number_of_employees is an optional string. Allowed values: BETWEEN_1_AND_10, BETWEEN_11_AND_50, BETWEEN_51_AND_200, BETWEEN_201_AND_500, BETWEEN_501_AND_2000, BETWEEN_2001_AND_10000, MORE_THAN_10001
             def update(profile_uuid, options = nil)
               valid_param?(:options, options, Hash, true)
               perform_action_with_identifier(profile_uuid, "POST", options)
