@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.63.3](https://github.com/plivo/plivo-ruby/tree/v4.63.3) (2026-06-11)
+**Feature - Compliance application support at number purchase**
+- Added `compliance_application_id` optional parameter to PhoneNumber `buy` method, sent as the `compliance_application_id` API parameter for purchasing regulated numbers that require a linked regulatory compliance application at purchase time
+
 ## [4.63.2](https://github.com/plivo/plivo-ruby/tree/v4.63.2) (2026-05-26)
 **Feature - Profile API DBA field support**
 - Added Doing Business As (DBA) field support to Profile API
