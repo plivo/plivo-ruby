@@ -1,4 +1,6 @@
 require 'rspec'
+require 'json'
+require 'spec_helper'
 
 describe 'Phone Numbers test' do
   def to_json(phone_number)
@@ -76,6 +78,20 @@ describe 'Phone Numbers test' do
                      method: 'POST',
                      data: {
                        app_id: 'app id'
+                     })
+  end
+
+  it 'buy phone number with compliance application id' do
+    contents = File.read(Dir.pwd + '/spec/mocks/phoneNumberCreateResponse.json')
+    mock(202, JSON.parse(contents))
+    expect(JSON.parse(to_json_buy(@api.phone_numbers
+                                      .buy('909090909090', 'app id', nil, nil, nil, 'compliance_app_id'))))
+      .to eql(JSON.parse(contents))
+    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/PhoneNumber/909090909090/',
+                     method: 'POST',
+                     data: {
+                       app_id: 'app id',
+                       compliance_application_id: 'compliance_app_id'
                      })
   end
 end
