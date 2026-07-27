@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.63.5](https://github.com/plivo/plivo-ruby/tree/v4.63.5) (2026-07-27)
+**Feature - Internal flag on Endpoint create**
+- Added optional `internal` keyword argument to `EndpointInterface#create` so callers can mark newly created SIP endpoints as internal at creation time. When omitted, wire behavior is unchanged.
+
 ## [4.63.3](https://github.com/plivo/plivo-ruby/tree/v4.63.3) (2026-06-11)
 **Feature - Compliance application support at number purchase**
 - Added `compliance_application_id` optional parameter to PhoneNumber `buy` method, sent as the `compliance_application_id` API parameter for purchasing regulated numbers that require a linked regulatory compliance application at purchase time
