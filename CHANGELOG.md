@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.63.4](https://github.com/plivo/plivo-ruby/tree/v4.63.4) (2026-07-27)
+**Feature - Toll-free verification terms, privacy, opt-in and help fields**
+- Added optional `terms_and_conditions_link`, `privacy_policy_link`, `optin_message` and `help_message` parameters to the toll-free verification create and update methods
+
 ## [4.63.3](https://github.com/plivo/plivo-ruby/tree/v4.63.3) (2026-06-11)
 **Feature - Compliance application support at number purchase**
 - Added `compliance_application_id` optional parameter to PhoneNumber `buy` method, sent as the `compliance_application_id` API parameter for purchasing regulated numbers that require a linked regulatory compliance application at purchase time
