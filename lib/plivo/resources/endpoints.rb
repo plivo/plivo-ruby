@@ -85,7 +85,8 @@ module Plivo
       # @param [String] password
       # @param [String] alias_
       # @param [String] app_id
-      def create(username, password, alias_, app_id = nil)
+      # @param [Boolean] internal
+      def create(username, password, alias_, app_id = nil, internal: nil)
         valid_param?(:username, username, [String, Symbol], true)
         valid_param?(:password, password, [String, Symbol], true)
         valid_param?(:alias, alias_, [String, Symbol], true)
@@ -97,6 +98,11 @@ module Plivo
         }
 
         params[:app_id] = app_id unless app_id.nil?
+
+        unless internal.nil?
+          valid_param?(:internal, internal, [TrueClass, FalseClass], true)
+          params[:internal] = internal
+        end
 
         perform_create(params)
       end
