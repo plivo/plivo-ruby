@@ -71,4 +71,55 @@ describe 'TollfreeVerifications test' do
                        method: 'DELETE',
                        data: nil)
   end
+
+  it 'creates a tollfree verification with optional link/message fields' do
+      contents = File.read(Dir.pwd + '/spec/mocks/tollfreeVerificationCreateResponse.json')
+      mock(201, JSON.parse(contents))
+      @api.tollfree_verifications.create(
+        '18888888888', 'PROXY', 'summary text', 'a4c95b2c-a3ce-4dc4-b12c-b0f7b48f6c8c',
+        'VERBAL', 'https://example.com/optin.png', '1,000', 'sample message',
+        'https://example.com/callback', 'POST', 'extra data', 'additional info',
+        'https://example.com/terms', 'https://example.com/privacy',
+        'optin message text', 'help message text')
+      compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/TollfreeVerification/',
+                       method: 'POST',
+                       data: {
+                         number: '18888888888',
+                         usecase: 'PROXY',
+                         usecase_summary: 'summary text',
+                         profile_uuid: 'a4c95b2c-a3ce-4dc4-b12c-b0f7b48f6c8c',
+                         optin_type: 'VERBAL',
+                         optin_image_url: 'https://example.com/optin.png',
+                         volume: '1,000',
+                         message_sample: 'sample message',
+                         callback_url: 'https://example.com/callback',
+                         callback_method: 'POST',
+                         extra_data: 'extra data',
+                         additional_information: 'additional info',
+                         terms_and_conditions_link: 'https://example.com/terms',
+                         privacy_policy_link: 'https://example.com/privacy',
+                         optin_message: 'optin message text',
+                         help_message: 'help message text'
+                       })
+  end
+
+  it 'updates a tollfree verification with optional link/message fields' do
+      id = 'SAXXXXXXXXXXXXXXXXXX'
+      contents = File.read(Dir.pwd + '/spec/mocks/tollfreeVerificationUpdateResponse.json')
+      mock(202, JSON.parse(contents))
+      @api.tollfree_verifications.update(id, {
+        terms_and_conditions_link: 'https://example.com/terms',
+        privacy_policy_link: 'https://example.com/privacy',
+        optin_message: 'optin message text',
+        help_message: 'help message text'
+      })
+      compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/TollfreeVerification/' + id + '/',
+                       method: 'POST',
+                       data: {
+                         terms_and_conditions_link: 'https://example.com/terms',
+                         privacy_policy_link: 'https://example.com/privacy',
+                         optin_message: 'optin message text',
+                         help_message: 'help message text'
+                       })
+  end
 end

@@ -15,7 +15,7 @@ module Plivo
         valid_param?(:options, options, Hash, true)
 
         params = {}
-        params_expected = %i[ usecase usecase_summary profile_uuid optin_type optin_image_url volume message_sample callback_method callback_url extra_data additional_information ]
+        params_expected = %i[ usecase usecase_summary profile_uuid optin_type optin_image_url volume message_sample callback_method callback_url extra_data additional_information terms_and_conditions_link privacy_policy_link optin_message help_message ]
         params_expected.each do |param|
           if options.key?(param) &&
              valid_param?(param, options[param], [String, Symbol], false)
@@ -41,6 +41,10 @@ module Plivo
           callback_url: @callback_url,
           extra_data: @extra_data,
           additional_information: @additional_information,
+          terms_and_conditions_link: @terms_and_conditions_link,
+          privacy_policy_link: @privacy_policy_link,
+          optin_message: @optin_message,
+          help_message: @help_message,
           message_sample: @message_sample,
           optin_image_url: @optin_image_url,
           optin_type: @optin_type,
@@ -121,8 +125,12 @@ module Plivo
       # @param [String] callback_method
       # @param [String] extra_data
       # @param [String] additional_information
+      # @param [String] terms_and_conditions_link
+      # @param [String] privacy_policy_link
+      # @param [String] optin_message
+      # @param [String] help_message
       # return [TollfreeVerification] TollfreeVerification
-      def create(number, usecase, usecase_summary, profile_uuid, optin_type, optin_image_url, volume, message_sample, callback_url = nil, callback_method = nil, extra_data = nil, additional_information = nil)
+      def create(number, usecase, usecase_summary, profile_uuid, optin_type, optin_image_url, volume, message_sample, callback_url = nil, callback_method = nil, extra_data = nil, additional_information = nil, terms_and_conditions_link = nil, privacy_policy_link = nil, optin_message = nil, help_message = nil)
         valid_param?(:number, number, [String, Symbol], true)
         valid_param?(:usecase, usecase, [String, Symbol], true)
         valid_param?(:usecase_summary, usecase_summary, [String, Symbol], true)
@@ -135,6 +143,10 @@ module Plivo
         valid_param?(:callback_method, callback_method, [String, Symbol], false)
         valid_param?(:extra_data, extra_data, [String, Symbol], false)
         valid_param?(:additional_information, additional_information, [String, Symbol], false)
+        valid_param?(:terms_and_conditions_link, terms_and_conditions_link, [String, Symbol], false)
+        valid_param?(:privacy_policy_link, privacy_policy_link, [String, Symbol], false)
+        valid_param?(:optin_message, optin_message, [String, Symbol], false)
+        valid_param?(:help_message, help_message, [String, Symbol], false)
 
         params = {
         number: number,
@@ -148,7 +160,11 @@ module Plivo
         callback_url: callback_url,
         callback_method: callback_method,
         extra_data: extra_data,
-        additional_information: additional_information
+        additional_information: additional_information,
+        terms_and_conditions_link: terms_and_conditions_link,
+        privacy_policy_link: privacy_policy_link,
+        optin_message: optin_message,
+        help_message: help_message
         }.delete_if { |key, value| value.nil? }
 
         return perform_create(params)
