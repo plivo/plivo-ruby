@@ -42,10 +42,6 @@ module Plivo
                   params[param] = options[param]
                 end
               end
-              if options.key?(:limit) && (options[:limit] > 20 || options[:limit] <= 0)
-                  raise_invalid_request('The maximum number of results that can be '\
-                    "fetched is 20. limit can't be more than 20 or less than 1")
-              end
               if options.key?(:offset) && options[:offset] < 0
                 raise_invalid_request("Offset can't be negative")
               end
