@@ -51,33 +51,34 @@ describe 'Addresses test' do
     }.to_json
   end
 
-  it 'creates an address' do
-    contents = File.read(Dir.pwd + '/spec/mocks/addressCreateResponse.json')
+describe "create an address" do
+  it "creates an address sucessfully" do
+    contents = File.read(Dir.pwd + '/spec/mocks/addressCreateSuccessResponse.json')
     mock(200, JSON.parse(contents))
 
     expect(JSON.parse(to_json_create(@api.addresses
-                                         .create(
-                                             'US',
-                                             'Mr',
-                                             'Bruce',
-                                             'Wayne',
-                                             '1234',
-                                             'Wayne Towers',
-                                             'New York',
-                                             'NY',
-                                             '12345',
-                                             'others',
-                                             nil,
-                                             {
-                                               callback_url: 'https://callback.url',
-                                               auto_correct_address: true
-                                             }
+                                         .create('US',
+                                           'local',
+                                           'Mr',
+                                           'Bruce',
+                                           'Wayne',
+                                           '1234',
+                                           'Wayne Towers',
+                                           'New York',
+                                           'NY',
+                                           '12345',
+                                           'US',
+                                           {
+                                             callback_url: 'https://callback.url',
+                                             proof_type: 'PASSPORT'
+                                           }
                                          ))))
         .to eql(JSON.parse(contents).reject { |_, v| v.nil? })
     compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Verification/Address/',
                      method: 'POST',
                      data: {
-                         country_iso: 'US',
+                         phone_number_country: 'US',
+                         number_type: 'local',
                          salutation: 'Mr',
                          first_name: 'Bruce',
                          last_name: 'Wayne',
@@ -86,11 +87,70 @@ describe 'Addresses test' do
                          city: 'New York',
                          region: 'NY',
                          postal_code: '12345',
-                         address_proof_type: 'others',
+                         country_iso: 'US',
                          callback_url: 'https://callback.url',
-                         auto_correct_address: true
+                         proof_type: 'PASSPORT'
                      })
   end
+
+  it "raises exception: in case of mandatory param - fiscal_identification_code is mandatory when country_iso is Spain" do
+    expect{@api.addresses.create('ES',
+                                 'local',
+                                 'Mr',
+                                 'Bruce',
+                                 'Wayne',
+                                 '1234',
+                                 'Wayne Towers',
+                                 'New York',
+                                 'NY',
+                                 '12345',
+                                 'ES',
+                                 {
+                                   callback_url: 'https://callback.url',
+                                   proof_type: 'PASSPORT'
+                                 }
+                             )}.to raise_error(Plivo::Exceptions::InvalidRequestError)
+  end
+
+  it "returns error: in case of invalid value for param" do
+    contents = File.read(Dir.pwd + '/spec/mocks/addressCreateErrorResponse.json')
+    mock(405, JSON.parse(contents))
+    expect{@api.addresses.create('US',
+                                  'local',
+                                  'Mr',
+                                  'Bruce',
+                                  'Wayne',
+                                  '1234',
+                                  'Wayne Towers',
+                                  'New York',
+                                  'NY',
+                                  '12345',
+                                  'US',
+                                  {
+                                      callback_url: 'https://callback.url',
+                                      proof_type: 'PASSPORT'
+                                  }
+                )}.to raise_error(Plivo::Exceptions::InvalidRequestError)
+    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Verification/Address/',
+                     method: 'POST',
+                     data: {
+                         phone_number_country: 'US',
+                         number_type: 'local',
+                         salutation: 'Mr',
+                         first_name: 'Bruce',
+                         last_name: 'Wayne',
+                         address_line1: '1234',
+                         address_line2: 'Wayne Towers',
+                         city: 'New York',
+                         region: 'NY',
+                         postal_code: '12345',
+                         country_iso: 'US',
+                         callback_url: 'https://callback.url',
+                         proof_type: 'PASSPORT'
+                     })
+  end
+end
+
 
   it 'fetches details of an address' do
     contents = File.read(Dir.pwd + '/spec/mocks/addressGetResponse.json')
@@ -127,7 +187,7 @@ describe 'Addresses test' do
     contents = File.read(Dir.pwd + '/spec/mocks/addressUpdateResponse.json')
     mock(200, JSON.parse(contents))
     expect(JSON.parse(to_json_update(@api.addresses
-                                         .update(id, nil, {
+                                         .update(id, {
                                            salutation: 'Mr',
                                            first_name: 'Bruce'
                                          }))))
