@@ -106,6 +106,25 @@ describe 'Calls test' do
                      })
   end
 
+  it 'creates a call with retry_on' do
+    contents = File.read(Dir.pwd + '/spec/mocks/callCreateResponse.json')
+    mock(201, JSON.parse(contents))
+    expect(JSON.parse(to_json_create(@api.calls
+                                         .create('+919090909090',
+                                                 ['+919898989898'],
+                                                 'http://www.answer.url',
+                                                 {retry_on: 'busy_line,no_answer'}))))
+      .to eql(JSON.parse(contents))
+    compare_requests(uri: '/v1/Account/MAXXXXXXXXXXXXXXXXXX/Call/',
+                     method: 'POST',
+                     data: {
+                       from: '+919090909090',
+                       to: '+919898989898',
+                       answer_url: 'http://www.answer.url',
+                       retry_on: 'busy_line,no_answer'
+                     })
+  end
+
   it 'fetches details of a call' do
     contents = File.read(Dir.pwd + '/spec/mocks/callGetResponse.json')
     mock(200, JSON.parse(contents))
