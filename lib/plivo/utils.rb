@@ -290,5 +290,22 @@ module Plivo
       generated_signature = compute_signatureV3?(new_url, auth_token, nonce)
       return signature.split(",").include? generated_signature
     end
+
+    def derive_signing_key(token)
+      sha256_digest = OpenSSL::Digest.new('sha256')
+      prk = OpenSSL::HMAC.digest(sha256_digest, 'plivo-scoped-token-v1', token)
+      OpenSSL::HMAC.digest(sha256_digest, prk, 'plivo-webhook-signing-v1' + "\x01")
+    end
+
+    def valid_signatureV3_scoped?(uri, nonce, signature, scoped_token, method, params={})
+      new_url = generate_url?(uri, params, method)
+      generated_signature = compute_signatureV3?(new_url, derive_signing_key(scoped_token), nonce)
+      signature.split(",").any? { |sig| secure_compare?(sig, generated_signature) }
+    end
+
+    def secure_compare?(a, b)
+      return false unless a.bytesize == b.bytesize
+      a.unpack('C*').zip(b.unpack('C*')).inject(0) { |acc, (x, y)| acc | (x ^ y) } == 0
+    end
   end
 end

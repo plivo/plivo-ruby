@@ -564,6 +564,24 @@ response = api.messages.create(
 puts response
 ```
 
+### Validating webhooks for scoped API tokens
+Webhooks triggered by an API call made with a scoped token (`PLV...`) are signed with a key derived from that token. Validate them with `valid_signatureV3_scoped?`, which takes the same arguments as `valid_signatureV3?` with the scoped token in place of the auth token:
+
+```ruby
+require 'plivo'
+
+valid = Plivo::Utils.valid_signatureV3_scoped?(
+  request.url,
+  request.headers['X-Plivo-Signature-V3-Nonce'],
+  request.headers['X-Plivo-Signature-V3'],
+  '<scoped_token>',
+  request.method,
+  request.POST
+)
+```
+
+`Plivo::Utils.derive_signing_key(scoped_token)` returns the raw 32-byte HMAC key if you validate signatures yourself.
+
 ### More examples
 More examples are available [here](https://github.com/plivo/plivo-examples-ruby). Also refer to the [guides for configuring the Rails server to run various scenarios](https://www.plivo.com/docs/sms/quickstart/ruby-rails/) & use it to test out your integration in under 5 minutes.
 
