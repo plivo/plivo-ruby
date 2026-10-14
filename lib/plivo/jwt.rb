@@ -110,6 +110,10 @@ module Plivo
         raise Exceptions::AuthenticationError, "Invalid auth_id: '#{auth_id}'" unless
           Utils.valid_account?(auth_id)
 
+        if auth_token.length == 46 && auth_token.start_with?('PLV')
+          raise Exceptions::AuthenticationError, "AccessToken must be signed with the account auth token; scoped API tokens (PLV...) can't sign JWTs. Use the auth token, or create a token with the JWT API (POST /Account/{auth_id}/JWT/Token/)."
+        end
+
         @auth_credentials = {
           auth_id: auth_id,
           auth_token: auth_token
