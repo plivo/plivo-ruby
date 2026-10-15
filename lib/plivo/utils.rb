@@ -297,10 +297,17 @@ module Plivo
       OpenSSL::HMAC.digest(sha256_digest, prk, 'plivo-webhook-signing-v1' + "\x01")
     end
 
-    def valid_signatureV3_scoped?(uri, nonce, signature, scoped_token, method, params={})
+    # @param [String, Array<String>] keys one key or a list; scoped tokens (46 chars, "PLV" prefix)
+    #   are HKDF-derived, any other key is used as an auth token
+    def valid_signatureV3_scoped?(uri, nonce, signature, keys, method, params={})
       new_url = generate_url?(uri, params, method)
-      generated_signature = compute_signatureV3?(new_url, derive_signing_key(scoped_token), nonce)
-      signature.split(",").any? { |sig| secure_compare?(sig, generated_signature) }
+      signatures = signature.split(",")
+      Array(keys).any? do |key|
+        next false if key.to_s.empty?
+        hmac_key = key.length == 46 && key.start_with?('PLV') ? derive_signing_key(key) : key
+        generated_signature = compute_signatureV3?(new_url, hmac_key, nonce)
+        signatures.any? { |sig| secure_compare?(sig, generated_signature) }
+      end
     end
 
     def secure_compare?(a, b)

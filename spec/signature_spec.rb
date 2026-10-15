@@ -168,4 +168,28 @@ describe 'Scoped token V3 signature validation' do
     expect(Plivo::Utils.valid_signatureV3_scoped?(post_url.dup, nonce, post_sig, token_one, 'POST', post_params.merge('Status' => 'failed'))).to eql(false)
     expect(Plivo::Utils.valid_signatureV3?(post_url.dup, nonce, post_sig, token_one, 'POST', post_params)).to eql(false)
   end
+
+  context 'with a list of keys' do
+    let(:auth_token) { 'MjEyOWU5MGVlM2NjZDY1ZTNmZTU2NjZhZGNjMTc5' }
+    let(:auth_sig) { Plivo::Utils.compute_signatureV3?(Plivo::Utils.generate_url?(post_url.dup, post_params, 'POST'), auth_token, nonce) }
+
+    def validate(signature, keys)
+      Plivo::Utils.valid_signatureV3_scoped?(post_url.dup, nonce, signature, keys, 'POST', post_params)
+    end
+
+    it 'accepts a signature made with the scoped token or the auth token' do
+      expect(validate(post_sig, [token_one, auth_token])).to eql(true)
+      expect(validate(auth_sig, [token_one, auth_token])).to eql(true)
+      expect(validate("#{post_sig},#{auth_sig}", [token_two, auth_token])).to eql(true)
+    end
+
+    it 'rejects when no key matches' do
+      expect(validate(post_sig, [token_two])).to eql(false)
+      expect(validate(post_sig, [])).to eql(false)
+    end
+
+    it 'skips nil and empty entries' do
+      expect(validate(post_sig, [nil, '', token_one])).to eql(true)
+    end
+  end
 end
