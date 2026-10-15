@@ -163,10 +163,15 @@ describe 'Scoped token V3 signature validation' do
     expect(Plivo::Utils.valid_signatureV3_scoped?(post_url.dup, nonce, "bogus,#{post_sig}", token_one, 'POST', post_params)).to eql(true)
   end
 
-  it 'rejects wrong token, tampered params and the auth-token validator' do
+  it 'rejects wrong token and tampered params' do
     expect(Plivo::Utils.valid_signatureV3_scoped?(post_url.dup, nonce, post_sig, token_two, 'POST', post_params)).to eql(false)
     expect(Plivo::Utils.valid_signatureV3_scoped?(post_url.dup, nonce, post_sig, token_one, 'POST', post_params.merge('Status' => 'failed'))).to eql(false)
-    expect(Plivo::Utils.valid_signatureV3?(post_url.dup, nonce, post_sig, token_one, 'POST', post_params)).to eql(false)
+  end
+
+  it 'accepts a scoped token in the auth-token validator' do
+    auth_sig = Plivo::Utils.compute_signatureV3?(Plivo::Utils.generate_url?(post_url.dup, post_params, 'POST'), 'test-auth-token', nonce)
+    expect(Plivo::Utils.valid_signatureV3?(post_url.dup, nonce, "#{post_sig},#{auth_sig}", token_one, 'POST', post_params)).to eql(true)
+    expect(Plivo::Utils.valid_signatureV3?(post_url.dup, nonce, auth_sig, token_one, 'POST', post_params)).to eql(false)
   end
 
   context 'with a list of keys' do

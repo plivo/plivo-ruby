@@ -5,6 +5,7 @@
 - Added `Plivo::Utils.valid_signatureV3_scoped?(uri, nonce, signature, scoped_token, method, params)` to validate `X-Plivo-Signature-V3` on webhooks triggered by scoped-token API calls
 - `valid_signatureV3_scoped?` also accepts an array of keys (scoped tokens and/or auth token) and returns true if any key matches
 - Added `Plivo::Utils.derive_signing_key(token)` returning the HKDF-SHA256 derived 32-byte signing key
+- `valid_signatureV3?` now also accepts a scoped API token in place of the auth token
 
 ## [4.63.2](https://github.com/plivo/plivo-ruby/tree/v4.63.2) (2026-05-26)
 **Feature - Profile API DBA field support**

@@ -285,7 +285,9 @@ module Plivo
       return Base64.encode64(OpenSSL::HMAC.digest(sha256_digest, auth_token, new_url)).strip()
     end
 
+    # Validates X-Plivo-Signature-V3 with an auth token, or with a scoped API token (PLV..., 46 chars) via derive_signing_key
     def valid_signatureV3?(uri, nonce, signature, auth_token, method, params={})
+      return valid_signatureV3_scoped?(uri, nonce, signature, auth_token, method, params) if auth_token.is_a?(String) && auth_token.length == 46 && auth_token.start_with?('PLV')
       new_url = generate_url?(uri, params, method)
       generated_signature = compute_signatureV3?(new_url, auth_token, nonce)
       return signature.split(",").include? generated_signature
